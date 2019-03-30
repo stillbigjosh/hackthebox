@@ -1,0 +1,46 @@
+
+-----------------
+DIRB v2.22    
+By The Dark Raver
+-----------------
+
+OUTPUT_FILE: dirb.txt
+START_TIME: Wed Mar 20 21:54:33 2019
+URL_BASE: http://10.10.10.127/
+WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
+OPTION: Not Stopping on warning messages
+
+-----------------
+
+GENERATED WORDS: 4612
+
+---- Scanning URL: http://10.10.10.127/ ----
+==> DIRECTORY: http://10.10.10.127/fortune/
++ http://10.10.10.127/select (CODE:405|SIZE:178)
+
+---- Entering directory: http://10.10.10.127/fortune/ ----
+
+
+
+
+-----------------
+DIRB v2.22    
+By The Dark Raver
+-----------------
+
+OUTPUT_FILE: dirb.txt
+START_TIME: Thu Mar 21 15:10:55 2019
+URL_BASE: http://10.10.10.127/fortune/
+WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
+OPTION: Not Stopping on warning messages
+
+-----------------
+
+GENERATED WORDS: 4612
+
+---- Scanning URL: http://10.10.10.127/fortune/ ----
++ http://10.10.10.127/fortune/index.html (CODE:200|SIZE:654)
+
+-----------------
+END_TIME: Thu Mar 21 15:47:46 2019
+DOWNLOADED: 4612 - FOUND: 1
