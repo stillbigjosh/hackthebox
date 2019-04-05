@@ -1,0 +1,63 @@
+SITUATIONAL AWARENESS
+
+System/User info:
+uname -a
+env
+whoami
+history
+pwd
+
+Coomand history?
+cat .bash_history
+
+Who else has logged in?
+who
+w
+last
+
+Are you in the sudoers file:
+sudo -l
+cat /etc/sudoers
+
+Other super users?:
+grep -v -E "^#" /etc/passwd | awk -F: '$3 == 0 { print $1 }'
+
+Network info:
+ifconfig -a
+netstat -antup
+lsof -i
+
+
+VULNERABLE OS?
+
+Get kernel version:
+uname -a
+
+Search for priv esc exploit
+searchsploit <kernel&version> | sort -n
+
+
+VULNERABLE SERVICES? 
+
+Enumerate services/software?:
+ps aux
+ps -ef
+
+
+LOOK FOR INTERESTING FILES
+
+SUID Files?:
+find / -perm -u=s -type f 2>/dev/null
+
+Password hashes?:
+cat /etc/shadow
+
+Check jobs/task:
+ls -la /etc/cron*
+
+SSH Keys:
+ls -la ~/.ssh/
+
+Look for cleartext creds in files for various scripts, DB's, config files, etc..
+
+find . type f -maxdepth 4 | xargs grep -i "password"
