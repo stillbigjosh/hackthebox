@@ -61,3 +61,7 @@ ls -la ~/.ssh/
 Look for cleartext creds in files for various scripts, DB's, config files, etc..
 
 find . type f -maxdepth 4 | xargs grep -i "password"
+
+Username enumeration(rpcclient):
+lsaenumsid
+lookupsids <sids>
