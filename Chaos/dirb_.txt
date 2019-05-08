@@ -1,0 +1,66 @@
+
+-----------------
+DIRB v2.22    
+By The Dark Raver
+-----------------
+
+OUTPUT_FILE: dirb_.txt
+START_TIME: Wed Apr 17 10:02:25 2019
+URL_BASE: http://10.10.10.120/
+WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
+OPTION: Not Stopping on warning messages
+
+-----------------
+
+GENERATED WORDS: 4612
+
+---- Scanning URL: http://10.10.10.120/ ----
++ http://10.10.10.120/index.html (CODE:200|SIZE:73)
+==> DIRECTORY: http://10.10.10.120/javascript/
++ http://10.10.10.120/server-status (CODE:403|SIZE:300)
+==> DIRECTORY: http://10.10.10.120/wp/
+
+---- Entering directory: http://10.10.10.120/javascript/ ----
+==> DIRECTORY: http://10.10.10.120/javascript/jquery/
+
+---- Entering directory: http://10.10.10.120/wp/ ----
+(!) WARNING: Directory IS LISTABLE. No need to scan it.
+    (Use mode '-w' if you want to scan it anyway)
+==> DIRECTORY: http://10.10.10.120/wp/wordpress/
+
+---- Entering directory: http://10.10.10.120/javascript/jquery/ ----
++ http://10.10.10.120/javascript/jquery/jquery (CODE:200|SIZE:268026)
+
+---- Entering directory: http://10.10.10.120/wp/wordpress/ ----
++ http://10.10.10.120/wp/wordpress/index.php (CODE:301|SIZE:0)
+==> DIRECTORY: http://10.10.10.120/wp/wordpress/wp-admin/
+==> DIRECTORY: http://10.10.10.120/wp/wordpress/wp-content/
+==> DIRECTORY: http://10.10.10.120/wp/wordpress/wp-includes/
++ http://10.10.10.120/wp/wordpress/xmlrpc.php (CODE:405|SIZE:42)
+
+---- Entering directory: http://10.10.10.120/wp/wordpress/wp-admin/ ----
++ http://10.10.10.120/wp/wordpress/wp-admin/admin.php (CODE:302|SIZE:0)
+==> DIRECTORY: http://10.10.10.120/wp/wordpress/wp-admin/css/
+==> DIRECTORY: http://10.10.10.120/wp/wordpress/wp-admin/images/
+==> DIRECTORY: http://10.10.10.120/wp/wordpress/wp-admin/includes/
++ http://10.10.10.120/wp/wordpress/wp-admin/index.php (CODE:302|SIZE:0)
+==> DIRECTORY: http://10.10.10.120/wp/wordpress/wp-admin/js/
+==> DIRECTORY: http://10.10.10.120/wp/wordpress/wp-admin/maint/
+==> DIRECTORY: http://10.10.10.120/wp/wordpress/wp-admin/network/
+==> DIRECTORY: http://10.10.10.120/wp/wordpress/wp-admin/user/
+
+---- Entering directory: http://10.10.10.120/wp/wordpress/wp-content/ ----
++ http://10.10.10.120/wp/wordpress/wp-content/index.php (CODE:200|SIZE:0)
+==> DIRECTORY: http://10.10.10.120/wp/wordpress/wp-content/plugins/
+==> DIRECTORY: http://10.10.10.120/wp/wordpress/wp-content/themes/
+
+---- Entering directory: http://10.10.10.120/wp/wordpress/wp-includes/ ----
+(!) WARNING: Directory IS LISTABLE. No need to scan it.
+    (Use mode '-w' if you want to scan it anyway)
+==> DIRECTORY: http://10.10.10.120/wp/wordpress/wp-includes/certificates/
+==> DIRECTORY: http://10.10.10.120/wp/wordpress/wp-includes/css/
+==> DIRECTORY: http://10.10.10.120/wp/wordpress/wp-includes/customize/
+==> DIRECTORY: http://10.10.10.120/wp/wordpress/wp-includes/fonts/
+==> DIRECTORY: http://10.10.10.120/wp/wordpress/wp-includes/images/
+==> DIRECTORY: http://10.10.10.120/wp/wordpress/wp-includes/js/
+.........

@@ -1,0 +1,95 @@
+# Nmap 7.70 scan initiated Fri Apr  5 09:38:01 2019 as: nmap -p 1-65535 -T4 -A -v -o nmap.txt 10.10.10.120
+Increasing send delay for 10.10.10.120 from 0 to 5 due to 193 out of 481 dropped probes since last increase.
+Nmap scan report for 10.10.10.120
+Host is up (0.18s latency).
+Not shown: 65529 closed ports
+PORT      STATE SERVICE  VERSION
+80/tcp    open  http     Apache httpd 2.4.34 ((Ubuntu))
+| http-methods: 
+|_  Supported Methods: GET POST OPTIONS HEAD
+|_http-server-header: Apache/2.4.34 (Ubuntu)
+|_http-title: Site doesn't have a title (text/html).
+110/tcp   open  pop3     Dovecot pop3d
+|_pop3-capabilities: AUTH-RESP-CODE SASL RESP-CODES CAPA STLS UIDL TOP PIPELINING
+| ssl-cert: Subject: commonName=chaos
+| Subject Alternative Name: DNS:chaos
+| Issuer: commonName=chaos
+| Public Key type: rsa
+| Public Key bits: 2048
+| Signature Algorithm: sha256WithRSAEncryption
+| Not valid before: 2018-10-28T10:01:49
+| Not valid after:  2028-10-25T10:01:49
+| MD5:   af90 2165 92c7 740f d97a 786a 7e9f cb92
+|_SHA-1: 5a4d 4223 3b08 a24b 7d5a e509 09bf 9570 aa2c f6ba
+|_ssl-date: TLS randomness does not represent time
+143/tcp   open  imap     Dovecot imapd (Ubuntu)
+|_imap-capabilities: SASL-IR more post-login ENABLE ID listed LOGIN-REFERRALS STARTTLS Pre-login LITERAL+ have IDLE capabilities OK LOGINDISABLEDA0001 IMAP4rev1
+| ssl-cert: Subject: commonName=chaos
+| Subject Alternative Name: DNS:chaos
+| Issuer: commonName=chaos
+| Public Key type: rsa
+| Public Key bits: 2048
+| Signature Algorithm: sha256WithRSAEncryption
+| Not valid before: 2018-10-28T10:01:49
+| Not valid after:  2028-10-25T10:01:49
+| MD5:   af90 2165 92c7 740f d97a 786a 7e9f cb92
+|_SHA-1: 5a4d 4223 3b08 a24b 7d5a e509 09bf 9570 aa2c f6ba
+|_ssl-date: TLS randomness does not represent time
+993/tcp   open  ssl/imap Dovecot imapd (Ubuntu)
+|_imap-capabilities: SASL-IR more post-login ENABLE Pre-login LOGIN-REFERRALS listed capabilities LITERAL+ have IDLE AUTH=PLAINA0001 OK ID IMAP4rev1
+| ssl-cert: Subject: commonName=chaos
+| Subject Alternative Name: DNS:chaos
+| Issuer: commonName=chaos
+| Public Key type: rsa
+| Public Key bits: 2048
+| Signature Algorithm: sha256WithRSAEncryption
+| Not valid before: 2018-10-28T10:01:49
+| Not valid after:  2028-10-25T10:01:49
+| MD5:   af90 2165 92c7 740f d97a 786a 7e9f cb92
+|_SHA-1: 5a4d 4223 3b08 a24b 7d5a e509 09bf 9570 aa2c f6ba
+|_ssl-date: TLS randomness does not represent time
+995/tcp   open  ssl/pop3 Dovecot pop3d
+|_pop3-capabilities: AUTH-RESP-CODE SASL(PLAIN) RESP-CODES CAPA USER UIDL TOP PIPELINING
+| ssl-cert: Subject: commonName=chaos
+| Subject Alternative Name: DNS:chaos
+| Issuer: commonName=chaos
+| Public Key type: rsa
+| Public Key bits: 2048
+| Signature Algorithm: sha256WithRSAEncryption
+| Not valid before: 2018-10-28T10:01:49
+| Not valid after:  2028-10-25T10:01:49
+| MD5:   af90 2165 92c7 740f d97a 786a 7e9f cb92
+|_SHA-1: 5a4d 4223 3b08 a24b 7d5a e509 09bf 9570 aa2c f6ba
+|_ssl-date: TLS randomness does not represent time
+10000/tcp open  http     MiniServ 1.890 (Webmin httpd)
+|_http-favicon: Unknown favicon MD5: EA9A0A98E2A16B0ADEA1F6ED448F4CEF
+| http-methods: 
+|_  Supported Methods: GET HEAD POST OPTIONS
+|_http-title: Site doesn't have a title (text/html; Charset=iso-8859-1).
+No exact OS matches for host (If you know what OS is running on it, see https://nmap.org/submit/ ).
+TCP/IP fingerprint:
+OS:SCAN(V=7.70%E=4%D=4/5%OT=80%CT=1%CU=33297%PV=Y%DS=2%DC=T%G=Y%TM=5CA718C6
+OS:%P=x86_64-pc-linux-gnu)SEQ(SP=100%GCD=1%ISR=10F%TI=Z%CI=Z%II=I%TS=A)SEQ(
+OS:SP=100%GCD=1%ISR=10F%TI=Z%CI=Z%TS=A)OPS(O1=M54DST11NW7%O2=M54DST11NW7%O3
+OS:=M54DNNT11NW7%O4=M54DST11NW7%O5=M54DST11NW7%O6=M54DST11)WIN(W1=7120%W2=7
+OS:120%W3=7120%W4=7120%W5=7120%W6=7120)ECN(R=Y%DF=Y%T=40%W=7210%O=M54DNNSNW
+OS:7%CC=Y%Q=)T1(R=Y%DF=Y%T=40%S=O%A=S+%F=AS%RD=0%Q=)T2(R=N)T3(R=N)T4(R=Y%DF
+OS:=Y%T=40%W=0%S=A%A=Z%F=R%O=%RD=0%Q=)T5(R=Y%DF=Y%T=40%W=0%S=Z%A=S+%F=AR%O=
+OS:%RD=0%Q=)T6(R=Y%DF=Y%T=40%W=0%S=A%A=Z%F=R%O=%RD=0%Q=)T7(R=Y%DF=Y%T=40%W=
+OS:0%S=Z%A=S+%F=AR%O=%RD=0%Q=)U1(R=Y%DF=N%T=40%IPL=164%UN=0%RIPL=G%RID=G%RI
+OS:PCK=G%RUCK=G%RUD=G)IE(R=Y%DFI=N%T=40%CD=S)
+
+Uptime guess: 34.820 days (since Fri Mar  1 14:18:41 2019)
+Network Distance: 2 hops
+TCP Sequence Prediction: Difficulty=256 (Good luck!)
+IP ID Sequence Generation: All zeros
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+TRACEROUTE (using port 1720/tcp)
+HOP RTT       ADDRESS
+1   310.68 ms 10.10.12.1
+2   307.74 ms 10.10.10.120
+
+Read data files from: /usr/bin/../share/nmap
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Fri Apr  5 09:58:46 2019 -- 1 IP address (1 host up) scanned in 1245.40 seconds

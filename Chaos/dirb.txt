@@ -1,0 +1,56 @@
+
+-----------------
+DIRB v2.22    
+By The Dark Raver
+-----------------
+
+OUTPUT_FILE: dirb.txt
+START_TIME: Fri Apr  5 16:56:32 2019
+URL_BASE: http://chaos.htb/
+WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
+OPTION: Not Stopping on warning messages
+
+-----------------
+
+GENERATED WORDS: 4612
+
+---- Scanning URL: http://chaos.htb/ ----
+==> DIRECTORY: http://chaos.htb/css/
+==> DIRECTORY: http://chaos.htb/img/
++ http://chaos.htb/index.html (CODE:200|SIZE:6964)
+==> DIRECTORY: http://chaos.htb/javascript/
+==> DIRECTORY: http://chaos.htb/js/
++ http://chaos.htb/server-status (CODE:403|SIZE:297)
+==> DIRECTORY: http://chaos.htb/source/
+
+---- Entering directory: http://chaos.htb/css/ ----
+(!) WARNING: Directory IS LISTABLE. No need to scan it.
+    (Use mode '-w' if you want to scan it anyway)
+
+---- Entering directory: http://chaos.htb/img/ ----
+(!) WARNING: Directory IS LISTABLE. No need to scan it.
+    (Use mode '-w' if you want to scan it anyway)
+==> DIRECTORY: http://chaos.htb/img/blog/
++ http://chaos.htb/img/favicon.ico (CODE:200|SIZE:16958)
+
+---- Entering directory: http://chaos.htb/javascript/ ----
+==> DIRECTORY: http://chaos.htb/javascript/jquery/
+
+---- Entering directory: http://chaos.htb/js/ ----
+(!) WARNING: Directory IS LISTABLE. No need to scan it.
+    (Use mode '-w' if you want to scan it anyway)
+
+---- Entering directory: http://chaos.htb/source/ ----
+(!) WARNING: Directory IS LISTABLE. No need to scan it.
+    (Use mode '-w' if you want to scan it anyway)
+
+---- Entering directory: http://chaos.htb/img/blog/ ----
+(!) WARNING: Directory IS LISTABLE. No need to scan it.
+    (Use mode '-w' if you want to scan it anyway)
+
+---- Entering directory: http://chaos.htb/javascript/jquery/ ----
++ http://chaos.htb/javascript/jquery/jquery (CODE:200|SIZE:268026)
+
+-----------------
+END_TIME: Fri Apr  5 20:07:55 2019
+DOWNLOADED: 36896 - FOUND: 4

