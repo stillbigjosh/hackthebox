@@ -1,0 +1,4 @@
+mount //10.10.10.134/Backups <smb_mountpoint>
+modprobe nbd max_part=16
+qemu-nbd --read-only --format=vpc -c /dev/nbd0 /mnt/WindowsImageBackup/L4mpje-PC/Backup\ 2019-02-22\ 124351/9b9cfbc4-369e-11e9-a17c-806e6f6e6963.vhd
+partprobe /dev/nbd0

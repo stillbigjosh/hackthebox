@@ -1,0 +1,41 @@
+Mount & Unmount a VHD file
+
+mkdir -p $HOME/mnt/image
+ntfs-3g -o windows_names image.vhd $HOME/mnt/image
+
+-----------------------------------------------------------------------------
+
+Mount an SMB Share
+
+apt-get install cifs-utils
+mount -t cifs //server/share /mnt -o user=username
+
+-----------------------------------------------------------------------------
+
+Mount an SMB Share
+
+Step 1: Install the CIFS Utils pkg
+sudo apt-get install cifs-utils
+
+Step 2: Create a mount point
+sudo mkdir /mnt/local_share
+
+Step 3: Mount the volume
+sudo mount -t cifs //<vpsa_ip_address>/<export_share> /mnt/<local_share>
+
+---------------------------------------------------------------------------
+
+Mount an SMB Share
+
+mount.cifs //bastion.htb/Backups /root/HTB/Bastion/mnt
+
+
+---------------------------------------------------------------------------
+
+$ sudo mount //10.10.10.134/Backups <smb_mountpoint> 
+$ sudo modprobe nbd max_part=16
+$ sudo qemu-nbd --read-only --format=vpc -c /dev/nbd0 <smb_mountpoint>/WindowsImageBackup/L4mpje-PC/Backup\ 2019-02-22\ 124351/9b9cfbc4-369e-11e9-a17c-806e6f6e6963.vhd 
+$ sudo mount -o allow_other /dev/nbd0p1 <vhd_mountpoint>
+$ sudo umount /dev/nbd0p1 
+$ sudo qemu-nbd -d /dev/nbd0 
+$ sudo umount <smb_mountpoint>

