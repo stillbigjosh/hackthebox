@@ -1,0 +1,54 @@
+PORT     STATE SERVICE VERSION
+21/tcp   open  ftp     vsftpd 3.0.3+ (ext.1)
+| ftp-anon: Anonymous FTP login allowed (FTP code 230)
+|_drwxr-xr-x    2 0        0             512 Apr 14 12:35 webapp
+| ftp-syst: 
+|   STAT: 
+| FTP server status:
+|      Connected to 10.10.13.74
+|      Logged in as ftp
+|      TYPE: ASCII
+|      No session upload bandwidth limit
+|      No session download bandwidth limit
+|      Session timeout in seconds is 300
+|      Control connection is plain text
+|      Data connections will be plain text
+|      At session startup, client count was 4
+|      vsFTPd 3.0.3+ (ext.1) - secure, fast, stable
+|_End of status
+22/tcp   open  ssh?
+80/tcp   open  http    Apache httpd 2.4.38 ((FreeBSD) PHP/7.3.3)
+| http-methods: 
+|   Supported Methods: OPTIONS HEAD GET POST TRACE
+|_  Potentially risky methods: TRACE
+|_http-server-header: Apache/2.4.38 (FreeBSD) PHP/7.3.3
+|_http-title: Luke
+3000/tcp open  http    Node.js Express framework
+| http-methods: 
+|_  Supported Methods: GET HEAD POST OPTIONS
+|_http-title: Site doesn't have a title (application/json; charset=utf-8).
+8000/tcp open  http    Ajenti http control panel
+| http-methods: 
+|_  Supported Methods: GET POST OPTIONS
+|_http-title: Ajenti
+Aggressive OS guesses: Android 4.0.1 - 4.0.4 (Linux 3.0) (91%), Android 4.3 (90%), Linux 2.6.32 (90%), Linux 2.6.32 - 3.2 (90%), Hikvision DVR (90%), Rebranded surveillance DVR (Hikvision, Q-SEE, EYEsurv, A1Webcams, Foscam) (90%), Android 2.2 (Linux 2.6.32) (90%), Android 2.2 - 2.2.1 (Linux 2.6.32) (90%), Tintri OS 3.2 (Linux 3.2) (90%), Linux 4.10 (90%)
+No exact OS matches for host (test conditions non-ideal).
+Uptime guess: 0.000 days (since Wed Jun  5 22:41:32 2019)
+Network Distance: 2 hops
+TCP Sequence Prediction: Difficulty=265 (Good luck!)
+IP ID Sequence Generation: All zeros
+
+TRACEROUTE (using port 53/tcp)
+HOP RTT       ADDRESS
+1   270.45 ms 10.10.12.1
+2   271.24 ms luke.htb (10.10.10.137)
+
+NSE: Script Post-scanning.
+Initiating NSE at 22:42
+Completed NSE at 22:42, 0.00s elapsed
+Initiating NSE at 22:42
+Completed NSE at 22:42, 0.00s elapsed
+Read data files from: /usr/bin/../share/nmap
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 8284.80 seconds
+           Raw packets sent: 101140 (4.455MB) | Rcvd: 69096 (2.768MB)

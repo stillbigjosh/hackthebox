@@ -1,0 +1,56 @@
+
+-----------------
+DIRB v2.22    
+By The Dark Raver
+-----------------
+
+OUTPUT_FILE: dirb.txt
+START_TIME: Thu Jun  6 14:08:17 2019
+URL_BASE: http://luke.htb/
+WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
+OPTION: Not Stopping on warning messages
+
+-----------------
+
+GENERATED WORDS: 4612
+
+---- Scanning URL: http://luke.htb/ ----
+==> DIRECTORY: http://luke.htb/css/
++ http://luke.htb/index.html (CODE:200|SIZE:3138)
+==> DIRECTORY: http://luke.htb/js/
++ http://luke.htb/LICENSE (CODE:200|SIZE:1093)
++ http://luke.htb/management (CODE:401|SIZE:381)
+==> DIRECTORY: http://luke.htb/member/
+==> DIRECTORY: http://luke.htb/vendor/
++ http://luke.htb/login.php
++ http://luke.htb/config.php
+
+
+
+-----------------
+DIRB v2.22    
+By The Dark Raver
+-----------------
+DIRB v2.22    
+By The Dark Raver
+-----------------
+
+OUTPUT_FILE: dirb.txt
+START_TIME: Fri Jun  7 10:44:25 2019
+URL_BASE: http://luke.htb/
+WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
+OPTION: Not Stopping on warning messages
+EXTENSIONS_LIST: (.php,.asp,.html,.aspx) | (.php)(.asp)(.html)(.aspx) [NUM = 4]
+
+-----------------
+
+GENERATED WORDS: 4612
+
+---- Scanning URL: http://luke.htb/ ----
++ http://luke.htb/config.php (CODE:200|SIZE:202)
++ http://luke.htb/index.html (CODE:200|SIZE:3138)
++ http://luke.htb/login.php (CODE:200|SIZE:1593)
+
+-----------------
+END_TIME: Fri Jun  7 11:47:27 2019
+DOWNLOADED: 18448 - FOUND: 3

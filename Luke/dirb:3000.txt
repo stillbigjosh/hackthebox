@@ -1,0 +1,25 @@
+oot@kali:~/HTB/Friendzone# dirb http://luke.htb:3000 -w
+
+-----------------
+DIRB v2.22    
+By The Dark Raver
+-----------------
+
+START_TIME: Sat Jun  8 14:01:29 2019
+URL_BASE: http://luke.htb:3000/
+WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
+OPTION: Not Stopping on warning messages
+
+-----------------
+
+GENERATED WORDS: 4612                                                          
+
+---- Scanning URL: http://luke.htb:3000/ ----
++ http://luke.htb:3000/login (CODE:200|SIZE:13)                                              
++ http://luke.htb:3000/Login (CODE:200|SIZE:13)                                              
++ http://luke.htb:3000/users (CODE:200|SIZE:56)                                              
+                                                                                             
+-----------------
+END_TIME: Sat Jun  8 14:16:35 2019
+DOWNLOADED: 4612 - FOUND: 3
+

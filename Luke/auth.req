@@ -1,0 +1,14 @@
+GET / HTTP/1.1
+Host: luke.htb:3000
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/60.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Accept: application/json
+Content-Type: application/json
+Connection: close
+Upgrade-Insecure-Requests: 1
+If-None-Match: W/"38-JmWDrUPxIbirDH0hheIjdLOzrFs"
+Content-Length: 87
+
+{"dbHost":"localhost","dbUsername":"root","dbPassword":"Zk6heYCyv6ZE9Xcg","db":"login"}
