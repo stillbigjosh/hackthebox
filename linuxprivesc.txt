@@ -65,3 +65,7 @@ find . type f -maxdepth 4 | xargs grep -i "password"
 Username enumeration(rpcclient):
 lsaenumsid
 lookupsids <sids>
+
+Enum usernames info and their RID(suffix of sid in hex)
+enumdomusers
+query <rid>
