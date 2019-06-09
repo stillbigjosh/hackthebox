@@ -210,6 +210,8 @@ partprobe /dev/nbd0
 mount -o allow_other /dev/nbd0p1 <vhd_mountpoint>
 
 
+Browsing to C:\Windows\System32\config, we noticed that we can read the SAM and SYSTEM file which means that we can get the NTLM hashes from the system
+
 Dump NTLM hashes
 
 samdump2 SYSTEM bootkey
