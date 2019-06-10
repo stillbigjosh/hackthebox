@@ -1,0 +1,12 @@
+C:\etc\Development
+C:/etc/Development
+C:\etc\Development\hello
+C:/etc/Development/hello
+C:\etc\Development\hello.php
+C:/etc/Development/hello.php
+\etc\Development
+/etc/Development
+\etc\Development\hello
+/etc/Development/hello
+\etc\Development\hello.php
+/etc/Development/hello.php

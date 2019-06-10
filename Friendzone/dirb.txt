@@ -1,0 +1,29 @@
+
+-----------------
+DIRB v2.22    
+By The Dark Raver
+-----------------
+
+OUTPUT_FILE: dirb.txt
+START_TIME: Fri Jun  7 15:32:24 2019
+URL_BASE: http://friendzone.htb/
+WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
+OPTION: Not Stopping on warning messages
+
+-----------------
+
+GENERATED WORDS: 4612
+
+---- Scanning URL: http://friendzone.htb/ ----
++ http://friendzone.htb/index.html (CODE:200|SIZE:324)
++ http://friendzone.htb/robots.txt (CODE:200|SIZE:13)
++ http://friendzone.htb/server-status (CODE:403|SIZE:302)
+==> DIRECTORY: http://friendzone.htb/wordpress/
+
+---- Entering directory: http://friendzone.htb/wordpress/ ----
+(!) WARNING: Directory IS LISTABLE. No need to scan it.
+    (Use mode '-w' if you want to scan it anyway)
+
+-----------------
+END_TIME: Fri Jun  7 16:03:04 2019
+DOWNLOADED: 9224 - FOUND: 3

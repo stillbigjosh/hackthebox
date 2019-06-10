@@ -1,0 +1,22 @@
+-----------------
+DIRB v2.22    
+By The Dark Raver
+-----------------
+
+START_TIME: Sat Jun  8 11:56:50 2019
+URL_BASE: https://friendzone.red/
+WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
+OPTION: Not Stopping on warning messages
+
+-----------------
+
+GENERATED WORDS: 4612                                                          
+
+---- Scanning URL: https://friendzone.red/ ----
+==> DIRECTORY: https://friendzone.red/admin/                                                
++ https://friendzone.red/index.html (CODE:200|SIZE:238)                                     
+==> DIRECTORY: https://friendzone.red/js/                                                   
++ https://friendzone.red/server-status (CODE:403|SIZE:303)                                  
+                                                                                            
+---- Entering directory: https://friendzone.red/admin/ ----
+(!) WARNING: Directory IS LISTABLE. No need to scan it.                     

