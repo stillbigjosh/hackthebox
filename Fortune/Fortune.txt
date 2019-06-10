@@ -247,6 +247,7 @@ fileix(os_shell) > ssh-keygen -s /var/appsrv/fortune/id_rsa
 
 COPY intermediate.cert.pem and intermediate.key.pem from the RCEd service
 
+GENERATE WEB CERT
 
 root@kali: openssl pkcs12 -export -out Cert.p12 -in intermediate.cert.pem -inkey intermediate.key.pem -passin pass:root -passout pass:root
 
