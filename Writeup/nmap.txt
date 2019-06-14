@@ -1,0 +1,27 @@
+# Nmap 7.70 scan initiated Sat Jun  8 20:10:54 2019 as: nmap -Pn -p 1-65535 -T4 -A -o nmap.txt writeup.htb
+RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+Nmap scan report for writeup.htb (10.10.10.138)
+Host is up (0.19s latency).
+Not shown: 65533 filtered ports
+PORT   STATE SERVICE    VERSION
+22/tcp open  tcpwrapped
+80/tcp open  http       Apache httpd 2.4.25 ((Debian))
+| http-robots.txt: 1 disallowed entry 
+|_/writeup/
+|_http-server-header: Apache/2.4.25 (Debian)
+|_http-title: Nothing here yet.
+Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port
+Aggressive OS guesses: Linux 3.10 - 4.11 (92%), Linux 3.13 (92%), Linux 3.2 - 4.9 (92%), Linux 3.16 (90%), Linux 3.16 - 4.6 (90%), Linux 3.18 (90%), Linux 4.2 (90%), Linux 4.4 (90%), Crestron XPanel control system (90%), Linux 3.12 (89%)
+No exact OS matches for host (test conditions non-ideal).
+Network Distance: 2 hops
+
+TRACEROUTE (using port 22/tcp)
+HOP RTT       ADDRESS
+1   203.46 ms 10.10.12.1
+2   203.39 ms writeup.htb (10.10.10.138)
+
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Sat Jun  8 20:30:15 2019 -- 1 IP address (1 host up) scanned in 1161.46 seconds

