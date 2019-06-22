@@ -1,0 +1,115 @@
+# Nmap 7.70 scan initiated Mon Jun 17 14:51:53 2019 as: nmap -p 1-65535 -T4 -A -o nmap.txt 10.10.10.132
+Nmap scan report for 10.10.10.132
+Host is up (0.31s latency).
+Not shown: 65530 filtered ports
+PORT      STATE SERVICE       VERSION
+135/tcp   open  msrpc         Microsoft Windows RPC
+445/tcp   open  microsoft-ds?
+5985/tcp  open  http          Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+|_http-server-header: Microsoft-HTTPAPI/2.0
+|_http-title: Not Found
+8080/tcp  open  http-proxy    -
+| fingerprint-strings: 
+|   GetRequest: 
+|     HTTP/1.1 200 OK
+|     Set-Cookie: JSESSIONID=7AB9B7EE8964607D0302F963C7978196; Path=/; HttpOnly
+|     Cache-Control: private
+|     Expires: Thu, 01 Jan 1970 01:00:00 GMT
+|     Content-Type: text/html;charset=UTF-8
+|     Vary: Accept-Encoding
+|     Date: Mon, 17 Jun 2019 13:03:07 GMT
+|     Connection: close
+|     Server: -
+|     <!DOCTYPE html>
+|     <html>
+|     <head>
+|     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+|     <script language='JavaScript' type="text/javascript" src='/scripts/Login.js?9309'></script>
+|     <script language='JavaScript' type="text/javascript" src='/scripts/jquery-1.8.3.min.js'></script>
+|     <link href="/style/loginstyle.css?9309" type="text/css" rel="stylesheet"/>
+|     <link href="/style/new-classes.css?9309" type="text/css" rel="stylesheet">
+|     <link href="/style/new-classes-sdp.css?9309" type="text/css" rel="stylesheet">
+|     <link href="/style/conflict-fix.css?9309" type="text/css" rel="stylesheet">
+|   HTTPOptions: 
+|     HTTP/1.1 200 OK
+|     Set-Cookie: JSESSIONID=AE27B8860B73CBAFAC79861FE065181D; Path=/; HttpOnly
+|     Cache-Control: private
+|     Expires: Thu, 01 Jan 1970 01:00:00 GMT
+|     Content-Type: text/html;charset=UTF-8
+|     Vary: Accept-Encoding
+|     Date: Mon, 17 Jun 2019 13:03:08 GMT
+|     Connection: close
+|     Server: -
+|     <!DOCTYPE html>
+|     <html>
+|     <head>
+|     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+|     <script language='JavaScript' type="text/javascript" src='/scripts/Login.js?9309'></script>
+|     <script language='JavaScript' type="text/javascript" src='/scripts/jquery-1.8.3.min.js'></script>
+|     <link href="/style/loginstyle.css?9309" type="text/css" rel="stylesheet"/>
+|     <link href="/style/new-classes.css?9309" type="text/css" rel="stylesheet">
+|     <link href="/style/new-classes-sdp.css?9309" type="text/css" rel="stylesheet">
+|_    <link href="/style/conflict-fix.css?9309" type="text/css" rel="stylesheet">
+|_http-open-proxy: Proxy might be redirecting requests
+|_http-server-header: -
+|_http-title: ManageEngine ServiceDesk Plus
+49667/tcp open  msrpc         Microsoft Windows RPC
+1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :
+SF-Port8080-TCP:V=7.70%I=7%D=6/17%Time=5D079D9B%P=x86_64-pc-linux-gnu%r(Ge
+SF:tRequest,2328,"HTTP/1\.1\x20200\x20OK\r\nSet-Cookie:\x20JSESSIONID=7AB9
+SF:B7EE8964607D0302F963C7978196;\x20Path=/;\x20HttpOnly\r\nCache-Control:\
+SF:x20private\r\nExpires:\x20Thu,\x2001\x20Jan\x201970\x2001:00:00\x20GMT\
+SF:r\nContent-Type:\x20text/html;charset=UTF-8\r\nVary:\x20Accept-Encoding
+SF:\r\nDate:\x20Mon,\x2017\x20Jun\x202019\x2013:03:07\x20GMT\r\nConnection
+SF::\x20close\r\nServer:\x20-\r\n\r\n<!DOCTYPE\x20html>\n<html>\n<head>\n<
+SF:meta\x20http-equiv=\"X-UA-Compatible\"\x20content=\"IE=Edge\">\n\n\n\n\
+SF:r\n\n\x20\x20\x20\x20<script\x20language='JavaScript'\x20type=\"text/ja
+SF:vascript\"\x20src='/scripts/Login\.js\?9309'></script>\n\x20\x20\x20\x2
+SF:0<script\x20language='JavaScript'\x20type=\"text/javascript\"\x20src='/
+SF:scripts/jquery-1\.8\.3\.min\.js'></script>\n\x20\x20\x20\x20\n\x20\x20\
+SF:x20\x20<link\x20href=\"/style/loginstyle\.css\?9309\"\x20type=\"text/cs
+SF:s\"\x20rel=\"stylesheet\"/>\n\x20\x20\x20\x20<link\x20href=\"/style/new
+SF:-classes\.css\?9309\"\x20type=\"text/css\"\x20rel=\"stylesheet\">\n\x20
+SF:\x20\x20\x20<link\x20href=\"/style/new-classes-sdp\.css\?9309\"\x20type
+SF:=\"text/css\"\x20rel=\"stylesheet\">\n\x20\x20\x20\x20<link\x20href=\"/
+SF:style/conflict-fix\.css\?9309\"\x20type=\"text/css\"\x20rel=\"styleshee
+SF:t\">")%r(HTTPOptions,25D6,"HTTP/1\.1\x20200\x20OK\r\nSet-Cookie:\x20JSE
+SF:SSIONID=AE27B8860B73CBAFAC79861FE065181D;\x20Path=/;\x20HttpOnly\r\nCac
+SF:he-Control:\x20private\r\nExpires:\x20Thu,\x2001\x20Jan\x201970\x2001:0
+SF:0:00\x20GMT\r\nContent-Type:\x20text/html;charset=UTF-8\r\nVary:\x20Acc
+SF:ept-Encoding\r\nDate:\x20Mon,\x2017\x20Jun\x202019\x2013:03:08\x20GMT\r
+SF:\nConnection:\x20close\r\nServer:\x20-\r\n\r\n<!DOCTYPE\x20html>\n<html
+SF:>\n<head>\n<meta\x20http-equiv=\"X-UA-Compatible\"\x20content=\"IE=Edge
+SF:\">\n\n\n\n\r\n\n\x20\x20\x20\x20<script\x20language='JavaScript'\x20ty
+SF:pe=\"text/javascript\"\x20src='/scripts/Login\.js\?9309'></script>\n\x2
+SF:0\x20\x20\x20<script\x20language='JavaScript'\x20type=\"text/javascript
+SF:\"\x20src='/scripts/jquery-1\.8\.3\.min\.js'></script>\n\x20\x20\x20\x2
+SF:0\n\x20\x20\x20\x20<link\x20href=\"/style/loginstyle\.css\?9309\"\x20ty
+SF:pe=\"text/css\"\x20rel=\"stylesheet\"/>\n\x20\x20\x20\x20<link\x20href=
+SF:\"/style/new-classes\.css\?9309\"\x20type=\"text/css\"\x20rel=\"stylesh
+SF:eet\">\n\x20\x20\x20\x20<link\x20href=\"/style/new-classes-sdp\.css\?93
+SF:09\"\x20type=\"text/css\"\x20rel=\"stylesheet\">\n\x20\x20\x20\x20<link
+SF:\x20href=\"/style/conflict-fix\.css\?9309\"\x20type=\"text/css\"\x20rel
+SF:=\"stylesheet\">");
+Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port
+OS fingerprint not ideal because: Missing a closed TCP port so results incomplete
+No OS matches for host
+Network Distance: 2 hops
+Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows
+
+Host script results:
+|_clock-skew: mean: -1h00m00s, deviation: 0s, median: -1h00m00s
+| smb2-security-mode: 
+|   2.02: 
+|_    Message signing enabled but not required
+| smb2-time: 
+|   date: 2019-06-17 14:05:16
+|_  start_date: N/A
+
+TRACEROUTE (using port 8080/tcp)
+HOP RTT       ADDRESS
+1   362.37 ms 10.10.16.1
+2   362.60 ms 10.10.10.132
+
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Mon Jun 17 15:05:53 2019 -- 1 IP address (1 host up) scanned in 839.74 seconds

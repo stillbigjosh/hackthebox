@@ -1,0 +1,68 @@
+root@kali:~/HTB/Helpline# hashcat -m 1000 -a 0 zach.txt /usr/share/wordlists/rockyou.txt --force
+hashcat (v5.1.0) starting...
+
+OpenCL Platform #1: The pocl project
+====================================
+* Device #1: pthread-Intel(R) Core(TM) i5-3340M CPU @ 2.70GHz, 512/1097 MB allocatable, 2MCU
+
+Hashes: 1 digests; 1 unique digests, 1 unique salts
+Bitmaps: 16 bits, 65536 entries, 0x0000ffff mask, 262144 bytes, 5/13 rotates
+Rules: 1
+
+Applicable optimizers:
+* Zero-Byte
+* Early-Skip
+* Not-Salted
+* Not-Iterated
+* Single-Hash
+* Single-Salt
+* Raw-Hash
+
+Minimum password length supported by kernel: 0
+Maximum password length supported by kernel: 256
+
+ATTENTION! Pure (unoptimized) OpenCL kernels selected.
+This enables cracking passwords and salts > length 32 but for the price of drastically reduced performance.
+If you want to switch to optimized OpenCL kernels, append -O to your commandline.
+
+Watchdog: Hardware monitoring interface not found on your system.
+Watchdog: Temperature abort trigger disabled.
+
+* Device #1: build_opts '-cl-std=CL1.2 -I OpenCL -I /usr/share/hashcat/OpenCL -D LOCAL_MEM_TYPE=2 -D VENDOR_ID=64 -D CUDA_ARCH=0 -D AMD_ROCM=0 -D VECT_SIZE=8 -D DEVICE_TYPE=2 -D DGST_R0=0 -D DGST_R1=3 -D DGST_R2=2 -D DGST_R3=1 -D DGST_ELEM=4 -D KERN_TYPE=1000 -D _unroll'
+Dictionary cache hit:
+* Filename..: /usr/share/wordlists/rockyou.txt
+* Passwords.: 14344385
+* Bytes.....: 139921507
+* Keyspace..: 14344385
+
+eef285f4c800bcd1ae1e84c371eeb282:0987654321      
+                                                 
+Session..........: hashcat
+Status...........: Cracked
+Hash.Type........: NTLM
+Hash.Target......: eef285f4c800bcd1ae1e84c371eeb282
+Time.Started.....: Wed Jun 19 15:57:04 2019 (0 secs)
+Time.Estimated...: Wed Jun 19 15:57:04 2019 (0 secs)
+Guess.Base.......: File (/usr/share/wordlists/rockyou.txt)
+Guess.Queue......: 1/1 (100.00%)
+Speed.#1.........:   428.0 kH/s (0.81ms) @ Accel:1024 Loops:1 Thr:1 Vec:8
+Recovered........: 1/1 (100.00%) Digests, 1/1 (100.00%) Salts
+Progress.........: 2048/14344385 (0.01%)
+Rejected.........: 0/2048 (0.00%)
+Restore.Point....: 0/14344385 (0.00%)
+Restore.Sub.#1...: Salt:0 Amplifier:0-1 Iteration:0-1
+Candidates.#1....: 123456 -> lovers1
+
+Started: Wed Jun 19 15:57:02 2019
+Stopped: Wed Jun 19 15:57:06 2019
+
+root@kali:~/HTB/Helpline# john --format=nt --wordlist=/usr/share/wordlists/rockyou.txt zach.txt
+Using default input encoding: UTF-8
+Loaded 1 password hash (NT [MD4 128/128 AVX 4x3])
+Warning: no OpenMP support for this hash type, consider --fork=2
+Press 'q' or Ctrl-C to abort, almost any other key for status
+0987654321       (?)
+1g 0:00:00:00 DONE (2019-06-19 16:12) 5.555g/s 5333p/s 5333c/s 5333C/s chichi..sandy
+Use the "--show --format=NT" options to display all of the cracked passwords reliably
+Session completed
+

@@ -1,0 +1,54 @@
+E:\ManageEngine\ServiceDesk\integration\custom_scripts>systeminfo
+
+
+Host Name:                 HELPLINE
+OS Name:                   Microsoft Windows Server 2019 Standard
+OS Version:                10.0.17763 N/A Build 17763
+OS Manufacturer:           Microsoft Corporation
+OS Configuration:          Standalone Server
+OS Build Type:             Multiprocessor Free
+Registered Owner:          Windows User
+Registered Organization:   
+Product ID:                00429-00521-62775-AA118
+Original Install Date:     12/20/2018, 10:07:26 PM
+System Boot Time:          6/18/2019, 3:51:46 PM
+System Manufacturer:       VMware, Inc.
+System Model:              VMware7,1
+System Type:               x64-based PC
+Processor(s):              2 Processor(s) Installed.
+                           [01]: Intel64 Family 6 Model 79 Stepping 1 GenuineIntel ~2100 Mhz
+                           [02]: Intel64 Family 6 Model 79 Stepping 1 GenuineIntel ~2100 Mhz
+BIOS Version:              VMware, Inc. VMW71.00V.0.B64.1704110547, 4/11/2017
+Windows Directory:         C:\Windows
+System Directory:          C:\Windows\system32
+Boot Device:               \Device\HarddiskVolume1
+System Locale:             en-us;English (United States)
+Input Locale:              en-us;English (United States)
+Time Zone:                 (UTC+00:00) Dublin, Edinburgh, Lisbon, London
+Total Physical Memory:     4,095 MB
+Available Physical Memory: 1,310 MB
+Virtual Memory: Max Size:  4,799 MB
+Virtual Memory: Available: 1,937 MB
+Virtual Memory: In Use:    2,862 MB
+Page File Location(s):     C:\pagefile.sys
+Domain:                    HTB
+Logon Server:              N/A
+Hotfix(s):                 7 Hotfix(s) Installed.
+                           [01]: KB4462930
+                           [02]: KB4470502
+                           [03]: KB4470788
+                           [04]: KB4471331
+                           [05]: KB4480056
+                           [06]: KB4480979
+                           [07]: KB4480116
+Network Card(s):           1 NIC(s) Installed.
+                           [01]: Intel(R) 82574L Gigabit Network Connection
+                                 Connection Name: Ethernet0
+                                 DHCP Enabled:    No
+                                 IP address(es)
+                                 [01]: 10.10.10.132
+                                 [02]: fe80::9cfd:713f:7d4:a9ac
+                                 [03]: dead:beef::9cfd:713f:7d4:a9ac
+Hyper-V Requirements:      A hypervisor has been detected. Features required for Hyper-V will not be displayed.
+
+

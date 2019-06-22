@@ -1,0 +1,56 @@
+
+-----------------
+DIRB v2.22    
+By The Dark Raver
+-----------------
+
+OUTPUT_FILE: dirb.txt
+START_TIME: Mon Jun 17 15:23:36 2019
+URL_BASE: http://helpline.htb:8080/
+WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
+OPTION: Not Stopping on warning messages
+
+-----------------
+
+GENERATED WORDS: 4612
+
+---- Scanning URL: http://helpline.htb:8080/ ----
+==> DIRECTORY: http://helpline.htb:8080/agent/
++ http://helpline.htb:8080/api (CODE:200|SIZE:259)
++ http://helpline.htb:8080/app (CODE:200|SIZE:9399)
+==> DIRECTORY: http://helpline.htb:8080/applets/
+==> DIRECTORY: http://helpline.htb:8080/components/
+==> DIRECTORY: http://helpline.htb:8080/custom/
+==> DIRECTORY: http://helpline.htb:8080/debug/
+==> DIRECTORY: http://helpline.htb:8080/fonts/
+==> DIRECTORY: http://helpline.htb:8080/framework/
+==> DIRECTORY: http://helpline.htb:8080/help/
+==> DIRECTORY: http://helpline.htb:8080/html/
+==> DIRECTORY: http://helpline.htb:8080/images/
+==> DIRECTORY: http://helpline.htb:8080/inline/
+==> DIRECTORY: http://helpline.htb:8080/lang/
+==> DIRECTORY: http://helpline.htb:8080/mc/
+==> DIRECTORY: http://helpline.htb:8080/META-INF/
+==> DIRECTORY: http://helpline.htb:8080/popups/
+==> DIRECTORY: http://helpline.htb:8080/scripts/
+==> DIRECTORY: http://helpline.htb:8080/sd/
++ http://helpline.htb:8080/servlet (CODE:200|SIZE:9399)
+==> DIRECTORY: http://helpline.htb:8080/style/
+==> DIRECTORY: http://helpline.htb:8080/swf/
+==> DIRECTORY: http://helpline.htb:8080/themes/
+==> DIRECTORY: http://helpline.htb:8080/WEB-INF/
+
+---- Entering directory: http://helpline.htb:8080/agent/ ----
+
+---- Entering directory: http://helpline.htb:8080/applets/ ----
+
+---- Entering directory: http://helpline.htb:8080/components/ ----
+==> DIRECTORY: http://helpline.htb:8080/components/javascript/
+
+---- Entering directory: http://helpline.htb:8080/custom/ ----
+==> DIRECTORY: http://helpline.htb:8080/custom/login/
+==> DIRECTORY: http://helpline.htb:8080/custom/scripts/
+==> DIRECTORY: http://helpline.htb:8080/custom/style/
+==> DIRECTORY: http://helpline.htb:8080/custom/users/
+
+---- Entering directory: http://helpline.htb:8080/debug/ ----

