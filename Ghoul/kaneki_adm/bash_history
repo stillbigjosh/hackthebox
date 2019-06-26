@@ -1,0 +1,5 @@
+root@kaneki-pc:/home/kaneki_adm# cat .bash_history
+ssh root@172.18.0.1 -p 2222
+ssh root@172.18.0.1 -p 2222 -v
+exit
+

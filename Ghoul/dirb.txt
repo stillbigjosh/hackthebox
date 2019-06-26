@@ -1,0 +1,125 @@
+
+-----------------
+DIRB v2.22    
+By The Dark Raver
+-----------------
+
+OUTPUT_FILE: dirb.txt
+START_TIME: Sat May 11 13:04:50 2019
+URL_BASE: http://10.10.10.101:80/
+WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
+OPTION: Not Stopping on warning messages
+
+-----------------
+
+GENERATED WORDS: 4612
+
+---- Scanning URL: http://10.10.10.101:80/ ----
+==> DIRECTORY: http://10.10.10.101:80/archives/
+==> DIRECTORY: http://10.10.10.101:80/css/
+==> DIRECTORY: http://10.10.10.101:80/images/
++ http://10.10.10.101:80/index.html (CODE:200|SIZE:11000)
+==> DIRECTORY: http://10.10.10.101:80/js/
++ http://10.10.10.101:80/server-status (CODE:403|SIZE:300)
+==> DIRECTORY: http://10.10.10.101:80/uploads/
+==> DIRECTORY: http://10.10.10.101:80/users/
+
+-----------------
+DIRB v2.22    
+By The Dark Raver
+-----------------
+
+
+-----------------
+DIRB v2.22    
+By The Dark Raver
+-----------------
+
+OUTPUT_FILE: dirb.txt
+START_TIME: Sun May 12 13:08:07 2019
+URL_BASE: http://10.10.10.101:80/archives/
+WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
+OPTION: Not Stopping on warning messages
+
+-----------------
+
+GENERATED WORDS: 4612
+
+---- Scanning URL: http://10.10.10.101:80/archives/ ----
+
+-----------------
+END_TIME: Sun May 12 14:04:28 2019
+DOWNLOADED: 4612 - FOUND: 0
+
+-----------------
+-----------------
+DIRB v2.22
+By The Dark Raver
+-----------------
+
+OUTPUT_FILE: dirb_.txt
+START_TIME: Sun May 12 13:08:40 2019
+URL_BASE: http://10.10.10.101:80/uploads/
+WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
+OPTION: Not Stopping on warning messages
+
+-----------------
+
+GENERATED WORDS: 4612
+
+---- Scanning URL: http://10.10.10.101:80/uploads/ ----
+
+-----------------
+END_TIME: Sun May 12 14:04:11 2019
+DOWNLOADED: 4612 - FOUND: 0
+
+
+
+
+
+-----------------
+DIRB v2.22    
+By The Dark Raver
+-----------------
+
+OUTPUT_FILE: dirb.txt
+START_TIME: Sun May 12 19:06:32 2019
+URL_BASE: http://10.10.10.101:80/users/
+WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
+OPTION: Not Stopping on warning messages
+
+-----------------
+
+GENERATED WORDS: 4612
+
+---- Scanning URL: http://10.10.10.101:80/users/ ----
+==> DIRECTORY: http://10.10.10.101:80/users/css/
++ http://10.10.10.101:80/users/index.php (CODE:302|SIZE:0)
+
+---- Entering directory: http://10.10.10.101:80/users/css/ ----
+
+-----------------
+-----------------
+DIRB v2.22    
+By The Dark Raver
+-----------------
+
+OUTPUT_FILE: dirbnew.txt
+START_TIME: Sat May 18 09:18:33 2019
+URL_BASE: http://10.10.10.101/
+WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
+OPTION: Not Stopping on warning messages
+EXTENSIONS_LIST: (.php) | (.php) [NUM = 1]
+
+-----------------
+
+GENERATED WORDS: 4612
+
+---- Scanning URL: http://10.10.10.101/ ----
++ http://10.10.10.101/pay.php (CODE:200|SIZE:94)
++ http://10.10.10.101/secret.php (CODE:200|SIZE:4865)
+
+-----------------
+END_TIME: Sat May 18 09:40:33 2019
+DOWNLOADED: 4612 - FOUND: 2
+

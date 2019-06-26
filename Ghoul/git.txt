@@ -1,0 +1,4 @@
+git log --oneline
+git checkout <hash>
+git checkout master #return to master
+git fsck --lost-found #dangling commits

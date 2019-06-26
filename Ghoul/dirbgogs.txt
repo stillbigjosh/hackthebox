@@ -1,0 +1,28 @@
+
+-----------------
+DIRB v2.22    
+By The Dark Raver
+-----------------
+
+OUTPUT_FILE: dirbgogs.txt
+START_TIME: Sun Jun 23 13:08:40 2019
+URL_BASE: http://127.0.0.1:1337/
+WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
+OPTION: Not Stopping on warning messages
+
+-----------------
+
+GENERATED WORDS: 4612
+
+---- Scanning URL: http://127.0.0.1:1337/ ----
++ http://127.0.0.1:!337/api (CODE:200|SIZE:)
++ http://127.0.0.1:1337/assets (CODE:302|SIZE:31)
++ http://127.0.0.1:1337/css (CODE:302|SIZE:28)
++ http://127.0.0.1:1337/debug (CODE:200|SIZE:160)
++ http://127.0.0.1:1337/img (CODE:302|SIZE:28)
++ http://127.0.0.1:1337/js (CODE:302|SIZE:27)
++ http://127.0.0.1:1337/plugins (CODE:302|SIZE:32)
+
+-----------------
+END_TIME: Sun Jun 23 13:27:54 2019
+DOWNLOADED: 4612 - FOUND: 6

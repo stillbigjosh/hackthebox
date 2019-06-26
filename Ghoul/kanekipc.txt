@@ -1,0 +1,22 @@
+kaneki@Aogiri:~$ ssh kaneki_pub@172.20.0.150
+Enter passphrase for key '/home/kaneki/.ssh/id_rsa': 
+Last login: Mon Jun  3 06:47:55 2019 from 172.20.0.10
+kaneki_pub@kaneki-pc:~$ uname -a
+Linux kaneki-pc 4.15.0-45-generic #48-Ubuntu SMP Tue Jan 29 16:28:13 UTC 2019 x86_64 x86_64 x86_64 GNU/Linux
+kaneki_pub@kaneki-pc:~$ 
+
+[+] Looks like we're in a Docker container:
+12:memory:/docker/64978af526b2cc276e45e1873a72d9b051383e294830317ed9c96237590f42ae
+11:hugetlb:/docker/64978af526b2cc276e45e1873a72d9b051383e294830317ed9c96237590f42ae
+10:cpuset:/docker/64978af526b2cc276e45e1873a72d9b051383e294830317ed9c96237590f42ae
+9:perf_event:/docker/64978af526b2cc276e45e1873a72d9b051383e294830317ed9c96237590f42ae
+7:pids:/docker/64978af526b2cc276e45e1873a72d9b051383e294830317ed9c96237590f42ae
+6:freezer:/docker/64978af526b2cc276e45e1873a72d9b051383e294830317ed9c96237590f42ae
+5:cpu,cpuacct:/docker/64978af526b2cc276e45e1873a72d9b051383e294830317ed9c96237590f42ae
+4:devices:/docker/64978af526b2cc276e45e1873a72d9b051383e294830317ed9c96237590f42ae
+3:net_cls,net_prio:/docker/64978af526b2cc276e45e1873a72d9b051383e294830317ed9c96237590f42ae
+2:blkio:/docker/64978af526b2cc276e45e1873a72d9b051383e294830317ed9c96237590f42ae
+1:name=systemd:/docker/64978af526b2cc276e45e1873a72d9b051383e294830317ed9c96237590f42ae
+0::/system.slice/docker.service
+-rwxr-xr-x 1 root root 0 Dec 16 07:36 /.dockerenv
+
