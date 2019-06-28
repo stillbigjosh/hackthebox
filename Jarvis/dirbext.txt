@@ -1,0 +1,29 @@
+
+-----------------
+DIRB v2.22    
+By The Dark Raver
+-----------------
+
+OUTPUT_FILE: dirbext.txt
+START_TIME: Sun Jun 23 11:27:14 2019
+URL_BASE: http://jarvis.htb/
+WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
+OPTION: Not Stopping on warning messages
+EXTENSIONS_LIST: (.php,.html,.json) | (.php)(.html)(.json) [NUM = 3]
+
+-----------------
+
+GENERATED WORDS: 4612
+
+---- Scanning URL: http://jarvis.htb/ ----
++ http://jarvis.htb/asdf.php (CODE:200|SIZE:92)
++ http://jarvis.htb/footer.php (CODE:200|SIZE:2237)
++ http://jarvis.htb/index.php (CODE:200|SIZE:23628)
++ http://jarvis.htb/nav.php (CODE:200|SIZE:1333)
++ http://jarvis.htb/q.php (CODE:200|SIZE:0)
++ http://jarvis.htb/room.php (CODE:302|SIZE:3024)
++ http://jarvis.htb/shell.php (CODE:200|SIZE:92)
+
+-----------------
+END_TIME: Sun Jun 23 12:49:47 2019
+DOWNLOADED: 13836 - FOUND: 7

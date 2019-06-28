@@ -1,0 +1,80 @@
+# Nmap 7.70 scan initiated Sat Jun 22 20:01:38 2019 as: nmap -p 1-65535 -T4 -A -o nmap.txt 10.10.10.143
+Warning: 10.10.10.143 giving up on port because retransmission cap hit (6).
+Nmap scan report for 10.10.10.143
+Host is up (0.57s latency).
+Not shown: 65526 closed ports
+PORT      STATE    SERVICE VERSION
+22/tcp    open     ssh     OpenSSH 7.4p1 Debian 10+deb9u6 (protocol 2.0)
+| ssh-hostkey: 
+|   2048 03:f3:4e:22:36:3e:3b:81:30:79:ed:49:67:65:16:67 (RSA)
+|   256 25:d8:08:a8:4d:6d:e8:d2:f8:43:4a:2c:20:c8:5a:f6 (ECDSA)
+|_  256 77:d4:ae:1f:b0:be:15:1f:f8:cd:c8:15:3a:c3:69:e1 (ED25519)
+80/tcp    open     http    Apache/2.4.25 (Debian)
+| fingerprint-strings: 
+|   Help: 
+|     HTTP/1.1 400 Bad Request
+|     Date: Sat, 22 Jun 2019 19:29:43 GMT
+|     Server: Apache/2.4.25 (Debian)
+|     Content-Length: 302
+|     Connection: close
+|     Content-Type: text/html; charset=iso-8859-1
+|     <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+|     <html><head>
+|     <title>400 Bad Request</title>
+|     </head><body>
+|     <h1>Bad Request</h1>
+|     <p>Your browser sent a request that this server could not understand.<br />
+|     </p>
+|     <hr>
+|     <address>Apache/2.4.25 (Debian) Server at jarvis.htb Port 80</address>
+|_    </body></html>
+| http-cookie-flags: 
+|   /: 
+|     PHPSESSID: 
+|_      httponly flag not set
+|_http-server-header: Apache/2.4.25 (Debian)
+|_http-title: Stark Hotel
+34901/tcp filtered unknown
+34996/tcp filtered unknown
+35448/tcp filtered unknown
+37474/tcp filtered unknown
+48102/tcp filtered unknown
+49678/tcp filtered unknown
+64999/tcp open     http    Apache httpd 2.4.25 ((Debian))
+|_http-server-header: Apache/2.4.25 (Debian)
+|_http-title: Site doesn't have a title (text/html).
+1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :
+SF-Port80-TCP:V=7.70%I=7%D=6/22%Time=5D0E81A7%P=x86_64-pc-linux-gnu%r(Help
+SF:,1E4,"HTTP/1\.1\x20400\x20Bad\x20Request\r\nDate:\x20Sat,\x2022\x20Jun\
+SF:x202019\x2019:29:43\x20GMT\r\nServer:\x20Apache/2\.4\.25\x20\(Debian\)\
+SF:r\nContent-Length:\x20302\r\nConnection:\x20close\r\nContent-Type:\x20t
+SF:ext/html;\x20charset=iso-8859-1\r\n\r\n<!DOCTYPE\x20HTML\x20PUBLIC\x20\
+SF:"-//IETF//DTD\x20HTML\x202\.0//EN\">\n<html><head>\n<title>400\x20Bad\x
+SF:20Request</title>\n</head><body>\n<h1>Bad\x20Request</h1>\n<p>Your\x20b
+SF:rowser\x20sent\x20a\x20request\x20that\x20this\x20server\x20could\x20no
+SF:t\x20understand\.<br\x20/>\n</p>\n<hr>\n<address>Apache/2\.4\.25\x20\(D
+SF:ebian\)\x20Server\x20at\x20jarvis\.htb\x20Port\x2080</address>\n</body>
+SF:</html>\n");
+No exact OS matches for host (If you know what OS is running on it, see https://nmap.org/submit/ ).
+TCP/IP fingerprint:
+OS:SCAN(V=7.70%E=4%D=6/22%OT=22%CT=1%CU=30429%PV=Y%DS=2%DC=T%G=Y%TM=5D0E823
+OS:C%P=x86_64-pc-linux-gnu)SEQ(SP=106%GCD=1%ISR=10A%TI=Z%CI=Z%II=I%TS=8)OPS
+OS:(O1=M54BST11NW7%O2=M54BST11NW7%O3=M54BNNT11NW7%O4=M54BST11NW7%O5=M54BST1
+OS:1NW7%O6=M54BST11)WIN(W1=7120%W2=7120%W3=7120%W4=7120%W5=7120%W6=7120)ECN
+OS:(R=Y%DF=Y%T=40%W=7210%O=M54BNNSNW7%CC=Y%Q=)T1(R=Y%DF=Y%T=40%S=O%A=S+%F=A
+OS:S%RD=0%Q=)T2(R=N)T3(R=N)T4(R=Y%DF=Y%T=40%W=0%S=A%A=Z%F=R%O=%RD=0%Q=)T5(R
+OS:=Y%DF=Y%T=40%W=0%S=Z%A=S+%F=AR%O=%RD=0%Q=)T6(R=Y%DF=Y%T=40%W=0%S=A%A=Z%F
+OS:=R%O=%RD=0%Q=)T7(R=Y%DF=Y%T=40%W=0%S=Z%A=S+%F=AR%O=%RD=0%Q=)U1(R=Y%DF=N%
+OS:T=40%IPL=164%UN=0%RIPL=G%RID=G%RIPCK=G%RUCK=G%RUD=G)IE(R=Y%DFI=N%T=40%CD
+OS:=S)
+
+Network Distance: 2 hops
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+TRACEROUTE (using port 587/tcp)
+HOP RTT       ADDRESS
+1   415.38 ms 10.10.16.1
+2   723.15 ms 10.10.10.143
+
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Sat Jun 22 20:32:12 2019 -- 1 IP address (1 host up) scanned in 1834.73 seconds

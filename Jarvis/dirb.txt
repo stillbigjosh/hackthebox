@@ -1,0 +1,63 @@
+
+-----------------
+DIRB v2.22    
+By The Dark Raver
+-----------------
+
+OUTPUT_FILE: dirb.txt
+START_TIME: Sun Jun 23 11:00:51 2019
+URL_BASE: http://jarvis.htb/
+WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
+OPTION: Not Stopping on warning messages
+
+-----------------
+
+GENERATED WORDS: 4612
+
+---- Scanning URL: http://jarvis.htb/ ----
+==> DIRECTORY: http://jarvis.htb/css/
+==> DIRECTORY: http://jarvis.htb/fonts/
+==> DIRECTORY: http://jarvis.htb/images/
++ http://jarvis.htb/index.php (CODE:200|SIZE:23628)
+==> DIRECTORY: http://jarvis.htb/js/
+==> DIRECTORY: http://jarvis.htb/phpmyadmin/
++ http://jarvis.htb/server-status (CODE:403|SIZE:298)
+
+
+
+-----------------
+DIRB v2.22    
+By The Dark Raver
+-----------------
+
+OUTPUT_FILE: dirb.txt
+START_TIME: Sun Jun 23 11:27:30 2019
+URL_BASE: http://jarvis.htb/phpmyadmin/
+WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
+OPTION: Not Stopping on warning messages
+
+-----------------
+
+GENERATED WORDS: 4612
+
+---- Scanning URL: http://jarvis.htb/phpmyadmin/ ----
++ http://jarvis.htb/phpmyadmin/ChangeLog (CODE:200|SIZE:19186)
+==> DIRECTORY: http://jarvis.htb/phpmyadmin/doc/
+==> DIRECTORY: http://jarvis.htb/phpmyadmin/examples/
++ http://jarvis.htb/phpmyadmin/favicon.ico (CODE:200|SIZE:22486)
++ http://jarvis.htb/phpmyadmin/index.php (CODE:200|SIZE:15212)
+==> DIRECTORY: http://jarvis.htb/phpmyadmin/js/
+==> DIRECTORY: http://jarvis.htb/phpmyadmin/libraries/
++ http://jarvis.htb/phpmyadmin/LICENSE (CODE:200|SIZE:18092)
+==> DIRECTORY: http://jarvis.htb/phpmyadmin/locale/
++ http://jarvis.htb/phpmyadmin/phpinfo.php (CODE:200|SIZE:15216)
++ http://jarvis.htb/phpmyadmin/README (CODE:200|SIZE:1520)
++ http://jarvis.htb/phpmyadmin/robots.txt (CODE:200|SIZE:26)
+==> DIRECTORY: http://jarvis.htb/phpmyadmin/setup/
+==> DIRECTORY: http://jarvis.htb/phpmyadmin/sql/
+==> DIRECTORY: http://jarvis.htb/phpmyadmin/templates/
+==> DIRECTORY: http://jarvis.htb/phpmyadmin/themes/
+==> DIRECTORY: http://jarvis.htb/phpmyadmin/tmp/
+==> DIRECTORY: http://jarvis.htb/phpmyadmin/vendor/
+
+
