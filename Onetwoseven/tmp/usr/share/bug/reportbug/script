@@ -1,0 +1,31 @@
+#! /usr/bin/python3
+# -*- python -*-
+
+import os
+import re
+
+OUT = os.fdopen(3, 'w', encoding='utf-8', errors='backslashreplace')
+
+envprint = False
+for var in ['EDITOR', 'PAGER', 'VISUAL', 'REPORTBUGEMAIL', 'DEBEMAIL', 'EMAIL',
+            'DEBFULLNAME', 'DEBNAME', 'NAME', 'INTERFACE']:
+    if var in os.environ:
+        if not envprint:
+            print('** Environment settings:', file=OUT)
+            envprint = True
+        print('%s="%s"' % (var, os.environ[var]), file=OUT)
+
+passwdre = re.compile(r'\s*(smtppasswd)\s+(.*)$')
+
+USERFILE = os.path.expanduser('~/.reportbugrc')
+if os.path.exists(USERFILE):
+    if envprint:
+        print(file=OUT)
+    print('** %s:' % USERFILE, file=OUT)
+    for line in open(USERFILE, 'r', encoding='utf-8', errors='backslashreplace'):
+        line = line.strip()
+        if line and not line.startswith('#'):
+            m = passwdre.match(line)
+            if m:
+                line = '%s <omitted>' % m.group(1)
+            print(line, file=OUT)

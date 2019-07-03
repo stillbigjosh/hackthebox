@@ -1,0 +1,18 @@
+[Desktop Entry]
+Type=Application
+Name=Reportbug
+Name[ru]=Reportbug
+Name[zh_CN]=报告漏洞
+Comment=Report bugs to the Debian BTS
+Comment[ru]=Создание и отправка отчёта об ошибке в Debian BTS
+Comment[zh_CN]=向 Debian 缺陷跟踪系统报告漏洞
+GenericName=Debian bug reporting tool
+GenericName[ru]=Отчёт об ошибке Reportbug
+GenericName[zh_CN]=Debian 缺陷报告工具
+X-GNOME-FullName[ru]=Отчёт об ошибке Reportbug
+Icon=/usr/share/reportbug/devuan-emblem.svg
+TryExec=reportbug
+Exec=reportbug --exit-prompt --ui gtk2
+Categories=System;
+Keywords=Debian;Bug;Bugs;BTS;
+Keywords[zh_CN]=漏洞;报告;缺陷;

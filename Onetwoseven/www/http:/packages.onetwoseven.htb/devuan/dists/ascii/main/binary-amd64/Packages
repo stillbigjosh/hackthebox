@@ -1,0 +1,34 @@
+Package: reportbug
+Version: 9.1.6+devuan2.1
+Architecture: all
+Maintainer: Vincenzo (KatolaZ) Nicosia <katolaz@freaknet.org>
+Installed-Size: 260
+Depends: python3:any, apt, python3-reportbug (= 7.1.6+devuan2.1)
+Suggests: postfix | exim4 | mail-transport-agent, gnupg | pgp, debconf-utils (>> 1.1.0), debsums (>= 2.0.47), file (>> 1.30), dlocate, python3-urwid, python3-gi, python3-gi-cairo, gir1.2-gtk-3.0, gir1.2-vte-2.91, python3-gtkspellcheck, xdg-utils, emacs23-bin-common | emacs24-bin-common, claws-mail (>= 3.8.0)
+Homepage: http://alioth.debian.org/projects/reportbug/
+Priority: standard
+Section: utils
+Filename: pool/main/r/reportbug/reportbug_9.1.6+devuan2.1_all.deb
+Size: 128448
+SHA256: ad03936eab9070e061abd3f6e074ae2afe7817839df7971969df8dad0f86258e
+SHA1: 4fc1bbf5bc3c2a0f874847c5a3911b55a0ebbff0
+MD5sum: bb21700b0a0e90da989ccf90d6375f4f
+Description: reports bugs in the Debian distribution
+ reportbug is a tool designed to make the reporting of bugs in Debian
+ and derived distributions relatively painless.  Its features include:
+ .
+  * Integration with mutt and mh/nmh mail readers.
+  * Access to outstanding bug reports to make it easier to identify
+    whether problems have already been reported.
+  * Automatic checking for newer versions of packages.
+  * Optional automatic verification of integrity of packages via debsums.
+  * Support for following-up on outstanding reports.
+  * Optional PGP/GnuPG integration.
+ .
+ reportbug is designed to be used on systems with an installed mail
+ transport agent, like exim or sendmail; however, you can edit the
+ configuration file and send reports using any available mail server.
+ .
+ This package also includes the "querybts" script for browsing the
+ Debian bug tracking system.
+

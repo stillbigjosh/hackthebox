@@ -1,0 +1,27 @@
+Origin: package.onetwoseven.htb
+Label: package.onetwoseven.htb
+Codename: ascii
+Date: Wed, 03 Jul 2019 14:39:30 UTC
+Architectures: amd64
+Components: main
+MD5Sum:
+ e9be64b05b451dccff0c0d01293c04d4 1739 main/binary-amd64/Packages
+ 78f0bbc671b3ec1f0065164d4cbb9537 998 main/binary-amd64/Packages.gz
+ eeb2b7732d807dea701c50984e3c7acb 99 main/binary-amd64/Release
+ d41d8cd98f00b204e9800998ecf8427e 0 main/source/Sources
+ 7029066c27ac6f5ef18d660d5741979a 20 main/source/Sources.gz
+ cb2bd384189e85381c5a9ec007f3710a 100 main/source/Release
+SHA1:
+ c67c17effbbd01d947e9d3af358973537e8a4d0d 1739 main/binary-amd64/Packages
+ e8edfee01ca822b6b4f634e6a04ac9042ffc23f9 998 main/binary-amd64/Packages.gz
+ c4ea755b29e5fae7f76df402bb30f06d76c325de 99 main/binary-amd64/Release
+ da39a3ee5e6b4b0d3255bfef95601890afd80709 0 main/source/Sources
+ 46c6643f07aa7f6bfe7118de926b86defc5087c4 20 main/source/Sources.gz
+ a507af4b4432c14b77b3aafe84830b7e801c231b 100 main/source/Release
+SHA256:
+ cd0bc1da73a1b69f170e9935e23d7926589f10c40651cb76f7a3ae47083b3784 1739 main/binary-amd64/Packages
+ 5f87fd3d82867dabbeb9a8848b032df21310bcc958f4b302891ba3187ce50c58 998 main/binary-amd64/Packages.gz
+ a0895ff0030ed30fd03ae1b057db7162f5aa7c5c5f97179ea3228f6628075c7a 99 main/binary-amd64/Release
+ e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855 0 main/source/Sources
+ 59869db34853933b239f1e2219cf7d431da006aa919635478511fabbfc8849d2 20 main/source/Sources.gz
+ d564934f5b255c4c01e7d714c984cf5fc44000cc7beb0f327aa112ea34a3f230 100 main/source/Release
