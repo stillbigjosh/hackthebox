@@ -1,0 +1,27 @@
+# Nmap 7.70 scan initiated Wed May 29 14:26:34 2019 as: nmap -p 1-65535 -T4 -A -o nmap.txt 10.10.10.139
+Nmap scan report for 10.10.10.139
+Host is up (0.15s latency).
+Not shown: 65533 filtered ports
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 7.6p1 Ubuntu 4 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey: 
+|   2048 49:e8:f1:2a:80:62:de:7e:02:40:a1:f4:30:d2:88:a6 (RSA)
+|   256 c8:02:cf:a0:f2:d8:5d:4f:7d:c7:66:0b:4d:5d:0b:df (ECDSA)
+|_  256 a5:a9:95:f5:4a:f4:ae:f8:b6:37:92:b8:9a:2a:b4:66 (ED25519)
+80/tcp open  http    nginx 1.14.0 (Ubuntu)
+|_http-server-header: nginx/1.14.0 (Ubuntu)
+| http-title: Ellingson Mineral Corp
+|_Requested resource was http://10.10.10.139/index
+Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port
+Aggressive OS guesses: Linux 3.10 - 4.11 (92%), Linux 3.2 - 4.9 (92%), Linux 3.18 (90%), Crestron XPanel control system (90%), Linux 3.16 (89%), ASUS RT-N56U WAP (Linux 3.4) (87%), Linux 3.1 (87%), Linux 3.2 (87%), HP P2000 G3 NAS device (87%), AXIS 210A or 211 Network Camera (Linux 2.6.17) (87%)
+No exact OS matches for host (test conditions non-ideal).
+Network Distance: 2 hops
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+TRACEROUTE (using port 22/tcp)
+HOP RTT       ADDRESS
+1   160.38 ms 10.10.12.1
+2   158.56 ms 10.10.10.139
+
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Wed May 29 16:30:48 2019 -- 1 IP address (1 host up) scanned in 7454.59 seconds

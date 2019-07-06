@@ -1,0 +1,52 @@
+
+-----------------
+DIRB v2.22    
+By The Dark Raver
+-----------------
+
+OUTPUT_FILE: dirb.txt
+START_TIME: Wed May 29 17:04:43 2019
+URL_BASE: http://10.10.10.139/
+WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
+OPTION: Not Stopping on warning messages
+
+-----------------
+
+GENERATED WORDS: 4612
+
+---- Scanning URL: http://10.10.10.139/ ----
+==> DIRECTORY: http://10.10.10.139/assets/
+==> DIRECTORY: http://10.10.10.139/images/
++ http://10.10.10.139/index (CODE:200|SIZE:6444)
+
+---- Entering directory: http://10.10.10.139/assets/ ----
+==> DIRECTORY: http://10.10.10.139/assets/css/
+==> DIRECTORY: http://10.10.10.139/assets/fonts/
+==> DIRECTORY: http://10.10.10.139/assets/js/
+
+---- Entering directory: http://10.10.10.139/images/ ----
+
+---- Entering directory: http://10.10.10.139/assets/css/ ----
+
+
+-----------------
+DIRB v2.22    
+By The Dark Raver
+-----------------
+
+OUTPUT_FILE: dirb_index.txt
+START_TIME: Wed May 29 17:26:41 2019
+URL_BASE: http://10.10.10.139/index/
+WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
+OPTION: Not Stopping on warning messages
+
+-----------------
+
+GENERATED WORDS: 4612
+
+---- Scanning URL: http://10.10.10.139/index/ ----
+
+-----------------
+END_TIME: Wed May 29 17:45:18 2019
+DOWNLOADED: 4612 - FOUND: 0
+

