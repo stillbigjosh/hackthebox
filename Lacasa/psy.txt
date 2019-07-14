@@ -1,0 +1,7 @@
+chdir('/home/nairobi/')
+file_get_contents('tokyo.php')
+echo getcwd() . "\n";
+scandir()
+
+
+

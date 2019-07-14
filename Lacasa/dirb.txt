@@ -1,0 +1,56 @@
+
+-----------------
+DIRB v2.22    
+By The Dark Raver
+-----------------
+
+OUTPUT_FILE: dirb.txt
+START_TIME: Fri Jul 12 15:21:40 2019
+URL_BASE: http://lacasadepapel.htb/
+WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
+OPTION: Not Stopping on warning messages
+
+-----------------
+
+GENERATED WORDS: 4612
+
+---- Scanning URL: http://lacasadepapel.htb/ ----
+
+-----------------
+DIRB v2.22    
+By The Dark Raver
+-----------------
+
+OUTPUT_FILE: dirb.txt
+START_TIME: Fri Jul 12 15:22:18 2019
+URL_BASE: http://lacasadepapel.htb/
+WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
+OPTION: Not Stopping on warning messages
+
+-----------------
+
+GENERATED WORDS: 4612
+
+---- Scanning URL: http://lacasadepapel.htb/ ----
+
+-----------------
+DIRB v2.22    
+By The Dark Raver
+-----------------
+
+OUTPUT_FILE: dirb.txt
+START_TIME: Fri Jul 12 15:40:03 2019
+URL_BASE: http://10.10.10.131/
+WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
+OPTION: Not Stopping on warning messages
+
+-----------------
+
+GENERATED WORDS: 4612
+
+---- Scanning URL: http://10.10.10.131/ ----
++ http://10.10.10.131/favicon.ico (CODE:200|SIZE:1406)
+
+-----------------
+END_TIME: Fri Jul 12 16:21:46 2019
+DOWNLOADED: 4612 - FOUND: 1

@@ -1,0 +1,577 @@
+#########################################################
+# Local Linux Enumeration & Privilege Escalation Script #
+#########################################################
+# www.rebootuser.com
+# version 0.95
+
+[-] Debug Info
+[+] Thorough tests = Disabled
+
+
+Scan started at:
+Sat Jul 13 16:16:35 UTC 2019
+
+
+### SYSTEM ##############################################
+[-] Kernel information:
+Linux lacasadepapel 4.14.78-0-virt #1-Alpine SMP Tue Oct 23 11:43:38 UTC 2018 x86_64 Linux
+
+
+[-] Kernel information (continued):
+Linux version 4.14.78-0-virt (buildozer@build-edge-x86_64) (gcc version 8.2.0 (Alpine 8.2.0)) #1-Alpine SMP Tue Oct 23 11:43:38 UTC 2018
+
+
+[-] Specific release information:
+3.8.1
+NAME="Alpine Linux"
+ID=alpine
+VERSION_ID=3.8.1
+PRETTY_NAME="Alpine Linux v3.8"
+HOME_URL="http://alpinelinux.org"
+BUG_REPORT_URL="http://bugs.alpinelinux.org"
+
+
+[-] Hostname:
+lacasadepapel
+
+
+### USER/GROUP ##########################################
+[-] Current user/group info:
+uid=1002(professor) gid=1002(professor) groups=1002(professor)
+
+
+[-] Group memberships:
+uid=0(root) gid=0(root) groups=0(root),0(root),1(bin),2(daemon),3(sys),4(adm),6(disk),10(wheel),11(floppy),20(dialout),26(tape),27(video)
+uid=1(bin) gid=1(bin) groups=1(bin),1(bin),2(daemon),3(sys)
+uid=2(daemon) gid=2(daemon) groups=2(daemon),1(bin),2(daemon),4(adm)
+uid=3(adm) gid=4(adm) groups=4(adm),3(sys),4(adm),6(disk)
+uid=4(lp) gid=7(lp) groups=7(lp),7(lp)
+uid=5(sync) gid=0(root) groups=0(root)
+uid=6(shutdown) gid=0(root) groups=0(root)
+uid=7(halt) gid=0(root) groups=0(root)
+uid=8(mail) gid=12(mail) groups=12(mail),12(mail)
+uid=9(news) gid=13(news) groups=13(news),13(news)
+uid=10(uucp) gid=14(uucp) groups=14(uucp),14(uucp)
+uid=11(operator) gid=0(root) groups=0(root)
+uid=13(man) gid=15(man) groups=15(man),15(man)
+uid=14(postmaster) gid=12(mail) groups=12(mail)
+uid=16(cron) gid=16(cron) groups=16(cron),16(cron)
+uid=21(ftp) gid=21(ftp) groups=21(ftp)
+uid=22(sshd) gid=22(sshd) groups=22(sshd)
+uid=25(at) gid=25(at) groups=25(at),25(at)
+uid=31(squid) gid=31(squid) groups=31(squid),31(squid)
+uid=33(xfs) gid=33(xfs) groups=33(xfs),33(xfs)
+uid=35(games) gid=35(games) groups=35(games),100(users)
+uid=70(postgres) gid=70(postgres) groups=70(postgres)
+uid=85(cyrus) gid=12(mail) groups=12(mail)
+uid=89(vpopmail) gid=89(vpopmail) groups=89(vpopmail)
+uid=123(ntp) gid=123(ntp) groups=123(ntp)
+uid=209(smmsp) gid=209(smmsp) groups=209(smmsp),209(smmsp)
+uid=405(guest) gid=100(users) groups=100(users)
+uid=65534(nobody) gid=65534(nobody) groups=65534(nobody)
+uid=100(chrony) gid=101(chrony) groups=101(chrony),101(chrony)
+uid=1000(dali) gid=1000(dali) groups=1000(dali)
+uid=1001(berlin) gid=1001(berlin) groups=1001(berlin)
+uid=1002(professor) gid=1002(professor) groups=1002(professor)
+uid=101(vsftp) gid=21(ftp) groups=21(ftp),21(ftp)
+uid=102(memcached) gid=102(memcached) groups=102(memcached),102(memcached)
+
+
+[-] It looks like we have some admin users:
+uid=0(root) gid=0(root) groups=0(root),0(root),1(bin),2(daemon),3(sys),4(adm),6(disk),10(wheel),11(floppy),20(dialout),26(tape),27(video)
+uid=2(daemon) gid=2(daemon) groups=2(daemon),1(bin),2(daemon),4(adm)
+uid=3(adm) gid=4(adm) groups=4(adm),3(sys),4(adm),6(disk)
+
+
+[-] Contents of /etc/passwd:
+root:x:0:0:root:/root:/bin/ash
+bin:x:1:1:bin:/bin:/sbin/nologin
+daemon:x:2:2:daemon:/sbin:/sbin/nologin
+adm:x:3:4:adm:/var/adm:/sbin/nologin
+lp:x:4:7:lp:/var/spool/lpd:/sbin/nologin
+sync:x:5:0:sync:/sbin:/bin/sync
+shutdown:x:6:0:shutdown:/sbin:/sbin/shutdown
+halt:x:7:0:halt:/sbin:/sbin/halt
+mail:x:8:12:mail:/var/spool/mail:/sbin/nologin
+news:x:9:13:news:/usr/lib/news:/sbin/nologin
+uucp:x:10:14:uucp:/var/spool/uucppublic:/sbin/nologin
+operator:x:11:0:operator:/root:/bin/sh
+man:x:13:15:man:/usr/man:/sbin/nologin
+postmaster:x:14:12:postmaster:/var/spool/mail:/sbin/nologin
+cron:x:16:16:cron:/var/spool/cron:/sbin/nologin
+ftp:x:21:21::/var/lib/ftp:/sbin/nologin
+sshd:x:22:22:sshd:/dev/null:/sbin/nologin
+at:x:25:25:at:/var/spool/cron/atjobs:/sbin/nologin
+squid:x:31:31:Squid:/var/cache/squid:/sbin/nologin
+xfs:x:33:33:X Font Server:/etc/X11/fs:/sbin/nologin
+games:x:35:35:games:/usr/games:/sbin/nologin
+postgres:x:70:70::/var/lib/postgresql:/bin/sh
+cyrus:x:85:12::/usr/cyrus:/sbin/nologin
+vpopmail:x:89:89::/var/vpopmail:/sbin/nologin
+ntp:x:123:123:NTP:/var/empty:/sbin/nologin
+smmsp:x:209:209:smmsp:/var/spool/mqueue:/sbin/nologin
+guest:x:405:100:guest:/dev/null:/sbin/nologin
+nobody:x:65534:65534:nobody:/:/sbin/nologin
+chrony:x:100:101:chrony:/var/log/chrony:/sbin/nologin
+dali:x:1000:1000:dali,,,:/home/dali:/usr/bin/psysh
+berlin:x:1001:1001:berlin,,,:/home/berlin:/bin/ash
+professor:x:1002:1002:professor,,,:/home/professor:/bin/ash
+vsftp:x:101:21:vsftp:/var/lib/ftp:/sbin/nologin
+memcached:x:102:102:memcached:/home/memcached:/sbin/nologin
+
+
+[-] Super user account(s):
+root
+
+
+[+] We can read root's home directory!
+total 0
+
+
+[-] Are permissions on /home directories lax:
+total 28
+drwxr-xr-x    7 root     root        4.0K Feb 16 18:06 .
+drwxr-xr-x   22 root     root        4.0K Feb  2 19:34 ..
+drwxr-sr-x    5 berlin   berlin      4.0K Feb  2 22:07 berlin
+drwxr-sr-x    4 dali     dali        4.0K Mar 12 12:47 dali
+drwxr-xr-x    4 nobody   nobody      4.0K Feb 16 19:42 nairobi
+drwxr-xr-x    5 nobody   nobody      4.0K Mar 11 20:58 oslo
+drwxr-sr-x    5 professo professo    4.0K Jul 13 16:15 professor
+
+
+[-] Root is allowed to login via SSH:
+PermitRootLogin yes
+
+
+### ENVIRONMENTAL #######################################
+[-] Environment information:
+SSH_CONNECTION=10.10.16.57 57730 10.10.10.131 22
+OLDPWD=/home/professor/.ssh
+USER=professor
+PAGER=less
+PWD=/home/professor/backoff
+HOME=/home/professor
+SSH_CLIENT=10.10.16.57 57730 22
+CHARSET=UTF-8
+SSH_TTY=/dev/pts/1
+MAIL=/var/mail/professor
+SHELL=/bin/ash
+TERM=xterm-256color
+SHLVL=2
+LOGNAME=professor
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+_=/usr/bin/env
+
+
+[-] Path information:
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+
+[-] Available shells:
+# valid login shells
+/bin/sh
+/bin/ash
+/bin/bash
+
+
+[-] Current umask value:
+0022
+u=rwx,g=rx,o=rx
+
+
+### JOBS/TASKS ##########################################
+[-] Cron jobs:
+total 12
+drwxr-xr-x    2 root     root          4096 Nov  5  2018 .
+drwxr-xr-x   33 root     root          4096 Mar 12 14:13 ..
+-rw-------    1 root     root           119 Nov  5  2018 root
+
+
+[-] Anything interesting in /var/spool/cron/crontabs:
+lrwxrwxrwx    1 root     root            13 Oct 26  2018 /var/spool/cron/crontabs -> /etc/crontabs
+
+
+### NETWORKING  ##########################################
+[-] Network and IP info:
+eth0      Link encap:Ethernet  HWaddr 00:50:56:B9:84:BA  
+          inet addr:10.10.10.131  Bcast:0.0.0.0  Mask:255.255.255.0
+          inet6 addr: dead:beef::250:56ff:feb9:84ba/64 Scope:Global
+          inet6 addr: fe80::250:56ff:feb9:84ba/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:309619 errors:0 dropped:40 overruns:0 frame:0
+          TX packets:313737 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:25462758 (24.2 MiB)  TX bytes:59600283 (56.8 MiB)
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:4843 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:4843 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:2978194 (2.8 MiB)  TX bytes:2978194 (2.8 MiB)
+
+
+[-] ARP history:
+? (10.10.10.2) at 00:50:56:aa:9c:8d [ether]  on eth0
+
+
+[-] Nameserver(s):
+nameserver 192.168.1.1
+
+
+[-] Default route:
+default         10.10.10.2      0.0.0.0         UG    0      0        0 eth0
+
+
+[-] Listening TCP:
+Active Internet connections (servers and established)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name    
+tcp        0      0 0.0.0.0:443             0.0.0.0:*               LISTEN      -
+tcp        0      0 127.0.0.1:8000          0.0.0.0:*               LISTEN      -
+tcp        0      0 127.0.0.1:11211         0.0.0.0:*               LISTEN      -
+tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN      -
+tcp        0      0 0.0.0.0:21              0.0.0.0:*               LISTEN      -
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      -
+tcp        0      0 0.0.0.0:6200            0.0.0.0:*               LISTEN      -
+tcp        0      0 10.10.10.131:80         10.10.14.165:53278      ESTABLISHED -
+tcp        0    401 10.10.10.131:80         10.10.12.97:55650       ESTABLISHED -
+tcp        0      0 10.10.10.131:22         10.10.12.182:58654      ESTABLISHED -
+tcp        0      0 10.10.10.131:21         10.10.14.149:55532      SYN_RECV    -
+tcp        0    396 10.10.10.131:80         10.10.12.97:55648       ESTABLISHED -
+tcp        0    392 10.10.10.131:80         10.10.12.97:55656       ESTABLISHED -
+tcp        0      0 10.10.10.131:80         10.10.13.235:58006      TIME_WAIT   -
+tcp        0    396 10.10.10.131:80         10.10.12.97:55662       ESTABLISHED -
+tcp        0      0 10.10.10.131:22         10.10.14.149:33648      SYN_RECV    -
+tcp        0    400 10.10.10.131:80         10.10.12.97:55660       ESTABLISHED -
+tcp        0    400 10.10.10.131:80         10.10.13.235:58010      ESTABLISHED -
+tcp        0      0 10.10.10.131:6200       10.10.12.97:59694       ESTABLISHED -
+tcp        0    399 10.10.10.131:80         10.10.12.97:55652       ESTABLISHED -
+tcp        0      0 10.10.10.131:6200       10.10.13.246:51448      ESTABLISHED -
+tcp        0    400 10.10.10.131:80         10.10.12.97:55654       ESTABLISHED -
+tcp        0      1 10.10.10.131:80         10.10.14.165:53276      FIN_WAIT1   -
+tcp        0    396 10.10.10.131:80         10.10.12.97:55658       ESTABLISHED -
+tcp        0 116548 10.10.10.131:80         10.10.14.165:53274      FIN_WAIT1   -
+tcp        0      0 10.10.10.131:443        10.10.14.149:44994      SYN_RECV    -
+tcp        0    156 10.10.10.131:22         10.10.16.57:57730       ESTABLISHED -
+tcp        0      0 10.10.10.131:80         10.10.13.246:40470      TIME_WAIT   -
+tcp        0    401 10.10.10.131:80         10.10.12.97:55664       ESTABLISHED -
+tcp        0      0 10.10.10.131:6200       10.10.16.17:45888       ESTABLISHED -
+tcp        0    396 10.10.10.131:80         10.10.12.97:55626       ESTABLISHED -
+tcp        0    394 10.10.10.131:80         10.10.13.235:58002      ESTABLISHED -
+tcp        0      0 10.10.10.131:6200       10.10.13.221:35966      ESTABLISHED -
+tcp        0      0 :::22                   :::*                    LISTEN      -
+
+
+[-] Listening UDP:
+Active Internet connections (servers and established)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name    
+udp        0      0 127.0.0.1:11211         0.0.0.0:*                           -
+
+
+### SERVICES #############################################
+[-] Running processes:
+PID   USER     TIME  COMMAND
+    1 root      0:00 /sbin/init
+    2 root      0:00 [kthreadd]
+    3 root      0:00 [kworker/0:0]
+    4 root      0:00 [kworker/0:0H]
+    6 root      0:00 [mm_percpu_wq]
+    7 root      0:05 [ksoftirqd/0]
+    8 root      0:00 [rcu_sched]
+    9 root      0:00 [rcu_bh]
+   10 root      0:00 [migration/0]
+   11 root      0:00 [watchdog/0]
+   12 root      0:00 [cpuhp/0]
+   13 root      0:00 [cpuhp/1]
+   14 root      0:00 [watchdog/1]
+   15 root      0:00 [migration/1]
+   16 root      0:00 [ksoftirqd/1]
+   17 root      0:00 [kworker/1:0]
+   18 root      0:00 [kworker/1:0H]
+   19 root      0:00 [cpuhp/2]
+   20 root      0:00 [watchdog/2]
+   21 root      0:00 [migration/2]
+   22 root      0:00 [ksoftirqd/2]
+   24 root      0:00 [kworker/2:0H]
+   25 root      0:00 [kdevtmpfs]
+   26 root      0:00 [netns]
+  192 root      0:00 [oom_reaper]
+  193 root      0:00 [writeback]
+  194 root      0:00 [kcompactd0]
+  196 root      0:00 [ksmd]
+  197 root      0:00 [crypto]
+  198 root      0:00 [kintegrityd]
+  199 root      0:00 [kblockd]
+  731 root      0:00 [ata_sff]
+  735 root      0:00 [md]
+  746 root      0:00 [watchdogd]
+  850 root      0:00 [kauditd]
+  855 root      0:00 [kswapd0]
+  944 root      0:00 [kthrotld]
+ 1171 root      0:00 [scsi_eh_0]
+ 1172 root      0:00 [scsi_tmf_0]
+ 1173 root      0:00 [scsi_eh_1]
+ 1177 root      0:00 [scsi_tmf_1]
+ 1200 root      0:00 [kworker/2:2]
+ 2140 root      0:07 [kworker/1:3]
+ 2222 root      0:00 [jbd2/sda3-8]
+ 2223 root      0:00 [ext4-rsv-conver]
+ 2629 root      0:00 [ttm_swap]
+ 2630 root      0:00 [irq/16-vmwgfx]
+ 2714 root      0:00 [ipv6_addrconf]
+ 2862 root      0:00 [jbd2/sda1-8]
+ 2863 root      0:00 [ext4-rsv-conver]
+ 2947 root      0:00 [kworker/1:1H]
+ 3042 root      0:00 /sbin/syslogd -Z
+ 3096 root      0:00 /sbin/acpid
+ 3122 root      0:00 /usr/sbin/crond -c /etc/crontabs
+ 3188 memcache  0:01 /usr/bin/memcached -d -p 11211 -U 11211 -l 127.0.0.1 -m 64 -c 1024 -u memcached -P /var/run/memcached/memcached-11211.pid
+ 3226 root      0:00 /usr/sbin/sshd
+ 3276 root      0:00 /usr/sbin/vsftpd /etc/vsftpd/vsftpd.conf
+ 3304 root      0:00 [kworker/0:1H]
+ 3314 dali      0:01 /usr/bin/node /home/dali/server.js
+ 3315 nobody    3:17 /usr/bin/node /home/oslo/server.js
+ 3316 berlin    0:00 /usr/bin/node /home/berlin/server.js
+ 3317 nobody    0:34 /usr/bin/node /home/nairobi/server.js
+ 3325 root      0:00 /sbin/getty 38400 tty1
+ 3326 root      0:00 /sbin/getty 38400 tty2
+ 3329 root      0:00 /sbin/getty 38400 tty3
+ 3332 root      0:00 /sbin/getty 38400 tty4
+ 3335 root      0:00 /sbin/getty 38400 tty5
+ 3338 root      0:00 /sbin/getty 38400 tty6
+ 3363 root      0:00 [kworker/2:1H]
+ 3426 root     29:01 /usr/sbin/vsftpd /etc/vsftpd/vsftpd.conf
+ 3429 nobody    0:00 [vsftpd]
+ 3433 root     28:47 /usr/sbin/vsftpd /etc/vsftpd/vsftpd.conf
+ 3434 nobody    0:00 [vsftpd]
+ 3446 dali      0:02 php /usr/bin/psysh
+ 3449 dali      0:01 php /usr/bin/psysh
+ 3640 root      0:00 sshd: professor [priv]
+ 3642 professo  0:00 sshd: professor@pts/0
+ 3643 professo  0:00 -ash
+ 4271 root     16:18 /usr/sbin/vsftpd /etc/vsftpd/vsftpd.conf
+ 4274 root      0:00 [kworker/u6:1]
+ 4275 nobody    0:00 [vsftpd]
+ 4280 dali      0:00 php /usr/bin/psysh
+ 4529 dali      0:00 php /usr/bin/psysh
+ 4531 root      0:00 sshd: professor [priv]
+ 4534 professo  0:00 sshd: professor@pts/1
+ 4535 professo  0:00 -ash
+ 4598 dali      0:00 php /usr/bin/psysh
+ 4860 root      9:09 /usr/sbin/vsftpd /etc/vsftpd/vsftpd.conf
+ 4863 nobody    0:00 [vsftpd]
+ 4866 dali      0:00 php /usr/bin/psysh
+ 4988 root      8:15 /usr/sbin/vsftpd /etc/vsftpd/vsftpd.conf
+ 4991 nobody    0:00 [vsftpd]
+ 4994 dali      0:00 php /usr/bin/psysh
+ 5262 root      0:00 [kworker/2:5]
+ 5320 root      6:58 /usr/sbin/vsftpd /etc/vsftpd/vsftpd.conf
+ 5321 nobody    0:00 [vsftpd]
+ 5434 root      6:21 /usr/sbin/vsftpd /etc/vsftpd/vsftpd.conf
+ 5437 nobody    0:00 [vsftpd]
+ 5503 dali      0:00 php /usr/bin/psysh
+ 5557 dali      0:00 php /usr/bin/psysh
+ 5637 dali      0:00 php /usr/bin/psysh
+ 5658 root      0:00 [kworker/u6:2]
+ 5740 dali      0:00 php /usr/bin/psysh
+ 5803 dali      0:00 php /usr/bin/psysh
+ 6033 root      0:00 [kworker/0:1]
+ 6167 dali      0:01 php /usr/bin/psysh
+ 6250 dali      0:00 php /usr/bin/psysh
+ 6253 dali      0:01 php /usr/bin/psysh
+ 6429 dali      0:00 php /usr/bin/psysh
+ 6438 dali      0:00 php /usr/bin/psysh
+ 6441 dali      0:00 php /usr/bin/psysh
+ 6444 dali      0:00 php /usr/bin/psysh
+ 6445 dali      0:00 php /usr/bin/psysh
+ 6447 root      1:14 /usr/sbin/vsftpd /etc/vsftpd/vsftpd.conf
+ 6448 dali      0:00 php /usr/bin/psysh
+ 6451 nobody    0:00 [vsftpd]
+ 6452 dali      0:00 php /usr/bin/psysh
+ 6453 dali      0:00 php /usr/bin/psysh
+ 6455 dali      0:00 php /usr/bin/psysh
+ 6459 dali      0:00 php /usr/bin/psysh
+ 6485 dali      0:00 php /usr/bin/psysh
+ 6511 dali      0:00 php /usr/bin/psysh
+ 6515 dali      0:00 php /usr/bin/psysh
+ 6518 dali      0:00 php /usr/bin/psysh
+ 6520 dali      0:00 php /usr/bin/psysh
+ 6522 dali      0:00 php /usr/bin/psysh
+ 6523 dali      0:00 php /usr/bin/psysh
+ 6525 dali      0:00 php /usr/bin/psysh
+ 6526 dali      0:00 php /usr/bin/psysh
+ 6528 dali      0:00 php /usr/bin/psysh
+ 6529 root      0:55 /usr/sbin/vsftpd /etc/vsftpd/vsftpd.conf
+ 6532 nobody    0:00 /usr/sbin/vsftpd /etc/vsftpd/vsftpd.conf
+ 6535 dali      0:00 php /usr/bin/psysh
+ 6537 dali      0:01 php /usr/bin/psysh
+ 6538 dali      0:00 php /usr/bin/psysh
+ 6590 dali      0:00 php /usr/bin/psysh
+ 6598 root      0:00 [kworker/2:0]
+ 6600 dali      0:00 php /usr/bin/psysh
+ 6602 dali      0:00 php /usr/bin/psysh
+ 6603 dali      0:00 php /usr/bin/psysh
+ 6610 dali      0:01 php /usr/bin/psysh
+ 6611 dali      0:00 php /usr/bin/psysh
+ 6615 root      0:41 /usr/sbin/vsftpd /etc/vsftpd/vsftpd.conf
+ 6618 nobody    0:00 /usr/sbin/vsftpd /etc/vsftpd/vsftpd.conf
+ 6621 dali      0:00 php /usr/bin/psysh
+ 6622 dali      0:01 php /usr/bin/psysh
+ 6623 root      0:40 /usr/sbin/vsftpd /etc/vsftpd/vsftpd.conf
+ 6626 nobody    0:00 /usr/sbin/vsftpd /etc/vsftpd/vsftpd.conf
+ 6627 dali      0:00 php /usr/bin/psysh
+ 6631 dali      0:00 php /usr/bin/psysh
+ 6647 root      0:00 [kworker/u6:0]
+ 6716 root      0:36 /usr/sbin/vsftpd /etc/vsftpd/vsftpd.conf
+ 6719 nobody    0:00 /usr/sbin/vsftpd /etc/vsftpd/vsftpd.conf
+ 6769 dali      0:00 php /usr/bin/psysh
+ 6787 root      0:18 /usr/sbin/vsftpd /etc/vsftpd/vsftpd.conf
+ 6790 nobody    0:00 /usr/sbin/vsftpd /etc/vsftpd/vsftpd.conf
+ 6796 dali      0:00 php /usr/bin/psysh
+ 6797 dali      0:00 php /usr/bin/psysh
+ 6800 dali      0:00 php /usr/bin/psysh
+ 6856 root      0:01 {supervisord} /usr/bin/python2 /usr/bin/supervisord --nodaemon --pidfile /var/run/supervisord.pid --configuration /etc/supervisord.conf
+ 6877 professo  0:00 bash LinEnum.sh
+ 6878 professo  0:00 bash LinEnum.sh
+ 6879 professo  0:00 tee -a
+ 7047 root      0:00 /sbin/getty -L 115200 ttyS0 vt100
+ 7066 root      0:00 [vsftpd]
+ 7070 professo  0:00 bash LinEnum.sh
+ 7071 professo  0:00 ps aux
+
+
+[-] Process binaries and associated permissions (from above list):
+-rw-------    1 root     root           313 Jan 29 01:15 /etc/supervisord.conf
+
+
+[-] /etc/init.d/ binary permissions:
+total 252
+drwxr-xr-x    2 root     root          4096 Mar 12 14:13 .
+drwxr-xr-x   33 root     root          4096 Mar 12 14:13 ..
+-rwxr-xr-x    1 root     root           244 Sep 27  2018 acpid
+-rwxr-xr-x    1 root     root          1179 Jun 21  2018 agetty
+-rwxr-xr-x    1 root     root           806 Jun 21  2018 binfmt
+-rwxr-xr-x    1 root     root          5899 Jun 21  2018 bootmisc
+-rwxr-xr-x    1 root     root          3519 Jun 21  2018 cgroups
+-rwxr-xr-x    1 root     root          1780 Jun 21  2018 consolefont
+-rwxr-xr-x    1 root     root           175 Sep 27  2018 crond
+-rwxr-xr-x    1 root     root          3622 Jun 21  2018 devfs
+-rwxr-xr-x    1 root     root           747 Jun 21  2018 dmesg
+-rwxr-xr-x    1 root     root           196 Sep 27  2018 dnsd
+-rwxr-xr-x    1 root     root           703 Jun 21  2018 firstboot
+-rwxr-xr-x    1 root     root          3260 Jun 21  2018 fsck
+lrwxrwxrwx    1 root     root            23 Oct 26  2018 functions.sh -> /lib/rc/sh/functions.sh
+-rwxr-xr-x    1 root     root           256 Jun 21  2018 hostname
+-rwxr-xr-x    1 root     root           152 Sep 27  2018 httpd
+-rwxr-xr-x    1 root     root          3307 Jun 21  2018 hwclock
+-rwxr-xr-x    1 root     root           720 Jun 21  2018 hwdrivers
+-rwxr-xr-x    1 root     root           211 Sep 27  2018 inetd
+-rwxr-xr-x    1 root     root          3172 May  1  2018 ip6tables
+-rwxr-xr-x    1 root     root          1963 Sep 21  2018 ipset
+-rwxr-xr-x    1 root     root          3172 May  1  2018 iptables
+-rwxr-xr-x    1 root     root           798 Jun 21  2018 killprocs
+-rwxr-xr-x    1 root     root           209 Sep 27  2018 klogd
+-rwxr-xr-x    1 root     root           602 May  1  2018 kmod-static-nodes
+-rwxr-xr-x    1 root     root           289 Sep 27  2018 loadkmap
+-rwxr-xr-x    1 root     root          2752 Jun 21  2018 local
+-rwxr-xr-x    1 root     root          3701 Jun 21  2018 localmount
+-rwxr-xr-x    1 root     root          1013 Jun 21  2018 loopback
+-rwxr-xr-x    1 root     root           739 Sep 27  2018 mdev
+-rwxr-xr-x    1 root     root          2321 Jun  1  2018 memcached
+-rwxr-xr-x    1 root     root          3030 Jun 21  2018 modloop
+-rwxr-xr-x    1 root     root           536 Jun 21  2018 modules
+-rwxr-xr-x    1 root     root          1639 Jun 21  2018 modules-load
+-rwxr-xr-x    1 root     root          1567 Jun 21  2018 mount-ro
+-rwxr-xr-x    1 root     root          1731 Jun 21  2018 mtab
+-rwxr-xr-x    1 root     root          2274 Jun 21  2018 net-online
+-rwxr-xr-x    1 root     root          2071 Jun 21  2018 netmount
+-rwxr-xr-x    1 root     root          1379 Jun 21  2018 networking
+-rwxr-xr-x    1 root     root           207 Sep 27  2018 ntpd
+-rwxr-xr-x    1 root     root          1136 Jun 21  2018 numlock
+-rwxr-xr-x    1 root     root           642 Jun 21  2018 osclock
+-rwxr-xr-x    1 root     root          1279 Jun 21  2018 procfs
+-rwxr-xr-x    1 root     root           253 Sep 27  2018 rdate
+-rwxr-xr-x    1 root     root          1420 Jun 21  2018 root
+-rwxr-xr-x    1 root     root          1110 Jun 21  2018 runsvdir
+-rwxr-xr-x    1 root     root          1030 Jun 21  2018 s6-svscan
+-rwxr-xr-x    1 root     root          1881 Jun 21  2018 savecache
+-rwxr-xr-x    1 root     root          2749 Oct 23  2018 sshd
+-rwxr-xr-x    1 root     root          2052 Jun 21  2018 staticroute
+-rwxr-xr-x    1 root     root           273 Jun 14  2018 supervisord
+-rwxr-xr-x    1 root     root          1037 Jun 21  2018 swap
+-rwxr-xr-x    1 root     root           960 Jun 21  2018 swclock
+-rwxr-xr-x    1 root     root          1674 Jun 21  2018 sysctl
+-rwxr-xr-x    1 root     root          3290 Jun 21  2018 sysfs
+-rwxr-xr-x    1 root     root          1257 Jun 21  2018 sysfsconf
+-rwxr-xr-x    1 root     root           269 Sep 27  2018 syslog
+-rwxr-xr-x    1 root     root          1476 Jun 21  2018 termencoding
+-rwxr-xr-x    1 root     root           174 Sep 27  2018 udhcpd
+-rwxr-xr-x    1 root     root          1383 Jun 21  2018 urandom
+-rwxr-xr-x    1 root     root           433 Jan 22 21:34 vsftpd
+-rwxr-xr-x    1 root     root           291 Sep 27  2018 watchdog
+
+
+### SOFTWARE #############################################
+[-] Sudo version:
+Sudo version 1.8.23
+
+
+### INTERESTING FILES ####################################
+[-] Useful file locations:
+/usr/bin/nc
+/usr/bin/wget
+/usr/bin/nmap
+/usr/bin/gcc
+/usr/bin/curl
+
+
+[-] Can we read/write sensitive files:
+-rw-r--r--    1 root     root          1548 Jan 31 21:49 /etc/passwd
+-rw-r--r--    1 root     root           794 Jan 27 01:46 /etc/group
+-rw-r--r--    1 root     root           259 Jul 27  2018 /etc/profile
+-rw-r-----    1 root     shadow        1037 Jan 27 01:46 /etc/shadow
+
+
+[-] SUID files:
+-rwsr-xr-x    1 root     root        116024 Jun 14  2018 /usr/bin/sudo
+---s--x--x    1 root     root         10016 Jun 22  2018 /usr/bin/abuild-sudo
+---s--x--x    1 root     root         14064 Sep 27  2018 /bin/bbsuid
+
+
+[-] SGID files:
+-rwxr-sr-x    1 root     shadow       26400 May  1  2018 /sbin/unix_chkpwd
+
+
+[+] Files with POSIX capabilities set:
+/usr/bin/node = cap_net_bind_service+ep
+
+
+[-] Can't search *.conf files as no keyword was entered
+
+[-] Can't search *.php files as no keyword was entered
+
+[-] Can't search *.log files as no keyword was entered
+
+[-] Can't search *.ini files as no keyword was entered
+
+[-] All *.conf files in /etc (recursive 1 level):
+-rw-r--r--    1 root     root          6322 Sep 25  2018 /etc/ca-certificates.conf
+-rw-r--r--    1 root     root          1996 Oct 26  2018 /etc/update-extlinux.conf
+-rw-r--r--    1 root     root            23 Nov  9  2018 /etc/resolv.conf
+-rw-r--r--    1 root     root            53 Jul 27  2018 /etc/sysctl.conf
+-rw-r--r--    1 root     root          2923 Sep 27  2018 /etc/mdev.conf
+-rw-r--r--    1 root     root           812 Aug 24  2018 /etc/mke2fs.conf
+-rw-r--r--    1 root     root           853 Jun 22  2018 /etc/abuild.conf
+-rw-r--r--    1 root     root         12374 Jun 21  2018 /etc/rc.conf
+-rw-r--r--    1 root     root          4169 Sep 27  2018 /etc/udhcpd.conf
+-rw-------    1 root     root           313 Jan 29 01:15 /etc/supervisord.conf
+
+
+[-] Current user's history files:
+lrwxrwxrwx    1 root     professo         9 Nov  6  2018 /home/professor/.ash_history -> /dev/null
+
+
+### SCAN COMPLETE ####################################
+

