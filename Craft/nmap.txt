@@ -1,0 +1,29 @@
+Starting Nmap 7.70 ( https://nmap.org ) at 2019-07-13 15:11 EDT
+Nmap scan report for craft.htb (10.10.10.110)
+Host is up (0.077s latency).
+
+PORT     STATE SERVICE  VERSION
+22/tcp	open	ssh
+443/tcp  open  ssl/http nginx 1.15.8
+|_http-server-header: nginx/1.15.8
+|_http-title: About
+| ssl-cert: Subject: commonName=craft.htb/organizationName=Craft/stateOrProvinceName=NY/countryName=US
+| Not valid before: 2019-02-06T02:25:47
+|_Not valid after:  2020-06-20T02:25:47
+|_ssl-date: TLS randomness does not represent time
+| tls-alpn:
+|_  http/1.1
+| tls-nextprotoneg:
+|_  http/1.1
+6022/tcp open  ssh      (protocol 2.0)
+| fingerprint-strings:
+|   NULL:
+|_    SSH-2.0-Go
+| ssh-hostkey:
+|_  2048 5b:cc:bf:f1:a1:8f:72:b0:c0:fb:df:a3:01:dc:a6:fb (RSA)
+1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :
+SF-Port6022-TCP:V=7.70%I=7%D=7/13%Time=5D2A2CEF%P=x86_64-pc-linux-gnu%r(NU
+SF:LL,C,"SSH-2\.0-Go\r\n");
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 47.39 seconds
