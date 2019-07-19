@@ -1,0 +1,23 @@
+
+-----------------
+DIRB v2.22    
+By The Dark Raver
+-----------------
+
+OUTPUT_FILE: dirb_staging.txt
+START_TIME: Sun Jul 14 15:20:33 2019
+URL_BASE: http://staging.player.htb/
+WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
+OPTION: Not Stopping on warning messages
+
+-----------------
+
+GENERATED WORDS: 4612
+
+---- Scanning URL: http://staging.player.htb/ ----
++ http://staging.player.htb/index.html (CODE:200|SIZE:1470)
++ http://staging.player.htb/server-status (CODE:403|SIZE:298)
+
+-----------------
+END_TIME: Sun Jul 14 15:37:25 2019
+DOWNLOADED: 4612 - FOUND: 2

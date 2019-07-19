@@ -1,0 +1,35 @@
+
+-----------------
+DIRB v2.22    
+By The Dark Raver
+-----------------
+
+OUTPUT_FILE: dirb.txt
+START_TIME: Sat Jul  6 20:04:53 2019
+URL_BASE: http://10.10.10.145/
+WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
+OPTION: Not Stopping on warning messages
+
+-----------------
+
+GENERATED WORDS: 4612
+
+---- Scanning URL: http://10.10.10.145/ ----
+==> DIRECTORY: http://10.10.10.145/launcher/
++ http://10.10.10.145/server-status (CODE:403|SIZE:292)
+
+---- Entering directory: http://10.10.10.145/launcher/ ----
+==> DIRECTORY: http://10.10.10.145/launcher/css/
+==> DIRECTORY: http://10.10.10.145/launcher/fonts/
+==> DIRECTORY: http://10.10.10.145/launcher/images/
++ http://10.10.10.145/launcher/index.html (CODE:200|SIZE:2969)
+==> DIRECTORY: http://10.10.10.145/launcher/js/
+==> DIRECTORY: http://10.10.10.145/launcher/vendor/
+
+---- Entering directory: http://10.10.10.145/launcher/css/ ----
+
+---- Entering directory: http://10.10.10.145/launcher/fonts/ ----
+
+---- Entering directory: http://10.10.10.145/launcher/images/ ----
+
+---- Entering directory: http://10.10.10.145/launcher/js/ ----

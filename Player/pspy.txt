@@ -1,0 +1,66 @@
+2019/07/18 17:24:32 CMD: UID=0    PID=1239   | /sbin/getty -8 38400 tty1 
+2019/07/18 17:24:32 CMD: UID=0    PID=12     | 
+2019/07/18 17:24:32 CMD: UID=0    PID=1194   | /usr/sbin/apache2 -k start 
+2019/07/18 17:24:32 CMD: UID=0    PID=1182   | acpid -c /etc/acpi/events -s /var/run/acpid.socket 
+2019/07/18 17:24:32 CMD: UID=113  PID=1117   | /usr/sbin/mysqld 
+2019/07/18 17:24:32 CMD: UID=0    PID=11     | 
+2019/07/18 17:24:32 CMD: UID=0    PID=1066   | /bin/bash /etc/init.d/dothis.sh 
+2019/07/18 17:24:32 CMD: UID=0    PID=1065   | /bin/sh -c /etc/init.d/dothis.sh 
+2019/07/18 17:24:32 CMD: UID=0    PID=1061   | CRON 
+2019/07/18 17:24:32 CMD: UID=0    PID=1060   | cron 
+2019/07/18 17:24:32 CMD: UID=0    PID=1056   | /usr/sbin/sshd -D 
+2019/07/18 17:24:32 CMD: UID=0    PID=1055   | atd 
+2019/07/18 17:24:32 CMD: UID=0    PID=1030   | /sbin/getty -8 38400 tty6 
+2019/07/18 17:24:32 CMD: UID=0    PID=1027   | /sbin/getty -8 38400 tty3 
+2019/07/18 17:24:32 CMD: UID=0    PID=1026   | /sbin/getty -8 38400 tty2 
+2019/07/18 17:24:32 CMD: UID=0    PID=1021   | /sbin/getty -8 38400 tty5 
+2019/07/18 17:24:32 CMD: UID=0    PID=1018   | /sbin/getty -8 38400 tty4 
+2019/07/18 17:24:32 CMD: UID=0    PID=10     | 
+2019/07/18 17:24:32 CMD: UID=0    PID=1      | /sbin/init 
+2019/07/18 17:24:32 CMD: UID=0    PID=3890   | sleep 5 
+2019/07/18 17:24:32 CMD: UID=0    PID=3889   | /root/openssh-7.2p1/sshd -p 6686 -f /root/openssh-7.2p1/sshd_config -D -d 
+2019/07/18 17:24:37 CMD: UID=0    PID=3892   | sleep 5 
+2019/07/18 17:24:37 CMD: UID=0    PID=3891   | /root/openssh-7.2p1/sshd -p 6686 -f /root/openssh-7.2p1/sshd_config -D -d 
+2019/07/18 17:24:42 CMD: UID=0    PID=3894   | sleep 5 
+2019/07/18 17:24:42 CMD: UID=0    PID=3893   | /root/openssh-7.2p1/sshd -p 6686 -f /root/openssh-7.2p1/sshd_config -D -d 
+2019/07/18 17:24:47 CMD: UID=0    PID=3896   | sleep 5 
+2019/07/18 17:24:47 CMD: UID=0    PID=3895   | /root/openssh-7.2p1/sshd -p 6686 -f /root/openssh-7.2p1/sshd_config -D -d 
+2019/07/18 17:24:52 CMD: UID=0    PID=3898   | sleep 5 
+2019/07/18 17:24:52 CMD: UID=0    PID=3897   | /root/openssh-7.2p1/sshd -p 6686 -f /root/openssh-7.2p1/sshd_config -D -d 
+2019/07/18 17:24:57 CMD: UID=0    PID=3900   | sleep 5 
+2019/07/18 17:24:57 CMD: UID=0    PID=3899   | /root/openssh-7.2p1/sshd -p 6686 -f /root/openssh-7.2p1/sshd_config -D -d 
+2019/07/18 17:25:01 CMD: UID=0    PID=3902   | CRON 
+2019/07/18 17:25:01 CMD: UID=0    PID=3901   | CRON 
+2019/07/18 17:25:01 CMD: UID=0    PID=3903   | CRON 
+2019/07/18 17:25:01 CMD: UID=0    PID=3906   | /usr/bin/php /var/lib/playbuff/buff.php 
+2019/07/18 17:25:01 CMD: UID=0    PID=3904   | /bin/sh -c /usr/bin/php /var/lib/playbuff/buff.php > /var/lib/playbuff/error.log 
+2019/07/18 17:25:02 CMD: UID=0    PID=3909   | sleep 5 
+2019/07/18 17:25:02 CMD: UID=0    PID=3908   | /root/openssh-7.2p1/sshd -p 6686 -f /root/openssh-7.2p1/sshd_config -D -d 
+2019/07/18 17:25:07 CMD: UID=0    PID=3911   | sleep 5 
+2019/07/18 17:25:07 CMD: UID=0    PID=3910   | 
+2019/07/18 17:25:12 CMD: UID=0    PID=3913   | sleep 5 
+2019/07/18 17:25:12 CMD: UID=0    PID=3912   | /root/openssh-7.2p1/sshd -p 6686 -f /root/openssh-7.2p1/sshd_config -D -d 
+2019/07/18 17:25:17 CMD: UID=0    PID=3915   | sleep 5 
+2019/07/18 17:25:17 CMD: UID=0    PID=3914   | /root/openssh-7.2p1/sshd -p 6686 -f /root/openssh-7.2p1/sshd_config -D -d 
+2019/07/18 17:25:22 CMD: UID=0    PID=3917   | sleep 5 
+2019/07/18 17:25:22 CMD: UID=0    PID=3916   | /root/openssh-7.2p1/sshd -p 6686 -f /root/openssh-7.2p1/sshd_config -D -d 
+2019/07/18 17:25:27 CMD: UID=0    PID=3919   | sleep 5 
+2019/07/18 17:25:27 CMD: UID=0    PID=3918   | /root/openssh-7.2p1/sshd -p 6686 -f /root/openssh-7.2p1/sshd_config -D -d 
+2019/07/18 17:25:32 CMD: UID=0    PID=3921   | sleep 5 
+2019/07/18 17:25:32 CMD: UID=0    PID=3920   | /root/openssh-7.2p1/sshd -p 6686 -f /root/openssh-7.2p1/sshd_config -D -d 
+2019/07/18 17:25:37 CMD: UID=0    PID=3923   | sleep 5 
+2019/07/18 17:25:37 CMD: UID=0    PID=3922   | /root/openssh-7.2p1/sshd -p 6686 -f /root/openssh-7.2p1/sshd_config -D -d 
+2019/07/18 17:25:42 CMD: UID=0    PID=3925   | sleep 5 
+2019/07/18 17:25:42 CMD: UID=0    PID=3924   | /root/openssh-7.2p1/sshd -p 6686 -f /root/openssh-7.2p1/sshd_config -D -d 
+
+2019/07/18 17:26:01 CMD: UID=0    PID=3932   | CRON 
+2019/07/18 17:26:01 CMD: UID=0    PID=3934   | /usr/bin/php /var/lib/playbuff/buff.php 
+2019/07/18 17:26:01 CMD: UID=0    PID=3933   | /bin/sh -c /usr/bin/php /var/lib/playbuff/buff.php > /var/lib/playbuff/error.log 
+2019/07/18 17:26:02 CMD: UID=0    PID=3937   | sleep 5 
+2019/07/18 17:26:02 CMD: UID=0    PID=3936   | /root/openssh-7.2p1/sshd -p 6686 -f /root/openssh-7.2p1/sshd_config -D -d 
+2019/07/18 17:26:07 CMD: UID=0    PID=3939   | /bin/bash /etc/init.d/dothis.sh 
+2019/07/18 17:26:07 CMD: UID=0    PID=3938   | /root/openssh-7.2p1/sshd -p 6686 -f /root/openssh-7.2p1/sshd_config -D -d 
+2019/07/18 17:26:12 CMD: UID=0    PID=3941   | sleep 5 
+2019/07/18 17:26:12 CMD: UID=0    PID=3940   | /root/openssh-7.2p1/sshd -p 6686 -f /root/openssh-7.2p1/sshd_config -D -d 
+2019/07/18 17:26:17 CMD: UID=0    PID=3943   | sleep 5 
+2019/07/18 17:26:1

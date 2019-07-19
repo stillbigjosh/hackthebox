@@ -1,0 +1,46 @@
+
+-----------------
+DIRB v2.22    
+By The Dark Raver
+-----------------
+
+OUTPUT_FILE: dirb_dev.txt
+START_TIME: Mon Jul 15 15:52:47 2019
+URL_BASE: http://dev.player.htb/
+WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
+OPTION: Not Stopping on warning messages
+
+-----------------
+
+GENERATED WORDS: 4612
+
+---- Scanning URL: http://dev.player.htb/ ----
+==> DIRECTORY: http://dev.player.htb/components/
+==> DIRECTORY: http://dev.player.htb/data/
++ http://dev.player.htb/favicon.ico (CODE:200|SIZE:1150)
+==> DIRECTORY: http://dev.player.htb/home/
++ http://dev.player.htb/index.php (CODE:200|SIZE:5243)
+==> DIRECTORY: http://dev.player.htb/js/
+==> DIRECTORY: http://dev.player.htb/languages/
+==> DIRECTORY: http://dev.player.htb/lib/
+==> DIRECTORY: http://dev.player.htb/plugins/
++ http://dev.player.htb/server-status (CODE:403|SIZE:294)
+==> DIRECTORY: http://dev.player.htb/themes/
+
+---- Entering directory: http://dev.player.htb/components/ ----
+==> DIRECTORY: http://dev.player.htb/components/active/
+==> DIRECTORY: http://dev.player.htb/components/editor/
+==> DIRECTORY: http://dev.player.htb/components/filemanager/
+==> DIRECTORY: http://dev.player.htb/components/install/
+==> DIRECTORY: http://dev.player.htb/components/market/
+==> DIRECTORY: http://dev.player.htb/components/project/
+==> DIRECTORY: http://dev.player.htb/components/settings/
+==> DIRECTORY: http://dev.player.htb/components/update/
+==> DIRECTORY: http://dev.player.htb/components/user/
+
+---- Entering directory: http://dev.player.htb/data/ ----
++ http://dev.player.htb/data/README (CODE:200|SIZE:18)
+
+---- Entering directory: http://dev.player.htb/home/ ----
+
+---- Entering directory: http://dev.player.htb/js/ ----
