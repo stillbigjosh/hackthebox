@@ -1,0 +1,344 @@
+root@kali:~/HTB/Heist# enum4linux -a -u Hazard -p stealth1agent 10.10.10.149
+Starting enum4linux v0.8.9 ( http://labs.portcullis.co.uk/application/enum4linux/ ) on Sun Aug 11 19:22:00 2019
+
+ ========================== 
+|    Target Information    |
+ ========================== 
+Target ........... 10.10.10.149
+RID Range ........ 500-550,1000-1050
+Username ......... 'Hazard'
+Password ......... 'stealth1agent'
+Known Usernames .. administrator, guest, krbtgt, domain admins, root, bin, none
+
+
+ ==================================================== 
+|    Enumerating Workgroup/Domain on 10.10.10.149    |
+ ==================================================== 
+[E] Can't find workgroup/domain
+
+
+ ============================================ 
+|    Nbtstat Information for 10.10.10.149    |
+ ============================================ 
+Looking up status of 10.10.10.149
+No reply from 10.10.10.149
+
+ ===================================== 
+|    Session Check on 10.10.10.149    |
+ ===================================== 
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 437.
+[+] Server 10.10.10.149 allows sessions using username 'Hazard', password 'stealth1agent'
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 451.
+[+] Got domain/workgroup name: 
+
+ =========================================== 
+|    Getting domain SID for 10.10.10.149    |
+ =========================================== 
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 359.
+Domain Name: WORKGROUP
+Domain Sid: (NULL SID)
+[+] Can't determine if host is part of domain or part of a workgroup
+
+ ====================================== 
+|    OS information on 10.10.10.149    |
+ ====================================== 
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 458.
+Use of uninitialized value $os_info in concatenation (.) or string at ./enum4linux.pl line 464.
+[+] Got OS info for 10.10.10.149 from smbclient: 
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 467.
+[+] Got OS info for 10.10.10.149 from srvinfo:
+	10.10.10.149   Wk Sv NT SNT         
+	platform_id     :	500
+	os version      :	10.0
+	server type     :	0x9003
+
+ ============================= 
+|    Users on 10.10.10.149    |
+ ============================= 
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 866.
+Use of uninitialized value $users in print at ./enum4linux.pl line 874.
+Use of uninitialized value $users in pattern match (m//) at ./enum4linux.pl line 877.
+
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 881.
+Use of uninitialized value $users in print at ./enum4linux.pl line 888.
+Use of uninitialized value $users in pattern match (m//) at ./enum4linux.pl line 890.
+
+ ========================================= 
+|    Share Enumeration on 10.10.10.149    |
+ ========================================= 
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 640.
+
+	Sharename       Type      Comment
+	---------       ----      -------
+	ADMIN$          Disk      Remote Admin
+	C$              Disk      Default share
+	IPC$            IPC       Remote IPC
+Reconnecting with SMB1 for workgroup listing.
+Connection to 10.10.10.149 failed (Error NT_STATUS_IO_TIMEOUT)
+Failed to connect with SMB1 -- no workgroup available
+
+[+] Attempting to map shares on 10.10.10.149
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 654.
+//10.10.10.149/ADMIN$	Mapping: DENIED, Listing: N/A
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 654.
+//10.10.10.149/C$	Mapping: DENIED, Listing: N/A
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 654.
+//10.10.10.149/IPC$	[E] Can't understand response:
+NT_STATUS_INVALID_INFO_CLASS listing \*
+
+ ==================================================== 
+|    Password Policy Information for 10.10.10.149    |
+ ==================================================== 
+[E] Unexpected error from polenum:
+
+
+[+] Attaching to 10.10.10.149 using Hazard:stealth1agent
+
+[+] Trying protocol 445/SMB...
+
+	[!] Protocol failed: rpc_s_access_denied
+
+[+] Trying protocol 139/SMB...
+
+	[!] Protocol failed: [Errno Connection error (10.10.10.149:139)] timed out
+
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 501.
+
+[E] Failed to get password policy with rpcclient
+
+
+ ============================== 
+|    Groups on 10.10.10.149    |
+ ============================== 
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 542.
+
+[+] Getting builtin groups:
+
+[+] Getting builtin group memberships:
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 542.
+
+[+] Getting local groups:
+
+[+] Getting local group memberships:
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 593.
+
+[+] Getting domain groups:
+
+[+] Getting domain group memberships:
+
+ ======================================================================= 
+|    Users on 10.10.10.149 via RID cycling (RIDS: 500-550,1000-1050)    |
+ ======================================================================= 
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 710.
+[I] Found new SID: S-1-5-21-4254423774-1266059056-3197185112
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 710.
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 710.
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 710.
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 710.
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 710.
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 710.
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 742.
+[+] Enumerating users using SID S-1-5-21-4254423774-1266059056-3197185112 and logon username 'Hazard', password 'stealth1agent'
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-510 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-512 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-513 SUPPORTDESK\None (Domain Group)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-514 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-515 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-516 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-517 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-518 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-519 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-520 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-521 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-522 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-523 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-524 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-525 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-526 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-527 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-528 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-529 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-530 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-531 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-532 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-533 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-534 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-535 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-536 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-537 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-538 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-539 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-540 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-541 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-542 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-543 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-544 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-545 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-546 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-547 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-548 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-549 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-550 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-1000 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-1001 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-1002 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-1003 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-1004 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-1005 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-1006 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-1007 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-1008 SUPPORTDESK\Hazard (Local User)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-1009 SUPPORTDESK\support (Local User)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-1010 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-1011 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-1012 SUPPORTDESK\Chase (Local User)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-1013 SUPPORTDESK\Jason (Local User)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-1014 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-1015 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-1016 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-1017 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-1018 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-1019 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-1020 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-1022 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-1023 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-1024 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-1025 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-1026 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-1027 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-1028 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-1029 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-1030 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-1031 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-1032 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-1033 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-1034 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-1035 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-1036 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-1037 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-1038 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-1039 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-1040 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-1041 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-1042 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-1043 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-1044 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-1045 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-1046 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-1047 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-1048 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-1049 *unknown*\*unknown* (8)
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 834.
+S-1-5-21-4254423774-1266059056-3197185112-1050 *unknown*\*unknown* (8)
+
+ ============================================= 
+|    Getting printer info for 10.10.10.149    |
+ ============================================= 
+Use of uninitialized value $global_workgroup in concatenation (.) or string at ./enum4linux.pl line 991.
+No printers returned.
+
+
+enum4linux complete on Sun Aug 11 19:32:49 2019
+
+

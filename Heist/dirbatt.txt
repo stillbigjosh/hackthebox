@@ -1,0 +1,22 @@
+
+-----------------
+DIRB v2.22    
+By The Dark Raver
+-----------------
+
+OUTPUT_FILE: dirbatt.txt
+START_TIME: Sun Aug 11 17:58:01 2019
+URL_BASE: http://10.10.10.149/attachments/
+WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
+EXTENSIONS_LIST: (.txt,.php) | (.txt)(.php) [NUM = 2]
+
+-----------------
+
+GENERATED WORDS: 4612
+
+---- Scanning URL: http://10.10.10.149/attachments/ ----
++ http://10.10.10.149/attachments/config.txt (CODE:200|SIZE:780)
+
+-----------------
+END_TIME: Sun Aug 11 18:45:54 2019
+DOWNLOADED: 9224 - FOUND: 1

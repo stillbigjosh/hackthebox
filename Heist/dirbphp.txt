@@ -1,0 +1,28 @@
+
+-----------------
+DIRB v2.22    
+By The Dark Raver
+-----------------
+
+OUTPUT_FILE: dirbphp.txt
+START_TIME: Sun Aug 11 17:45:36 2019
+URL_BASE: http://10.10.10.149/
+WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
+OPTION: Not Stopping on warning messages
+EXTENSIONS_LIST: (.php) | (.php) [NUM = 1]
+
+-----------------
+
+GENERATED WORDS: 4612
+
+---- Scanning URL: http://10.10.10.149/ ----
++ http://10.10.10.149/errorpage.php (CODE:200|SIZE:1240)
++ http://10.10.10.149/index.php (CODE:302|SIZE:0)
++ http://10.10.10.149/Index.php (CODE:302|SIZE:0)
++ http://10.10.10.149/issues.php (CODE:302|SIZE:16)
++ http://10.10.10.149/login.php (CODE:200|SIZE:2058)
++ http://10.10.10.149/Login.php (CODE:200|SIZE:2058)
+
+-----------------
+END_TIME: Sun Aug 11 18:10:29 2019
+DOWNLOADED: 4612 - FOUND: 6
