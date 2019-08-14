@@ -1,0 +1,37 @@
+root@kali:~/HTB/Unattended# sslscan https://10.10.10.126
+Version: 1.11.12-static
+OpenSSL 1.0.2-chacha (1.0.2g-dev)
+
+Connected to 10.10.10.126
+
+Testing SSL server 10.10.10.126 on port 443 using SNI name 10.10.10.126
+
+  TLS Fallback SCSV:
+Server supports TLS Fallback SCSV
+
+  TLS renegotiation:
+Session renegotiation not supported
+
+  TLS Compression:
+Compression disabled
+
+  Heartbleed:
+TLS 1.2 not vulnerable to heartbleed
+TLS 1.1 not vulnerable to heartbleed
+TLS 1.0 not vulnerable to heartbleed
+
+  Supported Server Cipher(s):
+Preferred TLSv1.2  256 bits  ECDHE-RSA-AES256-GCM-SHA384   Curve P-384 DHE 384
+Accepted  TLSv1.2  256 bits  DHE-RSA-AES256-GCM-SHA384     DHE 4096 bits
+Accepted  TLSv1.2  256 bits  ECDHE-RSA-AES256-SHA384       Curve P-384 DHE 384
+
+  SSL Certificate:
+Signature Algorithm: sha256WithRSAEncryption
+RSA Key Strength:    2048
+
+Subject:  www.nestedflanders.htb
+Issuer:   www.nestedflanders.htb
+
+Not valid before: Dec 19 09:43:58 2018 GMT
+Not valid after:  Sep 13 09:43:58 2021 GMT
+

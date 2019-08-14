@@ -1,0 +1,28 @@
+- Nikto v2.1.6
+---------------------------------------------------------------------------
++ Target IP:          10.10.10.126
++ Target Hostname:    www.nestedflanders.htb
++ Target Port:        443
+---------------------------------------------------------------------------
++ SSL Info:        Subject:  /C=IT/ST=IT/L=Unattended/O=Unattended ltd/CN=www.nestedflanders.htb
+                   Ciphers:  ECDHE-RSA-AES256-GCM-SHA384
+                   Issuer:   /C=IT/ST=IT/L=Unattended/O=Unattended ltd/CN=www.nestedflanders.htb
++ Start Time:         2019-06-12 15:59:56 (GMT1)
+---------------------------------------------------------------------------
++ Server: nginx/1.10.3
++ Server leaks inodes via ETags, header found with file /, fields: 0x29cd 0x57d7766b998cc 
++ The anti-clickjacking X-Frame-Options header is not present.
++ The X-XSS-Protection header is not defined. This header can hint to the user agent to protect against some forms of XSS
++ Uncommon header 'x-upstream' found, with contents: 127.0.0.1:8080
++ The site uses SSL and the Strict-Transport-Security HTTP header is not defined.
++ The X-Content-Type-Options header is not set. This could allow the user agent to render the content of the site in a different fashion to the MIME type
++ Cookie PHPSESSID created without the secure flag
++ Cookie PHPSESSID created without the httponly flag
++ No CGI Directories found (use '-C all' to force check all possible dirs)
++ Multiple index files found: /index.html, /index.php
++ The Content-Encoding header is set to "deflate" this may mean that the server is vulnerable to the BREACH attack.
++ Allowed HTTP Methods: GET, HEAD, POST, OPTIONS 
++ ///etc/hosts: The server install allows reading of any system file by adding an extra '/' to the URL.
++ OSVDB-561: /server-status: This reveals Apache information. Comment out appropriate line in the Apache conf file or restrict access to allowed sources.
++ OSVDB-3092: /dev/: This might be interesting...
+

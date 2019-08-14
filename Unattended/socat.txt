@@ -1,0 +1,8 @@
+
+SEND FILE WITH SOCAT
+
+Receiver
+socat -u TCP-LISTEN:80,reuseaddr OPEN:initrd.img-4.9.0-8-amd64,creat
+
+Sender
+socat -u FILE:/boot/initrd.img-4.9.0-8-amd64 TCP:10.10.16.70:80

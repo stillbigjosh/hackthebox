@@ -1,0 +1,74 @@
+
+-----------------
+DIRB v2.22    
+By The Dark Raver
+-----------------
+
+OUTPUT_FILE: dirb.txt
+START_TIME: Wed Jun 12 12:40:25 2019
+URL_BASE: http://nestedflanders.htb/
+WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
+OPTION: Not Stopping on warning messages
+
+-----------------
+
+GENERATED WORDS: 4612
+
+---- Scanning URL: http://nestedflanders.htb/ ----
++ http://nestedflanders.htb/index.html (CODE:200|SIZE:2)
+
+-----------------
+END_TIME: Wed Jun 12 13:24:38 2019
+DOWNLOADED: 4612 - FOUND: 1
+
+
+-----------------
+DIRB v2.22    
+By The Dark Raver
+-----------------
+
+OUTPUT_FILE: dirbssl.txt
+START_TIME: Wed Jun 12 12:41:04 2019
+URL_BASE: https://nestedflanders.htb/
+WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
+OPTION: Not Stopping on warning messages
+
+-----------------
+
+GENERATED WORDS: 4612
+
+---- Scanning URL: https://nestedflanders.htb/ ----
++ https://nestedflanders.htb/index.html (CODE:200|SIZE:2)
+
+-----------------
+END_TIME: Wed Jun 12 13:25:07 2019
+DOWNLOADED: 4612 - FOUND: 1
+
+
+-----------------
+DIRB v2.22    
+By The Dark Raver
+-----------------
+
+OUTPUT_FILE: dirb.txt
+START_TIME: Wed Jun 12 16:01:58 2019
+URL_BASE: https://www.nestedflanders.htb/
+WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
+OPTION: Not Stopping on warning messages
+
+-----------------
+
+GENERATED WORDS: 4612
+
+---- Scanning URL: https://www.nestedflanders.htb/ ----
+==> DIRECTORY: https://www.nestedflanders.htb/dev/
++ https://www.nestedflanders.htb/index.html (CODE:200|SIZE:10701)
++ https://www.nestedflanders.htb/index.php (CODE:200|SIZE:1244)
++ https://www.nestedflanders.htb/server-status (CODE:200|SIZE:4515)
+
+---- Entering directory: https://www.nestedflanders.htb/dev/ ----
++ https://www.nestedflanders.htb/dev/index.html (CODE:200|SIZE:42)
+
+-----------------
+END_TIME: Wed Jun 12 17:03:32 2019
+DOWNLOADED: 9224 - FOUND: 4

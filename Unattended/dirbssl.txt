@@ -1,0 +1,22 @@
+
+-----------------
+DIRB v2.22    
+By The Dark Raver
+-----------------
+
+OUTPUT_FILE: dirbssl.txt
+START_TIME: Wed Jun 12 12:41:04 2019
+URL_BASE: https://nestedflanders.htb/
+WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
+OPTION: Not Stopping on warning messages
+
+-----------------
+
+GENERATED WORDS: 4612
+
+---- Scanning URL: https://nestedflanders.htb/ ----
++ https://nestedflanders.htb/index.html (CODE:200|SIZE:2)
+
+-----------------
+END_TIME: Wed Jun 12 13:25:07 2019
+DOWNLOADED: 4612 - FOUND: 1

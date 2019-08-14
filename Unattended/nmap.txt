@@ -1,0 +1,26 @@
+# Nmap 7.70 scan initiated Wed Jun 12 12:18:07 2019 as: nmap -p 1-65535 -T4 -A -o nmap.txt 10.10.10.126
+Nmap scan report for 10.10.10.126
+Host is up (0.33s latency).
+Not shown: 65533 filtered ports
+PORT    STATE SERVICE  VERSION
+80/tcp  open  http     nginx 1.10.3
+|_http-server-header: nginx/1.10.3
+|_http-title: Site doesn't have a title (text/html).
+443/tcp open  ssl/http nginx 1.10.3
+|_http-server-header: nginx/1.10.3
+|_http-title: Site doesn't have a title (text/html).
+| ssl-cert: Subject: commonName=www.nestedflanders.htb/organizationName=Unattended ltd/stateOrProvinceName=IT/countryName=IT
+| Not valid before: 2018-12-19T09:43:58
+|_Not valid after:  2021-09-13T09:43:58
+Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port
+Aggressive OS guesses: Linux 3.10 - 4.11 (92%), Linux 3.12 (92%), Linux 3.13 (92%), Linux 3.13 or 4.2 (92%), Linux 3.16 - 4.6 (92%), Linux 3.2 - 4.9 (92%), Linux 3.8 - 3.11 (92%), Linux 4.2 (92%), Linux 4.4 (92%), Linux 3.16 (90%)
+No exact OS matches for host (test conditions non-ideal).
+Network Distance: 2 hops
+
+TRACEROUTE (using port 80/tcp)
+HOP RTT       ADDRESS
+1   372.23 ms 10.10.16.1
+2   372.32 ms 10.10.10.126
+
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Wed Jun 12 12:28:30 2019 -- 1 IP address (1 host up) scanned in 624.14 seconds

