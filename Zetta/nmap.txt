@@ -1,0 +1,27 @@
+# Nmap 7.70 scan initiated Sat Aug 31 21:06:50 2019 as: nmap -p- -A -o nmap.txt 10.10.10.156
+Nmap scan report for 10.10.10.156
+Host is up (0.30s latency).
+Not shown: 65532 filtered ports
+PORT   STATE SERVICE VERSION
+21/tcp open  ftp     Pure-FTPd
+22/tcp open  ssh     OpenSSH 7.9p1 Debian 10 (protocol 2.0)
+| ssh-hostkey: 
+|   2048 2d:82:60:c1:8c:8d:39:d2:fc:8b:99:5c:a2:47:f0:b0 (RSA)
+|   256 1f:1b:0e:9a:91:b1:10:5f:75:20:9b:a0:8e:fd:e4:c1 (ECDSA)
+|_  256 b5:0c:a1:2c:1c:71:dd:88:a4:28:e0:89:c9:a3:a0:ab (ED25519)
+80/tcp open  http    nginx
+|_http-server-header: nginx
+|_http-title: Ze::a Share
+Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port
+Aggressive OS guesses: Linux 3.10 - 4.11 (92%), Linux 3.18 (92%), Linux 3.2 - 4.9 (92%), Crestron XPanel control system (90%), Linux 3.16 (89%), ASUS RT-N56U WAP (Linux 3.4) (87%), Linux 3.1 (87%), Linux 3.2 (87%), HP P2000 G3 NAS device (87%), AXIS 210A or 211 Network Camera (Linux 2.6.17) (87%)
+No exact OS matches for host (test conditions non-ideal).
+Network Distance: 2 hops
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+TRACEROUTE (using port 80/tcp)
+HOP RTT       ADDRESS
+1   284.78 ms 10.10.16.1
+2   284.77 ms 10.10.10.156
+
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Sat Aug 31 21:25:15 2019 -- 1 IP address (1 host up) scanned in 1105.47 seconds

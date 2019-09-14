@@ -1,0 +1,215 @@
+<?xml version="1.0"?>
+<!DOCTYPE tudu SYSTEM "/usr/share/tudu/tudu.dtd">
+<todo>
+	<todo done="no" collapse="no">
+		<title>Homepage</title>
+		<text> 
+</text>
+		<todo done="yes" collapse="no">
+			<title>Choose bootstrap theme</title>
+			<text> 
+</text>
+		</todo>
+		<todo done="yes" collapse="no">
+			<title>Create temporary homepage</title>
+			<text> 
+</text>
+		</todo>
+		<todo done="no" collapse="no">
+			<title>Add more contents to the homepage</title>
+			<text> 
+</text>
+		</todo>
+		<todo done="no" collapse="no">
+			<title>Add screenshots of the mobile apps</title>
+			<text> 
+</text>
+		</todo>
+		<todo done="no" collapse="no">
+			<title>Add app store links for the mobile apps</title>
+			<text> 
+</text>
+		</todo>
+	</todo>
+	<todo done="no" collapse="no">
+		<title>Server</title>
+		<text> 
+</text>
+		<todo done="no" collapse="yes">
+			<title>HTTP Server</title>
+			<text> 
+</text>
+			<todo done="yes" collapse="no">
+				<title>Decide server: Apache vs. nginx</title>
+				<text> 
+</text>
+			</todo>
+			<todo done="yes" collapse="no">
+				<title>Install server</title>
+				<text> 
+</text>
+			</todo>
+			<todo done="yes" collapse="no">
+				<title>Configure server to serve static pages only</title>
+				<text> 
+</text>
+			</todo>
+			<todo done="yes" collapse="no">
+				<title>Copy preliminary homepage to /var/www/html</title>
+				<text> 
+</text>
+			</todo>
+			<todo done="no" collapse="no">
+				<title>Testing</title>
+				<text> 
+</text>
+			</todo>
+			<todo done="no" collapse="no">
+				<title>Configure letsencrypt for HTTPS</title>
+				<text> 
+</text>
+			</todo>
+			<todo done="no" collapse="no">
+				<title>Monitoring</title>
+				<text> 
+</text>
+			</todo>
+		</todo>
+		<todo done="no" collapse="yes">
+			<title>Network</title>
+			<text> 
+</text>
+			<todo done="yes" collapse="no">
+				<title>Test IPv6 connectivity</title>
+				<text> 
+</text>
+			</todo>
+			<todo done="no" collapse="no">
+				<title>Add ip6tables rules</title>
+				<text> 
+</text>
+			</todo>
+			<todo done="no" collapse="no">
+				<title>Check for IPv4 specific service configuration</title>
+				<text> 
+</text>
+			</todo>
+		</todo>
+		<todo done="no" collapse="yes">
+			<title>FTP Server</title>
+			<text> 
+</text>
+			<todo done="yes" collapse="no">
+				<title>Decide server: pure-ftpd vs. proftpd</title>
+				<text> 
+</text>
+			</todo>
+			<todo done="yes" collapse="no">
+				<title>Install server</title>
+				<text> 
+</text>
+			</todo>
+			<todo done="yes" collapse="no">
+				<title>Configure server</title>
+				<text> 
+</text>
+			</todo>
+			<todo done="yes" collapse="no">
+				<title>Add authentication module for Ze::a share</title>
+				<text> 
+</text>
+			</todo>
+			<todo done="no" collapse="no">
+				<title>Testing</title>
+				<text> 
+</text>
+			</todo>
+			<todo done="no" collapse="no">
+				<title>Monitoring</title>
+				<text> 
+</text>
+			</todo>
+		</todo>
+		<todo done="no" collapse="yes">
+			<title>RSYNC Server</title>
+			<text> 
+</text>
+			<todo done="no" collapse="no">
+				<title>Rework rsyncd.conf because of security incident</title>
+				<text> 
+</text>
+			</todo>
+			<todo done="no" collapse="no">
+				<title>Re-enable /etc syncing for cloud server to work properly again</title>
+				<text> 
+</text>
+			</todo>
+			<todo done="no" collapse="no">
+				<title>Move my dotfile sync from rsync to git.</title>
+				<text>
+</text>
+			</todo>
+		</todo>
+		<todo done="no" collapse="yes">
+			<title>SYSLOG Server</title>
+			<text> 
+</text>
+			<todo done="yes" collapse="no">
+				<title>Decide server: syslog-ng vs. rsyslog</title>
+				<text> 
+</text>
+			</todo>
+			<todo done="yes" collapse="no">
+				<title>Install server</title>
+				<text> 
+</text>
+			</todo>
+			<todo done="yes" collapse="no">
+				<title>Configure server</title>
+				<text> 
+</text>
+			</todo>
+			<todo done="yes" collapse="no">
+				<title>Check postgresql log for errors after configuration</title>
+				<text>
+</text>
+			</todo>
+			<todo done="yes" collapse="no">
+				<title>Prototype/test DB push of syslog events</title>
+				<text> 
+</text>
+			</todo>
+			<todo done="no" collapse="no">
+				<title>Testing</title>
+				<text> 
+</text>
+			</todo>
+			<todo done="no" collapse="no">
+				<title>Rework syslog configuration to push all events to the DB</title>
+				<text> 
+</text>
+			</todo>
+			<todo done="no" collapse="no">
+				<title>Find/write GUI for syslog-db access/view</title>
+				<text> 
+</text>
+			</todo>
+		</todo>
+		<todo done="no" collapse="yes">
+			<title>Security</title>
+			<text>
+</text>
+			<todo done="no" collapse="no">
+				<title>Run Lynis and remediate findings.</title>
+				<text>
+</text>
+			</todo>
+			<todo done="no" collapse="no">
+				<title>Change shared password scheme from &lt;secret&gt;@userid to something more secure.</title>
+				<text>
+</text>
+			</todo>
+		</todo>
+	</todo>
+</todo>
+
