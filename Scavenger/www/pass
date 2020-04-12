@@ -1,0 +1,20 @@
+ajax=1&token=&controller=AdminLogin&submitLogin=1&passwd=pwnhats.htb&email=admin%40pwnhats.htb&redirect=http%3A%2F%2Fwww.pwnhats.htb%2Fadmin530o6uisg%2F%26token%3De44d0ae2213d01986912abc63712a05b
+						<label class="control-label" for="passwd">
+						<input name="passwd" type="password" id="passwd" class="form-control" value="" tabindex="2" placeholder="&#xf084 Password" />
+						<a href="#" class="show-forgot-password pull-right" >
+							I forgot my password
+				<h4 id="forgot_name">Forgot your password?</h4>
+				<form action="#" id="forgot_password_form" method="post">
+				<h4 id="forgot_confirm_name">Please, check your mailbox.<br/><br/>A link to reset your password has been sent to you.</h4>
+ajax=1&token=&controller=AdminLogin&submitLogin=1&passwd=GetYouAH4t%21&email=pwnhats%40pwnhats.htb&redirect=http%3a//www.pwnhats.htb/admin530o6uisg/%26token%3de44d0ae2213d01986912abc63712a05b
+		                                    <label for="ps-module-addons-connect-password">Password</label>
+		                                    <input name="password_addons" type="password" class="form-control" id="ps-module-addons-connect-password" placeholder="Password">
+		                                <a href="http://addons.prestashop.com/password.php" target="_blank">Forgot your password?</a>
+								<input id="password_addons" name="password_addons" type="password" value="" autocomplete="off" class="form-control ac_input">
+							<a class="btn btn-link pull-right _blank" href="//addons.prestashop.com/en/forgot-your-password">I forgot my password</a>
+												IMAP password
+								<input id="password_addons" name="password_addons" type="password" value="" autocomplete="off" class="form-control ac_input">
+							<a class="btn btn-link pull-right _blank" href="//addons.prestashop.com/en/forgot-your-password">I forgot my password</a>
+												IMAP password
+								<input id="password_addons" name="password_addons" type="password" value="" autocomplete="off" class="form-control ac_input">
+							<a class="btn btn-link pull-right _blank" href="//addons.prestashop.com/en/forgot-your-password">I forgot my password</a>

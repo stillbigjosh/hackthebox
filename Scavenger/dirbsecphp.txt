@@ -1,0 +1,31 @@
+
+-----------------
+DIRB v2.22    
+By The Dark Raver
+-----------------
+
+OUTPUT_FILE: dirbsecphp.txt
+START_TIME: Sun Aug 25 12:34:03 2019
+URL_BASE: http://sec03.rentahacker.htb/
+WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
+OPTION: Not Stopping on warning messages
+EXTENSIONS_LIST: (.php) | (.php) [NUM = 1]
+
+-----------------
+
+GENERATED WORDS: 4612
+
+---- Scanning URL: http://sec03.rentahacker.htb/ ----
++ http://sec03.rentahacker.htb/core.php (CODE:200|SIZE:0)
++ http://sec03.rentahacker.htb/index.php (CODE:302|SIZE:0)
++ http://sec03.rentahacker.htb/login.php (CODE:200|SIZE:4712)
++ http://sec03.rentahacker.htb/plugin.php (CODE:200|SIZE:4669)
++ http://sec03.rentahacker.htb/search.php (CODE:302|SIZE:0)
++ http://sec03.rentahacker.htb/shell.php (CODE:200|SIZE:0)
++ http://sec03.rentahacker.htb/signup.php (CODE:200|SIZE:4729)
++ http://sec03.rentahacker.htb/view.php (CODE:200|SIZE:4667)
++ http://sec03.rentahacker.htb/wiki.php (CODE:200|SIZE:4667)
+
+-----------------
+END_TIME: Sun Aug 25 13:02:48 2019
+DOWNLOADED: 4612 - FOUND: 9

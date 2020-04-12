@@ -1,0 +1,41 @@
+
+-----------------
+DIRB v2.22    
+By The Dark Raver
+-----------------
+
+OUTPUT_FILE: dirbphp.txt
+START_TIME: Mon Aug 19 21:55:23 2019
+URL_BASE: http://www.supersechosting.htb/
+WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
+OPTION: Not Stopping on warning messages
+EXTENSIONS_LIST: (.php) | (.php) [NUM = 1]
+
+-----------------
+
+GENERATED WORDS: 4612
+
+---- Scanning URL: http://www.supersechosting.htb/ ----
+
+-----------------
+DIRB v2.22    
+By The Dark Raver
+-----------------
+
+OUTPUT_FILE: dirbphp.txt
+START_TIME: Mon Aug 19 22:10:19 2019
+URL_BASE: http://www.supersechosting.htb/
+WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
+OPTION: Not Stopping on warning messages
+EXTENSIONS_LIST: (.php) | (.php) [NUM = 1]
+
+-----------------
+
+GENERATED WORDS: 4612
+
+---- Scanning URL: http://www.supersechosting.htb/ ----
++ http://www.supersechosting.htb/index.php (CODE:200|SIZE:2520)
+
+-----------------
+END_TIME: Mon Aug 19 22:52:07 2019
+DOWNLOADED: 4612 - FOUND: 1

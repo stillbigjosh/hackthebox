@@ -1,0 +1,24 @@
+
+-----------------
+DIRB v2.22    
+By The Dark Raver
+-----------------
+
+OUTPUT_FILE: dirbblog.txt
+START_TIME: Sat Aug 24 10:36:01 2019
+URL_BASE: http://www.justanotherblog.htb/
+WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
+OPTION: Not Stopping on warning messages
+
+-----------------
+
+GENERATED WORDS: 4612
+
+---- Scanning URL: http://www.justanotherblog.htb/ ----
++ http://www.justanotherblog.htb/index.html (CODE:200|SIZE:27)
+==> DIRECTORY: http://www.justanotherblog.htb/javascript/
+==> DIRECTORY: http://www.justanotherblog.htb/manual/
++ http://www.justanotherblog.htb/phpmyadmin (CODE:403|SIZE:308)
++ http://www.justanotherblog.htb/server-status (CODE:403|SIZE:311)
+
+---- Entering directory: http://www.justanotherblog.htb/javascript/ ----

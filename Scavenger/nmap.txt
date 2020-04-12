@@ -1,0 +1,81 @@
+# Nmap 7.70 scan initiated Sun Aug 18 20:43:03 2019 as: nmap -p- -A -o nmap.txt -Pn 10.10.10.155
+RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+RTTVAR has grown to over 2.3 seconds, decreasing to 2.0
+Nmap scan report for 10.10.10.155
+Host is up (0.34s latency).
+Not shown: 65528 filtered ports
+PORT   STATE  SERVICE  VERSION
+20/tcp closed ftp-data
+21/tcp open   ftp      vsftpd 3.0.3
+22/tcp open   ssh      OpenSSH 7.4p1 Debian 10+deb9u4 (protocol 2.0)
+| ssh-hostkey: 
+|   2048 df:94:47:03:09:ed:8c:f7:b6:91:c5:08:b5:20:e5:bc (RSA)
+|   256 e3:05:c1:c5:d1:9c:3f:91:0f:c0:35:4b:44:7f:21:9e (ECDSA)
+|_  256 45:92:c0:a1:d9:5d:20:d6:eb:49:db:12:a5:70:b7:31 (ED25519)
+25/tcp open   smtp     Exim smtpd 4.89
+| smtp-commands: ib01.supersechosting.htb Hello nmap.scanme.org [10.10.16.18], SIZE 52428800, 8BITMIME, PIPELINING, PRDR, HELP, 
+|_ Commands supported: AUTH HELO EHLO MAIL RCPT DATA BDAT NOOP QUIT RSET HELP 
+|_smtp-ntlm-info: ERROR: Script execution failed (use -d to debug)
+43/tcp open   whois?
+| fingerprint-strings: 
+|   GenericLines, GetRequest, HTTPOptions, RTSPRequest: 
+|     % SUPERSECHOSTING WHOIS server v0.6beta@MariaDB10.1.37
+|     more information on SUPERSECHOSTING, visit http://www.supersechosting.htb
+|_    This query returned 0 object
+53/tcp open   domain   ISC BIND 9.10.3-P4 (Debian Linux)
+| dns-nsid: 
+|_  bind.version: 9.10.3-P4-Debian
+80/tcp open   http     Apache httpd 2.4.25 ((Debian))
+|_http-title: Site doesn't have a title (text/html).
+1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :
+SF-Port43-TCP:V=7.70%I=7%D=8/18%Time=5D59B456%P=x86_64-pc-linux-gnu%r(Gene
+SF:ricLines,A9,"%\x20SUPERSECHOSTING\x20WHOIS\x20server\x20v0\.6beta@Maria
+SF:DB10\.1\.37\r\n%\x20for\x20more\x20information\x20on\x20SUPERSECHOSTING
+SF:,\x20visit\x20http://www\.supersechosting\.htb\r\n%\x20This\x20query\x2
+SF:0returned\x200\x20object\r\n")%r(GetRequest,A9,"%\x20SUPERSECHOSTING\x2
+SF:0WHOIS\x20server\x20v0\.6beta@MariaDB10\.1\.37\r\n%\x20for\x20more\x20i
+SF:nformation\x20on\x20SUPERSECHOSTING,\x20visit\x20http://www\.supersecho
+SF:sting\.htb\r\n%\x20This\x20query\x20returned\x200\x20object\r\n")%r(HTT
+SF:POptions,A9,"%\x20SUPERSECHOSTING\x20WHOIS\x20server\x20v0\.6beta@Maria
+SF:DB10\.1\.37\r\n%\x20for\x20more\x20information\x20on\x20SUPERSECHOSTING
+SF:,\x20visit\x20http://www\.supersechosting\.htb\r\n%\x20This\x20query\x2
+SF:0returned\x200\x20object\r\n")%r(RTSPRequest,A9,"%\x20SUPERSECHOSTING\x
+SF:20WHOIS\x20server\x20v0\.6beta@MariaDB10\.1\.37\r\n%\x20for\x20more\x20
+SF:information\x20on\x20SUPERSECHOSTING,\x20visit\x20http://www\.supersech
+SF:osting\.htb\r\n%\x20This\x20query\x20returned\x200\x20object\r\n");
+Aggressive OS guesses: Linux 3.2 - 4.9 (95%), Linux 3.1 (95%), Linux 3.2 (95%), AXIS 210A or 211 Network Camera (Linux 2.6.17) (94%), Linux 3.12 (94%), Linux 3.13 (94%), Linux 3.8 - 3.11 (94%), Linux 4.8 (94%), Linux 4.4 (94%), Linux 4.9 (94%)
+No exact OS matches for host (test conditions non-ideal).
+Network Distance: 2 hops
+Service Info: Host: ib01.supersechosting.htb; OSs: Unix, Linux; CPE: cpe:/o:linux:linux_kernel
+
+TRACEROUTE (using port 20/tcp)
+HOP RTT       ADDRESS
+1   219.77 ms 10.10.16.1
+2   400.64 ms 10.10.10.155
+
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Sun Aug 18 21:27:19 2019 -- 1 IP address (1 host up) scanned in 2657.20 seconds
