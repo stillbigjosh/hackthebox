@@ -1,0 +1,155 @@
+########## Getting Netbios name ##########
+Doing NBT name scan for addresses from 10.10.10.161
+
+
+########## Checking for NULL sessions ##########
+Could not initialise srvsvc. Error was NT_STATUS_ACCESS_DENIED
+
+########## Enumerating domains ##########
+name:[HTB] idx:[0x0]
+name:[Builtin] idx:[0x0]
+
+########## Enumerating password and lockout policies ##########
+[+] Attaching to 10.10.10.161 using a NULL share
+
+[+] Trying protocol 445/SMB...
+
+	[!] Protocol failed: 'NoneType' object has no attribute 'decode'
+
+[+] Trying protocol 139/SMB...
+
+	[!] Protocol failed: Cannot request session (Called Name:10.10.10.161)
+########## Enumerating users ##########
+Starting Nmap 7.70 ( https://nmap.org ) at 2019-11-02 18:49 WAT
+Nmap scan report for forest.htb.local (10.10.10.161)
+Host is up (0.34s latency).
+
+PORT    STATE SERVICE
+139/tcp open  netbios-ssn
+445/tcp open  microsoft-ds
+Host script results:
+| smb-enum-users: 
+|   HTB\$331000-VK4ADACQNUCA (RID: 1123)
+|     Flags:       Normal user account, Password Expired, Password not required, Account disabled
+|   HTB\Administrator (RID: 500)
+|     Full name:   Administrator
+|     Description: Built-in account for administering the computer/domain
+|     Flags:       Normal user account, Password Expired
+|   HTB\andy (RID: 1150)
+|     Full name:   Andy Hislip
+|     Flags:       Normal user account, Password does not expire
+|   HTB\DefaultAccount (RID: 503)
+|     Description: A user account managed by the system.
+|     Flags:       Normal user account, Password does not expire, Password not required, Account disabled
+|   HTB\Guest (RID: 501)
+|     Description: Built-in account for guest access to the computer/domain
+|     Flags:       Normal user account, Password does not expire, Password not required, Account disabled
+|   HTB\hax0r (RID: 7601)
+|     Flags:       Normal user account
+|   HTB\HealthMailbox0659cc1 (RID: 1144)
+|     Full name:   HealthMailbox-EXCH01-010
+|     Flags:       Normal user account, Password does not expire
+|   HTB\HealthMailbox670628e (RID: 1137)
+|     Full name:   HealthMailbox-EXCH01-003
+|     Flags:       Normal user account, Password does not expire
+|   HTB\HealthMailbox6ded678 (RID: 1139)
+|     Full name:   HealthMailbox-EXCH01-005
+|     Flags:       Normal user account, Password does not expire
+|   HTB\HealthMailbox7108a4e (RID: 1143)
+|     Full name:   HealthMailbox-EXCH01-009
+|     Flags:       Normal user account, Password does not expire
+|   HTB\HealthMailbox83d6781 (RID: 1140)
+|     Full name:   HealthMailbox-EXCH01-006
+|     Flags:       Normal user account, Password does not expire
+|   HTB\HealthMailbox968e74d (RID: 1138)
+|     Full name:   HealthMailbox-EXCH01-004
+|     Flags:       Normal user account, Password does not expire
+|   HTB\HealthMailboxb01ac64 (RID: 1142)
+|     Full name:   HealthMailbox-EXCH01-008
+|     Flags:       Normal user account, Password does not expire
+|   HTB\HealthMailboxc0a90c9 (RID: 1136)
+|     Full name:   HealthMailbox-EXCH01-002
+|     Flags:       Normal user account, Password does not expire
+|   HTB\HealthMailboxc3d7722 (RID: 1134)
+|     Full name:   HealthMailbox-EXCH01-Mailbox-Database-1118319013
+|     Flags:       Normal user account, Password does not expire
+|   HTB\HealthMailboxfc9daad (RID: 1135)
+|     Full name:   HealthMailbox-EXCH01-001
+|     Flags:       Normal user account, Password does not expire
+|   HTB\HealthMailboxfd87238 (RID: 1141)
+|     Full name:   HealthMailbox-EXCH01-007
+|     Flags:       Normal user account, Password does not expire
+|   HTB\krbtgt (RID: 502)
+|     Description: Key Distribution Center Service Account
+|     Flags:       Normal user account, Password Expired, Account disabled
+|   HTB\lucinda (RID: 1146)
+|     Full name:   Lucinda Berger
+|     Flags:       Normal user account, Password does not expire
+|   HTB\mark (RID: 1151)
+|     Full name:   Mark Brandt
+|_    Flags:       Normal user account, Password does not expire
+Nmap done: 1 IP address (1 host up) scanned in 15.72 seconds
+user:[Administrator] rid:[0x1f4]
+user:[Guest] rid:[0x1f5]
+user:[krbtgt] rid:[0x1f6]
+user:[DefaultAccount] rid:[0x1f7]
+user:[$331000-VK4ADACQNUCA] rid:[0x463]
+user:[SM_2c8eef0a09b545acb] rid:[0x464]
+user:[SM_ca8c2ed5bdab4dc9b] rid:[0x465]
+user:[SM_75a538d3025e4db9a] rid:[0x466]
+user:[SM_681f53d4942840e18] rid:[0x467]
+user:[SM_1b41c9286325456bb] rid:[0x468]
+user:[SM_9b69f1b9d2cc45549] rid:[0x469]
+user:[SM_7c96b981967141ebb] rid:[0x46a]
+user:[SM_c75ee099d0a64c91b] rid:[0x46b]
+user:[SM_1ffab36a2f5f479cb] rid:[0x46c]
+user:[HealthMailboxc3d7722] rid:[0x46e]
+user:[HealthMailboxfc9daad] rid:[0x46f]
+user:[HealthMailboxc0a90c9] rid:[0x470]
+user:[HealthMailbox670628e] rid:[0x471]
+user:[HealthMailbox968e74d] rid:[0x472]
+user:[HealthMailbox6ded678] rid:[0x473]
+user:[HealthMailbox83d6781] rid:[0x474]
+user:[HealthMailboxfd87238] rid:[0x475]
+user:[HealthMailboxb01ac64] rid:[0x476]
+user:[HealthMailbox7108a4e] rid:[0x477]
+user:[HealthMailbox0659cc1] rid:[0x478]
+user:[sebastien] rid:[0x479]
+user:[lucinda] rid:[0x47a]
+user:[svc-alfresco] rid:[0x47b]
+user:[andy] rid:[0x47e]
+user:[mark] rid:[0x47f]
+user:[santi] rid:[0x480]
+user:[hax0r] rid:[0x1db1]
+
+########## Enumerating Administrators ##########
+
+Couldn't lookup SIDs
+########## Enumerating Domain Admins ##########
+HTB\Administrator
+########## Enumerating groups ##########
+Starting Nmap 7.70 ( https://nmap.org ) at 2019-11-02 18:50 WAT
+Nmap scan report for forest.htb.local (10.10.10.161)
+Host is up (1.5s latency).
+
+PORT    STATE SERVICE
+139/tcp open  netbios-ssn
+445/tcp open  microsoft-ds
+Nmap done: 1 IP address (1 host up) scanned in 78.02 seconds
+########## Enumerating shares ##########
+Starting Nmap 7.70 ( https://nmap.org ) at 2019-11-02 18:51 WAT
+Nmap scan report for forest.htb.local (10.10.10.161)
+Host is up (0.21s latency).
+
+PORT    STATE SERVICE
+139/tcp open  netbios-ssn
+445/tcp open  microsoft-ds
+Nmap done: 1 IP address (1 host up) scanned in 431.12 seconds
+########## Bruteforcing all users with 'password', blank and username as password
+Hydra v8.9.1 (c) 2019 by van Hauser/THC - Please do not use in military or secret service organizations, or for illegal purposes.
+
+Hydra (https://github.com/vanhauser-thc/thc-hydra) starting at 2019-11-02 18:58:32
+[DATA] max 1 task per 1 server, overall 1 task, 99 login tries (l:33/p:3), ~99 tries per task
+[DATA] attacking smb://10.10.10.161:445/
+
+[ERROR] could not connect to target smb://10.10.10.161:445/
