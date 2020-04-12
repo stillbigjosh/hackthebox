@@ -1,0 +1,21 @@
+
+-----------------
+DIRB v2.22    
+By The Dark Raver
+-----------------
+
+OUTPUT_FILE: dirbext.txt
+START_TIME: Sat Sep 14 20:04:22 2019
+URL_BASE: http://10.10.10.157/
+WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
+OPTION: Not Stopping on warning messages
+EXTENSIONS_LIST: (.php,.html,.json) | (.php)(.html)(.json) [NUM = 3]
+
+-----------------
+
+GENERATED WORDS: 4612
+
+---- Scanning URL: http://10.10.10.157/ ----
++ http://10.10.10.157/aa.php (CODE:200|SIZE:1)
++ http://10.10.10.157/index.html (CODE:200|SIZE:10918)
+http://10.10.10.157/panel.php

