@@ -1,0 +1,61 @@
+
+-----------------
+DIRB v2.22    
+By The Dark Raver
+-----------------
+
+OUTPUT_FILE: dirb.txt
+START_TIME: Sun Oct 20 17:54:52 2019
+URL_BASE: https://docker.registry.htb/
+WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
+OPTION: Not Stopping on warning messages
+
+-----------------
+
+GENERATED WORDS: 4613
+
+---- Scanning URL: https://docker.registry.htb/ ----
++ https://docker.registry.htb/v2 (CODE:301|SIZE:39)
+
+-----------------
+END_TIME: Sun Oct 20 18:37:21 2019
+DOWNLOADED: 4613 - FOUND: 1
+
+-----------------
+DIRB v2.22    
+By The Dark Raver
+-----------------
+
+OUTPUT_FILE: dirb.txt
+START_TIME: Sun Oct 20 20:11:00 2019
+URL_BASE: https://docker.registry.htb/v2/
+WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
+OPTION: Not Stopping on warning messages
+
+-----------------
+
+GENERATED WORDS: 4613
+
+---- Scanning URL: https://docker.registry.htb/v2/ ----
+
+-----------------
+DIRB v2.22    
+By The Dark Raver
+-----------------
+
+OUTPUT_FILE: dirb.txt
+START_TIME: Sun Oct 20 20:16:01 2019
+URL_BASE: https://docker.registry.htb/v2/
+WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
+AUTHORIZATION: admin:admin
+OPTION: Not Stopping on warning messages
+
+-----------------
+
+GENERATED WORDS: 4613
+
+---- Scanning URL: https://docker.registry.htb/v2/ ----
+
+-----------------
+END_TIME: Sun Oct 20 20:59:32 2019
+DOWNLOADED: 4613 - FOUND: 0

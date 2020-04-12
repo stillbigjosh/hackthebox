@@ -1,0 +1,193 @@
+SQLite format 3
+312ed58e041879f9c20b71269399a9daf40cd8bd02fac766477600cece5d8d96cd5c1b26531855beb2a6a4b15a004f3c72019-11-01 19:41:3710.10.15.180Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/60.02019-11-15 19:41:37
+320e3dd1607122fb4107bb0b1870b788c674413558ab88ce7771b10a21d0a6b23b8a8678d0c47ed44e5b2a8d9c119f8e02019-11-01 19:17:59127.0.0.1Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/60.02019-11-15 19:17:59
+365450aa174235ca940794689a18487c550dc1637be77807531da4c964b76d57b610d04ddea5dd1c2b2a59cde180e56a92019-11-01 18:40:2010.10.14.136Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/60.02019-11-15 18:40:20
+bolt_authtoken
+bolt_log_system
+!	bolt_users
+bolt_blocks
+bolt_showcases
+bolt_entries
+bolt_pages
+bolt_homepage
+3/	?'%
+2019-11-01 19:41:37Using cached data/bolt/async/dashboardnewsdashboardnews10.10.15.180news{"file":"/src/Controller/Async/General.php","line":361}
+3-	-
+2019-11-01 19:41:37Logged in: admin/bolt/bolt/loginpostLogin10.10.15.180authentication{"file":"/src/Controller/Backend/Authentication.php","line":193}
+2019-11-01 19:41:30Failed login attempt for 'Admin'./bolt/bolt/loginpostLogin10.10.15.180authentication{"file":"/src/AccessControl/Login.php","line":280}
+3/	?'
+2019-11-01 19:20:41Using cached data/bolt/async/dashboardnewsdashboardnews127.0.0.1news{"file":"/src/Controller/Async/General.php","line":361}
+3U	?'
+2019-11-01 19:17:59Error occurred during newsfeed fetch/bolt/async/dashboardnewsdashboardnews127.0.0.1exception{"file":"/var/www/html/bolt/vendor/guzzlehttp/guzzle/src/Handler/CurlFactory.php","line":185,"class":"","function":"","message":"cURL error 6: Could not resolve host: news.bolt.cm (see http://curl.haxx.se/libcurl/c/libcurl-errors.html)"}
+3q	?'
+2019-11-01 19:17:59Fetching from remote server: https://news.bolt.cm//bolt/async/dashboardnewsdashboardnews127.0.0.1news{"file":"/src/Controller/Async/General.php","line":386}
+3-	-
+2019-11-01 19:17:59Logged in: admin/bolt/bolt/loginpostLogin127.0.0.1authentication{"file":"/src/Controller/Backend/Authentication.php","line":193}
+2019-11-01 18:52:45Failed login attempt for 'Admin'./bolt/bolt/loginpostLogin10.10.15.79authentication{"file":"/src/AccessControl/Login.php","line":280}
+2019-11-01 18:52:37Failed login attempt for 'Admin'./bolt/bolt/loginpostLogin10.10.15.79authentication{"file":"/src/AccessControl/Login.php","line":280}
+3-	-
+2019-11-01 18:40:20Logged in: admin/bolt/bolt/loginpostLogin10.10.14.136authentication{"file":"/src/Controller/Backend/Authentication.php","line":193}
+3/	?'!
+2019-10-21 09:09:42Using cached data/bolt/async/dashboardnewsdashboardnews10.10.14.2news{"file":"/src/Controller/Async/General.php","line":361}
+3q	?'!
+2019-10-21 09:08:46Fetching from remote server: https://news.bolt.cm//bolt/async/dashboardnewsdashboardnews10.10.14.2news{"file":"/src/Controller/Async/General.php","line":386}
+3U	?'!
+2019-10-17 14:34:53Error occurred during newsfeed fetch/bolt/async/dashboardnewsdashboardnews10.10.14.2exception{"file":"/var/www/html/bolt/vendor/guzzlehttp/guzzle/src/Handler/CurlFactory.php","line":185,"class":"","function":"","message":"cURL error 6: Could not resolve host: news.bolt.cm (see http://curl.haxx.se/libcurl/c/libcurl-errors.html)"}
+3q	?'!
+2019-10-17 14:34:53Fetching from remote server: https://news.bolt.cm//bolt/async/dashboardnewsdashboardnews10.10.14.2news{"file":"/src/Controller/Async/General.php","line":386}
+3-	-
+2019-10-17 14:34:52Logged in: admin/bolt/bolt/loginpostLogin10.10.14.2authentication{"file":"/src/Controller/Backend/Authentication.php","line":193}
+3q	?'%
+2019-10-08 21:25:07Fetching from remote server: https://news.bolt.cm//bolt/async/dashboardnewsdashboardnews192.168.1.52news{"file":"/src/Controller/Async/General.php","line":386}
+2019-10-08 21:25:07The 'mailoptions' need to be set in app/config/config.yml/bolt/bolt/userfirstuserfirst192.168.1.52config{"file":"/src/Controller/Backend/Users.php","line":463}
+2019-10-08 21:25:07Added user account 'Admin'./bolt/bolt/userfirstuserfirst192.168.1.52security{"file":"/src/Controller/Backend/Users.php","line":203}
+2019-11-01 19:41:37
+2019-11-01 19:41:37
+2019-11-01 19:41:30
+2019-11-01 19:20:41
+2019-11-01 19:17:59
+2019-11-01 19:17:59
+2019-11-01 19:17:59
+2019-11-01 18:52:45
+2019-11-01 18:52:37
+2019-11-01 18:40:20	
+2019-10-21 09:09:42
+2019-10-21 09:08:46
+2019-10-17 14:34:53
+2019-10-17 14:34:53
+2019-10-17 14:34:52
+2019-10-08 21:25:07
+2019-10-08 21:25:07
+3	2019-10-08 21:25:07
+news
+authentication
+authentication
+news
+exception
+news
+authentication
+authentication
+authentication
+authentication	
+news
+news
+exception
+news
+authentication
+news
+config
+	security
+;indexIDX_4C524BC3EA11294378CED90Bbolt_relations
+CREATE INDEX IDX_4C524BC3EA11294378CED90B ON bolt_relations (from_contenttype, from_id)
+tablebolt_relationsbolt_relations
+CREATE TABLE bolt_relations (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, from_contenttype VARCHAR(32) NOT NULL, from_id INTEGER NOT NULL, to_contenttype VARCHAR(32) NOT NULL, to_id INTEGER NOT NULL)n
+	indexIDX_805C16D9E25D857Ebolt_log_system
+CREATE INDEX IDX_805C16D9E25D857E ON bolt_log_system (context)n
+	indexIDX_805C16D975DAD987bolt_log_system
+CREATE INDEX IDX_805C16D975DAD987 ON bolt_log_system (ownerid)k
+indexIDX_805C16D9AA9E377Abolt_log_system
+CREATE INDEX IDX_805C16D9AA9E377A ON bolt_log_system (date)l
+indexIDX_805C16D99AEACC13bolt_log_system
+CREATE INDEX IDX_805C16D99AEACC13 ON bolt_log_system (level)
+=tablebolt_log_systembolt_log_system
+CREATE TABLE bolt_log_system (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, level INTEGER NOT NULL, date DATETIME NOT NULL, message VARCHAR(1024) NOT NULL, ownerid INTEGER DEFAULT NULL, requesturi VARCHAR(128) NOT NULL, route VARCHAR(128) NOT NULL, ip VARCHAR(45) NOT NULL, context VARCHAR(32) NOT NULL, source CLOB NOT NULL --(DC2Type:json)
+indexIDX_946F972B0AEEF39bolt_log_change
+CREATE INDEX IDX_946F972B0AEEF39 ON bolt_log_change (mutation_type)n
+indexIDX_946F972E625AE99bolt_log_change
+CREATE INDEX IDX_946F972E625AE99 ON bolt_log_change (contentid)p
+indexIDX_946F972745E1826bolt_log_change
+CREATE INDEX IDX_946F972745E1826 ON bolt_log_change (contenttype)l
+indexIDX_946F97275DAD987bolt_log_change
+CREATE INDEX IDX_946F97275DAD987 ON bolt_log_change (ownerid)i	
+indexIDX_946F972AA9E377Abolt_log_change
+CREATE INDEX IDX_946F972AA9E377A ON bolt_log_change (date)
+#tablebolt_log_changebolt_log_change	CREATE TABLE bolt_log_change (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, date DATETIME NOT NULL, ownerid INTEGER DEFAULT NULL, title VARCHAR(256) NOT NULL, contenttype VARCHAR(128) NOT NULL, contentid INTEGER NOT NULL, mutation_type VARCHAR(16) NOT NULL, diff CLOB NOT NULL --(DC2Type:json)
+, comment VARCHAR(150) DEFAULT NULL)
+;indexIDX_8B31D78784A0A3ED745E1826bolt_field_value
+CREATE INDEX IDX_8B31D78784A0A3ED745E1826 ON bolt_field_value (content_id, contenttype)
+-tablebolt_field_valuebolt_field_value
+CREATE TABLE bolt_field_value (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, contenttype VARCHAR(64) NOT NULL, content_id INTEGER NOT NULL, name VARCHAR(64) NOT NULL, grouping INTEGER DEFAULT 0 NOT NULL, block VARCHAR(64) DEFAULT NULL, fieldname VARCHAR(255) NOT NULL, fieldtype VARCHAR(255) NOT NULL, value_string VARCHAR(255) DEFAULT NULL, value_text CLOB DEFAULT NULL, value_integer INTEGER DEFAULT NULL, value_float DOUBLE PRECISION DEFAULT NULL, value_decimal NUMERIC(18, 9) DEFAULT NULL, value_date DATE DEFAULT NULL, value_datetime DATETIME DEFAULT NULL, value_json_array CLOB NOT NULL --(DC2Type:json)
+, value_boolean BOOLEAN DEFAULT '0' NOT NULL)a
+}indexIDX_CD38E123615F8869bolt_cron
+CREATE INDEX IDX_CD38E123615F8869 ON bolt_cron (interim)
+tablebolt_cronbolt_cron
+CREATE TABLE bolt_cron (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, interim VARCHAR(16) NOT NULL, lastrun DATETIME NOT NULL)l
+indexIDX_740AC52FA76ED395bolt_authtoken
+CREATE INDEX IDX_740AC52FA76ED395 ON bolt_authtoken (user_id)P
+Ytablesqlite_sequencesqlite_sequence
+CREATE TABLE sqlite_sequence(name,seq)
+tablebolt_authtokenbolt_authtoken
+CREATE TABLE bolt_authtoken (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, user_id INTEGER DEFAULT NULL, username VARCHAR(32) DEFAULT NULL, token VARCHAR(128) NOT NULL, salt VARCHAR(128) NOT NULL, lastseen DATETIME DEFAULT NULL, ip VARCHAR(45) DEFAULT NULL, useragent VARCHAR(128) DEFAULT NULL, validity DATETIME DEFAULT NULL)
+Gtablebolt_homepagebolt_homepage#CREATE TABLE bolt_homepage (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, slug VARCHAR(128) NOT NULL COLLATE BINARY, datecreated DATETIME NOT NULL, datechanged DATETIME NOT NULL, datepublish DATETIME DEFAULT NULL, datedepublish DATETIME DEFAULT NULL, ownerid INTEGER DEFAULT NULL, status VARCHAR(32) NOT NULL COLLATE BINARY, title VARCHAR(256) DEFAULT NULL COLLATE BINARY, teaser CLOB DEFAULT NULL COLLATE BINARY, content CLOB DEFAULT NULL COLLATE BINARY, contentlink VARCHAR(256) DEFAULT NULL COLLATE BINARY, templatefields CLOB DEFAULT NULL --(DC2Type:json)
+, image CLOB DEFAULT NULL --(DC2Type:json)
+}indexIDX_5585B5450F9BB84bolt_users"CREATE INDEX IDX_5585B5450F9BB84 ON bolt_users (enabled)i
+	indexUNIQ_5585B54E7927C74bolt_users!CREATE UNIQUE INDEX UNIQ_5585B54E7927C74 ON bolt_users (email)l
+indexUNIQ_5585B54F85E0677bolt_users CREATE UNIQUE INDEX UNIQ_5585B54F85E0677 ON bolt_users (username)
+tablebolt_usersbolt_users
+CREATE TABLE bolt_users (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, username VARCHAR(32) NOT NULL, password VARCHAR(128) NOT NULL, email VARCHAR(254) NOT NULL, lastseen DATETIME DEFAULT NULL, lastip VARCHAR(45) DEFAULT NULL, displayname VARCHAR(32) NOT NULL, stack CLOB NOT NULL --(DC2Type:json)
+, enabled BOOLEAN DEFAULT '1' NOT NULL, shadowpassword VARCHAR(128) DEFAULT NULL, shadowtoken VARCHAR(128) DEFAULT NULL, shadowvalidity DATETIME DEFAULT NULL, failedlogins INTEGER DEFAULT 0 NOT NULL, throttleduntil DATETIME DEFAULT NULL, roles CLOB NOT NULL --(DC2Type:json)
+	indexIDX_ABAA1200FEA3B3F9bolt_taxonomy
+CREATE INDEX IDX_ABAA1200FEA3B3F9 ON bolt_taxonomy (sortorder)f
+indexIDX_ABAA1200989D9B62bolt_taxonomy
+CREATE INDEX IDX_ABAA1200989D9B62 ON bolt_taxonomy (slug)o
+indexIDX_ABAA1200FE2A268Fbolt_taxonomy
+CREATE INDEX IDX_ABAA1200FE2A268F ON bolt_taxonomy (taxonomytype)n
+indexIDX_ABAA1200745E1826bolt_taxonomy
+CREATE INDEX IDX_ABAA1200745E1826 ON bolt_taxonomy (contenttype)m
+indexIDX_ABAA120084A0A3EDbolt_taxonomy
+CREATE INDEX IDX_ABAA120084A0A3ED ON bolt_taxonomy (content_id)
+tablebolt_taxonomybolt_taxonomy
+CREATE TABLE bolt_taxonomy (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, content_id INTEGER NOT NULL, contenttype VARCHAR(32) NOT NULL, taxonomytype VARCHAR(32) NOT NULL, slug VARCHAR(64) NOT NULL, name VARCHAR(64) NOT NULL, sortorder INTEGER DEFAULT 0 NOT NULL)
+3indexIDX_4C524BC35ACD264530354A65bolt_relations
+CREATE INDEX IDX_4C524BC35ACD264530354A65 ON bolt_relations (to_contenttype, to_id)
+3admin$2y$10$e.ChUytg9SrL7AsboF2bX.wWKQ1LkS5Fi3/Z0yYD86.P5E9cpY7PKbolt@registry.htb2019-11-01 19:41:3710.10.15.180Admin["files://shell.php","themes://index.php"]["root","everyone"]
+	admin
+/	bolt@registry.htb
+indexIDX_9D9C7FD3A5131421bolt_homepage'CREATE INDEX IDX_9D9C7FD3A5131421 ON bolt_homepage (datepublish)
+indexIDX_31AF1BC8A5131421bolt_pages.CREATE INDEX IDX_31AF1BC8A5131421 ON bolt_pages (datepublish)hr
+indexIDX_31AF1BC8BE74E59Abolt_pages-CREATE INDEX IDX_31AF1BC8BE74E59A ON bolt_pages (datechanged)hq
+indexIDX_31AF1BC8AFBA6FD8bolt_pages,CREATE INDEX IDX_31AF1BC8AFBA6FD8 ON bolt_pages (datecreated)`p
+yindexIDX_31AF1BC8989D9B62bolt_pages+CREATE INDEX IDX_31AF1BC8989D9B62 ON bolt_pages (slug)
+5tablebolt_pagesbolt_pages*CREATE TABLE bolt_pages (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, slug VARCHAR(128) NOT NULL COLLATE BINARY, datecreated DATETIME NOT NULL, datechanged DATETIME NOT NULL, datepublish DATETIME DEFAULT NULL, datedepublish DATETIME DEFAULT NULL, ownerid INTEGER DEFAULT NULL, status VARCHAR(32) NOT NULL COLLATE BINARY, title VARCHAR(256) DEFAULT NULL COLLATE BINARY, teaser CLOB DEFAULT NULL COLLATE BINARY, body CLOB DEFAULT NULL COLLATE BINARY, template VARCHAR(256) DEFAULT NULL COLLATE BINARY, templatefields CLOB DEFAULT NULL --(DC2Type:json)
+, image CLOB DEFAULT NULL --(DC2Type:json)
+indexIDX_9D9C7FD37B00651Cbolt_homepage)CREATE INDEX IDX_9D9C7FD37B00651C ON bolt_homepage (status)pm
+indexIDX_9D9C7FD3B7805520bolt_homepage(CREATE INDEX IDX_9D9C7FD3B7805520 ON bolt_homepage (datedepublish)nk
+indexIDX_9D9C7FD3BE74E59Abolt_homepage&CREATE INDEX IDX_9D9C7FD3BE74E59A ON bolt_homepage (datechanged)nj
+indexIDX_9D9C7FD3AFBA6FD8bolt_homepage%CREATE INDEX IDX_9D9C7FD3AFBA6FD8 ON bolt_homepage (datecreated)fi
+indexIDX_9D9C7FD3989D9B62bolt_homepage$CREATE INDEX IDX_9D9C7FD3989D9B62 ON bolt_homepage (slug)
+)tablebolt_entriesbolt_entries2CREATE TABLE bolt_entries (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, slug VARCHAR(128) NOT NULL COLLATE BINARY, datecreated DATETIME NOT NULL, datechanged DATETIME NOT NULL, datepublish DATETIME DEFAULT NULL, datedepublish DATETIME DEFAULT NULL, ownerid INTEGER DEFAULT NULL, status VARCHAR(32) NOT NULL COLLATE BINARY, title VARCHAR(256) DEFAULT NULL COLLATE BINARY, teaser CLOB DEFAULT NULL COLLATE BINARY, body CLOB DEFAULT NULL COLLATE BINARY, templatefields CLOB DEFAULT NULL --(DC2Type:json)
+, image CLOB DEFAULT NULL --(DC2Type:json)
+, video CLOB DEFAULT NULL --(DC2Type:json)
+}indexIDX_31AF1BC87B00651Cbolt_pages1CREATE INDEX IDX_31AF1BC87B00651C ON bolt_pages (status)jt
+indexIDX_31AF1BC8B7805520bolt_pages/CREATE INDEX IDX_31AF1BC8B7805520 ON bolt_pages (datedepublish)
+FX_31
+indexIDX_7B2C81B77B00651Cbolt_blocksHCREATE INDEX IDX_7B2C81B77B00651C ON bolt_blocks (status)l
+indexIDX_7B2C81B7B7805520bolt_blocksGCREATE INDEX IDX_7B2C81B7B7805520 ON bolt_blocks (datedepublish)ly
+indexIDX_2696ADF0BE74E59Abolt_entries5CREATE INDEX IDX_2696ADF0BE74E59A ON bolt_entries (datechanged)lx
+indexIDX_2696ADF0AFBA6FD8bolt_entries4CREATE INDEX IDX_2696ADF0AFBA6FD8 ON bolt_entries (datecreated)dw
+}indexIDX_2696ADF0989D9B62bolt_entries3CREATE INDEX IDX_2696ADF0989D9B62 ON bolt_entries (slug)
+	indexIDX_7B2C81B7A5131421bolt_blocksFCREATE INDEX IDX_7B2C81B7A5131421 ON bolt_blocks (datepublish)j
+	indexIDX_7B2C81B7BE74E59Abolt_blocksDCREATE INDEX IDX_7B2C81B7BE74E59A ON bolt_blocks (datechanged)j
+	indexIDX_7B2C81B7AFBA6FD8bolt_blocksCCREATE INDEX IDX_7B2C81B7AFBA6FD8 ON bolt_blocks (datecreated)b
+{indexIDX_7B2C81B7989D9B62bolt_blocksBCREATE INDEX IDX_7B2C81B7989D9B62 ON bolt_blocks (slug)q
+indexIDX_C5F751E8FD4718AEbolt_showcases@CREATE INDEX IDX_C5F751E8FD4718AE ON bolt_showcases (integerfield)k
+indexIDX_C5F751E87B00651Cbolt_showcases?CREATE INDEX IDX_C5F751E87B00651C ON bolt_showcases (status)r
+indexIDX_C5F751E8B7805520bolt_showcases>CREATE INDEX IDX_C5F751E8B7805520 ON bolt_showcases (datedepublish)p
+indexIDX_C5F751E8A5131421bolt_showcases=CREATE INDEX IDX_C5F751E8A5131421 ON bolt_showcases (datepublish)p
+indexIDX_C5F751E8BE74E59Abolt_showcases<CREATE INDEX IDX_C5F751E8BE74E59A ON bolt_showcases (datechanged)p
+indexIDX_C5F751E8AFBA6FD8bolt_showcases;CREATE INDEX IDX_C5F751E8AFBA6FD8 ON bolt_showcases (datecreated)i~
+indexIDX_C5F751E8989D9B62bolt_showcases:CREATE INDEX IDX_C5F751E8989D9B62 ON bolt_showcases (slug)
+etablebolt_showcasesbolt_showcases9CREATE TABLE bolt_showcases (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, slug VARCHAR(128) NOT NULL COLLATE BINARY, datecreated DATETIME NOT NULL, datechanged DATETIME NOT NULL, datepublish DATETIME DEFAULT NULL, datedepublish DATETIME DEFAULT NULL, ownerid INTEGER DEFAULT NULL, status VARCHAR(32) NOT NULL COLLATE BINARY, title VARCHAR(256) DEFAULT NULL COLLATE BINARY, html CLOB DEFAULT NULL COLLATE BINARY, textarea CLOB DEFAULT NULL COLLATE BINARY, markdown CLOB DEFAULT NULL COLLATE BINARY, file VARCHAR(256) DEFAULT NULL COLLATE BINARY, checkbox BOOLEAN DEFAULT '0' NOT NULL, datetime DATETIME DEFAULT NULL, date DATE DEFAULT NULL, integerfield INTEGER DEFAULT 0 NOT NULL, floatfield DOUBLE PRECISION DEFAULT '0' NOT NULL, selectfield CLOB DEFAULT NULL COLLATE BINARY, selectentry CLOB DEFAULT NULL COLLATE BINARY, templatefields CLOB DEFAULT NULL --(DC2Type:json)
+, geolocation CLOB DEFAULT NULL --(DC2Type:json)
+, embed CLOB DEFAULT NULL --(DC2Type:json)
+, video CLOB DEFAULT NULL --(DC2Type:json)
+, image CLOB DEFAULT NULL --(DC2Type:json)
+, imagelist CLOB DEFAULT NULL --(DC2Type:json)
+, filelist CLOB DEFAULT NULL --(DC2Type:json)
+, multiselect CLOB DEFAULT NULL --(DC2Type:json)
+indexIDX_2696ADF07B00651Cbolt_entries8CREATE INDEX IDX_2696ADF07B00651C ON bolt_entries (status)n{
+indexIDX_2696ADF0B7805520bolt_entries7CREATE INDEX IDX_2696ADF0B7805520 ON bolt_entries (datedepublish)lz
+indexIDX_2696ADF0A5131421bolt_entries6CREATE INDEX IDX_2696ADF0A5131421 ON bolt_entries (datepublish)
+qtablebolt_blocksbolt_blocksACREATE TABLE bolt_blocks (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, slug VARCHAR(128) NOT NULL COLLATE BINARY, datecreated DATETIME NOT NULL, datechanged DATETIME NOT NULL, datepublish DATETIME DEFAULT NULL, datedepublish DATETIME DEFAULT NULL, ownerid INTEGER DEFAULT NULL, status VARCHAR(32) NOT NULL COLLATE BINARY, title VARCHAR(256) DEFAULT NULL COLLATE BINARY, content CLOB DEFAULT NULL COLLATE BINARY, contentlink VARCHAR(256) DEFAULT NULL COLLATE BINARY, templatefields CLOB DEFAULT NULL --(DC2Type:json)
+, image CLOB DEFAULT NULL --(DC2Type:json)
+
