@@ -1,0 +1,36 @@
+# Nmap 7.70 scan initiated Tue Jul 30 02:36:50 2019 as: nmap -p 1-65535 -T4 -A -o nmap.txt 10.10.10.147
+Warning: 10.10.10.147 giving up on port because retransmission cap hit (6).
+Nmap scan report for 10.10.10.147
+Host is up (0.25s latency).
+Not shown: 65532 closed ports
+PORT     STATE SERVICE    VERSION
+22/tcp   open  ssh        OpenSSH 7.4p1 Debian 10+deb9u6 (protocol 2.0)
+80/tcp   open  http       Apache httpd 2.4.25
+|_http-server-header: Apache/2.4.25 (Debian)
+|_http-title: 403 Forbidden
+1337/tcp open  tcpwrapped
+No exact OS matches for host (If you know what OS is running on it, see https://nmap.org/submit/ ).
+TCP/IP fingerprint:
+OS:SCAN(V=7.70%E=4%D=7/30%OT=22%CT=1%CU=37421%PV=Y%DS=2%DC=T%G=Y%TM=5D3FA36
+OS:F%P=x86_64-pc-linux-gnu)SEQ(SP=106%GCD=1%ISR=10B%TI=Z%CI=Z)SEQ(SP=105%GC
+OS:D=1%ISR=10B%TI=Z%CI=Z%II=I%TS=8)SEQ(SP=106%GCD=1%ISR=10B%TI=Z%CI=Z%TS=8)
+OS:OPS(O1=M54BST11NW7%O2=M54BST11NW7%O3=M54BNNT11NW7%O4=M54BST11NW7%O5=M54B
+OS:ST11NW7%O6=M54BST11)WIN(W1=7120%W2=7120%W3=7120%W4=7120%W5=7120%W6=7120)
+OS:ECN(R=Y%DF=Y%T=40%W=7210%O=M54BNNSNW7%CC=Y%Q=)T1(R=Y%DF=Y%T=40%S=O%A=S+%
+OS:F=AS%RD=0%Q=)T2(R=N)T3(R=N)T4(R=Y%DF=Y%T=40%W=0%S=A%A=Z%F=R%O=%RD=0%Q=)T
+OS:5(R=Y%DF=Y%T=40%W=0%S=Z%A=S+%F=AR%O=%RD=0%Q=)T6(R=Y%DF=Y%T=40%W=0%S=A%A=
+OS:Z%F=R%O=%RD=0%Q=)T7(R=Y%DF=Y%T=40%W=0%S=Z%A=S+%F=AR%O=%RD=0%Q=)U1(R=Y%DF
+OS:=N%T=40%IPL=164%UN=0%RIPL=G%RID=G%RIPCK=G%RUCK=G%RUD=G)IE(R=Y%DFI=N%T=40
+OS:%CD=S)
+
+Network Distance: 2 hops
+Service Info: Host: 127.0.1.1; OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+TRACEROUTE (using port 443/tcp)
+HOP RTT       ADDRESS
+1   246.91 ms 10.10.16.1
+2   247.14 ms 10.10.10.147
+
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Tue Jul 30 02:54:55 2019 -- 1 IP address (1 host up) scanned in 1085.97 seconds
+

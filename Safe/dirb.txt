@@ -1,0 +1,21 @@
+-----------------
+DIRB v2.22    
+By The Dark Raver
+-----------------
+
+OUTPUT_FILE: nmap.txt
+START_TIME: Tue Jul 30 03:27:03 2019
+URL_BASE: http://10.10.10.147/
+WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
+OPTION: Ignoring NOT_FOUND code -> 403
+OPTION: Not Stopping on warning messages
+
+-----------------
+
+GENERATED WORDS: 4612
+
+---- Scanning URL: http://10.10.10.147/ ----
++ http://10.10.10.147/index.html (CODE:200|SIZE:10787)
+==> DIRECTORY: http://10.10.10.147/manual/
+
+
