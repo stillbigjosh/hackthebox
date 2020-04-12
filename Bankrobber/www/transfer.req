@@ -1,0 +1,13 @@
+POST /user/transfer.php HTTP/1.1
+Host: 10.10.10.154
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/60.0
+Accept: */*
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate
+Referer: http://10.10.10.154/user/
+Content-type: application/x-www-form-urlencoded
+Content-Length: 40
+Cookie: id=7; username=dGVzdA%3D%3D; password=dGVzdA%3D%3D
+Connection: close
+
+fromId=7&toId=0877&amount=66&comment=comment

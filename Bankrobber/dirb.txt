@@ -1,0 +1,50 @@
+
+-----------------
+DIRB v2.22    
+By The Dark Raver
+-----------------
+
+OUTPUT_FILE: dirb.txt
+START_TIME: Mon Sep 23 16:29:07 2019
+URL_BASE: http://10.10.10.154/
+WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
+OPTION: Not Stopping on warning messages
+
+-----------------
+
+GENERATED WORDS: 4613
+
+---- Scanning URL: http://10.10.10.154/ ----
+==> DIRECTORY: http://10.10.10.154/admin/
+==> DIRECTORY: http://10.10.10.154/Admin/
+==> DIRECTORY: http://10.10.10.154/ADMIN/
++ http://10.10.10.154/aux (CODE:403|SIZE:1044)
++ http://10.10.10.154/cgi-bin/ (CODE:403|SIZE:1058)
++ http://10.10.10.154/com1 (CODE:403|SIZE:1044)
++ http://10.10.10.154/com2 (CODE:403|SIZE:1044)
++ http://10.10.10.154/com3 (CODE:403|SIZE:1044)
++ http://10.10.10.154/con (CODE:403|SIZE:1044)
+==> DIRECTORY: http://10.10.10.154/css/
++ http://10.10.10.154/examples (CODE:503|SIZE:1058)
+==> DIRECTORY: http://10.10.10.154/fonts/
+==> DIRECTORY: http://10.10.10.154/img/
++ http://10.10.10.154/index.php (CODE:200|SIZE:8245)
+==> DIRECTORY: http://10.10.10.154/js/
++ http://10.10.10.154/licenses (CODE:403|SIZE:1203)
++ http://10.10.10.154/lpt1 (CODE:403|SIZE:1044)
++ http://10.10.10.154/lpt2 (CODE:403|SIZE:1044)
++ http://10.10.10.154/nul (CODE:403|SIZE:1044)
++ http://10.10.10.154/phpmyadmin (CODE:403|SIZE:1203)
++ http://10.10.10.154/prn (CODE:403|SIZE:1044)
++ http://10.10.10.154/server-info (CODE:403|SIZE:1203)
++ http://10.10.10.154/server-status (CODE:403|SIZE:1203)
+==> DIRECTORY: http://10.10.10.154/user/
++ http://10.10.10.154/webalizer (CODE:403|SIZE:1044)
+
+---- Entering directory: http://10.10.10.154/admin/ ----
++ http://10.10.10.154/admin/aux (CODE:403|SIZE:1044)
++ http://10.10.10.154/admin/com1 (CODE:403|SIZE:1044)
++ http://10.10.10.154/admin/com2 (CODE:403|SIZE:1044)
++ http://10.10.10.154/admin/com3 (CODE:403|SIZE:1044)
++ http://10.10.10.154/admin/con (CODE:403|SIZE:1044)
++ http://10.10.10.154/admin/index.php (CODE:200|SIZE:40)

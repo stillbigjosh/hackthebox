@@ -1,0 +1,49 @@
+
+-----------------
+DIRB v2.22    
+By The Dark Raver
+-----------------
+
+OUTPUT_FILE: dirbphp.txt
+START_TIME: Mon Sep 23 16:30:59 2019
+URL_BASE: http://10.10.10.154/
+WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
+OPTION: Not Stopping on warning messages
+EXTENSIONS_LIST: (.php) | (.php) [NUM = 1]
+
+-----------------
+
+GENERATED WORDS: 4613
+
+---- Scanning URL: http://10.10.10.154/ ----
+
+-----------------
+DIRB v2.22    
+By The Dark Raver
+-----------------
+
+OUTPUT_FILE: dirbphp.txt
+START_TIME: Mon Sep 23 16:31:36 2019
+URL_BASE: http://10.10.10.154/
+WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
+OPTION: Not Stopping on warning messages
+EXTENSIONS_LIST: (.php,.html) | (.php)(.html) [NUM = 2]
+
+-----------------
+
+GENERATED WORDS: 4613
+
+---- Scanning URL: http://10.10.10.154/ ----
++ http://10.10.10.154/elements.html (CODE:200|SIZE:34812)
++ http://10.10.10.154/generic.html (CODE:200|SIZE:13343)
++ http://10.10.10.154/index.php (CODE:200|SIZE:8245)
++ http://10.10.10.154/Index.php (CODE:200|SIZE:8245)
++ http://10.10.10.154/link.php (CODE:200|SIZE:0)
++ http://10.10.10.154/login.php (CODE:302|SIZE:0)
++ http://10.10.10.154/Login.php (CODE:302|SIZE:0)
++ http://10.10.10.154/logout.php (CODE:302|SIZE:0)
++ http://10.10.10.154/register.php (CODE:200|SIZE:0)
+
+-----------------
+END_TIME: Mon Sep 23 17:53:19 2019
+DOWNLOADED: 9226 - FOUND: 9

