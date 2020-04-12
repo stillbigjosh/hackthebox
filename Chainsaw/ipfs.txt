@@ -1,0 +1,16 @@
+administrator@chainsaw:/opt/WeaponizedPing$ ipfs id
+ipfs id
+{
+	"ID": "QmPfaAfb157bVHC1Y3waMEkX5QHjrF5UrvHqcNdp4R1BGy",
+	"PublicKey": "CAASpgIwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDeME8+9MUmzPvifqnqC7dM4rtPfqOn4STLZxC5OgizeavrygOubfKosRdRkKNkm9DdNTsR5gB9QANiHkRnQ57bLwheH4o895Ib/lW/WOhwmOtks1iV9VIUj7DTnuQDNcN2IuVcnpC8x5HFQoNIgsj2HgqxLnlPCJboaTYo3oGwflqE2o2+/pwZjM2My3ux9FYCg7GhEpXO6WGpH6Jxq2Z3wOA1z1qVSOmAPSPgSOvvFGvKyfU6ntta8qd3EC15x4002CB9OSA/pTbchSTr3gS9QOMq5Wn55vEwNaOFNf/qOImaRWYER8epyHB/E4kKJ9XAeL7U7xfKpQDhrqvEdq2/AgMBAAE=",
+	"Addresses": [
+		"/ip4/127.0.0.1/tcp/4001/ipfs/QmPfaAfb157bVHC1Y3waMEkX5QHjrF5UrvHqcNdp4R1BGy",
+		"/ip4/10.10.10.142/tcp/4001/ipfs/QmPfaAfb157bVHC1Y3waMEkX5QHjrF5UrvHqcNdp4R1BGy",
+		"/ip6/::1/tcp/4001/ipfs/QmPfaAfb157bVHC1Y3waMEkX5QHjrF5UrvHqcNdp4R1BGy",
+		"/ip6/dead:beef::250:56ff:feb9:cd9f/tcp/4001/ipfs/QmPfaAfb157bVHC1Y3waMEkX5QHjrF5UrvHqcNdp4R1BGy"
+	],
+	"AgentVersion": "go-ipfs/0.4.18/",
+	"ProtocolVersion": "ipfs/0.1.0"
+}
+
+

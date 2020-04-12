@@ -1,0 +1,101 @@
+# Nmap 7.70 scan initiated Tue Jul 16 13:26:13 2019 as: nmap -p 1-65535 -T4 -A -o nmap.txt 10.10.10.142
+Warning: 10.10.10.142 giving up on port because retransmission cap hit (6).
+Nmap scan report for 10.10.10.142
+Host is up (0.28s latency).
+Not shown: 65529 closed ports
+PORT      STATE    SERVICE    VERSION
+21/tcp    open     ftp        vsftpd 3.0.3
+| ftp-anon: Anonymous FTP login allowed (FTP code 230)
+| -rw-r--r--    1 1001     1001        23828 Dec 05  2018 WeaponizedPing.json
+| -rw-r--r--    1 1001     1001          243 Dec 12  2018 WeaponizedPing.sol
+|_-rw-r--r--    1 1001     1001           44 Jul 16 16:30 address.txt
+| ftp-syst: 
+|   STAT: 
+| FTP server status:
+|      Connected to ::ffff:10.10.16.57
+|      Logged in as ftp
+|      TYPE: ASCII
+|      No session bandwidth limit
+|      Session timeout in seconds is 300
+|      Control connection is plain text
+|      Data connections will be plain text
+|      At session startup, client count was 4
+|      vsFTPd 3.0.3 - secure, fast, stable
+|_End of status
+22/tcp    open     ssh        OpenSSH 7.7p1 Ubuntu 4ubuntu0.1 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey: 
+|   2048 02:dd:8a:5d:3c:78:d4:41:ff:bb:27:39:c1:a2:4f:eb (RSA)
+|   256 3d:71:ff:d7:29:d5:d4:b2:a6:4f:9d:eb:91:1b:70:9f (ECDSA)
+|_  256 7e:02:da:db:29:f9:d2:04:63:df:fc:91:fd:a2:5a:f2 (ED25519)
+2217/tcp  filtered gotodevice
+9810/tcp  open     unknown
+| fingerprint-strings: 
+|   FourOhFourRequest: 
+|     HTTP/1.1 400 Bad Request
+|     Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, User-Agent
+|     Access-Control-Allow-Origin: *
+|     Access-Control-Allow-Methods: *
+|     Content-Type: text/plain
+|     Date: Tue, 16 Jul 2019 17:19:11 GMT
+|     Connection: close
+|     Request
+|   GetRequest: 
+|     HTTP/1.1 400 Bad Request
+|     Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, User-Agent
+|     Access-Control-Allow-Origin: *
+|     Access-Control-Allow-Methods: *
+|     Content-Type: text/plain
+|     Date: Tue, 16 Jul 2019 17:18:54 GMT
+|     Connection: close
+|     Request
+|   HTTPOptions: 
+|     HTTP/1.1 200 OK
+|     Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, User-Agent
+|     Access-Control-Allow-Origin: *
+|     Access-Control-Allow-Methods: *
+|     Content-Type: text/plain
+|     Date: Tue, 16 Jul 2019 17:18:55 GMT
+|_    Connection: close
+12667/tcp filtered unknown
+22956/tcp filtered unknown
+1 service unrecognized despite returning data. If you know the service/version, please submit the following fingerprint at https://nmap.org/cgi-bin/submit.cgi?new-service :
+SF-Port9810-TCP:V=7.70%I=7%D=7/16%Time=5D2E06FE%P=x86_64-pc-linux-gnu%r(Ge
+SF:tRequest,118,"HTTP/1\.1\x20400\x20Bad\x20Request\r\nAccess-Control-Allo
+SF:w-Headers:\x20Origin,\x20X-Requested-With,\x20Content-Type,\x20Accept,\
+SF:x20User-Agent\r\nAccess-Control-Allow-Origin:\x20\*\r\nAccess-Control-A
+SF:llow-Methods:\x20\*\r\nContent-Type:\x20text/plain\r\nDate:\x20Tue,\x20
+SF:16\x20Jul\x202019\x2017:18:54\x20GMT\r\nConnection:\x20close\r\n\r\n400
+SF:\x20Bad\x20Request")%r(HTTPOptions,100,"HTTP/1\.1\x20200\x20OK\r\nAcces
+SF:s-Control-Allow-Headers:\x20Origin,\x20X-Requested-With,\x20Content-Typ
+SF:e,\x20Accept,\x20User-Agent\r\nAccess-Control-Allow-Origin:\x20\*\r\nAc
+SF:cess-Control-Allow-Methods:\x20\*\r\nContent-Type:\x20text/plain\r\nDat
+SF:e:\x20Tue,\x2016\x20Jul\x202019\x2017:18:55\x20GMT\r\nConnection:\x20cl
+SF:ose\r\n\r\n")%r(FourOhFourRequest,118,"HTTP/1\.1\x20400\x20Bad\x20Reque
+SF:st\r\nAccess-Control-Allow-Headers:\x20Origin,\x20X-Requested-With,\x20
+SF:Content-Type,\x20Accept,\x20User-Agent\r\nAccess-Control-Allow-Origin:\
+SF:x20\*\r\nAccess-Control-Allow-Methods:\x20\*\r\nContent-Type:\x20text/p
+SF:lain\r\nDate:\x20Tue,\x2016\x20Jul\x202019\x2017:19:11\x20GMT\r\nConnec
+SF:tion:\x20close\r\n\r\n400\x20Bad\x20Request");
+No exact OS matches for host (If you know what OS is running on it, see https://nmap.org/submit/ ).
+TCP/IP fingerprint:
+OS:SCAN(V=7.70%E=4%D=7/16%OT=21%CT=1%CU=32604%PV=Y%DS=2%DC=T%G=Y%TM=5D2E075
+OS:7%P=x86_64-pc-linux-gnu)SEQ(SP=100%GCD=1%ISR=109%TI=Z%CI=Z%II=I%TS=A)SEQ
+OS:(SP=FF%GCD=1%ISR=10A%TI=Z%CI=Z%TS=B)OPS(O1=M54BST11NW7%O2=M54BST11NW7%O3
+OS:=M54BNNT11NW7%O4=M54BST11NW7%O5=M54BST11NW7%O6=M54BST11)WIN(W1=7120%W2=7
+OS:120%W3=7120%W4=7120%W5=7120%W6=7120)ECN(R=Y%DF=Y%T=40%W=7210%O=M54BNNSNW
+OS:7%CC=Y%Q=)T1(R=Y%DF=Y%T=40%S=O%A=S+%F=AS%RD=0%Q=)T2(R=N)T3(R=N)T4(R=Y%DF
+OS:=Y%T=40%W=0%S=A%A=Z%F=R%O=%RD=0%Q=)T5(R=Y%DF=Y%T=40%W=0%S=Z%A=S+%F=AR%O=
+OS:%RD=0%Q=)T6(R=Y%DF=Y%T=40%W=0%S=A%A=Z%F=R%O=%RD=0%Q=)T7(R=Y%DF=Y%T=40%W=
+OS:0%S=Z%A=S+%F=AR%O=%RD=0%Q=)U1(R=Y%DF=N%T=40%IPL=164%UN=0%RIPL=G%RID=G%RI
+OS:PCK=G%RUCK=G%RUD=G)IE(R=Y%DFI=N%T=40%CD=S)
+
+Network Distance: 2 hops
+Service Info: OSs: Unix, Linux; CPE: cpe:/o:linux:linux_kernel
+
+TRACEROUTE (using port 445/tcp)
+HOP RTT       ADDRESS
+1   263.76 ms 10.10.16.1
+2   21.74 ms  10.10.10.142
+
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+# Nmap done at Tue Jul 16 18:20:23 2019 -- 1 IP address (1 host up) scanned in 17649.92 seconds
