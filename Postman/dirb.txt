@@ -1,0 +1,24 @@
+
+-----------------
+DIRB v2.22    
+By The Dark Raver
+-----------------
+
+OUTPUT_FILE: dirb.txt
+START_TIME: Tue Nov  5 17:49:52 2019
+URL_BASE: http://10.10.10.160/
+WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
+OPTION: Not Stopping on warning messages
+
+-----------------
+
+GENERATED WORDS: 4613
+
+---- Scanning URL: http://10.10.10.160/ ----
+==> DIRECTORY: http://10.10.10.160/css/
+==> DIRECTORY: http://10.10.10.160/fonts/
+==> DIRECTORY: http://10.10.10.160/images/
++ http://10.10.10.160/index.html (CODE:200|SIZE:3844)
+==> DIRECTORY: http://10.10.10.160/js/
++ http://10.10.10.160/server-status (CODE:403|SIZE:300)
+==> DIRECTORY: http://10.10.10.160/upload/

